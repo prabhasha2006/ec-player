@@ -13,10 +13,10 @@ const themes = {
             '#2b00b8', '#4b0082', '#6a00b8', '#9400d3',
             '#b000d3', '#d000ff', '#ff00ff'
         ],
-        peak: '#000000ff',
-        button: '#ff9100ff',
+        peak: '#000000',
+        button: '#008cff',
         buttonHover: '#7c3aed',
-        slider: '#d75cf6ff'
+        slider: '#d75cf6'
     },
     ocean: {
         name: 'Ocean Blue',
@@ -583,7 +583,7 @@ function VisualizePlayer({
         <div className='rounded-xl overflow-hidden' style={{ backgroundColor: !(noControls || transparent) && (isDark ? '#606060ff' : 'white') }}>
             <div style={{ background: !(noControls || transparent) && currentTheme.bg }} className={!(noControls || transparent) && 'p-4'}>
                 {/* VU Meter */}
-                <div className={`${!(noControls || transparent) && (isDark ? 'bg-black/30' : 'bg-white/70')} rounded-lg ${!noControls && "mb-6"} ${!(noControls || transparent) && "p-4"} shadow-sm border border-gray-100/30`}>
+                <div className={`${!(noControls || transparent) && (isDark ? 'bg-black/30' : 'bg-white/70')} rounded-lg ${!noControls && "mb-6"} ${!(noControls || transparent) && "p-4"} shadow-sm`}>
                     <div className="flex justify-center items-end gap-1 h-64" ref={vuContainerRef}></div>
                 </div>
 
@@ -745,6 +745,7 @@ function DemoVisualizePlayer() {
     const [audioName, setAudioName] = useState('No track loaded');
     const [selectedTheme, setSelectedTheme] = useState('purple');
     const [showThemeSelector, setShowThemeSelector] = useState(false);
+    const [transparent, setTransparent] = useState(false)
     const [mode, setMode] = useState('light')
     const fileInputRef = useRef(null);
 
@@ -762,7 +763,7 @@ function DemoVisualizePlayer() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center p-4 md:p-8">
+        <div className="min-h-screen flex items-center justify-center p-4 md:p-8" style={{ backgroundColor: mode === 'dark' ? '#222' : 'white'}}>
             <div className="w-full h-full md:h-auto md:max-w-4xl">
                 {/* Theme Selector - Initially Hidden */}
                 {showThemeSelector && (
@@ -773,7 +774,7 @@ function DemoVisualizePlayer() {
                     {/* Header */}
                     <div className="mb-6 flex justify-between items-start">
                         <div>
-                            <h1 className="text-2xl font-semibold text-gray-800 mb-1">Audio Visualizer</h1>
+                            <h1 className={`text-2xl font-semibold ${mode === 'dark' ? 'text-gray-200' : 'text-gray-800'} mb-1`}>Audio Visualizer</h1>
                             <p className="text-sm text-gray-500">Professional frequency analyzer</p>
                         </div>
                         <button
@@ -792,7 +793,7 @@ function DemoVisualizePlayer() {
                         theme={selectedTheme}
                         autoPlay={false}
                         mode={mode}
-                        transparent={true}
+                        transparent={transparent}
                         volume={70}
                         controls={{
                             play: true,
@@ -822,16 +823,16 @@ function DemoVisualizePlayer() {
                             Load Audio
                         </button>
                         <button
-                            onClick={() => setMode('dark')}
+                            onClick={() => setMode(mode === 'dark' ? 'light' : 'dark')}
                             className="bg-white border border-gray-300 text-gray-700 px-6 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 flex items-center gap-2"
                         >
-                            Dark
+                            {mode === 'dark' ? 'Light' : 'Dark'}
                         </button>
                         <button
-                            onClick={() => setMode('light')}
+                            onClick={() => setTransparent(!transparent)}
                             className="bg-white border border-gray-300 text-gray-700 px-6 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 flex items-center gap-2"
                         >
-                            Light
+                            Transparent: {String(transparent)}
                         </button>
                     </div>
                 </div>
