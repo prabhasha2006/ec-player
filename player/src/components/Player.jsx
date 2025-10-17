@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Pause, Square, Volume2, VolumeX, Repeat } from 'lucide-react';
+import { Play, Pause, Square, Volume2, VolumeX, Repeat, Upload } from 'lucide-react';
 
 const themes = {
     rainbow: {
@@ -128,6 +128,7 @@ function ThemeSelector({ theme, setTheme, close }) {
 function VisualizePlayer({
     audio,
     name = 'No track loaded',
+    author,
     theme = 'rainbow',
     volume: vol = 100,
     controls = {
@@ -140,7 +141,8 @@ function VisualizePlayer({
         trackName: true
     },
     mode = 'light',
-    bands: _bands = null
+    bands: _bands = null,
+    transparent = false
 }) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
@@ -149,7 +151,7 @@ function VisualizePlayer({
     const [isMuted, setIsMuted] = useState(false);
     const [isLoop, setIsLoop] = useState(false);
     const [isSeeking, setIsSeeking] = useState(false);
-    const [error, setError] = useState('')
+    const [error, setError] = useState([])
 
     const audioRef = useRef(null);
     const audioContextRef = useRef(null);
@@ -158,8 +160,81 @@ function VisualizePlayer({
     const animationRef = useRef(null);
     const vuContainerRef = useRef(null);
 
-    //check types
-    if (_bands && (typeof _bands !== 'array')) {}
+    // ✅ Comprehensive prop type checks
+    useEffect(() => {
+        const errors = [];
+
+        // 1. audio: must be a string or undefined/null
+        if (audio && typeof audio !== 'string') {
+            errors.push(['TypeError', 'audio must be a string (URL or path)']);
+        }
+
+        // 2. name: must be string
+        if (name && typeof name !== 'string') {
+            errors.push(['TypeError', 'name must be a string']);
+        }
+
+        // 3. theme: must be string key or valid object
+        if (theme && typeof theme !== 'string' && typeof theme !== 'object') {
+            errors.push(['TypeError', 'theme must be a string or a valid theme object']);
+        } else if (typeof theme === 'object') {
+            const keys = ['name', 'bg', 'bars', 'peak', 'button', 'buttonHover', 'slider'];
+            for (const k of keys) {
+                if (!(k in theme)) {
+                    errors.push(['ThemeError', `theme object missing key: ${k}`]);
+                }
+            }
+        }
+
+        // 4. volume: must be number 0-100
+        if (typeof vol !== 'number' || vol < 0 || vol > 100) {
+            errors.push(['TypeError', 'volume must be a number between 0 and 100']);
+        }
+
+        // 5. controls: must be object with boolean keys
+        if (typeof controls !== 'object' || Array.isArray(controls)) {
+            errors.push(['TypeError', 'controls must be an object']);
+        } else {
+            const controlKeys = ['play', 'pause', 'stop', 'seekbar', 'volume', 'loop', 'trackName'];
+            controlKeys.forEach(key => {
+                if (key in controls && typeof controls[key] !== 'boolean') {
+                    errors.push(['TypeError', `controls.${key} must be a boolean`]);
+                }
+            });
+        }
+
+        // 6. mode: must be 'dark' or 'light'
+        if (mode && mode !== 'dark' && mode !== 'light') {
+            errors.push(['ModeError', "mode must be either 'dark' or 'light'"]);
+        }
+
+        // 7. bands: must be array of { freq: number }
+        if (_bands) {
+            if (!Array.isArray(_bands)) {
+                errors.push(['TypeError', 'bands must be an array']);
+            } else if (_bands.length === 0) {
+                errors.push(['ValueError', 'bands array cannot be empty']);
+            } else {
+                _bands.forEach((band, i) => {
+                    if (typeof band.freq !== 'number') {
+                        errors.push(['TypeError', `bands[${i}].freq must be a number`]);
+                    }
+                });
+            }
+        }
+
+        // ✅ Handle collected errors
+        if (errors.length > 0) {
+            setError(errors); // store the first error for UI
+            console.group('%cVisualizePlayer: Prop validation failed', 'color:red');
+            errors.forEach(e => console.error(`${e[0]}: ${e[1]}`));
+            console.groupEnd();
+        } else {
+            setError([]);
+        }
+
+    }, [audio, name, theme, vol, controls, mode, _bands]);
+
 
     // Updated bands array - removed last two high frequencies and added two bass frequencies
     const bands = _bands || [
@@ -179,10 +254,9 @@ function VisualizePlayer({
     const peakHoldTimesRef = useRef(bands.map(() => 0));
     const themeRef = useRef(theme); // Track current theme
 
-    let currentTheme
-    if (typeof theme === 'string') { currentTheme = themes[theme] || themes.rainbow }
-    if (typeof theme === 'object') { currentTheme = theme }
+    let currentTheme = (typeof theme === 'string') ? (themes[theme] || themes.purple) : (typeof theme === 'object') ? theme : themes.purple
     const isDark = mode === 'dark'
+    const noControls = (typeof controls === 'object' && Object.keys(controls).length === 0)
 
     // Update theme ref when theme changes
     useEffect(() => {
@@ -489,11 +563,27 @@ function VisualizePlayer({
         return `${mins}:${secs.toString().padStart(2, '0')}`;
     };
 
+    useEffect(() => {
+        if (((typeof controls === 'object' && Object.keys(controls).length === 0) || !controls) && !isPlaying) {
+            togglePlay()
+        }
+    }, [controls])
+
+    if (error && error.length > 0) {
+        return (
+            error.map(e => (
+                <div className="text-red-500 text-sm bg-red-50 p-3 rounded mb-4 border border-red-300">
+                    <strong>{e[0]}:</strong> {e[1]}
+                </div>
+            ))
+        )
+    }
+
     return (
-        <div className='rounded-xl overflow-hidden' style={{ backgroundColor: isDark ? '#606060ff' : 'white' }}>
-            <div style={{ background: currentTheme.bg }} className='p-4'>
+        <div className='rounded-xl overflow-hidden' style={{ backgroundColor: !(noControls || transparent) && (isDark ? '#606060ff' : 'white') }}>
+            <div style={{ background: !(noControls || transparent) && currentTheme.bg }} className={!(noControls || transparent) && 'p-4'}>
                 {/* VU Meter */}
-                <div className={`${isDark ? 'bg-black/30' : 'bg-white/70'} rounded-lg p-4 mb-6 shadow-sm border border-gray-100/30`}>
+                <div className={`${!(noControls || transparent) && (isDark ? 'bg-black/30' : 'bg-white/70')} rounded-lg ${!noControls && "mb-6"} ${!(noControls || transparent) && "p-4"} shadow-sm border border-gray-100/30`}>
                     <div className="flex justify-center items-end gap-1 h-64" ref={vuContainerRef}></div>
                 </div>
 
@@ -501,6 +591,9 @@ function VisualizePlayer({
                 {controls.trackName && (
                     <div className="mb-6">
                         <div className={`${isDark ? 'text-gray-100' : 'text-gray-700'} font-medium truncate`}>{name}</div>
+                        {author && typeof author === 'string' && (
+                            <div className={`${isDark ? 'text-gray-300' : 'text-gray-500'} text-xs`}>{author}</div>
+                        )}
                     </div>
                 )}
 
@@ -647,4 +740,104 @@ function VisualizePlayer({
     );
 }
 
-export { VisualizePlayer, ThemeSelector, themes };
+function DemoVisualizePlayer() {
+    const [audioFile, setAudioFile] = useState(null);
+    const [audioName, setAudioName] = useState('No track loaded');
+    const [selectedTheme, setSelectedTheme] = useState('purple');
+    const [showThemeSelector, setShowThemeSelector] = useState(false);
+    const [mode, setMode] = useState('light')
+    const fileInputRef = useRef(null);
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const url = URL.createObjectURL(file);
+            setAudioFile(url);
+            setAudioName(file.name);
+        }
+    };
+
+    const handleLoadAudio = () => {
+        fileInputRef.current.click();
+    }
+
+    return (
+        <div className="min-h-screen flex items-center justify-center p-4 md:p-8">
+            <div className="w-full h-full md:h-auto md:max-w-4xl">
+                {/* Theme Selector - Initially Hidden */}
+                {showThemeSelector && (
+                    <ThemeSelector theme={selectedTheme} setTheme={setSelectedTheme} close={() => setShowThemeSelector(false)} />
+                )}
+
+                <div className="container-glass rounded-xl p-8">
+                    {/* Header */}
+                    <div className="mb-6 flex justify-between items-start">
+                        <div>
+                            <h1 className="text-2xl font-semibold text-gray-800 mb-1">Audio Visualizer</h1>
+                            <p className="text-sm text-gray-500">Professional frequency analyzer</p>
+                        </div>
+                        <button
+                            onClick={() => setShowThemeSelector(!showThemeSelector)}
+                            className="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 flex items-center gap-2"
+                        >
+                            <span>🎨</span> Themes
+                        </button>
+                    </div>
+
+                    {/* Player Component */}
+                    <VisualizePlayer
+                        audio={audioFile}
+                        name={audioName}
+                        author={'K.Prabhasha'}
+                        theme={selectedTheme}
+                        autoPlay={false}
+                        mode={mode}
+                        transparent={true}
+                        volume={70}
+                        controls={{
+                            play: true,
+                            pause: true,
+                            stop: true,
+                            seekbar: true,
+                            volume: true,
+                            loop: true,
+                            trackName: true
+                        }}
+                    />
+
+                    {/* Load Audio Button */}
+                    <div className="mt-6 flex flex-wrap items-center gap-3">
+                        <input
+                            type="file"
+                            ref={fileInputRef}
+                            onChange={handleFileChange}
+                            accept="audio/*"
+                            className="hidden"
+                        />
+                        <button
+                            onClick={handleLoadAudio}
+                            className="bg-white border border-gray-300 text-gray-700 px-6 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 flex items-center gap-2"
+                        >
+                            <Upload size={16} />
+                            Load Audio
+                        </button>
+                        <button
+                            onClick={() => setMode('dark')}
+                            className="bg-white border border-gray-300 text-gray-700 px-6 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 flex items-center gap-2"
+                        >
+                            Dark
+                        </button>
+                        <button
+                            onClick={() => setMode('light')}
+                            className="bg-white border border-gray-300 text-gray-700 px-6 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 flex items-center gap-2"
+                        >
+                            Light
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export { VisualizePlayer, ThemeSelector, themes, DemoVisualizePlayer };
