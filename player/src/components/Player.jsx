@@ -1,19 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Pause, Square, Volume2, VolumeX, Repeat, Upload, Maximize, Minimize, ChevronDown, ChevronUp, Copy, Check, Settings } from 'lucide-react';
-
-const formatTime = (seconds) => {
-    if (isNaN(seconds)) return '0:00';
-
-    const hrs = Math.floor(seconds / 3600);
-    const mins = Math.floor((seconds % 3600) / 60);
-    const secs = Math.floor(seconds % 60);
-
-    if (hrs > 0) {
-        return `${hrs}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-    } else {
-        return `${mins}:${secs.toString().padStart(2, '0')}`;
-    }
-}
+import { Play, Pause, Square, Volume2, VolumeX, Repeat, Upload, Maximize, Minimize, Sliders } from 'lucide-react';
 
 const themes = {
     rainbow: {
@@ -155,12 +141,18 @@ function VisualizePlayer({
         seekbar: true,
         volume: true,
         loop: true,
-        trackName: true
+        trackName: true,
+        equalizer: true
     },
     mode = 'light',
     bands: _bands = null,
     transparent = false,
-    autoPlay = false
+    autoPlay = false,
+    equalizer = {
+        bass: 0,
+        mid: 0,
+        treble: 0
+    }
 }) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
@@ -169,16 +161,42 @@ function VisualizePlayer({
     const [isMuted, setIsMuted] = useState(false);
     const [isLoop, setIsLoop] = useState(false);
     const [isSeeking, setIsSeeking] = useState(false);
-    const [error, setError] = useState([])
+    const [error, setError] = useState([]);
+    const [showEqualizer, setShowEqualizer] = useState(false);
+    const [eqBands, setEqBands] = useState({
+        bass: equalizer.bass || 0,
+        mid: equalizer.mid || 0,
+        treble: equalizer.treble || 0
+    })
+    const [containerWidth, setContainerWidth] = useState(0)
 
     const audioRef = useRef(null);
     const audioContextRef = useRef(null);
     const analyserRef = useRef(null);
     const sourceRef = useRef(null);
+    const bassFilterRef = useRef(null);
+    const midFilterRef = useRef(null);
+    const trebleFilterRef = useRef(null);
     const animationRef = useRef(null);
     const vuContainerRef = useRef(null);
+    const containerRef = useRef(null)
 
-    // ✅ Comprehensive prop type checks
+    useEffect(() => {
+        const el = containerRef.current;
+        if (!el) return;
+
+        const observer = new ResizeObserver(entries => {
+            for (let entry of entries) {
+                setContainerWidth(entry.contentRect.width);
+            }
+        });
+
+        observer.observe(el);
+
+        return () => observer.disconnect();
+    }, []);
+
+    // Comprehensive prop type checks
     useEffect(() => {
         const errors = [];
 
@@ -213,7 +231,7 @@ function VisualizePlayer({
         if (typeof controls !== 'object' || Array.isArray(controls)) {
             errors.push(['TypeError', 'controls must be an object']);
         } else {
-            const controlKeys = ['play', 'pause', 'stop', 'seekbar', 'volume', 'loop', 'trackName'];
+            const controlKeys = ['play', 'pause', 'stop', 'seekbar', 'volume', 'loop', 'trackName', 'equalizer'];
             controlKeys.forEach(key => {
                 if (key in controls && typeof controls[key] !== 'boolean') {
                     errors.push(['TypeError', `controls.${key} must be a boolean`]);
@@ -241,45 +259,40 @@ function VisualizePlayer({
             }
         }
 
-        // ✅ Handle collected errors
+        // Handle collected errors
         if (errors.length > 0) {
-            setError(errors); // store the first error for UI
+            setError(errors);
             console.group('%cVisualizePlayer: Prop validation failed', 'color:red');
             errors.forEach(e => console.error(`${e[0]}: ${e[1]}`));
             console.groupEnd();
         } else {
             setError([]);
         }
-
     }, [audio, name, theme, vol, controls, mode, _bands]);
 
-
-    // Updated bands array - removed last two high frequencies and added two bass frequencies
+    // Updated bands array
     const bands = _bands || [
-        { freq: 0 },   // New bass band
-        { freq: 10 },   // New bass band
-        { freq: 20 }, { freq: 25 }, { freq: 31.5 }, { freq: 40 }, { freq: 50 },
+        { freq: 0 }, { freq: 10 }, { freq: 20 }, { freq: 25 }, { freq: 31.5 }, { freq: 40 }, { freq: 50 },
         { freq: 63 }, { freq: 80 }, { freq: 100 }, { freq: 125 }, { freq: 160 },
         { freq: 200 }, { freq: 250 }, { freq: 315 }, { freq: 400 }, { freq: 500 },
         { freq: 630 }, { freq: 800 }, { freq: 1000 }, { freq: 1250 }, { freq: 1600 },
         { freq: 2000 }, { freq: 2500 }, { freq: 3150 }, { freq: 4000 }, { freq: 5000 },
         { freq: 6300 }, { freq: 8000 }, { freq: 10000 }, { freq: 12500 }
-        // Removed: { freq: 16000 }, { freq: 20000 }
     ];
 
     const bandPeaksRef = useRef(bands.map(() => 0));
     const peakHoldsRef = useRef(bands.map(() => 0));
     const peakHoldTimesRef = useRef(bands.map(() => 0));
-    const themeRef = useRef(theme); // Track current theme
+    const themeRef = useRef(theme);
 
-    let currentTheme = (typeof theme === 'string') ? (themes[theme] || themes.purple) : (typeof theme === 'object') ? theme : themes.purple
-    const isDark = mode === 'dark'
-    const noControls = (typeof controls === 'object' && Object.keys(controls).length === 0)
+    let currentTheme = (typeof theme === 'string') ? (themes[theme] || themes.purple) : (typeof theme === 'object') ? theme : themes.purple;
+    const isDark = mode === 'dark';
+    const noControls = (typeof controls === 'object' && Object.keys(controls).length === 0);
 
     // Update theme ref when theme changes
     useEffect(() => {
         themeRef.current = theme;
-        updateVU(); // Update visualization with new theme
+        updateVU();
     }, [theme]);
 
     // Initialize audio element
@@ -357,6 +370,33 @@ function VisualizePlayer({
                     console.warn("Analyser disconnect error:", e);
                 }
                 analyserRef.current = null;
+            }
+
+            if (bassFilterRef.current) {
+                try {
+                    bassFilterRef.current.disconnect();
+                } catch (e) {
+                    console.warn("Bass filter disconnect error:", e);
+                }
+                bassFilterRef.current = null;
+            }
+
+            if (midFilterRef.current) {
+                try {
+                    midFilterRef.current.disconnect();
+                } catch (e) {
+                    console.warn("Mid filter disconnect error:", e);
+                }
+                midFilterRef.current = null;
+            }
+
+            if (trebleFilterRef.current) {
+                try {
+                    trebleFilterRef.current.disconnect();
+                } catch (e) {
+                    console.warn("Treble filter disconnect error:", e);
+                }
+                trebleFilterRef.current = null;
             }
 
             if (audioContextRef.current) {
@@ -438,6 +478,21 @@ function VisualizePlayer({
         }
     }, [isLoop]);
 
+    // Update equalizer bands
+    useEffect(() => {
+        if (audioContextRef.current) {
+            if (bassFilterRef.current) {
+                bassFilterRef.current.gain.value = eqBands.bass;
+            }
+            if (midFilterRef.current) {
+                midFilterRef.current.gain.value = eqBands.mid;
+            }
+            if (trebleFilterRef.current) {
+                trebleFilterRef.current.gain.value = eqBands.treble;
+            }
+        }
+    }, [eqBands]);
+
     // Start/stop visualization
     useEffect(() => {
         if (isPlaying && !animationRef.current) {
@@ -446,7 +501,6 @@ function VisualizePlayer({
             }
             analyze();
         } else if (!isPlaying && animationRef.current) {
-            // Don't cancel animation immediately - let it fade out
             fadeOutVisualization();
         }
     }, [isPlaying]);
@@ -456,12 +510,37 @@ function VisualizePlayer({
             try {
                 const AudioContext = window.AudioContext || window.webkitAudioContext;
                 audioContextRef.current = new AudioContext();
+
+                // Create filters
+                bassFilterRef.current = audioContextRef.current.createBiquadFilter();
+                bassFilterRef.current.type = 'lowshelf';
+                bassFilterRef.current.frequency.value = 320;
+                bassFilterRef.current.gain.value = eqBands.bass;
+
+                midFilterRef.current = audioContextRef.current.createBiquadFilter();
+                midFilterRef.current.type = 'peaking';
+                midFilterRef.current.frequency.value = 1000;
+                midFilterRef.current.Q.value = 0.5;
+                midFilterRef.current.gain.value = eqBands.mid;
+
+                trebleFilterRef.current = audioContextRef.current.createBiquadFilter();
+                trebleFilterRef.current.type = 'highshelf';
+                trebleFilterRef.current.frequency.value = 3200;
+                trebleFilterRef.current.gain.value = eqBands.treble;
+
+                // Create analyser
                 analyserRef.current = audioContextRef.current.createAnalyser();
                 analyserRef.current.fftSize = 8192;
                 analyserRef.current.smoothingTimeConstant = 0.7;
 
+                // Create source
                 sourceRef.current = audioContextRef.current.createMediaElementSource(audioRef.current);
-                sourceRef.current.connect(analyserRef.current);
+
+                // Connect nodes: source -> filters -> analyser -> destination
+                sourceRef.current.connect(bassFilterRef.current);
+                bassFilterRef.current.connect(midFilterRef.current);
+                midFilterRef.current.connect(trebleFilterRef.current);
+                trebleFilterRef.current.connect(analyserRef.current);
                 analyserRef.current.connect(audioContextRef.current.destination);
             } catch (error) {
                 console.error("Failed to setup audio context:", error);
@@ -482,12 +561,11 @@ function VisualizePlayer({
         // Gradually reduce the wave heights
         bandPeaksRef.current = bandPeaksRef.current.map(peak => peak * 0.7);
 
-        // Handle peak decay - always decay peaks when paused
+        // Handle peak decay
         const now = Date.now();
         peakHoldsRef.current = peakHoldsRef.current.map((peak, index) => {
-            // If hold time has passed, start gradual decay
             if (now - peakHoldTimesRef.current[index] > 1500) {
-                return peak * 0.95; // Gradual decay
+                return peak * 0.95;
             }
             return peak;
         });
@@ -500,7 +578,6 @@ function VisualizePlayer({
         if (maxPeak > 0.01 || maxHold > 0.01) {
             animationRef.current = requestAnimationFrame(fadeOutVisualization);
         } else {
-            // Reset to zero and stop animation
             bandPeaksRef.current = bands.map(() => 0);
             peakHoldsRef.current = bands.map(() => 0);
             peakHoldTimesRef.current = bands.map(() => 0);
@@ -540,7 +617,6 @@ function VisualizePlayer({
                 peakHoldsRef.current[index] = bandPeaksRef.current[index];
                 peakHoldTimesRef.current[index] = now;
             } else if (now - peakHoldTimesRef.current[index] > 1500) {
-                // Gradual decay after hold time
                 peakHoldsRef.current[index] *= 0.95;
             }
         });
@@ -552,7 +628,6 @@ function VisualizePlayer({
     const updateVU = () => {
         if (!vuContainerRef.current) return;
 
-        // Use the theme from the ref to ensure we have the latest theme
         const currentTheme = themes[themeRef.current] || themes.rainbow;
 
         let html = '';
@@ -595,7 +670,6 @@ function VisualizePlayer({
         setIsPlaying(false);
         setCurrentTime(0);
 
-        // Reset visualization
         bandPeaksRef.current = bands.map(() => 0);
         peakHoldsRef.current = bands.map(() => 0);
         peakHoldTimesRef.current = bands.map(() => 0);
@@ -635,30 +709,135 @@ function VisualizePlayer({
 
     const toggleLoop = () => {
         setIsLoop(!isLoop);
-    }
+    };
+
+    const handleEqChange = (band, value) => {
+        setEqBands(prev => ({
+            ...prev,
+            [band]: value
+        }));
+    };
+
+    const resetEqualizer = () => {
+        setEqBands({ bass: 0, mid: 0, treble: 0 });
+    };
 
     useEffect(() => {
         if ((((typeof controls === 'object' && Object.keys(controls).length === 0) || !controls) && !isPlaying) || autoPlay) {
-            togglePlay()
+            togglePlay();
         }
-    }, [controls])
+    }, [controls]);
+
+    const formatTime = (time) => {
+        if (isNaN(time)) return '0:00';
+        const minutes = Math.floor(time / 60);
+        const seconds = Math.floor(time % 60);
+        return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    };
 
     if (error && error.length > 0) {
         return (
-            error.map(e => (
-                <div className="text-red-500 text-sm bg-red-50 p-3 rounded mb-4 border border-red-300">
+            error.map((e, i) => (
+                <div key={i} className="text-red-500 text-sm bg-red-50 p-3 rounded mb-4 border border-red-300">
                     <strong>{e[0]}:</strong> {e[1]}
                 </div>
             ))
-        )
+        );
     }
 
     return (
-        <div className='rounded-xl overflow-hidden' style={{ backgroundColor: !(noControls || transparent) && (isDark ? '#606060ff' : 'white') }}>
+        <div ref={containerRef} className='rounded-xl overflow-hidden' style={{ backgroundColor: !(noControls || transparent) && (isDark ? '#606060ff' : 'white') }}>
             <div style={{ background: !(noControls || transparent) && currentTheme.bg }} className={!(noControls || transparent) && 'p-4'}>
                 {/* VU Meter */}
-                <div className={`${!(noControls || transparent) && (isDark ? 'bg-black/30' : 'bg-white/70')} rounded-lg ${!noControls && "mb-6"} ${!(noControls || transparent) && "p-4"} shadow-sm`}>
-                    <div className="flex justify-center items-end gap-1 h-64" ref={vuContainerRef}></div>
+                <div className='relative'>
+                    <div className={`${transparent && showEqualizer && 'opacity-40'} ${!(noControls || transparent) && (isDark ? 'bg-black/40' : 'bg-white/70')} rounded-lg ${!noControls && "mb-6"} ${!(noControls || transparent) && "p-4"} shadow-sm`}>
+                        <div className="flex justify-center items-end gap-1 h-64" ref={vuContainerRef}></div>
+                    </div>
+                    {showEqualizer && (
+                        <div className={`absolute inset-0 flex flex-col w-full justify-center z-10 ${!(noControls || transparent) && (isDark ? 'bg-black/50' : 'bg-white/80')} rounded-lg p-4 shadow-sm transition-all duration-300`}>
+                            <h3 className={`text-sm font-medium mb-4 ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>Equalizer</h3>
+
+                            <div className="space-y-4">
+                                {/* Bass Control */}
+                                <div>
+                                    <div className="flex justify-between mb-1">
+                                        <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Bass</span>
+                                        <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>{eqBands.bass} dB</span>
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>-20</span>
+                                        <input
+                                            type="range"
+                                            min="-20"
+                                            max="20"
+                                            value={eqBands.bass}
+                                            onChange={(e) => handleEqChange('bass', parseInt(e.target.value))}
+                                            className="flex-1 h-8 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+                                            style={{
+                                                background: `linear-gradient(to right, ${currentTheme.slider} ${(eqBands.bass + 20) / 40 * 100}%, ${currentTheme.slider + '30'} ${(eqBands.bass + 20) / 40 * 100}%)`
+                                            }}
+                                        />
+                                        <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>+20</span>
+                                    </div>
+                                </div>
+
+                                {/* Mid Control */}
+                                <div>
+                                    <div className="flex justify-between mb-1">
+                                        <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Mid</span>
+                                        <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>{eqBands.mid} dB</span>
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>-20</span>
+                                        <input
+                                            type="range"
+                                            min="-20"
+                                            max="20"
+                                            value={eqBands.mid}
+                                            onChange={(e) => handleEqChange('mid', parseInt(e.target.value))}
+                                            className="flex-1 h-8 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+                                            style={{
+                                                background: `linear-gradient(to right, ${currentTheme.slider} ${(eqBands.mid + 20) / 40 * 100}%, ${currentTheme.slider + '30'} ${(eqBands.mid + 20) / 40 * 100}%)`
+                                            }}
+                                        />
+                                        <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>+20</span>
+                                    </div>
+                                </div>
+
+                                {/* Treble Control */}
+                                <div>
+                                    <div className="flex justify-between mb-1">
+                                        <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Treble</span>
+                                        <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>{eqBands.treble} dB</span>
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>-20</span>
+                                        <input
+                                            type="range"
+                                            min="-20"
+                                            max="20"
+                                            value={eqBands.treble}
+                                            onChange={(e) => handleEqChange('treble', parseInt(e.target.value))}
+                                            className="flex-1 h-8 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+                                            style={{
+                                                background: `linear-gradient(to right, ${currentTheme.slider} ${(eqBands.treble + 20) / 40 * 100}%, ${currentTheme.slider + '30'} ${(eqBands.treble + 20) / 40 * 100}%)`
+                                            }}
+                                        />
+                                        <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>+20</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="flex justify-end mt-4">
+                                <button
+                                    onClick={resetEqualizer}
+                                    className={`px-3 py-1 rounded text-xs ${isDark ? 'bg-gray-700 text-gray-200 hover:bg-gray-600' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'} transition-all`}
+                                >
+                                    Reset
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 {/* Track Name */}
@@ -707,27 +886,20 @@ function VisualizePlayer({
                 )}
 
                 {/* Controls */}
-                <div className="flex flex-wrap items-center gap-3">
+                <div className={`flex flex-wrap items-center ${containerWidth < 330 ? 'gap-2' : 'gap-3'}`}>
                     {controls.play && (
                         <button
                             onClick={togglePlay}
                             disabled={!audio}
-                            className="px-4 py-2 md:w-24 rounded-full text-sm font-medium text-white disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all hover:opacity-90"
+                            className={`${containerWidth < 350 ? 'px-3 py-5' : 'px-4 py-2 md:w-24'} rounded-full text-sm font-medium text-white disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all hover:opacity-90`}
                             style={{ backgroundColor: currentTheme.button }}
                         >
                             <div className="relative w-4 flex items-center">
                                 <Pause size={16} className={`${!isPlaying ? 'scale-0 translate-y-10' : ''} transition-all absolute`} />
                                 <Play size={16} className={`${isPlaying ? 'scale-0 -translate-y-10' : ''} transition-all absolute`} />
                             </div>
-                            {isPlaying ? (
-                                <>
-                                    Pause
-                                </>
-                            ) : (
-                                <>
-                                    Play
-                                </>
-                            )}
+                            <span style={{ display: containerWidth < 350 ? 'none' : 'block' }}>{isPlaying ? 'Pause' : 'Play'}</span>
+
                         </button>
                     )}
 
@@ -735,10 +907,25 @@ function VisualizePlayer({
                         <button
                             onClick={stop}
                             disabled={!audio}
-                            className={`${isDark ? 'bg-gray-100 text-black' : 'bg-gray-700 text-white'} px-3 md:px-4 py-3 md:py-2 rounded-full text-sm font-medium ${isDark ? 'hover:bg-gray-300' : 'hover:bg-gray-800'} disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all`}
+                            className={`${isDark ? 'bg-gray-100 text-black' : 'bg-gray-700 text-white'} ${containerWidth < 600 ? 'px-3 py-3' : 'px-4 py-2'} rounded-full text-sm font-medium ${isDark ? 'hover:bg-gray-300' : 'hover:bg-gray-800'} disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all`}
                         >
                             <Square size={16} />
-                            <span className="hidden md:block">Stop</span>
+                            <span style={{ display: containerWidth < 600 ? 'none' : 'block' }}>Stop</span>
+                        </button>
+                    )}
+
+                    {controls.equalizer && (
+                        <button
+                            onClick={() => setShowEqualizer(!showEqualizer)}
+                            disabled={!audio}
+                            className={`${containerWidth < 600 ? 'px-3 py-3' : 'px-4 py-2'} rounded-full text-sm font-medium flex items-center gap-2 transition-all ${showEqualizer
+                                ? 'text-white'
+                                : 'bg-gray-100 text-gray-700 hover:bg-gray-300'
+                                } disabled:opacity-40 disabled:cursor-not-allowed`}
+                            style={showEqualizer ? { backgroundColor: currentTheme.button } : {}}
+                        >
+                            <Sliders size={16} />
+                            <span style={{ display: containerWidth < 600 ? 'none' : 'block' }}>EQ</span>
                         </button>
                     )}
 
@@ -746,14 +933,14 @@ function VisualizePlayer({
                         <button
                             onClick={toggleLoop}
                             disabled={!audio}
-                            className={`px-3 md:px-4 py-3 md:py-2 rounded-full text-sm font-medium flex items-center gap-2 transition-all ${isLoop
+                            className={`${containerWidth < 700 ? 'px-3 py-3' : 'px-4 py-2'} rounded-full text-sm font-medium flex items-center gap-2 transition-all ${isLoop
                                 ? 'text-white'
                                 : 'bg-gray-100 text-gray-700 hover:bg-gray-300'
                                 } disabled:opacity-40 disabled:cursor-not-allowed`}
                             style={isLoop ? { backgroundColor: currentTheme.button } : {}}
                         >
                             <Repeat size={16} className={`${isLoop ? 'rotate-180' : ''} transition-all`} />
-                            <span className="hidden md:block">Loop</span>
+                            <span style={{ display: containerWidth < 700 ? 'none' : 'block' }}>Loop</span>
                         </button>
                     )}
 
@@ -777,10 +964,11 @@ function VisualizePlayer({
                                 onChange={handleVolumeChange}
                                 className="hide-for-xs w-24 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
                                 style={{
-                                    background: `linear-gradient(to right, ${currentTheme.slider} ${volume}%, ${currentTheme.slider + '30'} ${volume}%)`
+                                    background: `linear-gradient(to right, ${currentTheme.slider} ${volume}%, ${currentTheme.slider + '30'} ${volume}%)`,
+                                    display: containerWidth < 460 ? 'none' : 'block'
                                 }}
                             />
-                            <span className={`hidden sm:block text-xs ${isDark ? 'text-gray-100' : 'text-gray-700'} font-mono w-10 text-right`}>{volume}%</span>
+                            <span style={{ display: containerWidth < 800 ? 'none' : 'block' }} className={`hidden sm:block text-xs ${isDark ? 'text-gray-100' : 'text-gray-700'} font-mono w-10 text-right`}>{volume}%</span>
                         </div>
                     )}
                 </div>
@@ -839,7 +1027,12 @@ function WaveAudioPlayer({
     background = '#2f1f3aff',
     autoPlay = false,
     thumbnail = null,
-    width
+    width,
+    equalizer = {
+        bass: 0,
+        mid: 0,
+        treble: 0
+    }
 }) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
@@ -849,9 +1042,19 @@ function WaveAudioPlayer({
     const [playbackRate, setPlaybackRate] = useState(1.0);
     const [waveformData, setWaveformData] = useState([]);
     const [error, setError] = useState(null);
+    const [showEqualizer, setShowEqualizer] = useState(false);
+    const [eqBands, setEqBands] = useState({
+        bass: equalizer.bass || 0,
+        mid: equalizer.mid || 0,
+        treble: equalizer.treble || 0
+    })
     const audioRef = useRef(null);
-
-    const mode = 'light'
+    const audioCtxRef = useRef(null);
+    const sourceRef = useRef(null);
+    const bassFilterRef = useRef(null);
+    const midFilterRef = useRef(null);
+    const trebleFilterRef = useRef(null);
+    const mode = 'light';
 
     // Generate random waveform data for visualization
     const generateWaveformData = () => {
@@ -868,7 +1071,7 @@ function WaveAudioPlayer({
         // Validate props
         if (!audioUrl) {
             //setError("No audio URL provided");
-            return
+            return;
         }
 
         if (!Array.isArray(gradient) || gradient.length < 2) {
@@ -893,7 +1096,7 @@ function WaveAudioPlayer({
         const handleEnded = () => setIsPlaying(false);
         const handleError = (e) => {
             setError(`Audio error: ${e.message || 'Failed to load audio'}`);
-        }
+        };
 
         audio.addEventListener('timeupdate', handleTimeUpdate);
         audio.addEventListener('loadedmetadata', handleLoadedMetadata);
@@ -905,13 +1108,44 @@ function WaveAudioPlayer({
             audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
             audio.removeEventListener('ended', handleEnded);
             audio.removeEventListener('error', handleError);
-        }
+        };
     }, [audioUrl, gradient, mode]);
 
     useEffect(() => {
         if (audioUrl && audioRef.current && autoPlay) {
             audioRef.current.play().catch(() => setIsPlaying(false));
             setIsPlaying(true);
+        }
+    }, [audioUrl]);
+
+    useEffect(() => {
+        if (!audioRef.current) return;
+
+        // Only create AudioContext if not already created
+        if (!audioCtxRef.current) {
+            audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
+            sourceRef.current = audioCtxRef.current.createMediaElementSource(audioRef.current);
+
+            // Filters
+            bassFilterRef.current = audioCtxRef.current.createBiquadFilter();
+            bassFilterRef.current.type = "lowshelf";
+            bassFilterRef.current.frequency.value = 200;
+
+            midFilterRef.current = audioCtxRef.current.createBiquadFilter();
+            midFilterRef.current.type = "peaking";
+            midFilterRef.current.frequency.value = 1000;
+            midFilterRef.current.Q.value = 1;
+
+            trebleFilterRef.current = audioCtxRef.current.createBiquadFilter();
+            trebleFilterRef.current.type = "highshelf";
+            trebleFilterRef.current.frequency.value = 3000;
+
+            // Connect
+            sourceRef.current
+                .connect(bassFilterRef.current)
+                .connect(midFilterRef.current)
+                .connect(trebleFilterRef.current)
+                .connect(audioCtxRef.current.destination);
         }
     }, [audioUrl]);
 
@@ -969,6 +1203,25 @@ function WaveAudioPlayer({
         }
     };
 
+    const handleEqChange = (band, value) => {
+        setEqBands(prev => ({ ...prev, [band]: value }));
+
+        if (band === "bass" && bassFilterRef.current)
+            bassFilterRef.current.gain.value = value;
+
+        if (band === "mid" && midFilterRef.current)
+            midFilterRef.current.gain.value = value;
+
+        if (band === "treble" && trebleFilterRef.current)
+            trebleFilterRef.current.gain.value = value;
+    };
+
+    const resetEqualizer = () => {
+        handleEqChange("bass", 0)
+        handleEqChange("mid", 0)
+        handleEqChange("treble", 0)
+    }
+
     const formatTime = (time) => {
         if (isNaN(time)) return '0:00';
         const minutes = Math.floor(time / 60);
@@ -996,7 +1249,7 @@ function WaveAudioPlayer({
     const secondaryTextColor = mode === 'dark' ? 'text-gray-500' : 'text-gray-400';
 
     return (
-        <div className="w-full max-w-lg" style={{ width: width + 'px' }}>
+        <div className="w-full max-w-lg relative" style={{ width: width + 'px' }}>
             <audio ref={audioRef} src={audioUrl} />
 
             <div className="rounded-2xl shadow-2xl">
@@ -1076,6 +1329,21 @@ function WaveAudioPlayer({
                                     display: (width && width < 400) && 'none'
                                 }}
                             />
+
+                            {/* Equalizer Button */}
+                            {(width && width < 400) && (
+                                <div className="flex items-center justify-end">
+                                    <button
+                                        onClick={() => setShowEqualizer(!showEqualizer)}
+                                        className="p-2 rounded-full transition-all"
+                                        style={{
+                                            background: `linear-gradient(135deg, ${gradient[0]}, ${gradient[1]})`
+                                        }}
+                                    >
+                                        <Sliders className="w-4 h-4 text-white" />
+                                    </button>
+                                </div>
+                            )}
                         </div>
 
                         {/* Play/Pause Button */}
@@ -1095,25 +1363,137 @@ function WaveAudioPlayer({
                             </button>
                         </div>
 
-                        {/* Speed Control */}
-                        <div className="flex items-center justify-end">
-                            <select
-                                value={playbackRate}
-                                style={{ background, color: gradient[0] }}
-                                onChange={handleSpeedChange}
-                                className={`py-1 px-2 rounded-lg text-sm ${textColor} ${mode === 'dark' ? 'bg-gray-800' : 'bg-gray-100'}`}
-                            >
-                                <option value="0.5">0.5x</option>
-                                <option value="0.75">0.75x</option>
-                                <option value="1">1x</option>
-                                <option value="1.25">1.25x</option>
-                                <option value="1.5">1.5x</option>
-                                <option value="2">2x</option>
-                            </select>
+                        <div className="flex items-center gap-3">
+                            {/* Speed Control */}
+                            <div className="flex items-center justify-end">
+                                <select
+                                    value={playbackRate}
+                                    style={{ background, color: gradient[0] }}
+                                    onChange={handleSpeedChange}
+                                    className={`py-1 px-2 rounded-lg text-sm ${textColor} ${mode === 'dark' ? 'bg-gray-800' : 'bg-gray-100'}`}
+                                >
+                                    <option value="0.5">0.5x</option>
+                                    <option value="0.75">0.75x</option>
+                                    <option value="1">1x</option>
+                                    <option value="1.25">1.25x</option>
+                                    <option value="1.5">1.5x</option>
+                                    <option value="2">2x</option>
+                                </select>
+                            </div>
+
+                            {/* Equalizer Button */}
+                            {!(width && width < 400) && (
+                                <div className="flex items-center justify-end">
+                                    <button
+                                        onClick={() => setShowEqualizer(!showEqualizer)}
+                                        className="p-2 rounded-full transition-all"
+                                        style={{
+                                            background: `linear-gradient(135deg, ${gradient[0]}, ${gradient[1]})`
+                                        }}
+                                    >
+                                        <Sliders className="w-4 h-4 text-white" />
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
             </div>
+
+            {/* Equalizer Overlay */}
+            {showEqualizer && (
+                <div className="absolute inset-0 bg-black bg-opacity-80 flex items-center justify-center z-10 rounded-2xl p-4">
+                    <div className={`max-w-xs w-full p-6 rounded-xl ${mode === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
+                        <h3 className={`text-lg font-medium mb-4 ${mode === 'dark' ? 'text-gray-200' : 'text-gray-700'}`}>Equalizer</h3>
+
+                        <div className="space-y-4">
+                            {/* Bass Control */}
+                            <div>
+                                <div className="flex justify-between mb-1">
+                                    <span className={`text-xs ${mode === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>Bass</span>
+                                    <span className={`text-xs ${mode === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>{eqBands.bass} dB</span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <span className={`text-xs ${mode === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>-20</span>
+                                    <input
+                                        type="range"
+                                        min="-20"
+                                        max="20"
+                                        value={eqBands.bass}
+                                        onChange={(e) => handleEqChange('bass', parseInt(e.target.value))}
+                                        className="flex-1 h-4 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+                                        style={{
+                                            background: `linear-gradient(to right, ${gradient[0]} ${(eqBands.bass + 20) / 40 * 100}%, ${gradient[1] + '30'} ${(eqBands.bass + 20) / 40 * 100}%)`
+                                        }}
+                                    />
+                                    <span className={`text-xs ${mode === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>+20</span>
+                                </div>
+                            </div>
+
+                            {/* Mid Control */}
+                            <div>
+                                <div className="flex justify-between mb-1">
+                                    <span className={`text-xs ${mode === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>Mid</span>
+                                    <span className={`text-xs ${mode === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>{eqBands.mid} dB</span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <span className={`text-xs ${mode === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>-20</span>
+                                    <input
+                                        type="range"
+                                        min="-20"
+                                        max="20"
+                                        value={eqBands.mid}
+                                        onChange={(e) => handleEqChange('mid', parseInt(e.target.value))}
+                                        className="flex-1 h-4 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+                                        style={{
+                                            background: `linear-gradient(to right, ${gradient[0]} ${(eqBands.mid + 20) / 40 * 100}%, ${gradient[1] + '30'} ${(eqBands.mid + 20) / 40 * 100}%)`
+                                        }}
+                                    />
+                                    <span className={`text-xs ${mode === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>+20</span>
+                                </div>
+                            </div>
+
+                            {/* Treble Control */}
+                            <div>
+                                <div className="flex justify-between mb-1">
+                                    <span className={`text-xs ${mode === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>Treble</span>
+                                    <span className={`text-xs ${mode === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>{eqBands.treble} dB</span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <span className={`text-xs ${mode === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>-20</span>
+                                    <input
+                                        type="range"
+                                        min="-20"
+                                        max="20"
+                                        value={eqBands.treble}
+                                        onChange={(e) => handleEqChange('treble', parseInt(e.target.value))}
+                                        className="flex-1 h-4 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+                                        style={{
+                                            background: `linear-gradient(to right, ${gradient[0]} ${(eqBands.treble + 20) / 40 * 100}%, ${gradient[1] + '30'} ${(eqBands.treble + 20) / 40 * 100}%)`
+                                        }}
+                                    />
+                                    <span className={`text-xs ${mode === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>+20</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex justify-between mt-6">
+                            <button
+                                onClick={resetEqualizer}
+                                className={`px-3 py-1 rounded text-xs ${mode === 'dark' ? 'bg-gray-700 text-gray-200 hover:bg-gray-600' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'} transition-all`}
+                            >
+                                Reset
+                            </button>
+                            <button
+                                onClick={() => setShowEqualizer(false)}
+                                className={`px-3 py-1 rounded text-xs ${mode === 'dark' ? 'bg-gray-700 text-gray-200 hover:bg-gray-600' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'} transition-all`}
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
@@ -1221,11 +1601,17 @@ function VideoPlayer({
         seekbar: true,
         volume: true,
         fullscreen: true,
-        videoName: true
+        videoName: true,
+        equalizer: true
     },
     mode = 'light',
     transparent = false,
-    autoPlay = false
+    autoPlay = false,
+    equalizer = {
+        bass: 0,
+        mid: 0,
+        treble: 0
+    }
 }) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
@@ -1235,15 +1621,24 @@ function VideoPlayer({
     const [isSeeking, setIsSeeking] = useState(false);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [error, setError] = useState([]);
+    const [showEqualizer, setShowEqualizer] = useState(false);
+    const [eqBands, setEqBands] = useState({
+        bass: equalizer.bass || 0,
+        mid: equalizer.mid || 0,
+        treble: equalizer.treble || 0
+    });
+    const [containerWidth, setContainerWidth] = useState(0);
 
     const videoRef = useRef(null);
     const containerRef = useRef(null);
     const audioContextRef = useRef(null);
     const analyserRef = useRef(null);
     const sourceRef = useRef(null);
+    const bassFilterRef = useRef(null);
+    const midFilterRef = useRef(null);
+    const trebleFilterRef = useRef(null);
     const animationRef = useRef(null);
     const vuContainerRef = useRef(null);
-    const splitterRef = useRef(null);
 
     // Audio visualization data for L and R channels
     const leftPeakRef = useRef(0);
@@ -1255,6 +1650,22 @@ function VideoPlayer({
 
     const isDark = mode === 'dark';
     const noControls = (typeof controls === 'object' && Object.keys(controls).length === 0);
+
+    // Track container width for responsive UI
+    useEffect(() => {
+        const el = containerRef.current;
+        if (!el) return;
+
+        const observer = new ResizeObserver(entries => {
+            for (let entry of entries) {
+                setContainerWidth(entry.contentRect.width);
+            }
+        });
+
+        observer.observe(el);
+
+        return () => observer.disconnect();
+    }, []);
 
     // Prop validation
     useEffect(() => {
@@ -1362,6 +1773,33 @@ function VideoPlayer({
                 analyserRef.current = null;
             }
 
+            if (bassFilterRef.current) {
+                try {
+                    bassFilterRef.current.disconnect();
+                } catch (e) {
+                    console.warn("Bass filter disconnect error:", e);
+                }
+                bassFilterRef.current = null;
+            }
+
+            if (midFilterRef.current) {
+                try {
+                    midFilterRef.current.disconnect();
+                } catch (e) {
+                    console.warn("Mid filter disconnect error:", e);
+                }
+                midFilterRef.current = null;
+            }
+
+            if (trebleFilterRef.current) {
+                try {
+                    trebleFilterRef.current.disconnect();
+                } catch (e) {
+                    console.warn("Treble filter disconnect error:", e);
+                }
+                trebleFilterRef.current = null;
+            }
+
             if (audioContextRef.current) {
                 audioContextRef.current.close().catch(e => console.warn("AudioContext close error:", e));
                 audioContextRef.current = null;
@@ -1406,6 +1844,21 @@ function VideoPlayer({
         }
     }, [volume, isMuted]);
 
+    // Update equalizer bands
+    useEffect(() => {
+        if (audioContextRef.current) {
+            if (bassFilterRef.current) {
+                bassFilterRef.current.gain.value = eqBands.bass;
+            }
+            if (midFilterRef.current) {
+                midFilterRef.current.gain.value = eqBands.mid;
+            }
+            if (trebleFilterRef.current) {
+                trebleFilterRef.current.gain.value = eqBands.treble;
+            }
+        }
+    }, [eqBands]);
+
     // Start/stop visualization
     useEffect(() => {
         if (isPlaying && audioVisual && !animationRef.current) {
@@ -1433,15 +1886,40 @@ function VideoPlayer({
             try {
                 const AudioContext = window.AudioContext || window.webkitAudioContext;
                 audioContextRef.current = new AudioContext();
+                
+                // Create filters
+                bassFilterRef.current = audioContextRef.current.createBiquadFilter();
+                bassFilterRef.current.type = 'lowshelf';
+                bassFilterRef.current.frequency.value = 320;
+                bassFilterRef.current.gain.value = eqBands.bass;
+
+                midFilterRef.current = audioContextRef.current.createBiquadFilter();
+                midFilterRef.current.type = 'peaking';
+                midFilterRef.current.frequency.value = 1000;
+                midFilterRef.current.Q.value = 0.5;
+                midFilterRef.current.gain.value = eqBands.mid;
+
+                trebleFilterRef.current = audioContextRef.current.createBiquadFilter();
+                trebleFilterRef.current.type = 'highshelf';
+                trebleFilterRef.current.frequency.value = 3200;
+                trebleFilterRef.current.gain.value = eqBands.treble;
+
+                // Create analyser for visualization
                 analyserRef.current = audioContextRef.current.createAnalyser();
                 analyserRef.current.fftSize = 2048;
                 analyserRef.current.smoothingTimeConstant = 0.8;
 
-                splitterRef.current = audioContextRef.current.createChannelSplitter(2);
-
+                // Create source
                 sourceRef.current = audioContextRef.current.createMediaElementSource(videoRef.current);
-                sourceRef.current.connect(splitterRef.current);
-                sourceRef.current.connect(audioContextRef.current.destination);
+                
+                // Connect the filters in series and then to the destination
+                sourceRef.current.connect(bassFilterRef.current);
+                bassFilterRef.current.connect(midFilterRef.current);
+                midFilterRef.current.connect(trebleFilterRef.current);
+                
+                // Connect the last filter to both the analyser (for visualization) and the destination
+                trebleFilterRef.current.connect(analyserRef.current);
+                trebleFilterRef.current.connect(audioContextRef.current.destination);
             } catch (error) {
                 console.error("Failed to setup audio context:", error);
             }
@@ -1480,65 +1958,42 @@ function VideoPlayer({
     };
 
     const analyze = () => {
-        if (!analyserRef.current || !splitterRef.current || !isPlaying) return;
+        if (!analyserRef.current || !isPlaying) return;
 
         const bufferLength = analyserRef.current.frequencyBinCount;
-        const leftData = new Uint8Array(bufferLength);
-        const rightData = new Uint8Array(bufferLength);
+        const dataArray = new Uint8Array(bufferLength);
+        analyserRef.current.getByteFrequencyData(dataArray);
 
-        // Create analysers for each channel
-        const leftAnalyser = audioContextRef.current.createAnalyser();
-        const rightAnalyser = audioContextRef.current.createAnalyser();
-        leftAnalyser.fftSize = 2048;
-        rightAnalyser.fftSize = 2048;
-        leftAnalyser.smoothingTimeConstant = 0.8;
-        rightAnalyser.smoothingTimeConstant = 0.8;
+        // Calculate average levels for the entire frequency range
+        let sum = 0;
+        for (let i = 0; i < bufferLength; i++) {
+            sum += dataArray[i];
+        }
 
-        splitterRef.current.connect(leftAnalyser, 0);
-        splitterRef.current.connect(rightAnalyser, 1);
+        let avg = sum / bufferLength / 255;
+        avg = Math.pow(avg, 0.5);
 
-        const analyzeFrame = () => {
-            if (!isPlaying) return;
+        // Update both left and right peaks with the same value (mono)
+        leftPeakRef.current = leftPeakRef.current * 0.7 + avg * 0.3;
+        rightPeakRef.current = rightPeakRef.current * 0.7 + avg * 0.3;
 
-            leftAnalyser.getByteFrequencyData(leftData);
-            rightAnalyser.getByteFrequencyData(rightData);
+        const now = Date.now();
+        if (leftPeakRef.current > leftHoldRef.current) {
+            leftHoldRef.current = leftPeakRef.current;
+            leftHoldTimeRef.current = now;
+        } else if (now - leftHoldTimeRef.current > 1500) {
+            leftHoldRef.current *= 0.95;
+        }
 
-            // Calculate average levels
-            let leftSum = 0, rightSum = 0;
-            for (let i = 0; i < bufferLength; i++) {
-                leftSum += leftData[i];
-                rightSum += rightData[i];
-            }
+        if (rightPeakRef.current > rightHoldRef.current) {
+            rightHoldRef.current = rightPeakRef.current;
+            rightHoldTimeRef.current = now;
+        } else if (now - rightHoldTimeRef.current > 1500) {
+            rightHoldRef.current *= 0.95;
+        }
 
-            let leftAvg = leftSum / bufferLength / 255;
-            let rightAvg = rightSum / bufferLength / 255;
-
-            leftAvg = Math.pow(leftAvg, 0.5);
-            rightAvg = Math.pow(rightAvg, 0.5);
-
-            leftPeakRef.current = leftPeakRef.current * 0.7 + leftAvg * 0.3;
-            rightPeakRef.current = rightPeakRef.current * 0.7 + rightAvg * 0.3;
-
-            const now = Date.now();
-            if (leftPeakRef.current > leftHoldRef.current) {
-                leftHoldRef.current = leftPeakRef.current;
-                leftHoldTimeRef.current = now;
-            } else if (now - leftHoldTimeRef.current > 1500) {
-                leftHoldRef.current *= 0.95;
-            }
-
-            if (rightPeakRef.current > rightHoldRef.current) {
-                rightHoldRef.current = rightPeakRef.current;
-                rightHoldTimeRef.current = now;
-            } else if (now - rightHoldTimeRef.current > 1500) {
-                rightHoldRef.current *= 0.95;
-            }
-
-            updateVU();
-            animationRef.current = requestAnimationFrame(analyzeFrame);
-        };
-
-        analyzeFrame();
+        updateVU();
+        animationRef.current = requestAnimationFrame(analyze);
     };
 
     const updateVU = () => {
@@ -1592,8 +2047,8 @@ function VideoPlayer({
                         <div class="text-xs text-white opacity-70 text-center mb-1">R</div>
                         <div class="flex-1 relative flex flex-col justify-end bg-black/30 rounded-lg overflow-hidden">
                             <div class="rounded-t transition-all duration-75" style="height: ${rightHeight}%; background: ${color};">
-                                ${rightHoldRef.current > 0.1 ? `<div class="absolute w-full h-1 transition-all duration-100" style="top: ${rightPeakPos}%; background: ${peakColor};"></div>` : ''}
-                            </div>
+                                ${rightHoldRef.current > 0.1 ? `<div class="absolute w-full h-1 transition-all duration-100" style="top: ${rightPeakPos}%; background: ${peakColor};"></div>` : ''
+                            }
                         </div>
                     </div>
                 </div>
@@ -1665,6 +2120,30 @@ function VideoPlayer({
         }
     };
 
+    const handleEqChange = (band, value) => {
+        setEqBands(prev => ({
+            ...prev,
+            [band]: value
+        }));
+        
+        // Apply the change immediately if the audio context is already set up
+        if (audioContextRef.current) {
+            if (band === "bass" && bassFilterRef.current) {
+                bassFilterRef.current.gain.value = value;
+            }
+            if (band === "mid" && midFilterRef.current) {
+                midFilterRef.current.gain.value = value;
+            }
+            if (band === "treble" && trebleFilterRef.current) {
+                trebleFilterRef.current.gain.value = value;
+            }
+        }
+    };
+
+    const resetEqualizer = () => {
+        setEqBands({ bass: 0, mid: 0, treble: 0 });
+    };
+
     const formatTime = (time) => {
         if (isNaN(time)) return '0:00';
         const minutes = Math.floor(time / 60);
@@ -1717,7 +2196,7 @@ function VideoPlayer({
                         )}
 
                         {/* Video Element */}
-                        <div className="flex-1 bg-black rounded-lg overflow-hidden">
+                        <div className="flex-1 bg-black rounded-lg overflow-hidden relative">
                             <video
                                 ref={videoRef}
                                 className="w-full h-full object-contain"
@@ -1726,6 +2205,99 @@ function VideoPlayer({
                                 {video && <source src={video} />}
                                 Your browser does not support the video tag.
                             </video>
+
+                            {/* Equalizer Overlay */}
+                            {showEqualizer && (
+                                <div className={`absolute inset-0 flex flex-col w-full justify-center z-10 ${isDark ? 'bg-black/80' : 'bg-white/80'} rounded-lg p-4 shadow-sm transition-all duration-300`}>
+                                    <h3 className={`text-sm font-medium mb-4 ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>Equalizer</h3>
+
+                                    <div className="space-y-4">
+                                        {/* Bass Control */}
+                                        <div>
+                                            <div className="flex justify-between mb-1">
+                                                <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Bass</span>
+                                                <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>{eqBands.bass} dB</span>
+                                            </div>
+                                            <div className="flex items-center gap-3">
+                                                <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>-20</span>
+                                                <input
+                                                    type="range"
+                                                    min="-20"
+                                                    max="20"
+                                                    value={eqBands.bass}
+                                                    onChange={(e) => handleEqChange('bass', parseInt(e.target.value))}
+                                                    className="flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+                                                    style={{
+                                                        background: `linear-gradient(to right, #3b82f6 ${(eqBands.bass + 20) / 40 * 100}%, #e5e7eb ${(eqBands.bass + 20) / 40 * 100}%)`
+                                                    }}
+                                                />
+                                                <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>+20</span>
+                                            </div>
+                                        </div>
+
+                                        {/* Mid Control */}
+                                        <div>
+                                            <div className="flex justify-between mb-1">
+                                                <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Mid</span>
+                                                <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>{eqBands.mid} dB</span>
+                                            </div>
+                                            <div className="flex items-center gap-3">
+                                                <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>-20</span>
+                                                <input
+                                                    type="range"
+                                                    min="-20"
+                                                    max="20"
+                                                    value={eqBands.mid}
+                                                    onChange={(e) => handleEqChange('mid', parseInt(e.target.value))}
+                                                    className="flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+                                                    style={{
+                                                        background: `linear-gradient(to right, #3b82f6 ${(eqBands.mid + 20) / 40 * 100}%, #e5e7eb ${(eqBands.mid + 20) / 40 * 100}%)`
+                                                    }}
+                                                />
+                                                <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>+20</span>
+                                            </div>
+                                        </div>
+
+                                        {/* Treble Control */}
+                                        <div>
+                                            <div className="flex justify-between mb-1">
+                                                <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Treble</span>
+                                                <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>{eqBands.treble} dB</span>
+                                            </div>
+                                            <div className="flex items-center gap-3">
+                                                <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>-20</span>
+                                                <input
+                                                    type="range"
+                                                    min="-20"
+                                                    max="20"
+                                                    value={eqBands.treble}
+                                                    onChange={(e) => handleEqChange('treble', parseInt(e.target.value))}
+                                                    className="flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+                                                    style={{
+                                                        background: `linear-gradient(to right, #3b82f6 ${(eqBands.treble + 20) / 40 * 100}%, #e5e7eb ${(eqBands.treble + 20) / 40 * 100}%)`
+                                                    }}
+                                                />
+                                                <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>+20</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex justify-end mt-4">
+                                        <button
+                                            onClick={resetEqualizer}
+                                            className={`px-3 py-1 rounded text-xs ${isDark ? 'bg-gray-700 text-gray-200 hover:bg-gray-600' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'} transition-all`}
+                                        >
+                                            Reset
+                                        </button>
+                                        <button
+                                            onClick={() => setShowEqualizer(false)}
+                                            className={`ml-2 px-3 py-1 rounded text-xs ${isDark ? 'bg-gray-700 text-gray-200 hover:bg-gray-600' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'} transition-all`}
+                                        >
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         {/* VU Meter - Right */}
@@ -1774,10 +2346,13 @@ function VideoPlayer({
                         <button
                             onClick={togglePlay}
                             disabled={!video}
-                            className="px-4 py-2 rounded-full text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all"
+                            className={`${!(containerWidth > 400) ? 'px-3 py-5' : ' px-4 py-2'} rounded-full text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all`}
                         >
-                            {isPlaying ? <Pause size={16} /> : <Play size={16} />}
-                            {isPlaying ? 'Pause' : 'Play'}
+                            <div className="relative w-4 flex items-center">
+                                <Pause size={16} className={`${!isPlaying ? 'scale-0 translate-y-10' : ''} transition-all absolute`} />
+                                <Play size={16} className={`${isPlaying ? 'scale-0 -translate-y-10' : ''} transition-all absolute`} />
+                            </div>
+                            {containerWidth > 400 && (isPlaying ? 'Pause' : 'Play')}
                         </button>
                     )}
 
@@ -1785,25 +2360,39 @@ function VideoPlayer({
                         <button
                             onClick={stop}
                             disabled={!video}
-                            className={`${isDark ? 'bg-gray-100 text-black hover:bg-gray-300' : 'bg-gray-700 text-white hover:bg-gray-800'} px-4 py-2 rounded-full text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all`}
+                            className={`${isDark ? 'bg-gray-100 text-black hover:bg-gray-300' : 'bg-gray-700 text-white hover:bg-gray-800'} px-3 py-3 rounded-full text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all`}
                         >
                             <Square size={16} />
-                            Stop
                         </button>
                     )}
 
                     {controls.fullscreen && (
                         <button
                             onClick={toggleFullscreen}
-                            className={`${isDark ? 'bg-gray-100 text-black hover:bg-gray-300' : 'bg-gray-700 text-white hover:bg-gray-800'} px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 transition-all`}
+                            className={`${containerWidth < 800 ? 'px-3 py-3' : 'px-4 py-2'} rounded-full text-sm font-medium flex items-center gap-2 transition-all ${isDark ? 'bg-gray-100 text-black hover:bg-gray-300' : 'bg-gray-700 text-white hover:bg-gray-800'}`}
                         >
                             {isFullscreen ? <Minimize size={16} /> : <Maximize size={16} />}
-                            {isFullscreen ? 'Exit' : 'Full'}
+                            <span style={{ display: containerWidth < 800 ? 'none' : 'block' }}>{isFullscreen ? 'Exit' : 'Full'}</span>
+                        </button>
+                    )}
+
+                    {controls.equalizer && (
+                        <button
+                            onClick={() => setShowEqualizer(!showEqualizer)}
+                            disabled={!video}
+                            className={`${containerWidth < 700 ? 'px-3 py-3' : 'px-4 py-2'} rounded-full text-sm font-medium flex items-center gap-2 transition-all ${showEqualizer
+                                ? 'text-white'
+                                : 'bg-gray-100 text-gray-700 hover:bg-gray-300'
+                                } disabled:opacity-40 disabled:cursor-not-allowed`}
+                            style={showEqualizer ? { backgroundColor: '#3b82f6' } : {}}
+                        >
+                            <Sliders size={16} />
+                            <span style={{ display: containerWidth < 700 ? 'none' : 'block' }}>EQ</span>
                         </button>
                     )}
 
                     {controls.volume && (
-                        <div className="flex items-center gap-3 ml-auto">
+                        <div className="flex items-center gap-1 md:gap-3 ml-auto">
                             <button
                                 onClick={toggleMute}
                                 className="p-2 rounded-lg hover:bg-gray-100 transition-all"
@@ -1820,12 +2409,13 @@ function VideoPlayer({
                                 max="100"
                                 value={volume}
                                 onChange={handleVolumeChange}
-                                className="w-24 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                                className="hide-for-xs w-24 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
                                 style={{
-                                    background: `linear-gradient(to right, #3b82f6 ${volume}%, #e5e7eb ${volume}%)`
+                                    background: `linear-gradient(to right, #3b82f6 ${volume}%, #e5e7eb ${volume}%)`,
+                                    display: containerWidth < 460 ? 'none' : 'block'
                                 }}
                             />
-                            <span className={`text-xs ${isDark ? 'text-gray-100' : 'text-gray-700'} font-mono w-10 text-right`}>{volume}%</span>
+                            <span style={{ display: containerWidth < 800 ? 'none' : 'block' }} className={`text-xs ${isDark ? 'text-gray-100' : 'text-gray-700'} font-mono w-10 text-right`}>{volume}%</span>
                         </div>
                     )}
                 </div>
@@ -1851,6 +2441,14 @@ function VideoPlayer({
                         cursor: pointer;
                         border: 2px solid white;
                         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+                    }
+                    .hide-for-xs {
+                        display: flex;
+                    }
+                    @media (max-width: 480px) {
+                        .hide-for-xs {
+                            display: none;
+                        }
                     }
                 `}</style>
             </div>

@@ -8,13 +8,14 @@ function VisualizePlayerDocs() {
     const [audioFile, setAudioFile] = useState(null);
     const [copiedCode, setCopiedCode] = useState(null);
     const [expandedSection, setExpandedSection] = useState('customize');
-    
+
     // Customization states
-    const [vizTheme, setVizTheme] = useState('rainbow');
+    const [vizTheme, setVizTheme] = useState('purple');
     const [vizMode, setVizMode] = useState('light');
     const [vizVolume, setVizVolume] = useState(70);
     const [vizTransparent, setVizTransparent] = useState(false);
     const [vizShowTrackName, setVizShowTrackName] = useState(true);
+    const [vizShowEqName, setVizShowEqName] = useState(true);
     const [vizShowSeekbar, setVizShowSeekbar] = useState(true);
     const [vizShowVolume, setVizShowVolume] = useState(true);
     const [vizShowLoop, setVizShowLoop] = useState(true);
@@ -23,7 +24,12 @@ function VisualizePlayerDocs() {
     const [vizThumbnail, setVizThumbnail] = useState('https://cdn-icons-png.flaticon.com/512/3845/3845874.png');
     const [vizAutoPlay, setVizAutoPlay] = useState(false);
     const [vizOnlyVisualization, setVizOnlyVisualization] = useState(false);
-    
+
+    // Equalizer states
+    const [vizEqBass, setVizEqBass] = useState(6);
+    const [vizEqMid, setVizEqMid] = useState(-5);
+    const [vizEqTreble, setVizEqTreble] = useState(10);
+
     // Custom theme state
     const [customTheme, setCustomTheme] = useState({
         name: 'Custom',
@@ -34,7 +40,7 @@ function VisualizePlayerDocs() {
         buttonHover: '#0284c7',
         slider: '#0ea5e9'
     });
-    
+
     const fileInputRef = useRef(null);
 
     const handleAudioFileChange = (e) => {
@@ -76,7 +82,8 @@ function VisualizePlayerDocs() {
         seekbar: ${vizShowSeekbar},
         volume: ${vizShowVolume},
         loop: ${vizShowLoop},
-        trackName: ${vizShowTrackName}
+        trackName: ${vizShowTrackName},
+        equalizer: ${vizShowEqName}
     }}
 />`;
         } else if (activeExample === 'custom') {
@@ -90,6 +97,11 @@ function VisualizePlayerDocs() {
     transparent={${vizTransparent}}
     thumbnail="${vizThumbnail}"
     autoPlay={${vizAutoPlay}}
+    equalizer={{
+        bass: ${vizEqBass},
+        mid: ${vizEqMid},
+        treble: ${vizEqTreble}
+    }}
 />`;
         } else if (activeExample === 'bands') {
             return `<VisualizePlayer
@@ -125,11 +137,21 @@ function VisualizePlayerDocs() {
     mode="${vizMode}"
     controls={{}}
 />`;
+        } else if (activeExample === 'equalizer') {
+            return `<VisualizePlayer
+    audio="${audioFile || 'path/to/audio.mp3'}"
+    name="Track Name"
+    equalizer={{
+        bass: ${vizEqBass},
+        mid: ${vizEqMid},
+        treble: ${vizEqTreble}
+    }}
+/>`;
         }
         return '';
     };
 
-    const examples = ['basic', 'themed', 'controls', 'custom', 'bands', 'customTheme', 'onlyVisualization'];
+    const examples = ['basic', 'themed', 'controls', 'custom', 'bands', 'customTheme', 'onlyVisualization', 'equalizer'];
 
     const exampleTitles = {
         basic: 'Basic Usage',
@@ -138,7 +160,8 @@ function VisualizePlayerDocs() {
         custom: 'Advanced Configuration',
         bands: 'Custom Frequency Bands',
         customTheme: 'Custom Theme Object',
-        onlyVisualization: 'Only Visualization'
+        onlyVisualization: 'Only Visualization',
+        equalizer: 'Equalizer Settings'
     };
 
     const exampleDescriptions = {
@@ -148,7 +171,8 @@ function VisualizePlayerDocs() {
         custom: 'Advanced configuration with all parameters',
         bands: 'Define custom frequency bands for visualization',
         customTheme: 'Create a completely custom theme with your own colors',
-        onlyVisualization: 'Display only the frequency visualization without any controls'
+        onlyVisualization: 'Display only the frequency visualization without any controls',
+        equalizer: 'Configure initial equalizer settings for bass, mid, and treble'
     };
 
     const propDocs = [
@@ -162,7 +186,8 @@ function VisualizePlayerDocs() {
         { prop: 'transparent', type: 'boolean', default: 'false', description: 'Remove background' },
         { prop: 'autoPlay', type: 'boolean', default: 'false', description: 'Start playing automatically' },
         { prop: 'controls', type: 'object', default: '{...}', description: 'Configure which controls to show. Empty object removes all controls.' },
-        { prop: 'bands', type: 'array', default: 'null', description: 'Custom frequency bands array' }
+        { prop: 'bands', type: 'array', default: 'null', description: 'Custom frequency bands array' },
+        { prop: 'equalizer', type: 'object', default: '{ bass: 0, mid: 0, treble: 0 }', required: false, description: 'Initial equalizer settings for bass, mid, and treble (-20 to +20)' }
     ];
 
     const features = [
@@ -177,7 +202,8 @@ function VisualizePlayerDocs() {
         'Volume control with mute toggle',
         'Seek bar with time display',
         'Loop playback option',
-        'Visualization-only mode'
+        'Visualization-only mode',
+        '3-band equalizer with bass, mid, and treble controls'
     ];
 
     return (
@@ -186,7 +212,7 @@ function VisualizePlayerDocs() {
             <div className="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-lg p-6 border border-purple-100">
                 <h2 className="text-2xl font-bold text-gray-800 mb-3">VisualizePlayer</h2>
                 <p className="text-gray-700 mb-4">
-                    A feature-rich audio player with multi-band frequency visualization, customizable themes, and comprehensive controls.
+                    A feature-rich audio player with multi-band frequency visualization, customizable themes, comprehensive controls, and a 3-band equalizer.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     {features.map((feature, idx) => (
@@ -209,11 +235,10 @@ function VisualizePlayerDocs() {
                         <button
                             key={key}
                             onClick={() => setActiveExample(key)}
-                            className={`px-4 py-3 rounded-lg font-medium transition-all ${
-                                activeExample === key
-                                    ? 'bg-purple-600 text-white shadow-lg'
-                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                            }`}
+                            className={`px-4 py-3 rounded-lg font-medium transition-all ${activeExample === key
+                                ? 'bg-purple-600 text-white shadow-lg'
+                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                }`}
                         >
                             {exampleTitles[key]}
                         </button>
@@ -277,13 +302,13 @@ function VisualizePlayerDocs() {
                         <ChevronDown className="text-gray-600" />
                     )}
                 </button>
-                
+
                 {expandedSection === 'customize' && (
                     <div className="p-6 bg-gradient-to-br from-purple-50 to-pink-50 border-t">
                         <div className="grid md:grid-cols-2 gap-6">
                             <div className="space-y-4">
                                 <h4 className="font-semibold text-gray-800">Settings</h4>
-                                
+
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Theme Type</label>
                                     <div className="flex gap-2">
@@ -301,7 +326,7 @@ function VisualizePlayerDocs() {
                                         </button>
                                     </div>
                                 </div>
-                                
+
                                 {vizTheme !== 'custom' ? (
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 mb-2">Theme</label>
@@ -322,7 +347,7 @@ function VisualizePlayerDocs() {
                                             <input
                                                 type="text"
                                                 value={customTheme.bg}
-                                                onChange={(e) => setCustomTheme({...customTheme, bg: e.target.value})}
+                                                onChange={(e) => setCustomTheme({ ...customTheme, bg: e.target.value })}
                                                 className="w-full px-4 py-2 border rounded-lg"
                                             />
                                         </div>
@@ -331,7 +356,7 @@ function VisualizePlayerDocs() {
                                             <input
                                                 type="text"
                                                 value={customTheme.bars.join(', ')}
-                                                onChange={(e) => setCustomTheme({...customTheme, bars: e.target.value.split(',').map(c => c.trim())})}
+                                                onChange={(e) => setCustomTheme({ ...customTheme, bars: e.target.value.split(',').map(c => c.trim()) })}
                                                 className="w-full px-4 py-2 border rounded-lg"
                                             />
                                         </div>
@@ -340,7 +365,7 @@ function VisualizePlayerDocs() {
                                             <input
                                                 type="color"
                                                 value={customTheme.peak}
-                                                onChange={(e) => setCustomTheme({...customTheme, peak: e.target.value})}
+                                                onChange={(e) => setCustomTheme({ ...customTheme, peak: e.target.value })}
                                                 className="w-full h-12 rounded-lg"
                                             />
                                         </div>
@@ -349,13 +374,13 @@ function VisualizePlayerDocs() {
                                             <input
                                                 type="color"
                                                 value={customTheme.button}
-                                                onChange={(e) => setCustomTheme({...customTheme, button: e.target.value})}
+                                                onChange={(e) => setCustomTheme({ ...customTheme, button: e.target.value })}
                                                 className="w-full h-12 rounded-lg"
                                             />
                                         </div>
                                     </div>
                                 )}
-                                
+
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Mode</label>
                                     <div className="flex gap-2">
@@ -373,7 +398,7 @@ function VisualizePlayerDocs() {
                                         </button>
                                     </div>
                                 </div>
-                                
+
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
                                         Volume: {vizVolume}%
@@ -387,7 +412,7 @@ function VisualizePlayerDocs() {
                                         className="w-full"
                                     />
                                 </div>
-                                
+
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Author</label>
                                     <input
@@ -397,7 +422,7 @@ function VisualizePlayerDocs() {
                                         className="w-full px-4 py-2 border rounded-lg"
                                     />
                                 </div>
-                                
+
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Thumbnail URL</label>
                                     <input
@@ -407,7 +432,66 @@ function VisualizePlayerDocs() {
                                         className="w-full px-4 py-2 border rounded-lg"
                                     />
                                 </div>
-                                
+
+                                {/* Equalizer Settings */}
+                                <div className="space-y-3">
+                                    <h4 className="font-medium text-gray-800">Default Equalizer Settings</h4>
+
+                                    <div>
+                                        <div className="flex justify-between mb-1">
+                                            <span className="text-sm text-gray-700">Bass: {vizEqBass} dB</span>
+                                        </div>
+                                        <div className="flex items-center gap-3">
+                                            <span className="text-xs text-gray-500">-20</span>
+                                            <input
+                                                type="range"
+                                                min="-20"
+                                                max="20"
+                                                value={vizEqBass}
+                                                onChange={(e) => setVizEqBass(parseInt(e.target.value))}
+                                                className="flex-1"
+                                            />
+                                            <span className="text-xs text-gray-500">+20</span>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div className="flex justify-between mb-1">
+                                            <span className="text-sm text-gray-700">Mid: {vizEqMid} dB</span>
+                                        </div>
+                                        <div className="flex items-center gap-3">
+                                            <span className="text-xs text-gray-500">-20</span>
+                                            <input
+                                                type="range"
+                                                min="-20"
+                                                max="20"
+                                                value={vizEqMid}
+                                                onChange={(e) => setVizEqMid(parseInt(e.target.value))}
+                                                className="flex-1"
+                                            />
+                                            <span className="text-xs text-gray-500">+20</span>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div className="flex justify-between mb-1">
+                                            <span className="text-sm text-gray-700">Treble: {vizEqTreble} dB</span>
+                                        </div>
+                                        <div className="flex items-center gap-3">
+                                            <span className="text-xs text-gray-500">-20</span>
+                                            <input
+                                                type="range"
+                                                min="-20"
+                                                max="20"
+                                                value={vizEqTreble}
+                                                onChange={(e) => setVizEqTreble(parseInt(e.target.value))}
+                                                className="flex-1"
+                                            />
+                                            <span className="text-xs text-gray-500">+20</span>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div className="space-y-2">
                                     <label className="flex items-center gap-2">
                                         <input
@@ -418,12 +502,13 @@ function VisualizePlayerDocs() {
                                         />
                                         <span className="text-sm">Only Visualization (no controls)</span>
                                     </label>
-                                    
+
                                     {!vizOnlyVisualization && (
                                         <>
                                             {[
                                                 ['vizTransparent', vizTransparent, setVizTransparent, 'Transparent'],
                                                 ['vizShowTrackName', vizShowTrackName, setVizShowTrackName, 'Show Track Name'],
+                                                ['vizShowEqName', vizShowEqName, setVizShowEqName, 'Show Equalizer Name'],
                                                 ['vizShowSeekbar', vizShowSeekbar, setVizShowSeekbar, 'Show Seekbar'],
                                                 ['vizShowVolume', vizShowVolume, setVizShowVolume, 'Show Volume'],
                                                 ['vizShowLoop', vizShowLoop, setVizShowLoop, 'Show Loop'],
@@ -463,12 +548,18 @@ function VisualizePlayerDocs() {
                                         seekbar: vizShowSeekbar,
                                         volume: vizShowVolume,
                                         loop: vizShowLoop,
-                                        trackName: vizShowTrackName
+                                        trackName: vizShowTrackName,
+                                        equalizer: vizShowEqName
+                                    }}
+                                    equalizer={{
+                                        bass: vizEqBass,
+                                        mid: vizEqMid,
+                                        treble: vizEqTreble
                                     }}
                                 />
                             </div>
                         </div>
-                        
+
                         {/* File Upload */}
                         <div className="mt-6 pt-6 border-t">
                             <input
@@ -503,7 +594,7 @@ function VisualizePlayerDocs() {
                         <ChevronDown className="text-gray-600" />
                     )}
                 </button>
-                
+
                 {expandedSection === 'props' && (
                     <div className="p-6 bg-gray-50 border-t overflow-x-auto">
                         <table className="w-full text-sm">
@@ -580,7 +671,7 @@ function WaveAudioPlayerDocs() {
     const [audioFile, setAudioFile] = useState(null);
     const [copiedCode, setCopiedCode] = useState(null);
     const [expandedSection, setExpandedSection] = useState('customize');
-    
+
     // Customization states
     const [waveGradient1, setWaveGradient1] = useState('#cd7eff');
     const [waveGradient2, setWaveGradient2] = useState('#fe59f6');
@@ -588,7 +679,12 @@ function WaveAudioPlayerDocs() {
     const [waveWidth, setWaveWidth] = useState(400);
     const [waveThumbnail, setWaveThumbnail] = useState('https://cdn-icons-png.flaticon.com/512/8316/8316619.png');
     const [waveAutoPlay, setWaveAutoPlay] = useState(false);
-    
+
+    // Equalizer states
+    const [waveEqBass, setWaveEqBass] = useState(0);
+    const [waveEqMid, setWaveEqMid] = useState(0);
+    const [waveEqTreble, setWaveEqTreble] = useState(0);
+
     const fileInputRef = useRef(null);
 
     const handleAudioFileChange = (e) => {
@@ -629,24 +725,37 @@ function WaveAudioPlayerDocs() {
     gradient={['${waveGradient1}', '${waveGradient2}']}
     background="${waveBackground}"
 />`;
+        } else if (activeExample === 'equalizer') {
+            return `<WaveAudioPlayer
+    audio="${audioFile || 'path/to/audio.mp3'}"
+    equalizer={{
+        bass: ${waveEqBass},
+        mid: ${waveEqMid},
+        treble: ${waveEqTreble}
+    }}
+    gradient={['${waveGradient1}', '${waveGradient2}']}
+    background="${waveBackground}"
+/>`;
         }
         return '';
     };
 
-    const examples = ['basic', 'custom', 'sized', 'autoplay'];
+    const examples = ['basic', 'custom', 'sized', 'autoplay', 'equalizer'];
 
     const exampleTitles = {
         basic: 'Basic Usage',
         custom: 'Custom Colors',
         sized: 'Custom Size',
-        autoplay: 'Auto Play'
+        autoplay: 'Auto Play',
+        equalizer: 'Equalizer Settings'
     };
 
     const exampleDescriptions = {
         basic: 'Simple implementation with default styling',
         custom: 'Apply custom gradient colors and background',
         sized: 'Set a custom width for the player',
-        autoplay: 'Configure the player to start automatically'
+        autoplay: 'Configure the player to start automatically',
+        equalizer: 'Configure initial equalizer settings for bass, mid, and treble'
     };
 
     const propDocs = [
@@ -655,7 +764,8 @@ function WaveAudioPlayerDocs() {
         { prop: 'background', type: 'string', default: '"#2f1f3a"', description: 'Background color' },
         { prop: 'width', type: 'number', default: 'undefined', description: 'Player width in pixels' },
         { prop: 'thumbnail', type: 'string', default: 'null', description: 'URL to thumbnail image' },
-        { prop: 'autoPlay', type: 'boolean', default: 'false', description: 'Start playing automatically' }
+        { prop: 'autoPlay', type: 'boolean', default: 'false', description: 'Start playing automatically' },
+        { prop: 'equalizer', type: 'object', default: '{ bass: 0, mid: 0, treble: 0 }', description: 'Initial equalizer settings for bass, mid, and treble (-20 to +20)' }
     ];
 
     const features = [
@@ -667,7 +777,8 @@ function WaveAudioPlayerDocs() {
         'Playback speed control',
         'Auto-play capability',
         'Time display with seek functionality',
-        'Sleek, modern design'
+        'Sleek, modern design',
+        '3-band equalizer with bass, mid, and treble controls'
     ];
 
     return (
@@ -676,7 +787,7 @@ function WaveAudioPlayerDocs() {
             <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-lg p-6 border border-blue-100">
                 <h2 className="text-2xl font-bold text-gray-800 mb-3">WaveAudioPlayer</h2>
                 <p className="text-gray-700 mb-4">
-                    A sleek audio player with waveform visualization, gradient styling, and responsive design.
+                    A sleek audio player with waveform visualization, gradient styling, responsive design, and a 3-band equalizer.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     {features.map((feature, idx) => (
@@ -699,11 +810,10 @@ function WaveAudioPlayerDocs() {
                         <button
                             key={key}
                             onClick={() => setActiveExample(key)}
-                            className={`px-4 py-3 rounded-lg font-medium transition-all ${
-                                activeExample === key
-                                    ? 'bg-blue-600 text-white shadow-lg'
-                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                            }`}
+                            className={`px-4 py-3 rounded-lg font-medium transition-all ${activeExample === key
+                                ? 'bg-blue-600 text-white shadow-lg'
+                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                }`}
                         >
                             {exampleTitles[key]}
                         </button>
@@ -767,13 +877,13 @@ function WaveAudioPlayerDocs() {
                         <ChevronDown className="text-gray-600" />
                     )}
                 </button>
-                
+
                 {expandedSection === 'customize' && (
                     <div className="p-6 bg-gradient-to-br from-blue-50 to-cyan-50 border-t">
                         <div className="grid md:grid-cols-2 gap-6">
                             <div className="space-y-4">
                                 <h4 className="font-semibold text-gray-800">Settings</h4>
-                                
+
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Gradient Color 1</label>
                                     <input
@@ -783,7 +893,7 @@ function WaveAudioPlayerDocs() {
                                         className="w-full h-12 rounded-lg"
                                     />
                                 </div>
-                                
+
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Gradient Color 2</label>
                                     <input
@@ -793,7 +903,7 @@ function WaveAudioPlayerDocs() {
                                         className="w-full h-12 rounded-lg"
                                     />
                                 </div>
-                                
+
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                                     <input
@@ -803,7 +913,7 @@ function WaveAudioPlayerDocs() {
                                         className="w-full h-12 rounded-lg"
                                     />
                                 </div>
-                                
+
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
                                         Width: {waveWidth}px
@@ -817,7 +927,7 @@ function WaveAudioPlayerDocs() {
                                         className="w-full"
                                     />
                                 </div>
-                                
+
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Thumbnail URL</label>
                                     <input
@@ -827,7 +937,66 @@ function WaveAudioPlayerDocs() {
                                         className="w-full px-4 py-2 border rounded-lg"
                                     />
                                 </div>
-                                
+
+                                {/* Equalizer Settings */}
+                                <div className="space-y-3">
+                                    <h4 className="font-medium text-gray-800">Equalizer Settings</h4>
+
+                                    <div>
+                                        <div className="flex justify-between mb-1">
+                                            <span className="text-sm text-gray-700">Bass: {waveEqBass} dB</span>
+                                        </div>
+                                        <div className="flex items-center gap-3">
+                                            <span className="text-xs text-gray-500">-20</span>
+                                            <input
+                                                type="range"
+                                                min="-20"
+                                                max="20"
+                                                value={waveEqBass}
+                                                onChange={(e) => setWaveEqBass(parseInt(e.target.value))}
+                                                className="flex-1"
+                                            />
+                                            <span className="text-xs text-gray-500">+20</span>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div className="flex justify-between mb-1">
+                                            <span className="text-sm text-gray-700">Mid: {waveEqMid} dB</span>
+                                        </div>
+                                        <div className="flex items-center gap-3">
+                                            <span className="text-xs text-gray-500">-20</span>
+                                            <input
+                                                type="range"
+                                                min="-20"
+                                                max="20"
+                                                value={waveEqMid}
+                                                onChange={(e) => setWaveEqMid(parseInt(e.target.value))}
+                                                className="flex-1"
+                                            />
+                                            <span className="text-xs text-gray-500">+20</span>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div className="flex justify-between mb-1">
+                                            <span className="text-sm text-gray-700">Treble: {waveEqTreble} dB</span>
+                                        </div>
+                                        <div className="flex items-center gap-3">
+                                            <span className="text-xs text-gray-500">-20</span>
+                                            <input
+                                                type="range"
+                                                min="-20"
+                                                max="20"
+                                                value={waveEqTreble}
+                                                onChange={(e) => setWaveEqTreble(parseInt(e.target.value))}
+                                                className="flex-1"
+                                            />
+                                            <span className="text-xs text-gray-500">+20</span>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <label className="flex items-center gap-2">
                                     <input
                                         type="checkbox"
@@ -848,11 +1017,16 @@ function WaveAudioPlayerDocs() {
                                         width={waveWidth}
                                         thumbnail={waveThumbnail}
                                         autoPlay={waveAutoPlay}
+                                        equalizer={{
+                                            bass: waveEqBass,
+                                            mid: waveEqMid,
+                                            treble: waveEqTreble
+                                        }}
                                     />
                                 </div>
                             </div>
                         </div>
-                        
+
                         {/* File Upload */}
                         <div className="mt-6 pt-6 border-t">
                             <input
@@ -887,7 +1061,7 @@ function WaveAudioPlayerDocs() {
                         <ChevronDown className="text-gray-600" />
                     )}
                 </button>
-                
+
                 {expandedSection === 'props' && (
                     <div className="p-6 bg-gray-50 border-t overflow-x-auto">
                         <table className="w-full text-sm">
@@ -964,7 +1138,7 @@ function NanoAudioPlayerDocs() {
     const [audioFile, setAudioFile] = useState(null);
     const [copiedCode, setCopiedCode] = useState(null);
     const [expandedSection, setExpandedSection] = useState('customize');
-    
+
     // Customization states
     const [nanoGradient1, setNanoGradient1] = useState('#cd7eff');
     const [nanoGradient2, setNanoGradient2] = useState('#fe59f6');
@@ -972,7 +1146,7 @@ function NanoAudioPlayerDocs() {
     const [nanoShowThumbnail, setNanoShowThumbnail] = useState(true);
     const [nanoThumbnail, setNanoThumbnail] = useState('https://cdn-icons-png.flaticon.com/512/17524/17524837.png');
     const [nanoAutoPlay, setNanoAutoPlay] = useState(false);
-    
+
     const fileInputRef = useRef(null);
 
     const handleAudioFileChange = (e) => {
@@ -1081,11 +1255,10 @@ function NanoAudioPlayerDocs() {
                         <button
                             key={key}
                             onClick={() => setActiveExample(key)}
-                            className={`px-4 py-3 rounded-lg font-medium transition-all ${
-                                activeExample === key
-                                    ? 'bg-yellow-600 text-white shadow-lg'
-                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                            }`}
+                            className={`px-4 py-3 rounded-lg font-medium transition-all ${activeExample === key
+                                ? 'bg-yellow-600 text-white shadow-lg'
+                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                }`}
                         >
                             {exampleTitles[key]}
                         </button>
@@ -1149,13 +1322,13 @@ function NanoAudioPlayerDocs() {
                         <ChevronDown className="text-gray-600" />
                     )}
                 </button>
-                
+
                 {expandedSection === 'customize' && (
                     <div className="p-6 bg-gradient-to-br from-yellow-50 to-amber-50 border-t">
                         <div className="grid md:grid-cols-2 gap-6">
                             <div className="space-y-4">
                                 <h4 className="font-semibold text-gray-800">Settings</h4>
-                                
+
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Gradient Color 1</label>
                                     <input
@@ -1165,7 +1338,7 @@ function NanoAudioPlayerDocs() {
                                         className="w-full h-12 rounded-lg"
                                     />
                                 </div>
-                                
+
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Gradient Color 2</label>
                                     <input
@@ -1175,7 +1348,7 @@ function NanoAudioPlayerDocs() {
                                         className="w-full h-12 rounded-lg"
                                     />
                                 </div>
-                                
+
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                                     <input
@@ -1185,7 +1358,7 @@ function NanoAudioPlayerDocs() {
                                         className="w-full h-12 rounded-lg"
                                     />
                                 </div>
-                                
+
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Thumbnail URL</label>
                                     <input
@@ -1195,7 +1368,7 @@ function NanoAudioPlayerDocs() {
                                         className="w-full px-4 py-2 border rounded-lg"
                                     />
                                 </div>
-                                
+
                                 <div className="space-y-2">
                                     <label className="flex items-center gap-2">
                                         <input
@@ -1206,7 +1379,7 @@ function NanoAudioPlayerDocs() {
                                         />
                                         <span className="text-sm">Show Thumbnail</span>
                                     </label>
-                                    
+
                                     <label className="flex items-center gap-2">
                                         <input
                                             type="checkbox"
@@ -1231,7 +1404,7 @@ function NanoAudioPlayerDocs() {
                                 </div>
                             </div>
                         </div>
-                        
+
                         {/* File Upload */}
                         <div className="mt-6 pt-6 border-t">
                             <input
@@ -1266,7 +1439,7 @@ function NanoAudioPlayerDocs() {
                         <ChevronDown className="text-gray-600" />
                     )}
                 </button>
-                
+
                 {expandedSection === 'props' && (
                     <div className="p-6 bg-gray-50 border-t overflow-x-auto">
                         <table className="w-full text-sm">
@@ -1343,7 +1516,7 @@ function VideoPlayerDocs() {
     const [videoFile, setVideoFile] = useState(null);
     const [copiedCode, setCopiedCode] = useState(null);
     const [expandedSection, setExpandedSection] = useState('customize');
-    
+
     // Customization states
     const [videoMode, setVideoMode] = useState('light');
     const [videoVolume, setVideoVolume] = useState(70);
@@ -1355,7 +1528,7 @@ function VideoPlayerDocs() {
     const [videoThumbnail, setVideoThumbnail] = useState('https://via.placeholder.com/800x450');
     const [videoAutoPlay, setVideoAutoPlay] = useState(false);
     const [videoShowControls, setVideoShowControls] = useState(true);
-    
+
     const videoInputRef = useRef(null);
 
     const handleVideoFileChange = (e) => {
@@ -1401,7 +1574,8 @@ function VideoPlayerDocs() {
         seekbar: true,
         volume: true,
         fullscreen: true,
-        videoName: true
+        videoName: true,
+        equalizer: true
     }}
 />`;
         } else if (activeExample === 'advanced') {
@@ -1491,11 +1665,10 @@ function VideoPlayerDocs() {
                         <button
                             key={key}
                             onClick={() => setActiveExample(key)}
-                            className={`px-4 py-3 rounded-lg font-medium transition-all ${
-                                activeExample === key
-                                    ? 'bg-red-600 text-white shadow-lg'
-                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                            }`}
+                            className={`px-4 py-3 rounded-lg font-medium transition-all ${activeExample === key
+                                ? 'bg-red-600 text-white shadow-lg'
+                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                }`}
                         >
                             {exampleTitles[key]}
                         </button>
@@ -1559,13 +1732,13 @@ function VideoPlayerDocs() {
                         <ChevronDown className="text-gray-600" />
                     )}
                 </button>
-                
+
                 {expandedSection === 'customize' && (
                     <div className="p-6 bg-gradient-to-br from-red-50 to-pink-50 border-t">
                         <div className="grid md:grid-cols-2 gap-6">
                             <div className="space-y-4">
                                 <h4 className="font-semibold text-gray-800">Settings</h4>
-                                
+
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Video Name</label>
                                     <input
@@ -1575,7 +1748,7 @@ function VideoPlayerDocs() {
                                         className="w-full px-4 py-2 border rounded-lg"
                                     />
                                 </div>
-                                
+
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Mode</label>
                                     <div className="flex gap-2">
@@ -1593,7 +1766,7 @@ function VideoPlayerDocs() {
                                         </button>
                                     </div>
                                 </div>
-                                
+
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
                                         Volume: {videoVolume}%
@@ -1607,7 +1780,7 @@ function VideoPlayerDocs() {
                                         className="w-full"
                                     />
                                 </div>
-                                
+
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Thumbnail URL</label>
                                     <input
@@ -1617,7 +1790,7 @@ function VideoPlayerDocs() {
                                         className="w-full px-4 py-2 border rounded-lg"
                                     />
                                 </div>
-                                
+
                                 <div className="space-y-2">
                                     <label className="flex items-center gap-2">
                                         <input
@@ -1628,7 +1801,7 @@ function VideoPlayerDocs() {
                                         />
                                         <span className="text-sm">Show Audio Visualization</span>
                                     </label>
-                                    
+
                                     <label className="flex items-center gap-2">
                                         <input
                                             type="checkbox"
@@ -1638,7 +1811,7 @@ function VideoPlayerDocs() {
                                         />
                                         <span className="text-sm">Auto Play</span>
                                     </label>
-                                    
+
                                     <label className="flex items-center gap-2">
                                         <input
                                             type="checkbox"
@@ -1649,7 +1822,7 @@ function VideoPlayerDocs() {
                                         <span className="text-sm">Show Controls</span>
                                     </label>
                                 </div>
-                                
+
                                 {videoShowAudioVisual && (
                                     <>
                                         <div>
@@ -1665,7 +1838,7 @@ function VideoPlayerDocs() {
                                                 <option value="bottom">Bottom</option>
                                             </select>
                                         </div>
-                                        
+
                                         <div>
                                             <label className="block text-sm font-medium text-gray-700 mb-2">VU Meter Color</label>
                                             <input
@@ -1675,7 +1848,7 @@ function VideoPlayerDocs() {
                                                 className="w-full h-12 rounded-lg"
                                             />
                                         </div>
-                                        
+
                                         <div>
                                             <label className="block text-sm font-medium text-gray-700 mb-2">Peak Color</label>
                                             <input
@@ -1704,7 +1877,8 @@ function VideoPlayerDocs() {
                                         seekbar: true,
                                         volume: true,
                                         fullscreen: true,
-                                        videoName: true
+                                        videoName: true,
+                                        equalizer: true
                                     } : {}}
                                     audioVisual={videoShowAudioVisual ? {
                                         side: videoVuSide,
@@ -1714,7 +1888,7 @@ function VideoPlayerDocs() {
                                 />
                             </div>
                         </div>
-                        
+
                         {/* File Upload */}
                         <div className="mt-6 pt-6 border-t">
                             <input
@@ -1749,7 +1923,7 @@ function VideoPlayerDocs() {
                         <ChevronDown className="text-gray-600" />
                     )}
                 </button>
-                
+
                 {expandedSection === 'props' && (
                     <div className="p-6 bg-gray-50 border-t overflow-x-auto">
                         <table className="w-full text-sm">
@@ -1826,14 +2000,14 @@ export default function MediaPlayerDocs() {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 p-4 md:p-8">
-            <div className="max-w-7xl mx-auto">
+            <div className="-max-w-7xl mx-auto">
                 {/* Header */}
                 <div className="text-center mb-12">
                     <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-3">
                         EC Players React
                     </h1>
                     <p className="text-gray-600 text-lg max-w-3xl mx-auto">
-                        Professional audio and video players with visualization capabilities, 
+                        Professional audio and video players with visualization capabilities,
                         customizable themes, and responsive design. Evelocore
                     </p>
                 </div>
@@ -1850,11 +2024,10 @@ export default function MediaPlayerDocs() {
                             <button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
-                                className={`flex-1 min-w-fit px-6 py-4 font-medium transition-all ${
-                                    activeTab === tab.id
-                                        ? `bg-gradient-to-r from-${tab.color}-600 to-${tab.color === 'purple' ? 'pink' : tab.color === 'blue' ? 'cyan' : tab.color === 'yellow' ? 'amber' : 'pink'}-600 text-white`
-                                        : 'text-gray-600 hover:bg-gray-50'
-                                }`}
+                                className={`flex-1 min-w-fit px-6 py-4 font-medium transition-all ${activeTab === tab.id
+                                    ? `bg-gradient-to-r from-${tab.color}-600 to-${tab.color === 'purple' ? 'pink' : tab.color === 'blue' ? 'cyan' : tab.color === 'yellow' ? 'amber' : 'pink'}-600 text-white`
+                                    : 'text-gray-600 hover:bg-gray-50'
+                                    }`}
                             >
                                 <span className="mr-2">{tab.icon}</span>
                                 <span className="hidden sm:inline">{tab.label}</span>
