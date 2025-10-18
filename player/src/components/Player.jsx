@@ -712,7 +712,7 @@ function VisualizePlayer({
                         <button
                             onClick={togglePlay}
                             disabled={!audio}
-                            className="px-4 py-2 md:w-24 rounded-full text-sm font-medium text-white disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all hover:scale-105"
+                            className="px-4 py-2 md:w-24 rounded-full text-sm font-medium text-white disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all hover:opacity-90"
                             style={{ backgroundColor: currentTheme.button }}
                         >
                             <div className="relative w-4 flex items-center">
