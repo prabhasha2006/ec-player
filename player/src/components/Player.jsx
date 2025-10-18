@@ -1,6 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Play, Pause, Square, Volume2, VolumeX, Repeat, Upload } from 'lucide-react';
 
+const formatTime = (seconds) => {
+    if (isNaN(seconds)) return '0:00';
+
+    const hrs = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = Math.floor(seconds % 60);
+
+    if (hrs > 0) {
+        return `${hrs}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    } else {
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+}
+
 const themes = {
     rainbow: {
         name: 'Rainbow',
@@ -131,6 +145,7 @@ function VisualizePlayer({
     author,
     theme = 'rainbow',
     volume: vol = 100,
+    thumbnail = null,
     controls = {
         play: true,
         pause: true,
@@ -142,7 +157,8 @@ function VisualizePlayer({
     },
     mode = 'light',
     bands: _bands = null,
-    transparent = false
+    transparent = false,
+    autoPlay = false
 }) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
@@ -554,17 +570,10 @@ function VisualizePlayer({
 
     const toggleLoop = () => {
         setIsLoop(!isLoop);
-    };
-
-    const formatTime = (seconds) => {
-        if (isNaN(seconds)) return '0:00';
-        const mins = Math.floor(seconds / 60);
-        const secs = Math.floor(seconds % 60);
-        return `${mins}:${secs.toString().padStart(2, '0')}`;
-    };
+    }
 
     useEffect(() => {
-        if (((typeof controls === 'object' && Object.keys(controls).length === 0) || !controls) && !isPlaying) {
+        if ((((typeof controls === 'object' && Object.keys(controls).length === 0) || !controls) && !isPlaying) || autoPlay) {
             togglePlay()
         }
     }, [controls])
@@ -589,11 +598,18 @@ function VisualizePlayer({
 
                 {/* Track Name */}
                 {controls.trackName && (
-                    <div className="mb-6">
-                        <div className={`${isDark ? 'text-gray-100' : 'text-gray-700'} font-medium truncate`}>{name}</div>
-                        {author && typeof author === 'string' && (
-                            <div className={`${isDark ? 'text-gray-300' : 'text-gray-500'} text-xs`}>{author}</div>
+                    <div className="mb-6 flex items-center">
+                        {thumbnail && (
+                            <div className="mr-2">
+                                <img src={thumbnail} alt="" className={`${isPlaying && 'animation-spin'} h-12 w-12 rounded-full`} />
+                            </div>
                         )}
+                        <div>
+                            <div className={`${isDark ? 'text-gray-100' : 'text-gray-700'} font-medium truncate`}>{name}</div>
+                            {author && typeof author === 'string' && (
+                                <div className={`${isDark ? 'text-gray-300' : 'text-gray-500'} text-xs`}>{author}</div>
+                            )}
+                        </div>
                     </div>
                 )}
 
@@ -734,7 +750,392 @@ function VisualizePlayer({
                         display: none;
                     }
                 }
+                .animation-spin {
+                    animation: spin 15s infinite linear;
+                }
+
+                @keyframes spin {
+                    from {
+                        transform: rotate(0deg);
+                    }
+                    to {
+                        transform: rotate(360deg)
+                    }
+                }
             `}</style>
+            </div>
+        </div>
+    );
+}
+
+function WaveAudioPlayer({
+    audio: audioUrl,
+    gradient = ['#cd7eff', '#fe59f6'],
+    background = '#2f1f3aff',
+    autoPlay = false,
+    thumbnail = null,
+    width
+}) {
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [currentTime, setCurrentTime] = useState(0);
+    const [duration, setDuration] = useState(0);
+    const [isMuted, setIsMuted] = useState(false);
+    const [volume, setVolume] = useState(80);
+    const [playbackRate, setPlaybackRate] = useState(1.0);
+    const [waveformData, setWaveformData] = useState([]);
+    const [error, setError] = useState(null);
+    const audioRef = useRef(null);
+
+    const mode = 'light'
+
+    // Generate random waveform data for visualization
+    const generateWaveformData = () => {
+        const data = [];
+        for (let i = 0; i < 100; i++) {
+            // Create more realistic waveform with some randomness
+            const height = 20 + Math.random() * 60;
+            data.push(height);
+        }
+        return data;
+    };
+
+    useEffect(() => {
+        // Validate props
+        if (!audioUrl) {
+            //setError("No audio URL provided");
+            return
+        }
+
+        if (!Array.isArray(gradient) || gradient.length < 2) {
+            setError("Gradient must be an array with at least 2 colors");
+            return;
+        }
+
+        if (mode !== 'dark' && mode !== 'light') {
+            setError("Mode must be either 'dark' or 'light'");
+            return;
+        }
+
+        const audio = audioRef.current;
+        if (!audio) return;
+
+        const handleTimeUpdate = () => setCurrentTime(audio.currentTime);
+        const handleLoadedMetadata = () => {
+            setDuration(audio.duration);
+            // Generate waveform when audio is loaded
+            setWaveformData(generateWaveformData());
+        };
+        const handleEnded = () => setIsPlaying(false);
+        const handleError = (e) => {
+            setError(`Audio error: ${e.message || 'Failed to load audio'}`);
+        }
+
+        audio.addEventListener('timeupdate', handleTimeUpdate);
+        audio.addEventListener('loadedmetadata', handleLoadedMetadata);
+        audio.addEventListener('ended', handleEnded);
+        audio.addEventListener('error', handleError);
+
+        return () => {
+            audio.removeEventListener('timeupdate', handleTimeUpdate);
+            audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
+            audio.removeEventListener('ended', handleEnded);
+            audio.removeEventListener('error', handleError);
+        }
+    }, [audioUrl, gradient, mode]);
+
+    useEffect(() => {
+        if (audioUrl && audioRef.current && autoPlay) {
+            audioRef.current.play().catch(() => setIsPlaying(false));
+            setIsPlaying(true);
+        }
+    }, [audioUrl]);
+
+    // Update volume when changed
+    useEffect(() => {
+        if (audioRef.current) {
+            audioRef.current.volume = isMuted ? 0 : volume / 100;
+        }
+    }, [volume, isMuted]);
+
+    // Update playback rate when changed
+    useEffect(() => {
+        if (audioRef.current) {
+            audioRef.current.playbackRate = playbackRate;
+        }
+    }, [playbackRate]);
+
+    const togglePlay = () => {
+        if (audioRef.current) {
+            if (isPlaying) {
+                audioRef.current.pause();
+            } else {
+                audioRef.current.play().catch(e => {
+                    setError(`Playback failed: ${e.message}`);
+                });
+            }
+            setIsPlaying(!isPlaying);
+        }
+    };
+
+    const toggleMute = () => {
+        setIsMuted(!isMuted);
+    };
+
+    const handleVolumeChange = (e) => {
+        setVolume(parseInt(e.target.value));
+        if (isMuted && parseInt(e.target.value) > 0) {
+            setIsMuted(false);
+        }
+    };
+
+    const handleSpeedChange = (e) => {
+        setPlaybackRate(parseFloat(e.target.value));
+    };
+
+    const handleSeek = (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const percentage = x / rect.width;
+        const newTime = percentage * duration;
+
+        if (audioRef.current) {
+            audioRef.current.currentTime = newTime;
+            setCurrentTime(newTime);
+        }
+    };
+
+    const formatTime = (time) => {
+        if (isNaN(time)) return '0:00';
+        const minutes = Math.floor(time / 60);
+        const seconds = Math.floor(time % 60);
+        return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    };
+
+    const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
+
+    if (error) {
+        return (
+            <div className="w-lg p-6 rounded-xl" style={{ background }}>
+                <div className={`text-center ${mode === 'dark' ? 'text-red-300' : 'text-red-600'}`}>
+                    <p className="font-medium">Error</p>
+                    <p className="text-sm">{error}</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (!audioUrl) return null;
+
+    // Determine text color based on mode
+    const textColor = mode === 'dark' ? 'text-gray-300' : 'text-gray-700';
+    const secondaryTextColor = mode === 'dark' ? 'text-gray-500' : 'text-gray-400';
+
+    return (
+        <div className="w-full max-w-lg" style={{ width: width+'px' }}>
+            <audio ref={audioRef} src={audioUrl} />
+
+            <div className="rounded-2xl shadow-2xl">
+                <div className="rounded-2xl p-6 backdrop-blur-xl" style={{ background }}>
+
+                    {thumbnail && (
+                        <div className="w-full p-4">
+                            <img src={thumbnail} alt="" className={`w-full aspect-square rounded-xl`} />
+                        </div>
+                    )}
+
+                    {/* Waveform Seek Bar */}
+                    <div
+                        className="relative h-20 mb-6 cursor-pointer"
+                        onClick={handleSeek}
+                    >
+                        {/* Waveform container */}
+                        <div className="absolute inset-0 flex items-end justify-center h-full w-full gap-px">
+                            {waveformData.map((height, index) => {
+                                // Calculate if this bar should be filled based on progress
+                                const barProgress = (index / waveformData.length) * 100;
+                                const isFilled = barProgress <= progress;
+
+                                return (
+                                    <div
+                                        key={index}
+                                        className="w-1 rounded-t transition-all duration-150"
+                                        style={{
+                                            height: `${height}%`,
+                                            background: isFilled ? gradient[0] : gradient[1],
+                                            opacity: isFilled ? 1 : 0.4
+                                        }}
+                                    />
+                                );
+                            })}
+                        </div>
+
+                        {/* Progress indicator */}
+                        <div
+                            className="absolute top-0 h-full w-1 bg-white border-r border-black rounded-full transition-all duration-150"
+                            style={{ left: `${progress}%`, transform: 'translateX(-50%)' }}
+                        />
+                    </div>
+
+                    {/* Time Display */}
+                    <div className={`flex justify-between text-sm ${secondaryTextColor} mb-6`}>
+                        <span>{formatTime(currentTime)}</span>
+                        <span>{formatTime(duration)}</span>
+                    </div>
+
+                    {/* Controls */}
+                    <div className="grid grid-cols-3 items-center justify-between mb-4">
+                        {/* Volume Control */}
+                        <div className="flex items-center gap-2">
+                            <button
+                                onClick={toggleMute}
+                                className="p-2 rounded-full transition-all"
+                                style={{
+                                    background: `linear-gradient(135deg, ${gradient[0]}, ${gradient[1]})`
+                                }}
+                            >
+                                {isMuted || volume === 0 ? (
+                                    <VolumeX className="w-4 h-4 text-white" />
+                                ) : (
+                                    <Volume2 className="w-4 h-4 text-white" />
+                                )}
+                            </button>
+                            <input
+                                type="range"
+                                min="0"
+                                max="100"
+                                value={volume}
+                                onChange={handleVolumeChange}
+                                className={`${!width && 'hidden sm:block'} w-20 h-1.5 rounded-lg appearance-none cursor-pointer`}
+                                style={{
+                                    background: `linear-gradient(to right, ${gradient[0]} ${volume}%, ${mode === 'dark' ? '#374151' : '#d1d5db'} ${volume}%)`,
+                                    display: (width && width < 400) && 'none'
+                                }}
+                            />
+                        </div>
+
+                        {/* Play/Pause Button */}
+                        <div className="flex justify-center">
+                            <button
+                                onClick={togglePlay}
+                                className="p-4 rounded-full transition-all hover:scale-105 shadow-lg"
+                                style={{
+                                    background: `linear-gradient(135deg, ${gradient[0]}, ${gradient[1]})`
+                                }}
+                            >
+                                {isPlaying ? (
+                                    <Pause className="w-6 h-6 text-white fill-white" />
+                                ) : (
+                                    <Play className="w-6 h-6 text-white fill-white" />
+                                )}
+                            </button>
+                        </div>
+
+                        {/* Speed Control */}
+                        <div className="flex items-center justify-end">
+                            <select
+                                value={playbackRate}
+                                style={{ background, color: gradient[0] }}
+                                onChange={handleSpeedChange}
+                                className={`py-1 px-2 rounded-lg text-sm ${textColor} ${mode === 'dark' ? 'bg-gray-800' : 'bg-gray-100'}`}
+                            >
+                                <option value="0.5">0.5x</option>
+                                <option value="0.75">0.75x</option>
+                                <option value="1">1x</option>
+                                <option value="1.25">1.25x</option>
+                                <option value="1.5">1.5x</option>
+                                <option value="2">2x</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+function NanoAudioPlayer({ audio: audioUrl, thumbnail, gradient: colors = ['#cd7eff', '#fe59f6'], background = '#1f273a', autoPlay = false }) {
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [currentTime, setCurrentTime] = useState(0);
+    const audioRef = useRef(null);
+
+    useEffect(() => {
+        const audio = audioRef.current;
+        if (!audio) return;
+
+        const handleTimeUpdate = () => setCurrentTime(audio.currentTime);
+        audio.addEventListener('timeupdate', handleTimeUpdate);
+
+        return () => audio.removeEventListener('timeupdate', handleTimeUpdate);
+    }, []);
+
+    useEffect(() => {
+        if (audioUrl && audioRef.current && autoPlay) {
+            audioRef.current.play().catch(() => setIsPlaying(false));
+            setIsPlaying(true);
+        }
+    }, [audioUrl]);
+
+    const togglePlay = () => {
+        if (audioRef.current) {
+            if (isPlaying) {
+                audioRef.current.pause();
+            } else {
+                audioRef.current.play();
+            }
+            setIsPlaying(!isPlaying);
+        }
+    };
+
+    if (!audioUrl) return null;
+
+    // gradient CSS for button
+    const buttonGradient = {
+        background: `linear-gradient(135deg, ${colors[0]}, ${colors[1]})`
+    }
+
+    return (
+        <div style={{ backgroundColor: background }} className={`inline-flex flex-col ${thumbnail ? 'rounded-2xl' : 'rounded-full'} px-3 py-2 shadow-lg`}>
+            <audio
+                ref={audioRef}
+                src={audioUrl}
+                onEnded={() => setIsPlaying(false)}
+            />
+            {thumbnail && (
+                <div className="w-24 pb-2">
+                    <img src={thumbnail} alt="" className={`w-24 aspect-square rounded-xl`} />
+                </div>
+            )}
+
+            <div className="flex items-center gap-2">
+                <button
+                    onClick={togglePlay}
+                    style={buttonGradient}
+                    className="p-1.5 rounded-full hover:scale-110 transition-transform flex-shrink-0"
+                >
+                    {isPlaying ? (
+                        <Pause fill={background} className="w-3 h-3 text-transparent" />
+                    ) : (
+                        <Play fill={background} className="w-3 h-3 text-transparent" />
+                    )}
+                </button>
+
+                {/* Mini Waveform */}
+                <div className="flex w-full min-w-12 items-center gap-0.5 h-6">
+                    {[...Array(12)].map((_, i) => (
+                        <div
+                            key={i}
+                            className="rounded-full transition-all duration-200"
+                            style={{
+                                width: '100%',
+                                background: `linear-gradient(to top, ${colors[0]}, ${colors[1]})`,
+                                height: isPlaying
+                                    ? `${8 + Math.sin((currentTime * 8 + i) * 0.6) * 10}px`
+                                    : '8px',
+                                opacity: isPlaying ? 0.6 + (Math.abs(i - 6) / 12) * 0.6 : 0.3
+                            }}
+                        />
+                    ))}
+                </div>
             </div>
         </div>
     );
@@ -763,7 +1164,7 @@ function DemoVisualizePlayer() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center p-4 md:p-8" style={{ backgroundColor: mode === 'dark' ? '#222' : 'white'}}>
+        <div className="min-h-screen flex items-center justify-center p-4 md:p-8" style={{ backgroundColor: mode === 'dark' ? '#222' : 'white' }}>
             <div className="w-full h-full md:h-auto md:max-w-4xl">
                 {/* Theme Selector - Initially Hidden */}
                 {showThemeSelector && (
@@ -792,6 +1193,7 @@ function DemoVisualizePlayer() {
                         author={'K.Prabhasha'}
                         theme={selectedTheme}
                         autoPlay={false}
+                        thumbnail={'https://cdn-icons-png.flaticon.com/512/3845/3845874.png'}
                         mode={mode}
                         transparent={transparent}
                         volume={70}
@@ -805,6 +1207,8 @@ function DemoVisualizePlayer() {
                             trackName: true
                         }}
                     />
+                    <WaveAudioPlayer audio={audioFile} width={300} thumbnail={'https://cdn-icons-png.flaticon.com/512/8316/8316619.png'} autoPlay={false} gradient={['#26ce3aff', '#39eed9ff']} background={'#c0ffefff'} />
+                    <NanoAudioPlayer audio={audioFile} thumbnail={'https://cdn-icons-png.flaticon.com/512/17524/17524837.png'} autoPlay={false} gradient={['#26ce3aff', '#39eed9ff']} background={'#c0ffefff'} />
 
                     {/* Load Audio Button */}
                     <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -841,4 +1245,4 @@ function DemoVisualizePlayer() {
     );
 }
 
-export { VisualizePlayer, ThemeSelector, themes, DemoVisualizePlayer };
+export { VisualizePlayer, ThemeSelector, themes, WaveAudioPlayer, NanoAudioPlayer, DemoVisualizePlayer };
