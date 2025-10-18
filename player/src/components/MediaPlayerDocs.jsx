@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Pause, Square, Volume2, VolumeX, Repeat, Upload, Maximize, Minimize, ChevronDown, ChevronUp, Copy, Check, Settings, Info, Download, Code } from 'lucide-react';
+import { AudioLines, Upload, CassetteTape, SquareMinus, ChevronDown, ChevronUp, Copy, Check, Settings, Info, TvMinimalPlay, Code } from 'lucide-react';
 import { VisualizePlayer, ThemeSelector, themes, WaveAudioPlayer, NanoAudioPlayer, VideoPlayer } from './Player';
+
+const importFrom = 'ecplayer/react'
 
 // VisualizePlayer Documentation Component
 function VisualizePlayerDocs() {
@@ -650,7 +652,7 @@ function VisualizePlayerDocs() {
                     <div>
                         <h4 className="font-semibold text-gray-700 mb-2">1. Import the component</h4>
                         <pre className="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto">
-                            <code>{`import { VisualizePlayer } from './components/MediaPlayers';`}</code>
+                            <code>{`import { VisualizePlayer } from '${importFrom}';`}</code>
                         </pre>
                     </div>
                     <div>
@@ -1117,7 +1119,7 @@ function WaveAudioPlayerDocs() {
                     <div>
                         <h4 className="font-semibold text-gray-700 mb-2">1. Import the component</h4>
                         <pre className="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto">
-                            <code>{`import { WaveAudioPlayer } from './components/MediaPlayers';`}</code>
+                            <code>{`import { WaveAudioPlayer } from '${importFrom}';`}</code>
                         </pre>
                     </div>
                     <div>
@@ -1495,7 +1497,7 @@ function NanoAudioPlayerDocs() {
                     <div>
                         <h4 className="font-semibold text-gray-700 mb-2">1. Import the component</h4>
                         <pre className="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto">
-                            <code>{`import { NanoAudioPlayer } from './components/MediaPlayers';`}</code>
+                            <code>{`import { NanoAudioPlayer } from '${importFrom}';`}</code>
                         </pre>
                     </div>
                     <div>
@@ -1980,7 +1982,7 @@ function VideoPlayerDocs() {
                     <div>
                         <h4 className="font-semibold text-gray-700 mb-2">1. Import the component</h4>
                         <pre className="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto">
-                            <code>{`import { VideoPlayer } from './components/MediaPlayers';`}</code>
+                            <code>{`import { VideoPlayer } from '${importFrom}';`}</code>
                         </pre>
                     </div>
                     <div>
@@ -1995,56 +1997,281 @@ function VideoPlayerDocs() {
     );
 }
 
-// Main MediaPlayerDocs Component
 export default function MediaPlayerDocs() {
     const [activeTab, setActiveTab] = useState('visualize');
+    const canvasRef = useRef(null);
+
+    // VU meter animation for hero background
+    useEffect(() => {
+        if (!canvasRef.current) return;
+
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+
+        // Initialize bars
+        const barCount = 64;
+        const barWidth = width / barCount;
+        const bars = Array(barCount).fill(0);
+        const peakHolds = Array(barCount).fill(0);
+        const peakHoldTimes = Array(barCount).fill(0);
+
+        // Animation function
+        const animate = () => {
+            ctx.clearRect(0, 0, width, height);
+
+            // Generate random values for visualization
+            for (let i = 0; i < barCount; i++) {
+                // Slower random walk for bars - reduced multiplier from 0.8 to 0.9
+                bars[i] = bars[i] * 0.9 + Math.random() * 0.1;
+
+                // Reduced frequency of random peaks - increased threshold from 0.95 to 0.98
+                if (Math.random() > 0.98) {
+                    bars[i] = Math.random() * 0.8 + 0.2;
+                }
+
+                // Update peak holds
+                const now = Date.now();
+                if (bars[i] > peakHolds[i]) {
+                    peakHolds[i] = bars[i];
+                    peakHoldTimes[i] = now;
+                } else if (now - peakHoldTimes[i] > 1500) {
+                    // Slower decay rate - increased multiplier from 0.95 to 0.97
+                    peakHolds[i] *= 0.97;
+                }
+
+                // Draw bar
+                const barHeight = bars[i] * height * 0.8;
+                const x = i * barWidth;
+                const y = height - barHeight;
+
+                // Create gradient for bars
+                const gradient = ctx.createLinearGradient(x, y, x, height);
+                gradient.addColorStop(0, '#d8b4fe'); // Light purple
+                gradient.addColorStop(1, '#7e22ce'); // Dark purple
+
+                ctx.fillStyle = gradient;
+                ctx.fillRect(x, y, barWidth - 1, barHeight);
+
+                // Draw peak hold indicator
+                if (peakHolds[i] > 0.05) {
+                    const peakY = height - (peakHolds[i] * height * 0.8);
+                    ctx.fillStyle = '#f0abfc'; // Light pink for peak
+                    ctx.fillRect(x, peakY, barWidth - 1, 2);
+                }
+            }
+
+            // Slow down the animation by reducing the frame rate
+            setTimeout(() => {
+                requestAnimationFrame(animate);
+            }, 50); // Add 50ms delay between frames
+        };
+
+        animate();
+
+        return () => {
+            // Cleanup if needed
+        };
+    }, []);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 p-4 md:p-8">
-            <div className="-max-w-7xl mx-auto">
-                {/* Header */}
-                <div className="text-center mb-12">
-                    <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-3">
-                        EC Players React
-                    </h1>
-                    <p className="text-gray-600 text-lg max-w-3xl mx-auto">
-                        Professional audio and video players with visualization capabilities,
-                        customizable themes, and responsive design. Evelocore
-                    </p>
-                </div>
+        <div className="min-h-screen flex flex-col">
+            {/* Hero Section */}
+            <div className="bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 text-white relative overflow-hidden">
+                {/* VU Meter Background */}
+                <canvas
+                    ref={canvasRef}
+                    className="absolute inset-0 w-full h-full opacity-20"
+                    width={800}
+                    height={200}
+                />
 
-                {/* Component Tabs */}
-                <div className="bg-white rounded-xl shadow-lg mb-8 overflow-hidden">
-                    <div className="flex flex-wrap border-b">
-                        {[
-                            { id: 'visualize', label: 'VisualizePlayer', icon: '🎵', color: 'purple' },
-                            { id: 'wave', label: 'WaveAudioPlayer', icon: '🌊', color: 'blue' },
-                            { id: 'nano', label: 'NanoAudioPlayer', icon: '⚡', color: 'yellow' },
-                            { id: 'video', label: 'VideoPlayer', icon: '🎬', color: 'red' }
-                        ].map(tab => (
-                            <button
-                                key={tab.id}
-                                onClick={() => setActiveTab(tab.id)}
-                                className={`flex-1 min-w-fit px-6 py-4 font-medium transition-all ${activeTab === tab.id
-                                    ? `bg-gradient-to-r from-${tab.color}-600 to-${tab.color === 'purple' ? 'pink' : tab.color === 'blue' ? 'cyan' : tab.color === 'yellow' ? 'amber' : 'pink'}-600 text-white`
-                                    : 'text-gray-600 hover:bg-gray-50'
-                                    }`}
+                <div className="max-w-7xl mx-auto px-4 min-h-[90vh] p-4 flex items-center justify-center relative">
+                    <div className="text-center max-w-5xl">
+                        {/* Badge */}
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-500/20 bg-purple-500/5 mb-8">
+                            <span className="relative flex h-2 w-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
+                            </span>
+                            <span className="text-sm text-gray-300">Open Source • MIT License</span>
+                        </div>
+
+                        {/* Main Heading */}
+                        <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight">
+                            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+                                EcPlayer.js <span className="text-white">React</span>
+                            </span>
+                        </h1>
+
+                        {/* Subtitle */}
+                        <p className="text-xl md:text-2xl text-gray-400 mb-12 leading-relaxed max-w-3xl mx-auto">
+                            Professional audio and video players with advanced visualization,
+                            customizable themes, and seamless responsive design
+                        </p>
+
+                        {/* CTA Buttons */}
+                        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+                            <a
+                                href="https://evelocore.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group relative px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/30 hover:scale-105 w-full sm:w-auto"
                             >
-                                <span className="mr-2">{tab.icon}</span>
-                                <span className="hidden sm:inline">{tab.label}</span>
-                                <span className="sm:hidden">{tab.icon}</span>
-                            </button>
-                        ))}
-                    </div>
+                                <span className="relative z-10 flex items-center justify-center gap-2">
+                                    Visit Evelocore
+                                    <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </span>
+                            </a>
 
-                    <div className="p-6 md:p-8">
-                        {activeTab === 'visualize' && <VisualizePlayerDocs />}
-                        {activeTab === 'wave' && <WaveAudioPlayerDocs />}
-                        {activeTab === 'nano' && <NanoAudioPlayerDocs />}
-                        {activeTab === 'video' && <VideoPlayerDocs />}
+                            <a
+                                href="https://github.com/prabhasha2006"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group px-8 py-4 bg-white/5 backdrop-blur-sm border border-white/10 text-gray-300 font-semibold rounded-xl transition-all duration-300 hover:bg-white/10 hover:border-white/20 hover:scale-105 w-full sm:w-auto"
+                            >
+                                <span className="flex items-center justify-center gap-2">
+                                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+                                    </svg>
+                                    GitHub
+                                </span>
+                            </a>
+                        </div>
+
+                        {/* Features Grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                            <div className="p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
+                                <div className="text-purple-400 mb-3">
+                                    <svg className="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                                    </svg>
+                                </div>
+                                <h3 className="text-white font-semibold mb-2">Audio Players</h3>
+                                <p className="text-gray-400 text-sm">Advanced audio playback with real-time visualization</p>
+                            </div>
+
+                            <div className="p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
+                                <div className="text-pink-400 mb-3">
+                                    <svg className="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                                <h3 className="text-white font-semibold mb-2">Video Players</h3>
+                                <p className="text-gray-400 text-sm">Professional video playback with custom controls</p>
+                            </div>
+
+                            <div className="p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
+                                <div className="text-purple-400 mb-3">
+                                    <svg className="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                                    </svg>
+                                </div>
+                                <h3 className="text-white font-semibold mb-2">Customizable</h3>
+                                <p className="text-gray-400 text-sm">Fully themeable with responsive design patterns</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            {/* Main Content */}
+            <div className="flex-grow bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
+                <div className="">
+                    {/* Component Tabs */}
+                    <div className="bg-white shadow-lg mb-8 overflow-hidden">
+                        <div className="flex flex-wrap border-b h-[10vh]">
+                            {[
+                                { id: 'visualize', label: 'VisualizePlayer', icon: <AudioLines />, color: 'purple' },
+                                { id: 'wave', label: 'WaveAudioPlayer', icon: <CassetteTape />, color: 'blue' },
+                                { id: 'nano', label: 'NanoAudioPlayer', icon: <SquareMinus />, color: 'yellow' },
+                                { id: 'video', label: 'VideoPlayer', icon: <TvMinimalPlay />, color: 'red' }
+                            ].map(tab => (
+                                <button
+                                    key={tab.id}
+                                    onClick={() => setActiveTab(tab.id)}
+                                    className={`flex-1 flex items-center justify-center min-w-fit px-6 h-full font-medium transition-all ${activeTab === tab.id
+                                        ? `bg-gradient-to-r from-${tab.color}-600 to-${tab.color === 'purple' ? 'pink' : tab.color === 'blue' ? 'cyan' : tab.color === 'yellow' ? 'amber' : 'pink'}-600 text-white`
+                                        : 'text-gray-600 hover:bg-gray-50'
+                                        }`}
+                                >
+                                    <span className="">{tab.icon}</span>
+                                    <span className="hidden sm:inline ml-2">{tab.label}</span>
+                                </button>
+                            ))}
+                        </div>
+
+                        <div className="p-6 md:p-8">
+                            {activeTab === 'visualize' && <VisualizePlayerDocs />}
+                            {activeTab === 'wave' && <WaveAudioPlayerDocs />}
+                            {activeTab === 'nano' && <NanoAudioPlayerDocs />}
+                            {activeTab === 'video' && <VideoPlayerDocs />}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Footer */}
+            <footer className="bg-gray-900 text-white py-8">
+                <div className="max-w-7xl mx-auto px-4">
+                    <div className="flex flex-col md:flex-row justify-between items-center">
+                        <div className="mb-4 md:mb-0">
+                            <div className="text-xl font-bold mb-2">EcPlayer.js</div>
+                            <div className="text-gray-400 text-sm">
+                                Professional React components for audio and video playback
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
+                            <div className="text-center md:text-left">
+                                <div className="text-gray-400 text-sm mb-1">Developed by</div>
+                                <div className="font-medium">K.Prabhasha</div>
+                                <a
+                                    href="https://kp.evelocore.com"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-purple-400 hover:text-purple-300 text-sm transition-colors"
+                                >
+                                    kp.evelocore.com
+                                </a>
+                            </div>
+
+                            <div className="text-center md:text-left">
+                                <div className="text-gray-400 text-sm mb-1">Company</div>
+                                <div className="font-medium">Evelocore</div>
+                                <a
+                                    href="https://evelocore.com"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-purple-400 hover:text-purple-300 text-sm transition-colors"
+                                >
+                                    evelocore.com
+                                </a>
+                            </div>
+
+                            <div className="text-center md:text-left">
+                                <div className="text-gray-400 text-sm mb-1">License</div>
+                                <div className="font-medium">MIT</div>
+                                <a
+                                    href="https://github.com/evelocore/ec-players-react/blob/main/LICENSE"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-purple-400 hover:text-purple-300 text-sm transition-colors"
+                                >
+                                    View License
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+                        <p>© {new Date().getFullYear()} Evelocore. All rights reserved.</p>
+                    </div>
+                </div>
+            </footer>
         </div>
     );
 }

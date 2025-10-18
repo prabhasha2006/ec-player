@@ -860,7 +860,7 @@ function VisualizePlayer({
                 {/* Seekbar */}
                 {controls.seekbar && (
                     <div className="mb-6">
-                        <div className="flex items-center md:gap-3">
+                        <div className="flex items-center md:gap-1">
                             <span className={`text-xs ${isDark ? 'text-gray-100' : 'text-gray-600'} font-mono w-12`}>{formatTime(currentTime)}</span>
                             <input
                                 type="range"
