@@ -1527,7 +1527,7 @@ function VideoPlayerDocs() {
     const [videoVuColor, setVideoVuColor] = useState('#00ff00');
     const [videoVuPeak, setVideoVuPeak] = useState('#ff0000');
     const [videoName, setVideoName] = useState('Sample Video');
-    const [videoThumbnail, setVideoThumbnail] = useState('https://via.placeholder.com/800x450');
+    const [videoThumbnail, setVideoThumbnail] = useState('./ecplayer-thumb.jpg');
     const [videoAutoPlay, setVideoAutoPlay] = useState(false);
     const [videoShowControls, setVideoShowControls] = useState(true);
 
@@ -2151,7 +2151,7 @@ export default function MediaPlayerDocs() {
                                     </svg>
                                 </div>
                                 <h3 className="text-white font-semibold mb-2">Audio Players</h3>
-                                <p className="text-gray-400 text-sm">Advanced audio playback with real-time visualization</p>
+                                <p className="text-gray-400 text-sm">Advanced audio playback with real-time visualization & equalizer</p>
                             </div>
 
                             <div className="p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
@@ -2161,7 +2161,7 @@ export default function MediaPlayerDocs() {
                                     </svg>
                                 </div>
                                 <h3 className="text-white font-semibold mb-2">Video Players</h3>
-                                <p className="text-gray-400 text-sm">Professional video playback with custom controls</p>
+                                <p className="text-gray-400 text-sm">Professional video playback with custom controls & equalizer</p>
                             </div>
 
                             <div className="p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
