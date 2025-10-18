@@ -750,7 +750,7 @@ function VisualizePlayer({
             <div style={{ background: !(noControls || transparent) && currentTheme.bg }} className={!(noControls || transparent) && 'p-4'}>
                 {/* VU Meter */}
                 <div className='relative'>
-                    <div className={`${transparent && showEqualizer && 'opacity-40'} ${!(noControls || transparent) && (isDark ? 'bg-black/40' : 'bg-white/70')} rounded-lg ${!noControls && "mb-6"} ${!(noControls || transparent) && "p-4"} shadow-sm`}>
+                    <div className={`${transparent && showEqualizer && 'opacity-30'} ${!(noControls || transparent) && (isDark ? 'bg-black/40' : 'bg-white/70')} rounded-lg ${!noControls && "mb-6"} ${!(noControls || transparent) && "p-4"} shadow-sm`}>
                         <div className="flex justify-center items-end gap-1 h-64" ref={vuContainerRef}></div>
                     </div>
                     {showEqualizer && (
@@ -948,7 +948,7 @@ function VisualizePlayer({
                         <div className="flex items-center gap-1 md:gap-3 ml-auto">
                             <button
                                 onClick={toggleMute}
-                                className="p-2 rounded-lg hover:bg-gray-100 transition-all"
+                                className="p-2 rounded-full hover:bg-gray-100/50 transition-all"
                             >
                                 {isMuted || volume === 0 ? (
                                     <VolumeX size={20} className={isDark ? 'text-gray-100' : 'text-gray-600'} />

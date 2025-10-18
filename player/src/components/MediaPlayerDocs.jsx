@@ -1633,7 +1633,8 @@ function VideoPlayerDocs() {
         'Volume control with mute toggle',
         'Seek bar with time display',
         'Fullscreen capability',
-        'Auto-play capability'
+        'Auto-play capability',
+        '3-band equalizer with bass, mid, and treble controls'
     ];
 
     return (
