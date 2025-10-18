@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react';
-import { VisualizePlayer, themes, ThemeSelector, DemoVisualizePlayer } from './components/Player';
+import MediaPlayerDocs from './components/MediaPlayerDocs';
 
 function App() {
   
 
-  return <DemoVisualizePlayer />
+  return <MediaPlayerDocs />
 }
 
 export default App;

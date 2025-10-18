@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Pause, Square, Volume2, VolumeX, Repeat, Upload } from 'lucide-react';
+import { Play, Pause, Square, Volume2, VolumeX, Repeat, Upload, Maximize, Minimize, ChevronDown, ChevronUp, Copy, Check, Settings } from 'lucide-react';
 
 const formatTime = (seconds) => {
     if (isNaN(seconds)) return '0:00';
@@ -105,6 +105,8 @@ const themes = {
         slider: '#ec4899'
     }
 }
+
+// Audio
 
 function ThemeSelector({ theme, setTheme, close }) {
     const themeOptions = Object.keys(themes).map(key => ({
@@ -327,22 +329,85 @@ function VisualizePlayer({
 
     // Update audio source when it changes
     useEffect(() => {
-        if (audioRef.current && audio) {
+        if (audio) {
             const wasPlaying = isPlaying;
+            const currentVolume = volume;
+            const currentLoop = isLoop;
 
-            // Reset audio context when changing tracks
-            if (audioContextRef.current) {
-                if (animationRef.current) {
-                    cancelAnimationFrame(animationRef.current);
+            // Stop animation
+            if (animationRef.current) {
+                cancelAnimationFrame(animationRef.current);
+                animationRef.current = null;
+            }
+
+            // Properly disconnect and close audio context
+            if (sourceRef.current) {
+                try {
+                    sourceRef.current.disconnect();
+                } catch (e) {
+                    console.warn("Source disconnect error:", e);
                 }
-                audioContextRef.current = null;
-                analyserRef.current = null;
                 sourceRef.current = null;
             }
 
-            audioRef.current.pause();
+            if (analyserRef.current) {
+                try {
+                    analyserRef.current.disconnect();
+                } catch (e) {
+                    console.warn("Analyser disconnect error:", e);
+                }
+                analyserRef.current = null;
+            }
+
+            if (audioContextRef.current) {
+                audioContextRef.current.close().catch(e => console.warn("AudioContext close error:", e));
+                audioContextRef.current = null;
+            }
+
+            // Remove old event listeners
+            if (audioRef.current) {
+                audioRef.current.pause();
+                audioRef.current.src = '';
+                audioRef.current.load();
+            }
+
+            // Create a completely new audio element
+            audioRef.current = new Audio();
             audioRef.current.src = audio;
+            audioRef.current.volume = isMuted ? 0 : currentVolume / 100;
+            audioRef.current.loop = currentLoop;
             audioRef.current.load();
+
+            // Re-attach event listeners
+            const audioElement = audioRef.current;
+
+            const handleTimeUpdate = () => {
+                if (!isSeeking) {
+                    setCurrentTime(audioElement.currentTime);
+                }
+            };
+
+            const handleLoadedMetadata = () => {
+                setDuration(audioElement.duration);
+            };
+
+            const handleEnded = () => {
+                if (!isLoop) {
+                    setIsPlaying(false);
+                    if (animationRef.current) {
+                        cancelAnimationFrame(animationRef.current);
+                    }
+                }
+            };
+
+            const handlePlay = () => setIsPlaying(true);
+            const handlePause = () => setIsPlaying(false);
+
+            audioElement.addEventListener('timeupdate', handleTimeUpdate);
+            audioElement.addEventListener('loadedmetadata', handleLoadedMetadata);
+            audioElement.addEventListener('ended', handleEnded);
+            audioElement.addEventListener('play', handlePlay);
+            audioElement.addEventListener('pause', handlePause);
 
             setCurrentTime(0);
             setIsPlaying(false);
@@ -931,7 +996,7 @@ function WaveAudioPlayer({
     const secondaryTextColor = mode === 'dark' ? 'text-gray-500' : 'text-gray-400';
 
     return (
-        <div className="w-full max-w-lg" style={{ width: width+'px' }}>
+        <div className="w-full max-w-lg" style={{ width: width + 'px' }}>
             <audio ref={audioRef} src={audioUrl} />
 
             <div className="rounded-2xl shadow-2xl">
@@ -1141,6 +1206,652 @@ function NanoAudioPlayer({ audio: audioUrl, thumbnail, gradient: colors = ['#cd7
     );
 }
 
+// Video
+
+function VideoPlayer({
+    video,
+    name = 'No video loaded',
+    audioVisual = null, // { side: 'left'|'right'|'top'|'bottom', color: '#00ff00', peak: '#ff0000' }
+    volume: vol = 100,
+    thumbnail = null,
+    controls = {
+        play: true,
+        pause: true,
+        stop: true,
+        seekbar: true,
+        volume: true,
+        fullscreen: true,
+        videoName: true
+    },
+    mode = 'light',
+    transparent = false,
+    autoPlay = false
+}) {
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [currentTime, setCurrentTime] = useState(0);
+    const [duration, setDuration] = useState(0);
+    const [volume, setVolume] = useState(vol || 100);
+    const [isMuted, setIsMuted] = useState(false);
+    const [isSeeking, setIsSeeking] = useState(false);
+    const [isFullscreen, setIsFullscreen] = useState(false);
+    const [error, setError] = useState([]);
+
+    const videoRef = useRef(null);
+    const containerRef = useRef(null);
+    const audioContextRef = useRef(null);
+    const analyserRef = useRef(null);
+    const sourceRef = useRef(null);
+    const animationRef = useRef(null);
+    const vuContainerRef = useRef(null);
+    const splitterRef = useRef(null);
+
+    // Audio visualization data for L and R channels
+    const leftPeakRef = useRef(0);
+    const rightPeakRef = useRef(0);
+    const leftHoldRef = useRef(0);
+    const rightHoldRef = useRef(0);
+    const leftHoldTimeRef = useRef(0);
+    const rightHoldTimeRef = useRef(0);
+
+    const isDark = mode === 'dark';
+    const noControls = (typeof controls === 'object' && Object.keys(controls).length === 0);
+
+    // Prop validation
+    useEffect(() => {
+        const errors = [];
+
+        if (video && typeof video !== 'string') {
+            errors.push(['TypeError', 'video must be a string (URL or path)']);
+        }
+
+        if (name && typeof name !== 'string') {
+            errors.push(['TypeError', 'name must be a string']);
+        }
+
+        if (typeof vol !== 'number' || vol < 0 || vol > 100) {
+            errors.push(['TypeError', 'volume must be a number between 0 and 100']);
+        }
+
+        if (audioVisual && typeof audioVisual !== 'object') {
+            errors.push(['TypeError', 'audioVisual must be an object']);
+        } else if (audioVisual) {
+            if (!['left', 'right', 'top', 'bottom'].includes(audioVisual.side)) {
+                errors.push(['ValueError', "audioVisual.side must be 'left', 'right', 'top', or 'bottom'"]);
+            }
+        }
+
+        if (errors.length > 0) {
+            setError(errors);
+            console.group('%cVideoPlayer: Prop validation failed', 'color:red');
+            errors.forEach(e => console.error(`${e[0]}: ${e[1]}`));
+            console.groupEnd();
+        } else {
+            setError([]);
+        }
+    }, [video, name, vol, audioVisual, controls, mode]);
+
+    // Initialize video element
+    useEffect(() => {
+        if (!videoRef.current) return;
+
+        const videoElement = videoRef.current;
+
+        const handleTimeUpdate = () => {
+            if (!isSeeking) {
+                setCurrentTime(videoElement.currentTime);
+            }
+        };
+
+        const handleLoadedMetadata = () => {
+            setDuration(videoElement.duration);
+        };
+
+        const handleEnded = () => {
+            setIsPlaying(false);
+            if (animationRef.current) {
+                cancelAnimationFrame(animationRef.current);
+            }
+        };
+
+        const handlePlay = () => setIsPlaying(true);
+        const handlePause = () => setIsPlaying(false);
+
+        videoElement.addEventListener('timeupdate', handleTimeUpdate);
+        videoElement.addEventListener('loadedmetadata', handleLoadedMetadata);
+        videoElement.addEventListener('ended', handleEnded);
+        videoElement.addEventListener('play', handlePlay);
+        videoElement.addEventListener('pause', handlePause);
+
+        return () => {
+            videoElement.removeEventListener('timeupdate', handleTimeUpdate);
+            videoElement.removeEventListener('loadedmetadata', handleLoadedMetadata);
+            videoElement.removeEventListener('ended', handleEnded);
+            videoElement.removeEventListener('play', handlePlay);
+            videoElement.removeEventListener('pause', handlePause);
+        };
+    }, [isSeeking]);
+
+    // Update video source when it changes
+    useEffect(() => {
+        if (video) {
+            const wasPlaying = isPlaying;
+            const currentVolume = volume;
+
+            // Stop animation
+            if (animationRef.current) {
+                cancelAnimationFrame(animationRef.current);
+                animationRef.current = null;
+            }
+
+            // Properly disconnect and close audio context
+            if (sourceRef.current) {
+                try {
+                    sourceRef.current.disconnect();
+                } catch (e) {
+                    console.warn("Source disconnect error:", e);
+                }
+                sourceRef.current = null;
+            }
+
+            if (analyserRef.current) {
+                try {
+                    analyserRef.current.disconnect();
+                } catch (e) {
+                    console.warn("Analyser disconnect error:", e);
+                }
+                analyserRef.current = null;
+            }
+
+            if (audioContextRef.current) {
+                audioContextRef.current.close().catch(e => console.warn("AudioContext close error:", e));
+                audioContextRef.current = null;
+            }
+
+            // Update video source
+            if (videoRef.current) {
+                videoRef.current.pause();
+                videoRef.current.src = video;
+                videoRef.current.volume = isMuted ? 0 : currentVolume / 100;
+                videoRef.current.load();
+            }
+
+            setCurrentTime(0);
+            setIsPlaying(false);
+
+            // Reset visualization
+            leftPeakRef.current = 0;
+            rightPeakRef.current = 0;
+            leftHoldRef.current = 0;
+            rightHoldRef.current = 0;
+            leftHoldTimeRef.current = 0;
+            rightHoldTimeRef.current = 0;
+            updateVU();
+
+            if (wasPlaying) {
+                videoRef.current.play().catch(e => console.error("Play failed:", e));
+            }
+        }
+    }, [video]);
+
+    // Update volume
+    useEffect(() => {
+        if (videoRef.current) {
+            videoRef.current.volume = isMuted ? 0 : volume / 100;
+        }
+    }, [volume, isMuted]);
+
+    // Start/stop visualization
+    useEffect(() => {
+        if (isPlaying && audioVisual && !animationRef.current) {
+            if (!audioContextRef.current) {
+                setupAudioContext();
+            }
+            analyze();
+        } else if (!isPlaying && animationRef.current) {
+            fadeOutVisualization();
+        }
+    }, [isPlaying, audioVisual]);
+
+    // Fullscreen change listener
+    useEffect(() => {
+        const handleFullscreenChange = () => {
+            setIsFullscreen(!!document.fullscreenElement);
+        };
+
+        document.addEventListener('fullscreenchange', handleFullscreenChange);
+        return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    }, []);
+
+    const setupAudioContext = () => {
+        if (!audioContextRef.current && videoRef.current) {
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioContextRef.current = new AudioContext();
+                analyserRef.current = audioContextRef.current.createAnalyser();
+                analyserRef.current.fftSize = 2048;
+                analyserRef.current.smoothingTimeConstant = 0.8;
+
+                splitterRef.current = audioContextRef.current.createChannelSplitter(2);
+
+                sourceRef.current = audioContextRef.current.createMediaElementSource(videoRef.current);
+                sourceRef.current.connect(splitterRef.current);
+                sourceRef.current.connect(audioContextRef.current.destination);
+            } catch (error) {
+                console.error("Failed to setup audio context:", error);
+            }
+        }
+    };
+
+    const fadeOutVisualization = () => {
+        if (!animationRef.current) return;
+
+        leftPeakRef.current *= 0.7;
+        rightPeakRef.current *= 0.7;
+
+        const now = Date.now();
+        if (now - leftHoldTimeRef.current > 1500) {
+            leftHoldRef.current *= 0.95;
+        }
+        if (now - rightHoldTimeRef.current > 1500) {
+            rightHoldRef.current *= 0.95;
+        }
+
+        updateVU();
+
+        const maxPeak = Math.max(leftPeakRef.current, rightPeakRef.current);
+        const maxHold = Math.max(leftHoldRef.current, rightHoldRef.current);
+        if (maxPeak > 0.01 || maxHold > 0.01) {
+            animationRef.current = requestAnimationFrame(fadeOutVisualization);
+        } else {
+            leftPeakRef.current = 0;
+            rightPeakRef.current = 0;
+            leftHoldRef.current = 0;
+            rightHoldRef.current = 0;
+            updateVU();
+            cancelAnimationFrame(animationRef.current);
+            animationRef.current = null;
+        }
+    };
+
+    const analyze = () => {
+        if (!analyserRef.current || !splitterRef.current || !isPlaying) return;
+
+        const bufferLength = analyserRef.current.frequencyBinCount;
+        const leftData = new Uint8Array(bufferLength);
+        const rightData = new Uint8Array(bufferLength);
+
+        // Create analysers for each channel
+        const leftAnalyser = audioContextRef.current.createAnalyser();
+        const rightAnalyser = audioContextRef.current.createAnalyser();
+        leftAnalyser.fftSize = 2048;
+        rightAnalyser.fftSize = 2048;
+        leftAnalyser.smoothingTimeConstant = 0.8;
+        rightAnalyser.smoothingTimeConstant = 0.8;
+
+        splitterRef.current.connect(leftAnalyser, 0);
+        splitterRef.current.connect(rightAnalyser, 1);
+
+        const analyzeFrame = () => {
+            if (!isPlaying) return;
+
+            leftAnalyser.getByteFrequencyData(leftData);
+            rightAnalyser.getByteFrequencyData(rightData);
+
+            // Calculate average levels
+            let leftSum = 0, rightSum = 0;
+            for (let i = 0; i < bufferLength; i++) {
+                leftSum += leftData[i];
+                rightSum += rightData[i];
+            }
+
+            let leftAvg = leftSum / bufferLength / 255;
+            let rightAvg = rightSum / bufferLength / 255;
+
+            leftAvg = Math.pow(leftAvg, 0.5);
+            rightAvg = Math.pow(rightAvg, 0.5);
+
+            leftPeakRef.current = leftPeakRef.current * 0.7 + leftAvg * 0.3;
+            rightPeakRef.current = rightPeakRef.current * 0.7 + rightAvg * 0.3;
+
+            const now = Date.now();
+            if (leftPeakRef.current > leftHoldRef.current) {
+                leftHoldRef.current = leftPeakRef.current;
+                leftHoldTimeRef.current = now;
+            } else if (now - leftHoldTimeRef.current > 1500) {
+                leftHoldRef.current *= 0.95;
+            }
+
+            if (rightPeakRef.current > rightHoldRef.current) {
+                rightHoldRef.current = rightPeakRef.current;
+                rightHoldTimeRef.current = now;
+            } else if (now - rightHoldTimeRef.current > 1500) {
+                rightHoldRef.current *= 0.95;
+            }
+
+            updateVU();
+            animationRef.current = requestAnimationFrame(analyzeFrame);
+        };
+
+        analyzeFrame();
+    };
+
+    const updateVU = () => {
+        if (!vuContainerRef.current || !audioVisual) return;
+
+        const color = audioVisual.color || '#00ff00';
+        const peakColor = audioVisual.peak || '#ff0000';
+
+        const leftHeight = leftPeakRef.current * 100;
+        const rightHeight = rightPeakRef.current * 100;
+        const leftPeakPos = 100 - (leftHoldRef.current * 100);
+        const rightPeakPos = 100 - (rightHoldRef.current * 100);
+
+        const isHorizontal = audioVisual.side === 'top' || audioVisual.side === 'bottom';
+
+        if (isHorizontal) {
+            vuContainerRef.current.innerHTML = `
+                <div class="flex gap-2 h-full">
+                    <div class="flex-1 flex flex-col gap-1">
+                        <div class="text-xs text-white opacity-70 text-center">L</div>
+                        <div class="flex-1 flex items-center">
+                            <div class="relative w-full h-4 bg-black/30 rounded-full overflow-hidden">
+                                <div class="absolute left-0 top-0 h-full rounded-full transition-all duration-75" style="width: ${leftHeight}%; background: ${color};"></div>
+                                ${leftHoldRef.current > 0.1 ? `<div class="absolute top-0 w-1 h-full transition-all duration-100" style="left: ${leftHoldRef.current * 100}%; background: ${peakColor};"></div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-1 flex flex-col gap-1">
+                        <div class="text-xs text-white opacity-70 text-center">R</div>
+                        <div class="flex-1 flex items-center">
+                            <div class="relative w-full h-4 bg-black/30 rounded-full overflow-hidden">
+                                <div class="absolute left-0 top-0 h-full rounded-full transition-all duration-75" style="width: ${rightHeight}%; background: ${color};"></div>
+                                ${rightHoldRef.current > 0.1 ? `<div class="absolute top-0 w-1 h-full transition-all duration-100" style="left: ${rightHoldRef.current * 100}%; background: ${peakColor};"></div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else {
+            vuContainerRef.current.innerHTML = `
+                <div class="flex gap-2 h-full">
+                    <div class="flex-1 flex flex-col">
+                        <div class="text-xs text-white opacity-70 text-center mb-1">L</div>
+                        <div class="flex-1 relative flex flex-col justify-end bg-black/30 rounded-lg overflow-hidden">
+                            <div class="rounded-t transition-all duration-75" style="height: ${leftHeight}%; background: ${color};">
+                                ${leftHoldRef.current > 0.1 ? `<div class="absolute w-full h-1 transition-all duration-100" style="top: ${leftPeakPos}%; background: ${peakColor};"></div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-1 flex flex-col">
+                        <div class="text-xs text-white opacity-70 text-center mb-1">R</div>
+                        <div class="flex-1 relative flex flex-col justify-end bg-black/30 rounded-lg overflow-hidden">
+                            <div class="rounded-t transition-all duration-75" style="height: ${rightHeight}%; background: ${color};">
+                                ${rightHoldRef.current > 0.1 ? `<div class="absolute w-full h-1 transition-all duration-100" style="top: ${rightPeakPos}%; background: ${peakColor};"></div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    };
+
+    const togglePlay = () => {
+        if (!videoRef.current || !video) return;
+
+        if (isPlaying) {
+            videoRef.current.pause();
+        } else {
+            if (audioContextRef.current && audioContextRef.current.state === 'suspended') {
+                audioContextRef.current.resume();
+            }
+            videoRef.current.play().catch(e => console.error("Play failed:", e));
+        }
+    };
+
+    const stop = () => {
+        if (!videoRef.current) return;
+
+        videoRef.current.pause();
+        videoRef.current.currentTime = 0;
+        setIsPlaying(false);
+        setCurrentTime(0);
+
+        leftPeakRef.current = 0;
+        rightPeakRef.current = 0;
+        leftHoldRef.current = 0;
+        rightHoldRef.current = 0;
+        updateVU();
+    };
+
+    const handleSeekChange = (e) => {
+        const value = parseFloat(e.target.value);
+        const seekTime = (value / 100) * duration;
+        setCurrentTime(seekTime);
+
+        if (videoRef.current && !isSeeking) {
+            videoRef.current.currentTime = seekTime;
+        }
+    };
+
+    const handleSeekMouseDown = () => setIsSeeking(true);
+    const handleSeekMouseUp = () => {
+        if (videoRef.current) {
+            videoRef.current.currentTime = currentTime;
+        }
+        setIsSeeking(false);
+    };
+
+    const handleVolumeChange = (e) => {
+        const newVolume = parseInt(e.target.value);
+        setVolume(newVolume);
+        setIsMuted(newVolume === 0);
+    };
+
+    const toggleMute = () => setIsMuted(!isMuted);
+
+    const toggleFullscreen = () => {
+        if (!containerRef.current) return;
+
+        if (!document.fullscreenElement) {
+            containerRef.current.requestFullscreen().catch(e => console.error("Fullscreen failed:", e));
+        } else {
+            document.exitFullscreen();
+        }
+    };
+
+    const formatTime = (time) => {
+        if (isNaN(time)) return '0:00';
+        const minutes = Math.floor(time / 60);
+        const seconds = Math.floor(time % 60);
+        return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    };
+
+    useEffect(() => {
+        if (noControls && !isPlaying || autoPlay) {
+            togglePlay();
+        }
+    }, [controls]);
+
+    if (error && error.length > 0) {
+        return error.map((e, i) => (
+            <div key={i} className="text-red-500 text-sm bg-red-50 p-3 rounded mb-4 border border-red-300">
+                <strong>{e[0]}:</strong> {e[1]}
+            </div>
+        ));
+    }
+
+    const vuPosition = audioVisual ? audioVisual.side : null;
+    const isHorizontalVU = vuPosition === 'top' || vuPosition === 'bottom';
+
+    return (
+        <div 
+            ref={containerRef}
+            className='rounded-xl overflow-hidden' 
+            style={{ backgroundColor: !(noControls || transparent) && (isDark ? '#606060ff' : 'white') }}
+        >
+            <div style={{ background: !(noControls || transparent) && (isDark ? '#1a1a1a' : '#f5f5f5') }} className={!(noControls || transparent) && 'p-4'}>
+                {/* Video Name */}
+                {controls.videoName && (
+                    <div className="mb-4">
+                        <div className={`${isDark ? 'text-gray-100' : 'text-gray-700'} font-medium`}>{name}</div>
+                    </div>
+                )}
+
+                {/* Video Container with VU Meters */}
+                <div className={`relative ${isHorizontalVU ? 'flex flex-col gap-3' : 'flex gap-3'} mb-4`}>
+                    {/* VU Meter - Top */}
+                    {audioVisual && vuPosition === 'top' && (
+                        <div className="w-full h-16 bg-black/20 rounded-lg p-2" ref={vuContainerRef}></div>
+                    )}
+
+                    <div className={`flex ${!isHorizontalVU && 'flex-1'} gap-3`}>
+                        {/* VU Meter - Left */}
+                        {audioVisual && vuPosition === 'left' && (
+                            <div className="w-24 bg-black/20 rounded-lg p-2" ref={vuContainerRef}></div>
+                        )}
+
+                        {/* Video Element */}
+                        <div className="flex-1 bg-black rounded-lg overflow-hidden">
+                            <video
+                                ref={videoRef}
+                                className="w-full h-full object-contain"
+                                poster={thumbnail}
+                            >
+                                {video && <source src={video} />}
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+
+                        {/* VU Meter - Right */}
+                        {audioVisual && vuPosition === 'right' && (
+                            <div className="w-24 bg-black/20 rounded-lg p-2" ref={vuContainerRef}></div>
+                        )}
+                    </div>
+
+                    {/* VU Meter - Bottom */}
+                    {audioVisual && vuPosition === 'bottom' && (
+                        <div className="w-full h-16 bg-black/20 rounded-lg p-2" ref={vuContainerRef}></div>
+                    )}
+                </div>
+
+                {/* Seekbar */}
+                {controls.seekbar && (
+                    <div className="mb-4">
+                        <div className="flex items-center gap-3">
+                            <span className={`text-xs ${isDark ? 'text-gray-100' : 'text-gray-600'} font-mono w-12`}>{formatTime(currentTime)}</span>
+                            <input
+                                type="range"
+                                min="0"
+                                max="100"
+                                value={duration > 0 ? (currentTime / duration) * 100 : 0}
+                                onChange={handleSeekChange}
+                                onMouseDown={handleSeekMouseDown}
+                                onMouseUp={handleSeekMouseUp}
+                                onTouchStart={handleSeekMouseDown}
+                                onTouchEnd={handleSeekMouseUp}
+                                disabled={!video}
+                                className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                                style={{
+                                    background: video && duration > 0
+                                        ? `linear-gradient(to right, #3b82f6 ${(currentTime / duration) * 100}%, #e5e7eb ${(currentTime / duration) * 100}%)`
+                                        : '#e5e7eb'
+                                }}
+                            />
+                            <span className={`text-xs ${isDark ? 'text-gray-100' : 'text-gray-600'} font-mono w-12 text-right`}>{formatTime(duration)}</span>
+                        </div>
+                    </div>
+                )}
+
+                {/* Controls */}
+                <div className="flex flex-wrap items-center gap-3">
+                    {controls.play && (
+                        <button
+                            onClick={togglePlay}
+                            disabled={!video}
+                            className="px-4 py-2 rounded-full text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all"
+                        >
+                            {isPlaying ? <Pause size={16} /> : <Play size={16} />}
+                            {isPlaying ? 'Pause' : 'Play'}
+                        </button>
+                    )}
+
+                    {controls.stop && (
+                        <button
+                            onClick={stop}
+                            disabled={!video}
+                            className={`${isDark ? 'bg-gray-100 text-black hover:bg-gray-300' : 'bg-gray-700 text-white hover:bg-gray-800'} px-4 py-2 rounded-full text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all`}
+                        >
+                            <Square size={16} />
+                            Stop
+                        </button>
+                    )}
+
+                    {controls.fullscreen && (
+                        <button
+                            onClick={toggleFullscreen}
+                            className={`${isDark ? 'bg-gray-100 text-black hover:bg-gray-300' : 'bg-gray-700 text-white hover:bg-gray-800'} px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 transition-all`}
+                        >
+                            {isFullscreen ? <Minimize size={16} /> : <Maximize size={16} />}
+                            {isFullscreen ? 'Exit' : 'Full'}
+                        </button>
+                    )}
+
+                    {controls.volume && (
+                        <div className="flex items-center gap-3 ml-auto">
+                            <button
+                                onClick={toggleMute}
+                                className="p-2 rounded-lg hover:bg-gray-100 transition-all"
+                            >
+                                {isMuted || volume === 0 ? (
+                                    <VolumeX size={20} className={isDark ? 'text-gray-100' : 'text-gray-600'} />
+                                ) : (
+                                    <Volume2 size={20} className={isDark ? 'text-gray-100' : 'text-gray-600'} />
+                                )}
+                            </button>
+                            <input
+                                type="range"
+                                min="0"
+                                max="100"
+                                value={volume}
+                                onChange={handleVolumeChange}
+                                className="w-24 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                                style={{
+                                    background: `linear-gradient(to right, #3b82f6 ${volume}%, #e5e7eb ${volume}%)`
+                                }}
+                            />
+                            <span className={`text-xs ${isDark ? 'text-gray-100' : 'text-gray-700'} font-mono w-10 text-right`}>{volume}%</span>
+                        </div>
+                    )}
+                </div>
+
+                <style jsx>{`
+                    input[type="range"]::-webkit-slider-thumb {
+                        -webkit-appearance: none;
+                        appearance: none;
+                        width: 16px;
+                        height: 16px;
+                        border-radius: 50%;
+                        background: #3b82f6;
+                        cursor: pointer;
+                        border: 2px solid white;
+                        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+                    }
+                    
+                    input[type="range"]::-moz-range-thumb {
+                        width: 16px;
+                        height: 16px;
+                        border-radius: 50%;
+                        background: #3b82f6;
+                        cursor: pointer;
+                        border: 2px solid white;
+                        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+                    }
+                `}</style>
+            </div>
+        </div>
+    );
+}
+
 function DemoVisualizePlayer() {
     const [audioFile, setAudioFile] = useState(null);
     const [audioName, setAudioName] = useState('No track loaded');
@@ -1207,7 +1918,7 @@ function DemoVisualizePlayer() {
                             trackName: true
                         }}
                     />
-                    <WaveAudioPlayer audio={audioFile} width={300} thumbnail={'https://cdn-icons-png.flaticon.com/512/8316/8316619.png'} autoPlay={false} gradient={['#26ce3aff', '#39eed9ff']} background={'#c0ffefff'} />
+                    <WaveAudioPlayer audio={audioFile} width={400} thumbnail={'https://cdn-icons-png.flaticon.com/512/8316/8316619.png'} autoPlay={false} gradient={['#26ce3aff', '#39eed9ff']} background={'#c0ffefff'} />
                     <NanoAudioPlayer audio={audioFile} thumbnail={'https://cdn-icons-png.flaticon.com/512/17524/17524837.png'} autoPlay={false} gradient={['#26ce3aff', '#39eed9ff']} background={'#c0ffefff'} />
 
                     {/* Load Audio Button */}
@@ -1245,4 +1956,4 @@ function DemoVisualizePlayer() {
     );
 }
 
-export { VisualizePlayer, ThemeSelector, themes, WaveAudioPlayer, NanoAudioPlayer, DemoVisualizePlayer };
+export { VisualizePlayer, ThemeSelector, themes, WaveAudioPlayer, NanoAudioPlayer, VideoPlayer, DemoVisualizePlayer };
