@@ -1372,7 +1372,17 @@ function VideoPlayer({
                 videoRef.current.pause();
                 videoRef.current.src = video;
                 videoRef.current.volume = isMuted ? 0 : currentVolume / 100;
-                videoRef.current.load();
+
+                // Add event listener for when video is ready to play
+                const handleCanPlay = () => {
+                    if (wasPlaying) {
+                        videoRef.current.play().catch(e => console.error("Play failed:", e));
+                    }
+                    videoRef.current.removeEventListener('canplay', handleCanPlay);
+                };
+
+                videoRef.current.addEventListener('canplay', handleCanPlay);
+                videoRef.current.load(); // Load after adding event listener
             }
 
             setCurrentTime(0);
@@ -1386,10 +1396,6 @@ function VideoPlayer({
             leftHoldTimeRef.current = 0;
             rightHoldTimeRef.current = 0;
             updateVU();
-
-            if (wasPlaying) {
-                videoRef.current.play().catch(e => console.error("Play failed:", e));
-            }
         }
     }, [video]);
 
@@ -1684,9 +1690,9 @@ function VideoPlayer({
     const isHorizontalVU = vuPosition === 'top' || vuPosition === 'bottom';
 
     return (
-        <div 
+        <div
             ref={containerRef}
-            className='rounded-xl overflow-hidden' 
+            className='rounded-xl overflow-hidden'
             style={{ backgroundColor: !(noControls || transparent) && (isDark ? '#606060ff' : 'white') }}
         >
             <div style={{ background: !(noControls || transparent) && (isDark ? '#1a1a1a' : '#f5f5f5') }} className={!(noControls || transparent) && 'p-4'}>
@@ -1701,13 +1707,13 @@ function VideoPlayer({
                 <div className={`relative ${isHorizontalVU ? 'flex flex-col gap-3' : 'flex gap-3'} mb-4`}>
                     {/* VU Meter - Top */}
                     {audioVisual && vuPosition === 'top' && (
-                        <div className="w-full h-16 bg-black/20 rounded-lg p-2" ref={vuContainerRef}></div>
+                        <div className="w-full h-16 bg-black/50 rounded-lg p-2" ref={vuContainerRef}></div>
                     )}
 
                     <div className={`flex ${!isHorizontalVU && 'flex-1'} gap-3`}>
                         {/* VU Meter - Left */}
                         {audioVisual && vuPosition === 'left' && (
-                            <div className="w-24 bg-black/20 rounded-lg p-2" ref={vuContainerRef}></div>
+                            <div className="w-12 bg-black/50 rounded-lg p-1" ref={vuContainerRef}></div>
                         )}
 
                         {/* Video Element */}
@@ -1724,13 +1730,13 @@ function VideoPlayer({
 
                         {/* VU Meter - Right */}
                         {audioVisual && vuPosition === 'right' && (
-                            <div className="w-24 bg-black/20 rounded-lg p-2" ref={vuContainerRef}></div>
+                            <div className="w-12 bg-black/50 rounded-lg p-1" ref={vuContainerRef}></div>
                         )}
                     </div>
 
                     {/* VU Meter - Bottom */}
                     {audioVisual && vuPosition === 'bottom' && (
-                        <div className="w-full h-16 bg-black/20 rounded-lg p-2" ref={vuContainerRef}></div>
+                        <div className="w-full h-16 bg-black/50 rounded-lg p-2" ref={vuContainerRef}></div>
                     )}
                 </div>
 
