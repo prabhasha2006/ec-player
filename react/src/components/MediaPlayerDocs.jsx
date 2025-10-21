@@ -2261,7 +2261,7 @@ export default function MediaPlayerDocs() {
                                 <div className="text-gray-400 text-sm mb-1">License</div>
                                 <div className="font-medium">MIT</div>
                                 <a
-                                    href="https://github.com/prabhasha2006/music-player/blob/main/LICENSE"
+                                    href="https://github.com/prabhasha2006/ec-player-react/blob/main/LICENSE"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-purple-400 hover:text-purple-300 text-sm transition-colors"

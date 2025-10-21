@@ -1,2 +1,2 @@
-# music-player
-React Music Player
+# EcPlayer.js
+K.Prabhasha
