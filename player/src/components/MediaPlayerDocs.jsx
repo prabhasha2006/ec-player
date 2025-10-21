@@ -2106,9 +2106,14 @@ export default function MediaPlayerDocs() {
                         </h1>
 
                         {/* Subtitle */}
-                        <p className="text-xl md:text-2xl text-gray-400 mb-12 leading-relaxed max-w-3xl mx-auto">
+                        <p className="text-xl md:text-2xl text-gray-400 mb-6 leading-relaxed max-w-3xl mx-auto">
                             Professional audio and video players with advanced visualization,
                             customizable themes, and seamless responsive design
+                        </p>
+
+                        {/* ud */}
+                        <p className="text-xl md:text-2xl text-red-400 mb-6 leading-relaxed max-w-3xl mx-auto">
+                            Under Development !
                         </p>
 
                         {/* CTA Buttons */}
@@ -2256,7 +2261,7 @@ export default function MediaPlayerDocs() {
                                 <div className="text-gray-400 text-sm mb-1">License</div>
                                 <div className="font-medium">MIT</div>
                                 <a
-                                    href="https://github.com/evelocore/ec-players-react/blob/main/LICENSE"
+                                    href="https://github.com/prabhasha2006/music-player/blob/main/LICENSE"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-purple-400 hover:text-purple-300 text-sm transition-colors"
