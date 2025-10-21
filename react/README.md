@@ -1,2 +1,0 @@
-# EcPlayer.js
-K.Prabhasha
