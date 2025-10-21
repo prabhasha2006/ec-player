@@ -2090,13 +2090,13 @@ export default function MediaPlayerDocs() {
                 <div className="max-w-7xl mx-auto px-4 min-h-[90vh] p-4 flex items-center justify-center relative">
                     <div className="text-center max-w-5xl">
                         {/* Badge */}
-                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-500/20 bg-purple-500/5 mb-8">
+                        {/* <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-500/20 bg-purple-500/5 mb-8">
                             <span className="relative flex h-2 w-2">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                                 <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
                             </span>
                             <span className="text-sm text-gray-300">Open Source • MIT License</span>
-                        </div>
+                        </div> */}
 
                         {/* Main Heading */}
                         <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight">
@@ -2259,7 +2259,7 @@ export default function MediaPlayerDocs() {
 
                             <div className="text-center md:text-left">
                                 <div className="text-gray-400 text-sm mb-1">License</div>
-                                <div className="font-medium">MIT</div>
+                                <div className="font-medium">CC BY-NC-ND 4.0</div>
                                 <a
                                     href="https://github.com/prabhasha2006/ec-player/blob/main/LICENSE"
                                     target="_blank"
