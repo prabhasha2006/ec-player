@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { AudioLines, Upload, CassetteTape, SquareMinus, ChevronDown, ChevronUp, Copy, Check, Settings, Info, TvMinimalPlay, Code } from 'lucide-react';
-import { VisualizePlayer, ThemeSelector, themes, WaveAudioPlayer, NanoAudioPlayer, VideoPlayer } from './Player';
+import { VisualizePlayer, ThemeSelector, themes, WaveAudioPlayer, NanoAudioPlayer, VideoPlayer } from './Player.js';
 
 const importFrom = 'ecplayer/react'
 

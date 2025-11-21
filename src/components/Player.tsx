@@ -1,7 +1,112 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Play, Pause, Square, Volume2, VolumeX, Repeat, Upload, Maximize, Minimize, Sliders } from 'lucide-react';
 
-const themes = {
+// --- Types ---
+export interface Theme {
+    name: string;
+    bg: string;
+    bars: string[];
+    peak: string;
+    button: string;
+    buttonHover: string;
+    slider: string;
+}
+
+export type ThemeKey =
+    | 'rainbow' | 'ocean' | 'sunset' | 'forest' | 'midnight' | 'neon' | 'purple' | 'amber' | 'rose';
+
+export type Themes = Record<ThemeKey, Theme>;
+
+export interface ThemeSelectorProps {
+    theme: ThemeKey | Theme;
+    setTheme: React.Dispatch<React.SetStateAction<ThemeKey | Theme | string>>;
+    close: () => void;
+}
+
+export interface VisualizePlayerProps {
+    audio?: string;
+    name?: string;
+    author?: string;
+    theme?: ThemeKey | Theme;
+    volume?: number;
+    thumbnail?: string | null;
+    controls?: {
+        play?: boolean;
+        pause?: boolean;
+        stop?: boolean;
+        seekbar?: boolean;
+        volume?: boolean;
+        loop?: boolean;
+        trackName?: boolean;
+        equalizer?: boolean;
+    };
+    mode?: 'light' | 'dark';
+    bands?: { freq: number }[] | null;
+    transparent?: boolean;
+    autoPlay?: boolean;
+    equalizer?: {
+        bass?: number;
+        mid?: number;
+        treble?: number;
+    };
+}
+
+export interface WaveAudioPlayerProps {
+    audio: string;
+    gradient?: string[];
+    background?: string;
+    autoPlay?: boolean;
+    thumbnail?: string | null;
+    width?: number;
+    equalizer?: {
+        bass?: number;
+        mid?: number;
+        treble?: number;
+    };
+    mode?: 'light' | 'dark';
+}
+
+export interface NanoAudioPlayerProps {
+    audio: string;
+    thumbnail?: string;
+    gradient?: string[];
+    background?: string;
+    autoPlay?: boolean;
+    mode?: 'light' | 'dark';
+}
+
+export interface VideoPlayerProps {
+    video: string;
+    name?: string;
+    audioVisual?: {
+        side: 'left' | 'right' | 'top' | 'bottom';
+        color?: string;
+        peak?: string;
+    } | null;
+    volume?: number;
+    thumbnail?: string | null;
+    controls?: {
+        play?: boolean;
+        pause?: boolean;
+        stop?: boolean;
+        seekbar?: boolean;
+        volume?: boolean;
+        fullscreen?: boolean;
+        videoName?: boolean;
+        equalizer?: boolean;
+    };
+    mode?: 'light' | 'dark';
+    transparent?: boolean;
+    autoPlay?: boolean;
+    equalizer?: {
+        bass?: number;
+        mid?: number;
+        treble?: number;
+    };
+}
+
+// --- Themes ---
+const themes: Themes = {
     rainbow: {
         name: 'Rainbow',
         bg: 'linear-gradient(135deg, #ff000043 0%, #ff7f0043 15%, #ffff0043 30%, #00ff0043 45%, #00ffff43 60%, #0000ff43 75%, #4b008243 85%, #9400d343 92%, #ff00ff43 100%)',
@@ -65,7 +170,7 @@ const themes = {
     },
     purple: {
         name: 'Royal Purple',
-        bg: 'linear-gradient(135deg, #667eea43 0%, #764ba243 100%)',
+        bg: 'linear-gradient(135deg, #2f1c5622 0%, #764ba243 100%)',
         bars: ['#8b5cf6', '#a78bfa', '#c4b5fd', '#ddd6fe'],
         peak: '#6d28d9',
         button: '#8b5cf6',
@@ -94,8 +199,8 @@ const themes = {
 
 // Audio
 
-function ThemeSelector({ theme, setTheme, close }) {
-    const themeOptions = Object.keys(themes).map(key => ({
+function ThemeSelector({ theme, setTheme, close }: ThemeSelectorProps) {
+    const themeOptions = (Object.keys(themes) as ThemeKey[]).map(key => ({
         key,
         name: themes[key].name,
         colors: themes[key].bars
@@ -144,7 +249,7 @@ function VisualizePlayer({
         trackName: true,
         equalizer: true
     },
-    mode = 'light',
+    mode = 'light' as 'light' | 'dark',
     bands: _bands = null,
     transparent = false,
     autoPlay = false,
@@ -153,7 +258,7 @@ function VisualizePlayer({
         mid: 0,
         treble: 0
     }
-}) {
+}: VisualizePlayerProps) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
@@ -240,9 +345,7 @@ function VisualizePlayer({
         }
 
         // 6. mode: must be 'dark' or 'light'
-        if (mode && mode !== 'dark' && mode !== 'light') {
-            errors.push(['ModeError', "mode must be either 'dark' or 'light'"]);
-        }
+        // mode is always 'light' | 'dark' by type
 
         // 7. bands: must be array of { freq: number }
         if (_bands) {
@@ -283,15 +386,19 @@ function VisualizePlayer({
     const bandPeaksRef = useRef(bands.map(() => 0));
     const peakHoldsRef = useRef(bands.map(() => 0));
     const peakHoldTimesRef = useRef(bands.map(() => 0));
-    const themeRef = useRef(theme);
+    const themeRef = useRef<ThemeKey>(typeof theme === 'string' ? theme : 'purple');
 
-    let currentTheme = (typeof theme === 'string') ? (themes[theme] || themes.purple) : (typeof theme === 'object') ? theme : themes.purple;
+    let currentTheme: Theme = (typeof theme === 'string') ? (themes[theme] || themes.purple) : (typeof theme === 'object') ? theme : themes.purple;
     const isDark = mode === 'dark';
     const noControls = (typeof controls === 'object' && Object.keys(controls).length === 0);
 
     // Update theme ref when theme changes
     useEffect(() => {
-        themeRef.current = theme;
+        if (typeof theme === 'string') {
+            themeRef.current = theme;
+        } else {
+            themeRef.current = 'purple';
+        }
         updateVU();
     }, [theme]);
 
@@ -413,7 +520,15 @@ function VisualizePlayer({
 
             // Create a completely new audio element
             audioRef.current = new Audio();
+            // allow analysis for cross-origin sources when CORS headers present
+            try {
+                audioRef.current.crossOrigin = 'anonymous';
+            } catch (e) {
+                console.debug('Could not set crossOrigin on audio element', e);
+            }
             audioRef.current.src = audio;
+            audioRef.current.preload = 'auto';
+            audioRef.current.muted = false;
             audioRef.current.volume = isMuted ? 0 : currentVolume / 100;
             audioRef.current.loop = currentLoop;
             audioRef.current.load();
@@ -451,6 +566,8 @@ function VisualizePlayer({
 
             setCurrentTime(0);
             setIsPlaying(false);
+
+            console.debug('Audio element created', { src: audioRef.current.src, volume: audioRef.current.volume, loop: audioRef.current.loop });
 
             // Reset visualization
             bandPeaksRef.current = bands.map(() => 0);
@@ -508,40 +625,42 @@ function VisualizePlayer({
     const setupAudioContext = () => {
         if (!audioContextRef.current && audioRef.current) {
             try {
-                const AudioContext = window.AudioContext || window.webkitAudioContext;
-                audioContextRef.current = new AudioContext();
+                const AudioContextClass: any = (window as any).AudioContext || (window as any).webkitAudioContext;
+                if (AudioContextClass) {
+                    audioContextRef.current = new AudioContextClass();
 
-                // Create filters
-                bassFilterRef.current = audioContextRef.current.createBiquadFilter();
-                bassFilterRef.current.type = 'lowshelf';
-                bassFilterRef.current.frequency.value = 320;
-                bassFilterRef.current.gain.value = eqBands.bass;
+                    // Create filters
+                    bassFilterRef.current = audioContextRef.current.createBiquadFilter();
+                    bassFilterRef.current.type = 'lowshelf';
+                    bassFilterRef.current.frequency.value = 320;
+                    bassFilterRef.current.gain.value = eqBands.bass;
 
-                midFilterRef.current = audioContextRef.current.createBiquadFilter();
-                midFilterRef.current.type = 'peaking';
-                midFilterRef.current.frequency.value = 1000;
-                midFilterRef.current.Q.value = 0.5;
-                midFilterRef.current.gain.value = eqBands.mid;
+                    midFilterRef.current = audioContextRef.current.createBiquadFilter();
+                    midFilterRef.current.type = 'peaking';
+                    midFilterRef.current.frequency.value = 1000;
+                    midFilterRef.current.Q.value = 0.5;
+                    midFilterRef.current.gain.value = eqBands.mid;
 
-                trebleFilterRef.current = audioContextRef.current.createBiquadFilter();
-                trebleFilterRef.current.type = 'highshelf';
-                trebleFilterRef.current.frequency.value = 3200;
-                trebleFilterRef.current.gain.value = eqBands.treble;
+                    trebleFilterRef.current = audioContextRef.current.createBiquadFilter();
+                    trebleFilterRef.current.type = 'highshelf';
+                    trebleFilterRef.current.frequency.value = 3200;
+                    trebleFilterRef.current.gain.value = eqBands.treble;
 
-                // Create analyser
-                analyserRef.current = audioContextRef.current.createAnalyser();
-                analyserRef.current.fftSize = 8192;
-                analyserRef.current.smoothingTimeConstant = 0.7;
+                    // Create analyser
+                    analyserRef.current = audioContextRef.current.createAnalyser();
+                    analyserRef.current.fftSize = 8192;
+                    analyserRef.current.smoothingTimeConstant = 0.7;
 
-                // Create source
-                sourceRef.current = audioContextRef.current.createMediaElementSource(audioRef.current);
+                    // Create source
+                    sourceRef.current = audioContextRef.current.createMediaElementSource(audioRef.current);
 
-                // Connect nodes: source -> filters -> analyser -> destination
-                sourceRef.current.connect(bassFilterRef.current);
-                bassFilterRef.current.connect(midFilterRef.current);
-                midFilterRef.current.connect(trebleFilterRef.current);
-                trebleFilterRef.current.connect(analyserRef.current);
-                analyserRef.current.connect(audioContextRef.current.destination);
+                    // Connect nodes: source -> filters -> analyser -> destination
+                    sourceRef.current.connect(bassFilterRef.current);
+                    bassFilterRef.current.connect(midFilterRef.current);
+                    midFilterRef.current.connect(trebleFilterRef.current);
+                    trebleFilterRef.current.connect(analyserRef.current);
+                    analyserRef.current.connect(audioContextRef.current.destination);
+                }
             } catch (error) {
                 console.error("Failed to setup audio context:", error);
             }
@@ -746,7 +865,7 @@ function VisualizePlayer({
     }
 
     return (
-        <div ref={containerRef} className='rounded-xl overflow-hidden' style={{ backgroundColor: !(noControls || transparent) && (isDark ? '#606060ff' : 'white') }}>
+        <div ref={containerRef} className='w-full rounded-xl overflow-hidden' style={{ backgroundColor: !(noControls || transparent) && (isDark ? '#606060ff' : 'white') }}>
             <div style={{ background: !(noControls || transparent) && currentTheme.bg }} className={!(noControls || transparent) && 'p-4'}>
                 {/* VU Meter */}
                 <div className='relative'>
@@ -973,7 +1092,7 @@ function VisualizePlayer({
                     )}
                 </div>
 
-                <style jsx>{`
+                <style>{`
                 input[type="range"]::-webkit-slider-thumb {
                     -webkit-appearance: none;
                     appearance: none;
@@ -1032,8 +1151,9 @@ function WaveAudioPlayer({
         bass: 0,
         mid: 0,
         treble: 0
-    }
-}) {
+    },
+    mode = 'light' as 'light' | 'dark',
+}: WaveAudioPlayerProps) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
@@ -1054,7 +1174,7 @@ function WaveAudioPlayer({
     const bassFilterRef = useRef(null);
     const midFilterRef = useRef(null);
     const trebleFilterRef = useRef(null);
-    const mode = 'light';
+    // mode comes from props and is typed
 
     // Generate random waveform data for visualization
     const generateWaveformData = () => {
@@ -1079,10 +1199,7 @@ function WaveAudioPlayer({
             return;
         }
 
-        if (mode !== 'dark' && mode !== 'light') {
-            setError("Mode must be either 'dark' or 'light'");
-            return;
-        }
+        // mode is always 'light' | 'dark' by type
 
         const audio = audioRef.current;
         if (!audio) return;
@@ -1123,29 +1240,32 @@ function WaveAudioPlayer({
 
         // Only create AudioContext if not already created
         if (!audioCtxRef.current) {
-            audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
-            sourceRef.current = audioCtxRef.current.createMediaElementSource(audioRef.current);
+            const AudioCtxClass: any = (window as any).AudioContext || (window as any).webkitAudioContext;
+            if (AudioCtxClass) {
+                audioCtxRef.current = new AudioCtxClass();
+                sourceRef.current = audioCtxRef.current.createMediaElementSource(audioRef.current);
 
-            // Filters
-            bassFilterRef.current = audioCtxRef.current.createBiquadFilter();
-            bassFilterRef.current.type = "lowshelf";
-            bassFilterRef.current.frequency.value = 200;
+                // Filters
+                bassFilterRef.current = audioCtxRef.current.createBiquadFilter();
+                bassFilterRef.current.type = "lowshelf";
+                bassFilterRef.current.frequency.value = 200;
 
-            midFilterRef.current = audioCtxRef.current.createBiquadFilter();
-            midFilterRef.current.type = "peaking";
-            midFilterRef.current.frequency.value = 1000;
-            midFilterRef.current.Q.value = 1;
+                midFilterRef.current = audioCtxRef.current.createBiquadFilter();
+                midFilterRef.current.type = "peaking";
+                midFilterRef.current.frequency.value = 1000;
+                midFilterRef.current.Q.value = 1;
 
-            trebleFilterRef.current = audioCtxRef.current.createBiquadFilter();
-            trebleFilterRef.current.type = "highshelf";
-            trebleFilterRef.current.frequency.value = 3000;
+                trebleFilterRef.current = audioCtxRef.current.createBiquadFilter();
+                trebleFilterRef.current.type = "highshelf";
+                trebleFilterRef.current.frequency.value = 3000;
 
-            // Connect
-            sourceRef.current
-                .connect(bassFilterRef.current)
-                .connect(midFilterRef.current)
-                .connect(trebleFilterRef.current)
-                .connect(audioCtxRef.current.destination);
+                // Connect
+                sourceRef.current
+                    .connect(bassFilterRef.current)
+                    .connect(midFilterRef.current)
+                    .connect(trebleFilterRef.current)
+                    .connect(audioCtxRef.current.destination);
+            }
         }
     }, [audioUrl]);
 
@@ -1498,7 +1618,7 @@ function WaveAudioPlayer({
     );
 }
 
-function NanoAudioPlayer({ audio: audioUrl, thumbnail, gradient: colors = ['#cd7eff', '#fe59f6'], background = '#1f273a', autoPlay = false }) {
+function NanoAudioPlayer({ audio: audioUrl, thumbnail, gradient: colors = ['#cd7eff', '#fe59f6'], background = '#1f273a', autoPlay = false }: NanoAudioPlayerProps) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const audioRef = useRef(null);
@@ -1591,7 +1711,7 @@ function NanoAudioPlayer({ audio: audioUrl, thumbnail, gradient: colors = ['#cd7
 function VideoPlayer({
     video,
     name = 'No video loaded',
-    audioVisual = null, // { side: 'left'|'right'|'top'|'bottom', color: '#00ff00', peak: '#ff0000' }
+    audioVisual = null,
     volume: vol = 100,
     thumbnail = null,
     controls = {
@@ -1604,7 +1724,7 @@ function VideoPlayer({
         videoName: true,
         equalizer: true
     },
-    mode = 'light',
+    mode = 'light' as 'light' | 'dark',
     transparent = false,
     autoPlay = false,
     equalizer = {
@@ -1612,7 +1732,7 @@ function VideoPlayer({
         mid: 0,
         treble: 0
     }
-}) {
+}: VideoPlayerProps) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
@@ -1884,42 +2004,44 @@ function VideoPlayer({
     const setupAudioContext = () => {
         if (!audioContextRef.current && videoRef.current) {
             try {
-                const AudioContext = window.AudioContext || window.webkitAudioContext;
-                audioContextRef.current = new AudioContext();
-                
-                // Create filters
-                bassFilterRef.current = audioContextRef.current.createBiquadFilter();
-                bassFilterRef.current.type = 'lowshelf';
-                bassFilterRef.current.frequency.value = 320;
-                bassFilterRef.current.gain.value = eqBands.bass;
+                const AudioContextClass: any = (window as any).AudioContext || (window as any).webkitAudioContext;
+                if (AudioContextClass) {
+                    audioContextRef.current = new AudioContextClass();
+                    
+                    // Create filters
+                    bassFilterRef.current = audioContextRef.current.createBiquadFilter();
+                    bassFilterRef.current.type = 'lowshelf';
+                    bassFilterRef.current.frequency.value = 320;
+                    bassFilterRef.current.gain.value = eqBands.bass;
 
-                midFilterRef.current = audioContextRef.current.createBiquadFilter();
-                midFilterRef.current.type = 'peaking';
-                midFilterRef.current.frequency.value = 1000;
-                midFilterRef.current.Q.value = 0.5;
-                midFilterRef.current.gain.value = eqBands.mid;
+                    midFilterRef.current = audioContextRef.current.createBiquadFilter();
+                    midFilterRef.current.type = 'peaking';
+                    midFilterRef.current.frequency.value = 1000;
+                    midFilterRef.current.Q.value = 0.5;
+                    midFilterRef.current.gain.value = eqBands.mid;
 
-                trebleFilterRef.current = audioContextRef.current.createBiquadFilter();
-                trebleFilterRef.current.type = 'highshelf';
-                trebleFilterRef.current.frequency.value = 3200;
-                trebleFilterRef.current.gain.value = eqBands.treble;
+                    trebleFilterRef.current = audioContextRef.current.createBiquadFilter();
+                    trebleFilterRef.current.type = 'highshelf';
+                    trebleFilterRef.current.frequency.value = 3200;
+                    trebleFilterRef.current.gain.value = eqBands.treble;
 
-                // Create analyser for visualization
-                analyserRef.current = audioContextRef.current.createAnalyser();
-                analyserRef.current.fftSize = 2048;
-                analyserRef.current.smoothingTimeConstant = 0.8;
+                    // Create analyser for visualization
+                    analyserRef.current = audioContextRef.current.createAnalyser();
+                    analyserRef.current.fftSize = 2048;
+                    analyserRef.current.smoothingTimeConstant = 0.8;
 
-                // Create source
-                sourceRef.current = audioContextRef.current.createMediaElementSource(videoRef.current);
-                
-                // Connect the filters in series and then to the destination
-                sourceRef.current.connect(bassFilterRef.current);
-                bassFilterRef.current.connect(midFilterRef.current);
-                midFilterRef.current.connect(trebleFilterRef.current);
-                
-                // Connect the last filter to both the analyser (for visualization) and the destination
-                trebleFilterRef.current.connect(analyserRef.current);
-                trebleFilterRef.current.connect(audioContextRef.current.destination);
+                    // Create source
+                    sourceRef.current = audioContextRef.current.createMediaElementSource(videoRef.current);
+                    
+                    // Connect the filters in series and then to the destination
+                    sourceRef.current.connect(bassFilterRef.current);
+                    bassFilterRef.current.connect(midFilterRef.current);
+                    midFilterRef.current.connect(trebleFilterRef.current);
+                    
+                    // Connect the last filter to both the analyser (for visualization) and the destination
+                    trebleFilterRef.current.connect(analyserRef.current);
+                    trebleFilterRef.current.connect(audioContextRef.current.destination);
+                }
             } catch (error) {
                 console.error("Failed to setup audio context:", error);
             }
@@ -2282,7 +2404,7 @@ function VideoPlayer({
                                         </div>
                                     </div>
 
-                                    <div className="flex justify-end mt-4">
+                                    <div className="flex justify-between mt-6">
                                         <button
                                             onClick={resetEqualizer}
                                             className={`px-3 py-1 rounded text-xs ${isDark ? 'bg-gray-700 text-gray-200 hover:bg-gray-600' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'} transition-all`}
@@ -2420,7 +2542,7 @@ function VideoPlayer({
                     )}
                 </div>
 
-                <style jsx>{`
+                <style>{`
                     input[type="range"]::-webkit-slider-thumb {
                         -webkit-appearance: none;
                         appearance: none;
@@ -2459,10 +2581,10 @@ function VideoPlayer({
 function DemoVisualizePlayer() {
     const [audioFile, setAudioFile] = useState(null);
     const [audioName, setAudioName] = useState('No track loaded');
-    const [selectedTheme, setSelectedTheme] = useState('purple');
+    const [selectedTheme, setSelectedTheme] = useState<ThemeKey>('purple');
     const [showThemeSelector, setShowThemeSelector] = useState(false);
     const [transparent, setTransparent] = useState(false)
-    const [mode, setMode] = useState('light')
+    const [mode, setMode] = useState<'light' | 'dark'>('light')
     const fileInputRef = useRef(null);
 
     const handleFileChange = (e) => {
@@ -2483,7 +2605,7 @@ function DemoVisualizePlayer() {
             <div className="w-full h-full md:h-auto md:max-w-4xl">
                 {/* Theme Selector - Initially Hidden */}
                 {showThemeSelector && (
-                    <ThemeSelector theme={selectedTheme} setTheme={setSelectedTheme} close={() => setShowThemeSelector(false)} />
+                    <ThemeSelector theme={selectedTheme as ThemeKey} setTheme={setSelectedTheme} close={() => setShowThemeSelector(false)} />
                 )}
 
                 <div className="container-glass rounded-xl p-8">

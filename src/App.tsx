@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import MediaPlayerDocs from './components/MediaPlayerDocs';
+import MediaPlayerDocs from './components/MediaPlayerDocs.js';
 
 function App() {
   
