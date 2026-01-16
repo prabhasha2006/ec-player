@@ -2184,24 +2184,19 @@ function VideoPlayer({
 
         if (isHorizontal) {
             vuContainerRef.current.innerHTML = `
-                <div class="flex gap-2 h-full">
-                    <div class="flex-1 flex flex-col gap-1">
-                        <div class="text-xs text-white opacity-70 text-center">L</div>
-                        <div class="flex-1 flex items-center">
-                            <div class="relative w-full h-4 bg-black/30 rounded-full overflow-hidden">
-                                <div class="absolute left-0 top-0 h-full rounded-full transition-all duration-75" style="width: ${leftHeight}%; background: ${color};"></div>
-                                ${leftHoldRef.current > 0.1 ? `<div class="absolute top-0 w-1 h-full transition-all duration-100" style="left: ${leftHoldRef.current * 100}%; background: ${peakColor};"></div>` : ''}
-                            </div>
+                <div class="flex flex-col gap-1 h-full justify-center">
+                    <div class="flex items-center justify-center gap-2">
+                        <div class="text-xs text-white opacity-50 w-4 text-center">L</div>
+                        <div class="relative flex-1 h-3 bg-black/40 rounded-full overflow-hidden flex justify-end">
+                            <div class="h-full rounded-l-full transition-all duration-75" style="width: ${leftHeight}%; background: ${color};"></div>
+                            ${leftHoldRef.current > 0.1 ? `<div class="absolute top-0 w-1 h-full transition-all duration-100" style="right: ${leftHoldRef.current * 100}%; background: ${peakColor};"></div>` : ''}
                         </div>
-                    </div>
-                    <div class="flex-1 flex flex-col gap-1">
-                        <div class="text-xs text-white opacity-70 text-center">R</div>
-                        <div class="flex-1 flex items-center">
-                            <div class="relative w-full h-4 bg-black/30 rounded-full overflow-hidden">
-                                <div class="absolute left-0 top-0 h-full rounded-full transition-all duration-75" style="width: ${rightHeight}%; background: ${color};"></div>
-                                ${rightHoldRef.current > 0.1 ? `<div class="absolute top-0 w-1 h-full transition-all duration-100" style="left: ${rightHoldRef.current * 100}%; background: ${peakColor};"></div>` : ''}
-                            </div>
+                        <div class="w-px h-4 bg-white/20"></div>
+                        <div class="relative flex-1 h-3 bg-black/40 rounded-full overflow-hidden flex justify-start">
+                            <div class="h-full rounded-r-full transition-all duration-75" style="width: ${rightHeight}%; background: ${color};"></div>
+                            ${rightHoldRef.current > 0.1 ? `<div class="absolute top-0 w-1 h-full transition-all duration-100" style="left: ${rightHoldRef.current * 100}%; background: ${peakColor};"></div>` : ''}
                         </div>
+                        <div class="text-xs text-white opacity-50 w-4 text-center">R</div>
                     </div>
                 </div>
             `;
@@ -2344,19 +2339,19 @@ function VideoPlayer({
     return (
         <div
             ref={containerRef}
-            className='rounded-xl overflow-hidden'
-            style={{ backgroundColor: !(noControls || transparent) && (isDark ? '#49494937' : 'white') }}
+            className={`rounded-xl overflow-hidden transition-all duration-300 ${isFullscreen ? 'fixed inset-0 z-[9999] flex flex-col h-screen w-screen bg-black' : 'relative'}`}
+            style={{ backgroundColor: !isFullscreen && !(noControls || transparent) && (isDark ? '#49494937' : 'white') }}
         >
-            <div style={{ background: !(noControls || transparent) && (isDark ? '#1a1a1ab0' : '#f5f5f5') }} className={!(noControls || transparent) && 'p-4'}>
+            <div style={{ background: !isFullscreen && !(noControls || transparent) && (isDark ? '#1a1a1ab0' : '#f5f5f5'), height: isFullscreen ? '100%' : 'auto' }} className={`${!(noControls || transparent) && 'p-4'} ${isFullscreen ? 'flex flex-col flex-1' : ''}`}>
                 {/* Video Name */}
-                {controls.videoName && (
+                {controls.videoName && !isFullscreen && (
                     <div className="mb-4">
                         <div className={`${isDark ? 'text-gray-100' : 'text-gray-700'} font-medium`}>{name}</div>
                     </div>
                 )}
 
                 {/* Video Container with VU Meters */}
-                <div className={`relative ${isHorizontalVU ? 'flex flex-col gap-3' : 'flex gap-3'} mb-4`}>
+                <div className={`relative ${isHorizontalVU ? 'flex flex-col gap-3' : 'flex gap-3'} ${isFullscreen ? 'flex-1 min-h-0' : 'mb-4'}`}>
                     {/* VU Meter - Top */}
                     {audioVisual && vuPosition === 'top' && (
                         <div className="w-full h-16 bg-black/50 rounded-lg p-2" ref={vuContainerRef}></div>
@@ -2381,7 +2376,7 @@ function VideoPlayer({
 
                             {/* Equalizer Overlay */}
                             {showEqualizer && (
-                                <div className={`absolute inset-0 flex flex-col w-full justify-center z-10 ${isDark ? 'bg-black/80' : 'bg-white/80'} rounded-lg p-4 shadow-sm transition-all duration-300`}>
+                                <div className={`absolute inset-0 flex flex-col w-full justify-center z-10 ${isDark ? 'bg-black/60' : 'bg-white/60'} rounded-lg p-4 shadow-sm transition-all duration-300`}>
                                     <h3 className={`text-sm font-medium mb-4 ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>Equalizer</h3>
 
                                     <div className="space-y-4">
