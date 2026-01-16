@@ -117,7 +117,7 @@ const themes: Themes = {
             '#22c55e', '#10b981', '#06b6d4', '#0ea5e9', '#3b82f6',
             '#6366f1', '#8b5cf6', '#a855f7', '#d946ef', '#ec4899', '#f43f5e'
         ],
-        peak: '#ffffff',
+        peak: '#a0a0a0ff',
         button: '#ec4899',
         buttonHover: '#d946ef',
         slider: '#ec4899'
