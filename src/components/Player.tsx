@@ -98,6 +98,7 @@ export interface VideoPlayerProps {
     mode?: 'light' | 'dark';
     transparent?: boolean;
     autoPlay?: boolean;
+    color?: string;
     equalizer?: {
         bass?: number;
         mid?: number;
@@ -1742,6 +1743,7 @@ function VideoPlayer({
     mode = 'light' as 'light' | 'dark',
     transparent = false,
     autoPlay = false,
+    color = '#3b82f6',
     equalizer = {
         bass: 0,
         mid: 0,
@@ -2309,9 +2311,9 @@ function VideoPlayer({
         <div
             ref={containerRef}
             className='rounded-xl overflow-hidden'
-            style={{ backgroundColor: !(noControls || transparent) && (isDark ? '#606060ff' : 'white') }}
+            style={{ backgroundColor: !(noControls || transparent) && (isDark ? '#49494937' : 'white') }}
         >
-            <div style={{ background: !(noControls || transparent) && (isDark ? '#1a1a1a' : '#f5f5f5') }} className={!(noControls || transparent) && 'p-4'}>
+            <div style={{ background: !(noControls || transparent) && (isDark ? '#1a1a1ab0' : '#f5f5f5') }} className={!(noControls || transparent) && 'p-4'}>
                 {/* Video Name */}
                 {controls.videoName && (
                     <div className="mb-4">
@@ -2365,7 +2367,7 @@ function VideoPlayer({
                                                     onChange={(e) => handleEqChange('bass', parseInt(e.target.value))}
                                                     className="flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer"
                                                     style={{
-                                                        background: `linear-gradient(to right, #3b82f6 ${(eqBands.bass + 20) / 40 * 100}%, #e5e7eb ${(eqBands.bass + 20) / 40 * 100}%)`
+                                                        background: `linear-gradient(to right, ${color} ${(eqBands.bass + 20) / 40 * 100}%, #e5e7eb ${(eqBands.bass + 20) / 40 * 100}%)`
                                                     }}
                                                 />
                                                 <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>+20</span>
@@ -2388,7 +2390,7 @@ function VideoPlayer({
                                                     onChange={(e) => handleEqChange('mid', parseInt(e.target.value))}
                                                     className="flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer"
                                                     style={{
-                                                        background: `linear-gradient(to right, #3b82f6 ${(eqBands.mid + 20) / 40 * 100}%, #e5e7eb ${(eqBands.mid + 20) / 40 * 100}%)`
+                                                        background: `linear-gradient(to right, ${color} ${(eqBands.mid + 20) / 40 * 100}%, #e5e7eb ${(eqBands.mid + 20) / 40 * 100}%)`
                                                     }}
                                                 />
                                                 <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>+20</span>
@@ -2411,7 +2413,7 @@ function VideoPlayer({
                                                     onChange={(e) => handleEqChange('treble', parseInt(e.target.value))}
                                                     className="flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer"
                                                     style={{
-                                                        background: `linear-gradient(to right, #3b82f6 ${(eqBands.treble + 20) / 40 * 100}%, #e5e7eb ${(eqBands.treble + 20) / 40 * 100}%)`
+                                                        background: `linear-gradient(to right, ${color} ${(eqBands.treble + 20) / 40 * 100}%, #e5e7eb ${(eqBands.treble + 20) / 40 * 100}%)`
                                                     }}
                                                 />
                                                 <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>+20</span>
@@ -2468,7 +2470,7 @@ function VideoPlayer({
                                 className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
                                 style={{
                                     background: video && duration > 0
-                                        ? `linear-gradient(to right, #3b82f6 ${(currentTime / duration) * 100}%, #e5e7eb ${(currentTime / duration) * 100}%)`
+                                        ? `linear-gradient(to right, ${color} ${(currentTime / duration) * 100}%, #e5e7eb ${(currentTime / duration) * 100}%)`
                                         : '#e5e7eb'
                                 }}
                             />
@@ -2483,7 +2485,8 @@ function VideoPlayer({
                         <button
                             onClick={togglePlay}
                             disabled={!video}
-                            className={`${!(containerWidth > 400) ? 'px-3 py-5' : ' px-4 py-2'} rounded-full text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all`}
+                            style={{ backgroundColor: color }}
+                            className={`${!(containerWidth > 400) ? 'px-3 py-5' : ' px-4 py-2'} rounded-full text-sm font-medium text-white hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all`}
                         >
                             <div className="relative w-4 flex items-center">
                                 <Pause size={16} className={`${!isPlaying ? 'scale-0 translate-y-10' : ''} transition-all absolute`} />
@@ -2521,7 +2524,7 @@ function VideoPlayer({
                                 ? 'text-white'
                                 : 'bg-gray-100 text-gray-700 hover:bg-gray-300'
                                 } disabled:opacity-40 disabled:cursor-not-allowed`}
-                            style={showEqualizer ? { backgroundColor: '#3b82f6' } : {}}
+                            style={showEqualizer ? { backgroundColor: color } : {}}
                         >
                             <Sliders size={16} />
                             <span style={{ display: containerWidth < 700 ? 'none' : 'block' }}>EQ</span>
@@ -2548,7 +2551,7 @@ function VideoPlayer({
                                 onChange={handleVolumeChange}
                                 className="hide-for-xs w-24 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
                                 style={{
-                                    background: `linear-gradient(to right, #3b82f6 ${volume}%, #e5e7eb ${volume}%)`,
+                                    background: `linear-gradient(to right, ${color} ${volume}%, #e5e7eb ${volume}%)`,
                                     display: containerWidth < 460 ? 'none' : 'block'
                                 }}
                             />
@@ -2564,7 +2567,7 @@ function VideoPlayer({
                         width: 16px;
                         height: 16px;
                         border-radius: 50%;
-                        background: #3b82f6;
+                        background: ${color};
                         cursor: pointer;
                         border: 2px solid white;
                         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
@@ -2574,7 +2577,7 @@ function VideoPlayer({
                         width: 16px;
                         height: 16px;
                         border-radius: 50%;
-                        background: #3b82f6;
+                        background: ${color};
                         cursor: pointer;
                         border: 2px solid white;
                         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);

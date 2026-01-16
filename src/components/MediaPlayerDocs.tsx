@@ -1624,6 +1624,7 @@ function VideoPlayerDocs() {
     const [videoVuColor, setVideoVuColor] = useState('#00ff00');
     const [videoVuPeak, setVideoVuPeak] = useState('#ff0000');
     const [videoName, setVideoName] = useState('Sample Video');
+    const [videoColor, setVideoColor] = useState('#3b82f6');
     const [videoThumbnail, setVideoThumbnail] = useState('./ecplayer-thumb.jpg');
     const [videoAutoPlay, setVideoAutoPlay] = useState(false);
     const [videoShowControls, setVideoShowControls] = useState(true);
@@ -1649,11 +1650,13 @@ function VideoPlayerDocs() {
             return `<VideoPlayer
     video="${videoFile || 'path/to/video.mp4'}"
     name="${videoName}"
+    color="${videoColor}"
 />`;
         } else if (activeExample === 'vuMeter') {
             return `<VideoPlayer
     video="${videoFile || 'path/to/video.mp4'}"
     name="${videoName}"
+    color="${videoColor}"
     audioVisual={{
         side: '${videoVuSide}',
         color: '${videoVuColor}',
@@ -1665,6 +1668,7 @@ function VideoPlayerDocs() {
     video="${videoFile || 'path/to/video.mp4'}"
     name="${videoName}"
     mode="${videoMode}"
+    color="${videoColor}"
     volume={${videoVolume}}
     controls={{
         play: true,
@@ -1682,6 +1686,7 @@ function VideoPlayerDocs() {
     video="${videoFile || 'path/to/video.mp4'}"
     name="${videoName}"
     mode="${videoMode}"
+    color="${videoColor}"
     volume={${videoVolume}}
     thumbnail="${videoThumbnail}"
     autoPlay={${videoAutoPlay}}
@@ -1719,6 +1724,7 @@ function VideoPlayerDocs() {
         { prop: 'mode', type: 'string', default: '"light"', description: '"light" or "dark"' },
         { prop: 'transparent', type: 'boolean', default: 'false', description: 'Remove background' },
         { prop: 'autoPlay', type: 'boolean', default: 'false', description: 'Start playing automatically' },
+        { prop: 'color', type: 'string', default: '"#3b82f6"', description: 'Color for controls and buttons' },
         { prop: 'controls', type: 'object', default: '{...}', description: 'Configure which controls to show' },
         { prop: 'audioVisual', type: 'object', default: 'null', description: 'VU meter configuration {side, color, peak}' }
     ];
@@ -1891,6 +1897,26 @@ function VideoPlayerDocs() {
                                     />
                                 </div>
 
+                                <div className="space-y-4">
+                                    <div>
+                                        <label className={`block text-sm font-medium ${theme.label} mb-2`}>Player Color</label>
+                                        <div className="flex items-center gap-3">
+                                            <input
+                                                type="color"
+                                                value={videoColor}
+                                                onChange={(e) => setVideoColor(e.target.value)}
+                                                className={`w-10 h-10 rounded border ${theme.btnBorder} cursor-pointer p-0 overflow-hidden`}
+                                            />
+                                            <input
+                                                type="text"
+                                                value={videoColor}
+                                                onChange={(e) => setVideoColor(e.target.value)}
+                                                className={`flex-1 text-sm bg-transparent border-b ${theme.cardBorder} focus:border-red-500 outline-none p-1 ${theme.text}`}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div className="space-y-2">
                                     <label className="flex items-center gap-2">
                                         <input
@@ -1967,9 +1993,10 @@ function VideoPlayerDocs() {
                                 <h4 className={`font-semibold ${theme.heading} mb-4`}>Live Preview</h4>
                                 <div className={`rounded-xl overflow-hidden border ${theme.cardBorder} shadow-2xl`}>
                                     <VideoPlayer
-                                        video={videoFile}
+                                        video={videoFile || 'https://www.w3schools.com/html/mov_bbb.mp4'}
                                         name={videoName}
                                         mode={videoMode}
+                                        color={videoColor}
                                         volume={videoVolume}
                                         thumbnail={videoThumbnail}
                                         autoPlay={videoAutoPlay}
