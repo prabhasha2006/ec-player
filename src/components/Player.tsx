@@ -1681,9 +1681,10 @@ function WaveAudioPlayer({
 function NanoAudioPlayer({ audio: audioUrl, thumbnail, gradient: colors = ['#cd7eff', '#fe59f6'], background = '#1f273a', autoPlay = false }: NanoAudioPlayerProps) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
-    const [animationTime, setAnimationTime] = useState(0);
     const audioRef = useRef(null);
-    const animationRef = useRef<number | null>(null);
+    const [animationTime, setAnimationTime] = useState<any>(0);
+    const [audioDuration, setAudioDuration] = useState<any>(0); // total duration of audio
+    const [playedDuration, setPlayedDuration] = useState<any>(0); // duration of audio that has been played
 
     useEffect(() => {
         const audio = audioRef.current;
@@ -1695,27 +1696,18 @@ function NanoAudioPlayer({ audio: audioUrl, thumbnail, gradient: colors = ['#cd7
         return () => audio.removeEventListener('timeupdate', handleTimeUpdate);
     }, []);
 
-    // Animation loop for smooth wave movement
     useEffect(() => {
-        if (isPlaying) {
-            const animate = () => {
-                setAnimationTime(prev => prev + 0.1);
-                animationRef.current = requestAnimationFrame(animate);
-            };
-            animationRef.current = requestAnimationFrame(animate);
-        } else {
-            if (animationRef.current) {
-                cancelAnimationFrame(animationRef.current);
-                animationRef.current = null;
-            }
-            setAnimationTime(0); // Reset animation time when paused
-        }
+        const loop = setInterval(() => {
+            if (isPlaying) setAnimationTime(prev => prev + 0.1);
+        }, 100);
+        return () => clearInterval(loop);
+    }, [isPlaying]);
 
-        return () => {
-            if (animationRef.current) {
-                cancelAnimationFrame(animationRef.current);
-            }
-        };
+    useEffect(() => {
+        const loop = setInterval(() => {
+            if (isPlaying) setPlayedDuration(prev => prev + 0.1);
+        }, 100);
+        return () => clearInterval(loop);
     }, [isPlaying]);
 
     useEffect(() => {
@@ -1723,6 +1715,24 @@ function NanoAudioPlayer({ audio: audioUrl, thumbnail, gradient: colors = ['#cd7
             audioRef.current.play().catch(() => setIsPlaying(false));
             setIsPlaying(true);
         }
+    }, [audioUrl]);
+
+    useEffect(() => {
+        const audio = audioRef.current;
+        if (!audio) return;
+
+        const handleLoadedMetadata = () => {
+            setAudioDuration(audio.duration);
+            console.log("Audio duration:", audio.duration);
+        };
+
+        setPlayedDuration(0);
+
+        audio.addEventListener("loadedmetadata", handleLoadedMetadata);
+
+        return () => {
+            audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
+        };
     }, [audioUrl]);
 
     const togglePlay = () => {
@@ -1744,48 +1754,69 @@ function NanoAudioPlayer({ audio: audioUrl, thumbnail, gradient: colors = ['#cd7
     }
 
     return (
-        <div style={{ backgroundColor: background }} className={`inline-flex flex-col ${thumbnail ? 'rounded-2xl' : 'rounded-full'} px-3 py-2 shadow-lg`}>
+        <div
+            style={{ backgroundColor: background }}
+            className={`
+                relative overflow-hidden inline-flex flex-col 
+                ${thumbnail ? 'rounded-2xl' : 'rounded-full'} 
+                px-3 py-2 shadow-lg
+                ${thumbnail ? 'w-[120px] h-[150px]' : 'w-[110px] h-[40px]'}
+            `}
+        >
             <audio
                 ref={audioRef}
                 src={audioUrl}
-                onEnded={() => setIsPlaying(false)}
+                onEnded={() => {
+                    setIsPlaying(false)
+                    setPlayedDuration(0)
+                }}
             />
-            {thumbnail && (
-                <div className="w-24 pb-2">
-                    <img src={thumbnail} alt="" className={`w-24 aspect-square rounded-xl`} />
-                </div>
-            )}
 
-            <div className="flex items-center gap-2">
-                <button
-                    onClick={togglePlay}
-                    style={buttonGradient}
-                    className="p-1.5 rounded-full hover:scale-110 transition-transform flex-shrink-0"
-                >
-                    {isPlaying ? (
-                        <Pause fill={background} className="w-3 h-3 text-transparent" />
-                    ) : (
-                        <Play fill={background} className="w-3 h-3 text-transparent" />
-                    )}
-                </button>
+            <div
+                style={{
+                    width: `${playedDuration / audioDuration * 100}%`,
+                    backgroundImage: buttonGradient.background
+                }}
+                className="absolute top-0 left-0 h-full opacity-20"
+            />
 
-                {/* Mini Waveform */}
-                <div className="flex w-full min-w-12 items-center gap-0.5 h-6">
-                    {[...Array(12)].map((_, i) => (
-                        <div
-                            key={i}
-                            className="rounded-full transition-all duration-200"
-                            style={{
-                                width: '100%',
-                                background: `linear-gradient(to top, ${colors[0]}, ${colors[1]})`,
-                                height: isPlaying
-                                    ? `${14 + Math.sin(i * 1.5 - animationTime * 0.15) * 10}px`
-                                    : `${14 + Math.sin(i * 0.5) * 4}px`,
-                                opacity: isPlaying ? 0.8 : 0.4
-                            }}
-                        >
-                        </div>
-                    ))}
+            <div className="absolute flex flex-col">
+                {thumbnail && (
+                    <div className="w-24 pb-2">
+                        <img src={thumbnail} alt="" className={`w-24 aspect-square rounded-xl`} />
+                    </div>
+                )}
+
+                <div className="flex items-center gap-2">
+                    <button
+                        onClick={togglePlay}
+                        style={buttonGradient}
+                        className="p-1.5 rounded-full hover:scale-110 transition-transform flex-shrink-0"
+                    >
+                        {isPlaying ? (
+                            <Pause fill={background} className="w-3 h-3 text-transparent" />
+                        ) : (
+                            <Play fill={background} className="w-3 h-3 text-transparent" />
+                        )}
+                    </button>
+
+                    {/* Mini Waveform */}
+                    <div className="flex w-full min-w-12 items-center gap-0.5 h-6">
+                        {[...Array(12)].map((_, i) => (
+                            <div
+                                key={i}
+                                className={`rounded-full transition-all duration-200`}
+                                style={{
+                                    width: '100%',
+                                    background: `linear-gradient(to top, ${colors[0]}, ${colors[1]})`,
+                                    height: isPlaying
+                                        ? `${8 + Math.sin((animationTime * 8 + i) * 0.6) * 10}px`
+                                        : "8px",
+                                    opacity: isPlaying ? 0.8 : 0.4
+                                }}
+                            />
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
