@@ -314,8 +314,8 @@ function VisualizePlayerDocs() {
             {/* Example Selector */}
             <div>
                 <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-lg font-semibold text-gray-800">Examples</h3>
-                    <div className="text-sm text-gray-500">{examples.length} examples available</div>
+                    <h3 className={`text-lg font-semibold ${theme.heading}`}>Examples</h3>
+                    <div className={`text-sm ${theme.secondaryText}`}>{examples.length} examples available</div>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                     {examples.map(key => (
@@ -334,26 +334,26 @@ function VisualizePlayerDocs() {
             </div>
 
             {/* Example Description */}
-            <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
+            <div className={`${theme.infoBg} rounded-lg p-4 border transition-colors duration-500`}>
                 <div className="flex items-start">
-                    <Info className="h-5 w-5 text-blue-500 mt-0.5 flex-shrink-0" />
+                    <Info className={`h-5 w-5 ${theme.infoText} mt-0.5 flex-shrink-0`} />
                     <div className="ml-3">
-                        <h4 className="font-medium text-blue-800">{exampleTitles[activeExample]}</h4>
-                        <p className="text-blue-700 text-sm mt-1">{exampleDescriptions[activeExample]}</p>
+                        <h4 className={`font-medium ${theme.infoText}`}>{exampleTitles[activeExample]}</h4>
+                        <p className={`${theme.infoSubtext} text-sm mt-1`}>{exampleDescriptions[activeExample]}</p>
                     </div>
                 </div>
             </div>
 
             {/* Code Example */}
-            <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-6">
+            <div className={`${theme.card} rounded-xl p-6 transition-colors duration-500`}>
                 <div className="flex justify-between items-start mb-4">
                     <div>
-                        <h4 className="text-xl font-bold text-gray-800 mb-1">{exampleTitles[activeExample]}</h4>
-                        <p className="text-gray-600 text-sm">Copy this code to use in your project</p>
+                        <h4 className={`text-xl font-bold ${theme.heading} mb-1`}>{exampleTitles[activeExample]}</h4>
+                        <p className={`${theme.secondaryText} text-sm`}>Copy this code to use in your project</p>
                     </div>
                     <button
                         onClick={() => copyCode(getExampleCode(), activeExample)}
-                        className="flex items-center gap-2 px-4 py-2 bg-white rounded-lg shadow hover:shadow-md transition-all"
+                        className={`flex items-center gap-2 px-4 py-2 rounded-lg shadow hover:shadow-md transition-all ${theme.btnBg} ${theme.btnText} border ${theme.btnBorder} ${theme.btnHover}`}
                     >
                         {copiedCode === activeExample ? (
                             <>
@@ -362,13 +362,13 @@ function VisualizePlayerDocs() {
                             </>
                         ) : (
                             <>
-                                <Copy size={16} className="text-gray-600" />
-                                <span className="text-sm font-medium text-gray-600">Copy</span>
+                                <Copy size={16} className={isDark ? "text-gray-400" : "text-gray-600"} />
+                                <span className={`text-sm font-medium ${theme.btnText}`}>Copy</span>
                             </>
                         )}
                     </button>
                 </div>
-                <pre className="bg-gray-900 text-green-400 p-4 rounded-lg overflow-x-auto text-sm">
+                <pre className={`${theme.codeBg} ${theme.codeText} p-4 rounded-lg overflow-x-auto text-sm border ${theme.cardBorder}`}>
                     <code>{getExampleCode()}</code>
                 </pre>
             </div>
@@ -377,16 +377,16 @@ function VisualizePlayerDocs() {
             <div className={`${theme.docsBg} border ${theme.docsBorder} rounded-xl overflow-hidden transition-colors duration-500 shadow-xl`}>
                 <button
                     onClick={() => setExpandedSection(expandedSection === 'customize' ? null : 'customize')}
-                    className="w-full flex justify-between items-center p-4 hover:bg-purple-50 transition-all"
+                    className={`w-full flex justify-between items-center p-4 ${theme.tabHover} transition-all`}
                 >
                     <div className="flex items-center gap-2">
                         <Settings size={20} className="text-purple-600" />
                         <span className={`font-semibold ${theme.heading}`}>Live Preview & Customize</span>
                     </div>
                     {expandedSection === 'customize' ? (
-                        <ChevronUp className="text-gray-600" />
+                        <ChevronUp className={theme.secondaryText} />
                     ) : (
-                        <ChevronDown className="text-gray-600" />
+                        <ChevronDown className={theme.secondaryText} />
                     )}
                 </button>
 
@@ -529,7 +529,7 @@ function VisualizePlayerDocs() {
                                             <span className={`text-sm ${theme.label}`}>Bass: {vizEqBass} dB</span>
                                         </div>
                                         <div className="flex items-center gap-3">
-                                            <span className="text-xs text-gray-500">-20</span>
+                                            <span className={`text-xs ${theme.secondaryText}`}>-20</span>
                                             <input
                                                 type="range"
                                                 min="-20"
@@ -538,7 +538,7 @@ function VisualizePlayerDocs() {
                                                 onChange={(e) => setVizEqBass(parseInt(e.target.value))}
                                                 className="flex-1"
                                             />
-                                            <span className="text-xs text-gray-500">+20</span>
+                                            <span className={`text-xs ${theme.secondaryText}`}>+20</span>
                                         </div>
                                     </div>
 
@@ -617,7 +617,7 @@ function VisualizePlayerDocs() {
                                 </div>
                             </div>
                             <div>
-                                <h4 className="font-semibold text-gray-800 mb-4">Live Preview</h4>
+                                <h4 className={`font-semibold ${theme.heading} mb-4`}>Live Preview</h4>
                                 <VisualizePlayer
                                     audio={audioFile}
                                     name="Sample Track"
@@ -1610,7 +1610,7 @@ function NanoAudioPlayerDocs() {
 
 // VideoPlayer Documentation Component
 function VideoPlayerDocs() {
-    const { theme } = React.useContext(ThemeContext);
+    const { theme, isDark } = React.useContext(ThemeContext);
     const [activeExample, setActiveExample] = useState('basic');
     const [videoFile, setVideoFile] = useState(null);
     const [copiedCode, setCopiedCode] = useState(null);
@@ -1757,8 +1757,8 @@ function VideoPlayerDocs() {
             {/* Example Selector */}
             <div>
                 <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-lg font-semibold text-gray-800">Examples</h3>
-                    <div className="text-sm text-gray-500">{examples.length} examples available</div>
+                    <h3 className={`text-lg font-semibold ${theme.heading}`}>Examples</h3>
+                    <div className={`text-sm ${theme.secondaryText}`}>{examples.length} examples available</div>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                     {examples.map(key => (
@@ -1767,7 +1767,7 @@ function VideoPlayerDocs() {
                             onClick={() => setActiveExample(key)}
                             className={`px-4 py-3 rounded-lg font-medium transition-all ${activeExample === key
                                 ? 'bg-red-600 text-white shadow-lg'
-                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                : `${theme.btnBg} ${theme.btnText} border ${theme.btnBorder} ${theme.btnHover}`
                                 }`}
                         >
                             {exampleTitles[key]}
@@ -1777,26 +1777,26 @@ function VideoPlayerDocs() {
             </div>
 
             {/* Example Description */}
-            <div className="bg-red-50 rounded-lg p-4 border border-red-100">
+            <div className={`${theme.infoBg} rounded-lg p-4 border transition-colors duration-500`}>
                 <div className="flex items-start">
-                    <Info className="h-5 w-5 text-red-500 mt-0.5 flex-shrink-0" />
+                    <Info className={`h-5 w-5 ${theme.infoText} mt-0.5 flex-shrink-0`} />
                     <div className="ml-3">
-                        <h4 className="font-medium text-red-800">{exampleTitles[activeExample]}</h4>
-                        <p className="text-red-700 text-sm mt-1">{exampleDescriptions[activeExample]}</p>
+                        <h4 className={`font-medium ${theme.infoText}`}>{exampleTitles[activeExample]}</h4>
+                        <p className={`${theme.infoSubtext} text-sm mt-1`}>{exampleDescriptions[activeExample]}</p>
                     </div>
                 </div>
             </div>
 
             {/* Code Example */}
-            <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-6">
+            <div className={`${theme.card} rounded-xl p-6 transition-colors duration-500`}>
                 <div className="flex justify-between items-start mb-4">
                     <div>
-                        <h4 className="text-xl font-bold text-gray-800 mb-1">{exampleTitles[activeExample]}</h4>
-                        <p className="text-gray-600 text-sm">Copy this code to use in your project</p>
+                        <h4 className={`text-xl font-bold ${theme.heading} mb-1`}>{exampleTitles[activeExample]}</h4>
+                        <p className={`${theme.secondaryText} text-sm`}>Copy this code to use in your project</p>
                     </div>
                     <button
                         onClick={() => copyCode(getExampleCode(), activeExample)}
-                        className="flex items-center gap-2 px-4 py-2 bg-white rounded-lg shadow hover:shadow-md transition-all"
+                        className={`flex items-center gap-2 px-4 py-2 rounded-lg shadow hover:shadow-md transition-all ${theme.btnBg} ${theme.btnText} border ${theme.btnBorder} ${theme.btnHover}`}
                     >
                         {copiedCode === activeExample ? (
                             <>
@@ -1805,62 +1805,62 @@ function VideoPlayerDocs() {
                             </>
                         ) : (
                             <>
-                                <Copy size={16} className="text-gray-600" />
-                                <span className="text-sm font-medium text-gray-600">Copy</span>
+                                <Copy size={16} className={isDark ? "text-gray-400" : "text-gray-600"} />
+                                <span className={`text-sm font-medium ${theme.btnText}`}>Copy</span>
                             </>
                         )}
                     </button>
                 </div>
-                <pre className="bg-gray-900 text-green-400 p-4 rounded-lg overflow-x-auto text-sm">
+                <pre className={`${theme.codeBg} ${theme.codeText} p-4 rounded-lg overflow-x-auto text-sm border ${theme.cardBorder}`}>
                     <code>{getExampleCode()}</code>
                 </pre>
             </div>
 
             {/* Live Preview & Customization */}
-            <div className="bg-white border-2 border-red-200 rounded-lg overflow-hidden">
+            <div className={`${theme.docsBg} border ${theme.docsBorder} rounded-xl overflow-hidden transition-colors duration-500 shadow-xl`}>
                 <button
                     onClick={() => setExpandedSection(expandedSection === 'customize' ? null : 'customize')}
-                    className="w-full flex justify-between items-center p-4 hover:bg-red-50 transition-all"
+                    className={`w-full flex justify-between items-center p-4 ${theme.tabHover} transition-all`}
                 >
                     <div className="flex items-center gap-2">
                         <Settings size={20} className="text-red-600" />
-                        <span className="font-semibold text-gray-800">Live Preview & Customize</span>
+                        <span className={`font-semibold ${theme.heading}`}>Live Preview & Customize</span>
                     </div>
                     {expandedSection === 'customize' ? (
-                        <ChevronUp className="text-gray-600" />
+                        <ChevronUp className={theme.secondaryText} />
                     ) : (
-                        <ChevronDown className="text-gray-600" />
+                        <ChevronDown className={theme.secondaryText} />
                     )}
                 </button>
 
                 {expandedSection === 'customize' && (
-                    <div className="p-6 bg-gradient-to-br from-red-50 to-pink-50 border-t">
+                    <div className={`p-6 ${theme.sectionBg} border-t transition-colors duration-500`}>
                         <div className="grid md:grid-cols-2 gap-6">
                             <div className="space-y-4">
-                                <h4 className="font-semibold text-gray-800">Settings</h4>
+                                <h4 className={`font-semibold ${theme.heading}`}>Settings</h4>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Video Name</label>
+                                    <label className={`block text-sm font-medium ${theme.label} mb-2`}>Video Name</label>
                                     <input
                                         type="text"
                                         value={videoName}
                                         onChange={(e) => setVideoName(e.target.value)}
-                                        className="w-full px-4 py-2 border rounded-lg"
+                                        className={`w-full px-4 py-2 border rounded-lg ${theme.inputBg} ${theme.inputText} ${theme.inputBorder}`}
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Mode</label>
+                                    <label className={`block text-sm font-medium ${theme.label} mb-2`}>Mode</label>
                                     <div className="flex gap-2">
                                         <button
                                             onClick={() => setVideoMode('light')}
-                                            className={`flex-1 px-4 py-2 rounded-lg ${videoMode === 'light' ? 'bg-red-600 text-white' : 'bg-white border'}`}
+                                            className={`flex-1 px-4 py-2 rounded-lg transition-all ${videoMode === 'light' ? 'bg-red-600 text-white shadow-md' : `${theme.btnBg} ${theme.btnText} border ${theme.btnBorder}`}`}
                                         >
                                             Light
                                         </button>
                                         <button
                                             onClick={() => setVideoMode('dark')}
-                                            className={`flex-1 px-4 py-2 rounded-lg ${videoMode === 'dark' ? 'bg-red-600 text-white' : 'bg-white border'}`}
+                                            className={`flex-1 px-4 py-2 rounded-lg transition-all ${videoMode === 'dark' ? 'bg-red-600 text-white shadow-md' : `${theme.btnBg} ${theme.btnText} border ${theme.btnBorder}`}`}
                                         >
                                             Dark
                                         </button>
@@ -1868,7 +1868,7 @@ function VideoPlayerDocs() {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    <label className={`block text-sm font-medium ${theme.label} mb-2`}>
                                         Volume: {videoVolume}%
                                     </label>
                                     <input
@@ -1877,17 +1877,17 @@ function VideoPlayerDocs() {
                                         max="100"
                                         value={videoVolume}
                                         onChange={(e) => setVideoVolume(parseInt(e.target.value))}
-                                        className="w-full"
+                                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-red-600"
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Thumbnail URL</label>
+                                    <label className={`block text-sm font-medium ${theme.label} mb-2`}>Thumbnail URL</label>
                                     <input
                                         type="text"
                                         value={videoThumbnail}
                                         onChange={(e) => setVideoThumbnail(e.target.value)}
-                                        className="w-full px-4 py-2 border rounded-lg"
+                                        className={`w-full px-4 py-2 border rounded-lg ${theme.inputBg} ${theme.inputText} ${theme.inputBorder}`}
                                     />
                                 </div>
 
@@ -1897,9 +1897,9 @@ function VideoPlayerDocs() {
                                             type="checkbox"
                                             checked={videoShowAudioVisual}
                                             onChange={(e) => setVideoShowAudioVisual(e.target.checked)}
-                                            className="w-4 h-4"
+                                            className="w-4 h-4 accent-red-600"
                                         />
-                                        <span className="text-sm">Show Audio Visualization</span>
+                                        <span className={`text-sm ${theme.label}`}>Show Audio Visualization</span>
                                     </label>
 
                                     <label className="flex items-center gap-2">
@@ -1907,9 +1907,9 @@ function VideoPlayerDocs() {
                                             type="checkbox"
                                             checked={videoAutoPlay}
                                             onChange={(e) => setVideoAutoPlay(e.target.checked)}
-                                            className="w-4 h-4"
+                                            className="w-4 h-4 accent-red-600"
                                         />
-                                        <span className="text-sm">Auto Play</span>
+                                        <span className={`text-sm ${theme.label}`}>Auto Play</span>
                                     </label>
 
                                     <label className="flex items-center gap-2">
@@ -1917,20 +1917,20 @@ function VideoPlayerDocs() {
                                             type="checkbox"
                                             checked={videoShowControls}
                                             onChange={(e) => setVideoShowControls(e.target.checked)}
-                                            className="w-4 h-4"
+                                            className="w-4 h-4 accent-red-600"
                                         />
-                                        <span className="text-sm">Show Controls</span>
+                                        <span className={`text-sm ${theme.label}`}>Show Controls</span>
                                     </label>
                                 </div>
 
                                 {videoShowAudioVisual && (
-                                    <>
+                                    <div className="space-y-4 pt-2">
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-2">VU Meter Position</label>
+                                            <label className={`block text-sm font-medium ${theme.label} mb-2`}>VU Meter Position</label>
                                             <select
                                                 value={videoVuSide}
                                                 onChange={(e) => setVideoVuSide(e.target.value)}
-                                                className="w-full px-4 py-2 border rounded-lg"
+                                                className={`w-full px-4 py-2 border rounded-lg ${theme.inputBg} ${theme.inputText} ${theme.inputBorder}`}
                                             >
                                                 <option value="left">Left</option>
                                                 <option value="right">Right</option>
@@ -1939,53 +1939,57 @@ function VideoPlayerDocs() {
                                             </select>
                                         </div>
 
-                                        <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-2">VU Meter Color</label>
-                                            <input
-                                                type="color"
-                                                value={videoVuColor}
-                                                onChange={(e) => setVideoVuColor(e.target.value)}
-                                                className="w-full h-12 rounded-lg"
-                                            />
-                                        </div>
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <label className={`block text-sm font-medium ${theme.label} mb-2`}>VU Color</label>
+                                                <input
+                                                    type="color"
+                                                    value={videoVuColor}
+                                                    onChange={(e) => setVideoVuColor(e.target.value)}
+                                                    className={`w-full h-12 rounded-lg ${theme.inputBg} border ${theme.inputBorder}`}
+                                                />
+                                            </div>
 
-                                        <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-2">Peak Color</label>
-                                            <input
-                                                type="color"
-                                                value={videoVuPeak}
-                                                onChange={(e) => setVideoVuPeak(e.target.value)}
-                                                className="w-full h-12 rounded-lg"
-                                            />
+                                            <div>
+                                                <label className={`block text-sm font-medium ${theme.label} mb-2`}>Peak Color</label>
+                                                <input
+                                                    type="color"
+                                                    value={videoVuPeak}
+                                                    onChange={(e) => setVideoVuPeak(e.target.value)}
+                                                    className={`w-full h-12 rounded-lg ${theme.inputBg} border ${theme.inputBorder}`}
+                                                />
+                                            </div>
                                         </div>
-                                    </>
+                                    </div>
                                 )}
                             </div>
                             <div>
-                                <h4 className="font-semibold text-gray-800 mb-4">Live Preview</h4>
-                                <VideoPlayer
-                                    video={videoFile}
-                                    name={videoName}
-                                    mode={videoMode}
-                                    volume={videoVolume}
-                                    thumbnail={videoThumbnail}
-                                    autoPlay={videoAutoPlay}
-                                    controls={videoShowControls ? {
-                                        play: true,
-                                        pause: true,
-                                        stop: true,
-                                        seekbar: true,
-                                        volume: true,
-                                        fullscreen: true,
-                                        videoName: true,
-                                        equalizer: true
-                                    } : {}}
-                                    audioVisual={videoShowAudioVisual ? {
-                                        side: videoVuSide,
-                                        color: videoVuColor,
-                                        peak: videoVuPeak
-                                    } : null}
-                                />
+                                <h4 className={`font-semibold ${theme.heading} mb-4`}>Live Preview</h4>
+                                <div className={`rounded-xl overflow-hidden border ${theme.cardBorder} shadow-2xl`}>
+                                    <VideoPlayer
+                                        video={videoFile}
+                                        name={videoName}
+                                        mode={videoMode}
+                                        volume={videoVolume}
+                                        thumbnail={videoThumbnail}
+                                        autoPlay={videoAutoPlay}
+                                        controls={videoShowControls ? {
+                                            play: true,
+                                            pause: true,
+                                            stop: true,
+                                            seekbar: true,
+                                            volume: true,
+                                            fullscreen: true,
+                                            videoName: true,
+                                            equalizer: true
+                                        } : {}}
+                                        audioVisual={videoShowAudioVisual ? {
+                                            side: videoVuSide,
+                                            color: videoVuColor,
+                                            peak: videoVuPeak
+                                        } : null}
+                                    />
+                                </div>
                             </div>
                         </div>
 
@@ -2000,7 +2004,7 @@ function VideoPlayerDocs() {
                             />
                             <button
                                 onClick={() => videoInputRef.current?.click()}
-                                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-red-600 to-pink-600 text-white rounded-lg hover:shadow-lg transition-all"
+                                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-red-600 to-pink-600 text-white rounded-lg hover:shadow-lg transition-all font-semibold"
                             >
                                 <Upload size={20} />
                                 Load Video File to Test
@@ -2011,57 +2015,60 @@ function VideoPlayerDocs() {
             </div>
 
             {/* Props Documentation */}
-            <div className="bg-white border-2 border-red-200 rounded-lg overflow-hidden">
+            <div className={`${theme.docsBg} border ${theme.docsBorder} rounded-xl overflow-hidden transition-colors duration-500 shadow-xl`}>
                 <button
                     onClick={() => setExpandedSection(expandedSection === 'props' ? null : 'props')}
-                    className="w-full flex justify-between items-center p-4 hover:bg-red-50 transition-all"
+                    className={`w-full flex justify-between items-center p-4 ${theme.tabHover} transition-all`}
                 >
-                    <span className="font-semibold text-gray-800">📋 Props Documentation</span>
+                    <div className="flex items-center gap-2">
+                        <Info size={20} className="text-red-600" />
+                        <span className={`font-semibold ${theme.heading}`}>📋 Props Documentation</span>
+                    </div>
                     {expandedSection === 'props' ? (
-                        <ChevronUp className="text-gray-600" />
+                        <ChevronUp className={theme.secondaryText} />
                     ) : (
-                        <ChevronDown className="text-gray-600" />
+                        <ChevronDown className={theme.secondaryText} />
                     )}
                 </button>
 
                 {expandedSection === 'props' && (
-                    <div className="p-6 bg-gray-50 border-t overflow-x-auto">
+                    <div className={`p-6 ${theme.card} border-t overflow-x-auto`}>
                         <table className="w-full text-sm">
                             <thead>
-                                <tr className="border-b-2 border-red-200">
-                                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Prop</th>
-                                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Type</th>
-                                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Default</th>
-                                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Required</th>
-                                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Description</th>
+                                <tr className={`border-b-2 ${theme.tableHeader}`}>
+                                    <th className={`text-left py-3 px-4 font-semibold ${theme.label}`}>Prop</th>
+                                    <th className={`text-left py-3 px-4 font-semibold ${theme.label}`}>Type</th>
+                                    <th className={`text-left py-3 px-4 font-semibold ${theme.label}`}>Default</th>
+                                    <th className={`text-left py-3 px-4 font-semibold ${theme.label}`}>Required</th>
+                                    <th className={`text-left py-3 px-4 font-semibold ${theme.label}`}>Description</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {propDocs.map((prop, idx) => (
-                                    <tr key={idx} className="border-b border-gray-200 hover:bg-white">
+                                    <tr key={idx} className={`border-b ${theme.tableRow} transition-colors duration-300`}>
                                         <td className="py-3 px-4">
-                                            <code className="text-red-600 font-mono bg-red-50 px-2 py-1 rounded">
+                                            <code className="bg-red-50 text-red-600 font-mono px-2 py-1 rounded dark:bg-red-900/30 dark:text-red-400">
                                                 {prop.prop}
                                             </code>
                                         </td>
                                         <td className="py-3 px-4">
-                                            <code className="text-blue-600 font-mono text-xs">
+                                            <code className={`text-blue-500 font-mono text-xs opacity-80`}>
                                                 {prop.type}
                                             </code>
                                         </td>
                                         <td className="py-3 px-4">
-                                            <code className="text-gray-600 font-mono text-xs">
+                                            <code className={`${theme.secondaryText} font-mono text-xs`}>
                                                 {prop.default}
                                             </code>
                                         </td>
                                         <td className="py-3 px-4">
                                             {prop.required ? (
-                                                <span className="text-red-600 font-medium">Yes</span>
+                                                <span className="text-red-500 font-medium">Yes</span>
                                             ) : (
-                                                <span className="text-gray-500">No</span>
+                                                <span className={theme.secondaryText}>No</span>
                                             )}
                                         </td>
-                                        <td className="py-3 px-4 text-gray-600">
+                                        <td className={`py-3 px-4 ${theme.subtext}`}>
                                             {prop.description}
                                         </td>
                                     </tr>
@@ -2073,18 +2080,18 @@ function VideoPlayerDocs() {
             </div>
 
             {/* Installation & Usage */}
-            <div className="bg-gradient-to-br from-red-100 to-pink-100 rounded-lg p-6">
-                <h3 className="text-lg font-bold text-gray-800 mb-4">🚀 Getting Started</h3>
+            <div className={`${theme.featureBg} rounded-xl p-6 transition-all duration-500 border`}>
+                <h3 className={`text-lg font-bold ${theme.heading} mb-4`}>🚀 Getting Started</h3>
                 <div className="space-y-4">
                     <div>
-                        <h4 className="font-semibold text-gray-700 mb-2">1. Import the component</h4>
-                        <pre className="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto">
+                        <h4 className={`font-semibold ${theme.label} mb-2`}>1. Import the component</h4>
+                        <pre className={`${theme.codeBg} ${theme.codeText} p-4 rounded-lg text-sm overflow-x-auto border ${theme.cardBorder}`}>
                             <code>{`import { VideoPlayer } from '${importFrom}';`}</code>
                         </pre>
                     </div>
                     <div>
-                        <h4 className="font-semibold text-gray-700 mb-2">2. Use in your component</h4>
-                        <pre className="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto">
+                        <h4 className={`font-semibold ${theme.label} mb-2`}>2. Use in your component</h4>
+                        <pre className={`${theme.codeBg} ${theme.codeText} p-4 rounded-lg text-sm overflow-x-auto border ${theme.cardBorder}`}>
                             <code>{getExampleCode()}</code>
                         </pre>
                     </div>
@@ -2294,7 +2301,7 @@ export default function MediaPlayerDocs() {
                                         </svg>
                                     </div>
                                     <h3 className="text-white font-semibold mb-2">Customizable</h3>
-                                    <p className="text-gray-400 text-sm">Fully themeable with responsive design patterns</p>
+                                    <p className="text-gray-300 text-sm">Fully themeable with responsive design patterns</p>
                                 </div>
                             </div>
                         </div>
