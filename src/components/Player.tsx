@@ -106,22 +106,20 @@ export interface VideoPlayerProps {
 }
 
 // --- Themes ---
+
 const themes: Themes = {
     rainbow: {
         name: 'Rainbow',
-        bg: 'linear-gradient(135deg, #ff000043 0%, #ff7f0043 15%, #ffff0043 30%, #00ff0043 45%, #00ffff43 60%, #0000ff43 75%, #4b008243 85%, #9400d343 92%, #ff00ff43 100%)',
+        bg: 'linear-gradient(135deg, #ef444422 0%, #f9731622 15%, #f59e0b22 30%, #10b98122 45%, #06b6d422 60%, #3b82f622 75%, #6366f122 85%, #a855f722 92%, #ec489922 100%)',
         bars: [
-            '#ff0000', '#ff2000', '#ff4000', '#ff6000',
-            '#ff7f00', '#ffaa00', '#ffd000', '#ffff00',
-            '#aaff00', '#55ff00', '#00ff00', '#00ffaa',
-            '#00ffff', '#00aaff', '#0055ff', '#0000ff',
-            '#2b00b8', '#4b0082', '#6a00b8', '#9400d3',
-            '#b000d3', '#d000ff', '#ff00ff'
+            '#ef4444', '#f97316', '#f59e0b', '#eab308', '#84cc16',
+            '#22c55e', '#10b981', '#06b6d4', '#0ea5e9', '#3b82f6',
+            '#6366f1', '#8b5cf6', '#a855f7', '#d946ef', '#ec4899', '#f43f5e'
         ],
-        peak: '#000000',
-        button: '#008cff',
-        buttonHover: '#7c3aed',
-        slider: '#d75cf6'
+        peak: '#ffffff',
+        button: '#ec4899',
+        buttonHover: '#d946ef',
+        slider: '#ec4899'
     },
     ocean: {
         name: 'Ocean Blue',
@@ -171,7 +169,7 @@ const themes: Themes = {
     purple: {
         name: 'Royal Purple',
         bg: 'linear-gradient(135deg, #2f1c5622 0%, #764ba243 100%)',
-        bars: ['#8b5cf6', '#a78bfa', '#c4b5fd', '#ddd6fe'],
+        bars: ['#8b5cf6', '#a78bfa', '#baabf9ff', '#ddd6fe'],
         peak: '#6d28d9',
         button: '#8b5cf6',
         buttonHover: '#7c3aed',
@@ -882,7 +880,7 @@ function VisualizePlayer({
     }
 
     return (
-        <div ref={containerRef} className='w-full rounded-xl overflow-hidden' style={{ backgroundColor: !(noControls || transparent) && (isDark ? '#606060ff' : 'white') }}>
+        <div ref={containerRef} className='w-full rounded-xl overflow-hidden' style={{ backgroundColor: !(noControls || transparent) && (isDark ? '#6060606a' : '#ffffffab') }}>
             <div style={{ background: !(noControls || transparent) && currentTheme.bg }} className={!(noControls || transparent) && 'p-4'}>
                 {/* VU Meter */}
                 <div className='relative'>
