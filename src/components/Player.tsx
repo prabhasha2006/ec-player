@@ -447,6 +447,23 @@ function VisualizePlayer({
         };
     }, [isSeeking, isLoop]);
 
+    // Cleanup on unmount
+    useEffect(() => {
+        return () => {
+            if (audioRef.current) {
+                audioRef.current.pause();
+                audioRef.current.src = '';
+                audioRef.current.load();
+            }
+            if (audioContextRef.current) {
+                audioContextRef.current.close().catch(e => console.warn("AudioContext cleanup error:", e));
+            }
+            if (animationRef.current) {
+                cancelAnimationFrame(animationRef.current);
+            }
+        };
+    }, []);
+
     // Update audio source when it changes
     useEffect(() => {
         if (audio) {
@@ -2007,7 +2024,7 @@ function VideoPlayer({
                 const AudioContextClass: any = (window as any).AudioContext || (window as any).webkitAudioContext;
                 if (AudioContextClass) {
                     audioContextRef.current = new AudioContextClass();
-                    
+
                     // Create filters
                     bassFilterRef.current = audioContextRef.current.createBiquadFilter();
                     bassFilterRef.current.type = 'lowshelf';
@@ -2032,12 +2049,12 @@ function VideoPlayer({
 
                     // Create source
                     sourceRef.current = audioContextRef.current.createMediaElementSource(videoRef.current);
-                    
+
                     // Connect the filters in series and then to the destination
                     sourceRef.current.connect(bassFilterRef.current);
                     bassFilterRef.current.connect(midFilterRef.current);
                     midFilterRef.current.connect(trebleFilterRef.current);
-                    
+
                     // Connect the last filter to both the analyser (for visualization) and the destination
                     trebleFilterRef.current.connect(analyserRef.current);
                     trebleFilterRef.current.connect(audioContextRef.current.destination);
@@ -2170,7 +2187,7 @@ function VideoPlayer({
                         <div class="flex-1 relative flex flex-col justify-end bg-black/30 rounded-lg overflow-hidden">
                             <div class="rounded-t transition-all duration-75" style="height: ${rightHeight}%; background: ${color};">
                                 ${rightHoldRef.current > 0.1 ? `<div class="absolute w-full h-1 transition-all duration-100" style="top: ${rightPeakPos}%; background: ${peakColor};"></div>` : ''
-                            }
+                }
                         </div>
                     </div>
                 </div>
@@ -2247,7 +2264,7 @@ function VideoPlayer({
             ...prev,
             [band]: value
         }));
-        
+
         // Apply the change immediately if the audio context is already set up
         if (audioContextRef.current) {
             if (band === "bass" && bassFilterRef.current) {
