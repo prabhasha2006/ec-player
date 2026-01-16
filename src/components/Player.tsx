@@ -907,7 +907,7 @@ function VisualizePlayer({
                                             max="20"
                                             value={eqBands.bass}
                                             onChange={(e) => handleEqChange('bass', parseInt(e.target.value))}
-                                            className="flex-1 h-8 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+                                            className="flex-1 h-8 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider"
                                             style={{
                                                 background: `linear-gradient(to right, ${currentTheme.slider} ${(eqBands.bass + 20) / 40 * 100}%, ${currentTheme.slider + '30'} ${(eqBands.bass + 20) / 40 * 100}%)`
                                             }}
@@ -930,7 +930,7 @@ function VisualizePlayer({
                                             max="20"
                                             value={eqBands.mid}
                                             onChange={(e) => handleEqChange('mid', parseInt(e.target.value))}
-                                            className="flex-1 h-8 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+                                            className="flex-1 h-8 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider"
                                             style={{
                                                 background: `linear-gradient(to right, ${currentTheme.slider} ${(eqBands.mid + 20) / 40 * 100}%, ${currentTheme.slider + '30'} ${(eqBands.mid + 20) / 40 * 100}%)`
                                             }}
@@ -953,7 +953,7 @@ function VisualizePlayer({
                                             max="20"
                                             value={eqBands.treble}
                                             onChange={(e) => handleEqChange('treble', parseInt(e.target.value))}
-                                            className="flex-1 h-8 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+                                            className="flex-1 h-8 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider"
                                             style={{
                                                 background: `linear-gradient(to right, ${currentTheme.slider} ${(eqBands.treble + 20) / 40 * 100}%, ${currentTheme.slider + '30'} ${(eqBands.treble + 20) / 40 * 100}%)`
                                             }}
@@ -1129,6 +1129,22 @@ function VisualizePlayer({
                     cursor: pointer;
                     border: 2px solid white;
                     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+                }
+                input[type="range"].eq-slider::-webkit-slider-thumb {
+                    -webkit-appearance: none;
+                    appearance: none;
+                    width: 0;
+                    height: 0;
+                    background: transparent;
+                    border: none;
+                    box-shadow: none;
+                }
+                input[type="range"].eq-slider::-moz-range-thumb {
+                    width: 0;
+                    height: 0;
+                    background: transparent;
+                    border: none;
+                    box-shadow: none;
                 }
                 .hide-for-xs {
                     display: flex;
@@ -1557,7 +1573,7 @@ function WaveAudioPlayer({
                                         max="20"
                                         value={eqBands.bass}
                                         onChange={(e) => handleEqChange('bass', parseInt(e.target.value))}
-                                        className="flex-1 h-4 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+                                        className="flex-1 h-4 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider"
                                         style={{
                                             background: `linear-gradient(to right, ${gradient[0]} ${(eqBands.bass + 20) / 40 * 100}%, ${gradient[1] + '30'} ${(eqBands.bass + 20) / 40 * 100}%)`
                                         }}
@@ -1580,7 +1596,7 @@ function WaveAudioPlayer({
                                         max="20"
                                         value={eqBands.mid}
                                         onChange={(e) => handleEqChange('mid', parseInt(e.target.value))}
-                                        className="flex-1 h-4 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+                                        className="flex-1 h-4 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider"
                                         style={{
                                             background: `linear-gradient(to right, ${gradient[0]} ${(eqBands.mid + 20) / 40 * 100}%, ${gradient[1] + '30'} ${(eqBands.mid + 20) / 40 * 100}%)`
                                         }}
@@ -1603,7 +1619,7 @@ function WaveAudioPlayer({
                                         max="20"
                                         value={eqBands.treble}
                                         onChange={(e) => handleEqChange('treble', parseInt(e.target.value))}
-                                        className="flex-1 h-4 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+                                        className="flex-1 h-4 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider"
                                         style={{
                                             background: `linear-gradient(to right, ${gradient[0]} ${(eqBands.treble + 20) / 40 * 100}%, ${gradient[1] + '30'} ${(eqBands.treble + 20) / 40 * 100}%)`
                                         }}
@@ -1630,6 +1646,24 @@ function WaveAudioPlayer({
                     </div>
                 </div>
             )}
+            <style>{`
+                input[type="range"].eq-slider::-webkit-slider-thumb {
+                    -webkit-appearance: none;
+                    appearance: none;
+                    width: 0;
+                    height: 0;
+                    background: transparent;
+                    border: none;
+                    box-shadow: none;
+                }
+                input[type="range"].eq-slider::-moz-range-thumb {
+                    width: 0;
+                    height: 0;
+                    background: transparent;
+                    border: none;
+                    box-shadow: none;
+                }
+            `}</style>
         </div>
     );
 }
@@ -2365,7 +2399,7 @@ function VideoPlayer({
                                                     max="20"
                                                     value={eqBands.bass}
                                                     onChange={(e) => handleEqChange('bass', parseInt(e.target.value))}
-                                                    className="flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+                                                    className="flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider"
                                                     style={{
                                                         background: `linear-gradient(to right, ${color} ${(eqBands.bass + 20) / 40 * 100}%, #e5e7eb ${(eqBands.bass + 20) / 40 * 100}%)`
                                                     }}
@@ -2388,7 +2422,7 @@ function VideoPlayer({
                                                     max="20"
                                                     value={eqBands.mid}
                                                     onChange={(e) => handleEqChange('mid', parseInt(e.target.value))}
-                                                    className="flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+                                                    className="flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider"
                                                     style={{
                                                         background: `linear-gradient(to right, ${color} ${(eqBands.mid + 20) / 40 * 100}%, #e5e7eb ${(eqBands.mid + 20) / 40 * 100}%)`
                                                     }}
@@ -2411,7 +2445,7 @@ function VideoPlayer({
                                                     max="20"
                                                     value={eqBands.treble}
                                                     onChange={(e) => handleEqChange('treble', parseInt(e.target.value))}
-                                                    className="flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+                                                    className="flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider"
                                                     style={{
                                                         background: `linear-gradient(to right, ${color} ${(eqBands.treble + 20) / 40 * 100}%, #e5e7eb ${(eqBands.treble + 20) / 40 * 100}%)`
                                                     }}
@@ -2581,6 +2615,22 @@ function VideoPlayer({
                         cursor: pointer;
                         border: 2px solid white;
                         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+                    }
+                    input[type="range"].eq-slider::-webkit-slider-thumb {
+                        -webkit-appearance: none;
+                        appearance: none;
+                        width: 0;
+                        height: 0;
+                        background: transparent;
+                        border: none;
+                        box-shadow: none;
+                    }
+                    input[type="range"].eq-slider::-moz-range-thumb {
+                        width: 0;
+                        height: 0;
+                        background: transparent;
+                        border: none;
+                        box-shadow: none;
                     }
                     .hide-for-xs {
                         display: flex;

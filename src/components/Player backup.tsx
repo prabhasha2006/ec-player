@@ -98,6 +98,7 @@ export interface VideoPlayerProps {
     mode?: 'light' | 'dark';
     transparent?: boolean;
     autoPlay?: boolean;
+    color?: string;
     equalizer?: {
         bass?: number;
         mid?: number;
@@ -106,22 +107,20 @@ export interface VideoPlayerProps {
 }
 
 // --- Themes ---
+
 const themes: Themes = {
     rainbow: {
         name: 'Rainbow',
-        bg: 'linear-gradient(135deg, #ff000043 0%, #ff7f0043 15%, #ffff0043 30%, #00ff0043 45%, #00ffff43 60%, #0000ff43 75%, #4b008243 85%, #9400d343 92%, #ff00ff43 100%)',
+        bg: 'linear-gradient(135deg, #ef444422 0%, #f9731622 15%, #f59e0b22 30%, #10b98122 45%, #06b6d422 60%, #3b82f622 75%, #6366f122 85%, #a855f722 92%, #ec489922 100%)',
         bars: [
-            '#ff0000', '#ff2000', '#ff4000', '#ff6000',
-            '#ff7f00', '#ffaa00', '#ffd000', '#ffff00',
-            '#aaff00', '#55ff00', '#00ff00', '#00ffaa',
-            '#00ffff', '#00aaff', '#0055ff', '#0000ff',
-            '#2b00b8', '#4b0082', '#6a00b8', '#9400d3',
-            '#b000d3', '#d000ff', '#ff00ff'
+            '#ef4444', '#f97316', '#f59e0b', '#eab308', '#84cc16',
+            '#22c55e', '#10b981', '#06b6d4', '#0ea5e9', '#3b82f6',
+            '#6366f1', '#8b5cf6', '#a855f7', '#d946ef', '#ec4899', '#f43f5e'
         ],
-        peak: '#000000',
-        button: '#008cff',
-        buttonHover: '#7c3aed',
-        slider: '#d75cf6'
+        peak: '#ffffff',
+        button: '#ec4899',
+        buttonHover: '#d946ef',
+        slider: '#ec4899'
     },
     ocean: {
         name: 'Ocean Blue',
@@ -171,7 +170,7 @@ const themes: Themes = {
     purple: {
         name: 'Royal Purple',
         bg: 'linear-gradient(135deg, #2f1c5622 0%, #764ba243 100%)',
-        bars: ['#8b5cf6', '#a78bfa', '#c4b5fd', '#ddd6fe'],
+        bars: ['#8b5cf6', '#a78bfa', '#baabf9ff', '#ddd6fe'],
         peak: '#6d28d9',
         button: '#8b5cf6',
         buttonHover: '#7c3aed',
@@ -446,6 +445,23 @@ function VisualizePlayer({
             audioElement.removeEventListener('pause', handlePause);
         };
     }, [isSeeking, isLoop]);
+
+    // Cleanup on unmount
+    useEffect(() => {
+        return () => {
+            if (audioRef.current) {
+                audioRef.current.pause();
+                audioRef.current.src = '';
+                audioRef.current.load();
+            }
+            if (audioContextRef.current) {
+                audioContextRef.current.close().catch(e => console.warn("AudioContext cleanup error:", e));
+            }
+            if (animationRef.current) {
+                cancelAnimationFrame(animationRef.current);
+            }
+        };
+    }, []);
 
     // Update audio source when it changes
     useEffect(() => {
@@ -865,7 +881,7 @@ function VisualizePlayer({
     }
 
     return (
-        <div ref={containerRef} className='w-full rounded-xl overflow-hidden' style={{ backgroundColor: !(noControls || transparent) && (isDark ? '#606060ff' : 'white') }}>
+        <div ref={containerRef} className='w-full rounded-xl overflow-hidden' style={{ backgroundColor: !(noControls || transparent) && (isDark ? '#6060606a' : '#ffffffab') }}>
             <div style={{ background: !(noControls || transparent) && currentTheme.bg }} className={!(noControls || transparent) && 'p-4'}>
                 {/* VU Meter */}
                 <div className='relative'>
@@ -1727,6 +1743,7 @@ function VideoPlayer({
     mode = 'light' as 'light' | 'dark',
     transparent = false,
     autoPlay = false,
+    color = '#3b82f6',
     equalizer = {
         bass: 0,
         mid: 0,
@@ -2007,7 +2024,7 @@ function VideoPlayer({
                 const AudioContextClass: any = (window as any).AudioContext || (window as any).webkitAudioContext;
                 if (AudioContextClass) {
                     audioContextRef.current = new AudioContextClass();
-                    
+
                     // Create filters
                     bassFilterRef.current = audioContextRef.current.createBiquadFilter();
                     bassFilterRef.current.type = 'lowshelf';
@@ -2032,12 +2049,12 @@ function VideoPlayer({
 
                     // Create source
                     sourceRef.current = audioContextRef.current.createMediaElementSource(videoRef.current);
-                    
+
                     // Connect the filters in series and then to the destination
                     sourceRef.current.connect(bassFilterRef.current);
                     bassFilterRef.current.connect(midFilterRef.current);
                     midFilterRef.current.connect(trebleFilterRef.current);
-                    
+
                     // Connect the last filter to both the analyser (for visualization) and the destination
                     trebleFilterRef.current.connect(analyserRef.current);
                     trebleFilterRef.current.connect(audioContextRef.current.destination);
@@ -2170,7 +2187,7 @@ function VideoPlayer({
                         <div class="flex-1 relative flex flex-col justify-end bg-black/30 rounded-lg overflow-hidden">
                             <div class="rounded-t transition-all duration-75" style="height: ${rightHeight}%; background: ${color};">
                                 ${rightHoldRef.current > 0.1 ? `<div class="absolute w-full h-1 transition-all duration-100" style="top: ${rightPeakPos}%; background: ${peakColor};"></div>` : ''
-                            }
+                }
                         </div>
                     </div>
                 </div>
@@ -2247,7 +2264,7 @@ function VideoPlayer({
             ...prev,
             [band]: value
         }));
-        
+
         // Apply the change immediately if the audio context is already set up
         if (audioContextRef.current) {
             if (band === "bass" && bassFilterRef.current) {
@@ -2294,9 +2311,9 @@ function VideoPlayer({
         <div
             ref={containerRef}
             className='rounded-xl overflow-hidden'
-            style={{ backgroundColor: !(noControls || transparent) && (isDark ? '#606060ff' : 'white') }}
+            style={{ backgroundColor: !(noControls || transparent) && (isDark ? '#49494937' : 'white') }}
         >
-            <div style={{ background: !(noControls || transparent) && (isDark ? '#1a1a1a' : '#f5f5f5') }} className={!(noControls || transparent) && 'p-4'}>
+            <div style={{ background: !(noControls || transparent) && (isDark ? '#1a1a1ab0' : '#f5f5f5') }} className={!(noControls || transparent) && 'p-4'}>
                 {/* Video Name */}
                 {controls.videoName && (
                     <div className="mb-4">
@@ -2350,7 +2367,7 @@ function VideoPlayer({
                                                     onChange={(e) => handleEqChange('bass', parseInt(e.target.value))}
                                                     className="flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer"
                                                     style={{
-                                                        background: `linear-gradient(to right, #3b82f6 ${(eqBands.bass + 20) / 40 * 100}%, #e5e7eb ${(eqBands.bass + 20) / 40 * 100}%)`
+                                                        background: `linear-gradient(to right, ${color} ${(eqBands.bass + 20) / 40 * 100}%, #e5e7eb ${(eqBands.bass + 20) / 40 * 100}%)`
                                                     }}
                                                 />
                                                 <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>+20</span>
@@ -2373,7 +2390,7 @@ function VideoPlayer({
                                                     onChange={(e) => handleEqChange('mid', parseInt(e.target.value))}
                                                     className="flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer"
                                                     style={{
-                                                        background: `linear-gradient(to right, #3b82f6 ${(eqBands.mid + 20) / 40 * 100}%, #e5e7eb ${(eqBands.mid + 20) / 40 * 100}%)`
+                                                        background: `linear-gradient(to right, ${color} ${(eqBands.mid + 20) / 40 * 100}%, #e5e7eb ${(eqBands.mid + 20) / 40 * 100}%)`
                                                     }}
                                                 />
                                                 <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>+20</span>
@@ -2396,7 +2413,7 @@ function VideoPlayer({
                                                     onChange={(e) => handleEqChange('treble', parseInt(e.target.value))}
                                                     className="flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer"
                                                     style={{
-                                                        background: `linear-gradient(to right, #3b82f6 ${(eqBands.treble + 20) / 40 * 100}%, #e5e7eb ${(eqBands.treble + 20) / 40 * 100}%)`
+                                                        background: `linear-gradient(to right, ${color} ${(eqBands.treble + 20) / 40 * 100}%, #e5e7eb ${(eqBands.treble + 20) / 40 * 100}%)`
                                                     }}
                                                 />
                                                 <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>+20</span>
@@ -2453,7 +2470,7 @@ function VideoPlayer({
                                 className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
                                 style={{
                                     background: video && duration > 0
-                                        ? `linear-gradient(to right, #3b82f6 ${(currentTime / duration) * 100}%, #e5e7eb ${(currentTime / duration) * 100}%)`
+                                        ? `linear-gradient(to right, ${color} ${(currentTime / duration) * 100}%, #e5e7eb ${(currentTime / duration) * 100}%)`
                                         : '#e5e7eb'
                                 }}
                             />
@@ -2468,7 +2485,8 @@ function VideoPlayer({
                         <button
                             onClick={togglePlay}
                             disabled={!video}
-                            className={`${!(containerWidth > 400) ? 'px-3 py-5' : ' px-4 py-2'} rounded-full text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all`}
+                            style={{ backgroundColor: color }}
+                            className={`${!(containerWidth > 400) ? 'px-3 py-5' : ' px-4 py-2'} rounded-full text-sm font-medium text-white hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all`}
                         >
                             <div className="relative w-4 flex items-center">
                                 <Pause size={16} className={`${!isPlaying ? 'scale-0 translate-y-10' : ''} transition-all absolute`} />
@@ -2506,7 +2524,7 @@ function VideoPlayer({
                                 ? 'text-white'
                                 : 'bg-gray-100 text-gray-700 hover:bg-gray-300'
                                 } disabled:opacity-40 disabled:cursor-not-allowed`}
-                            style={showEqualizer ? { backgroundColor: '#3b82f6' } : {}}
+                            style={showEqualizer ? { backgroundColor: color } : {}}
                         >
                             <Sliders size={16} />
                             <span style={{ display: containerWidth < 700 ? 'none' : 'block' }}>EQ</span>
@@ -2533,7 +2551,7 @@ function VideoPlayer({
                                 onChange={handleVolumeChange}
                                 className="hide-for-xs w-24 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
                                 style={{
-                                    background: `linear-gradient(to right, #3b82f6 ${volume}%, #e5e7eb ${volume}%)`,
+                                    background: `linear-gradient(to right, ${color} ${volume}%, #e5e7eb ${volume}%)`,
                                     display: containerWidth < 460 ? 'none' : 'block'
                                 }}
                             />
@@ -2549,7 +2567,7 @@ function VideoPlayer({
                         width: 16px;
                         height: 16px;
                         border-radius: 50%;
-                        background: #3b82f6;
+                        background: ${color};
                         cursor: pointer;
                         border: 2px solid white;
                         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
@@ -2559,7 +2577,7 @@ function VideoPlayer({
                         width: 16px;
                         height: 16px;
                         border-radius: 50%;
-                        background: #3b82f6;
+                        background: ${color};
                         cursor: pointer;
                         border: 2px solid white;
                         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
