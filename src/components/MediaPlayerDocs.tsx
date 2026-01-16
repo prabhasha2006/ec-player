@@ -98,7 +98,7 @@ function VisualizePlayerDocs() {
 
     // Customization states
     const [vizTheme, setVizTheme] = useState('purple');
-    const [vizMode, setVizMode] = useState('light');
+    const [vizMode, setVizMode] = useState<'light' | 'dark'>('light');
     const [vizVolume, setVizVolume] = useState(70);
     const [vizTransparent, setVizTransparent] = useState(false);
     const [vizShowTrackName, setVizShowTrackName] = useState(true);
@@ -601,12 +601,12 @@ function VisualizePlayerDocs() {
                                                 ['vizShowLoop', vizShowLoop, setVizShowLoop, 'Show Loop'],
                                                 ['vizShowStop', vizShowStop, setVizShowStop, 'Show Stop'],
                                                 ['vizAutoPlay', vizAutoPlay, setVizAutoPlay, 'Auto Play']
-                                            ].map(([key, value, setter, label]) => (
-                                                <label key={key} className={`flex items-center gap-2 cursor-pointer ${theme.label}`}>
+                                            ].map(([key, value, setter, label]: any) => (
+                                                <label key={key as string} className={`flex items-center gap-2 cursor-pointer ${theme.label}`}>
                                                     <input
                                                         type="checkbox"
-                                                        checked={value}
-                                                        onChange={(e) => setter(e.target.checked)}
+                                                        checked={value as boolean}
+                                                        onChange={(e) => (setter as React.Dispatch<React.SetStateAction<boolean>>)(e.target.checked)}
                                                         className="w-4 h-4 accent-purple-600 rounded"
                                                     />
                                                     <span className="text-sm">{label}</span>
@@ -622,7 +622,7 @@ function VisualizePlayerDocs() {
                                     audio={audioFile}
                                     name="Sample Track"
                                     author={vizAuthor}
-                                    theme={vizTheme === 'custom' ? customTheme : vizTheme}
+                                    theme={(vizTheme === 'custom' ? customTheme : vizTheme) as any}
                                     mode={vizMode}
                                     volume={vizVolume}
                                     transparent={vizTransparent}
@@ -1617,10 +1617,10 @@ function VideoPlayerDocs() {
     const [expandedSection, setExpandedSection] = useState('customize');
 
     // Customization states
-    const [videoMode, setVideoMode] = useState('light');
+    const [videoMode, setVideoMode] = useState<'light' | 'dark'>('light');
     const [videoVolume, setVideoVolume] = useState(70);
     const [videoShowAudioVisual, setVideoShowAudioVisual] = useState(true);
-    const [videoVuSide, setVideoVuSide] = useState('left');
+    const [videoVuSide, setVideoVuSide] = useState<'left' | 'right' | 'top' | 'bottom'>('left');
     const [videoVuColor, setVideoVuColor] = useState('#00ff00');
     const [videoVuPeak, setVideoVuPeak] = useState('#ff0000');
     const [videoName, setVideoName] = useState('Sample Video');
@@ -1955,7 +1955,7 @@ function VideoPlayerDocs() {
                                             <label className={`block text-sm font-medium ${theme.label} mb-2`}>VU Meter Position</label>
                                             <select
                                                 value={videoVuSide}
-                                                onChange={(e) => setVideoVuSide(e.target.value)}
+                                                onChange={(e) => setVideoVuSide(e.target.value as 'left' | 'right' | 'top' | 'bottom')}
                                                 className={`w-full px-4 py-2 border rounded-lg ${theme.inputBg} ${theme.inputText} ${theme.inputBorder}`}
                                             >
                                                 <option value="left">Left</option>
@@ -2011,7 +2011,7 @@ function VideoPlayerDocs() {
                                             equalizer: true
                                         } : {}}
                                         audioVisual={videoShowAudioVisual ? {
-                                            side: videoVuSide,
+                                            side: videoVuSide as "left" | "right" | "top" | "bottom",
                                             color: videoVuColor,
                                             peak: videoVuPeak
                                         } : null}

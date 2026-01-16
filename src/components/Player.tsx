@@ -1681,7 +1681,9 @@ function WaveAudioPlayer({
 function NanoAudioPlayer({ audio: audioUrl, thumbnail, gradient: colors = ['#cd7eff', '#fe59f6'], background = '#1f273a', autoPlay = false }: NanoAudioPlayerProps) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
+    const [animationTime, setAnimationTime] = useState(0);
     const audioRef = useRef(null);
+    const animationRef = useRef<number | null>(null);
 
     useEffect(() => {
         const audio = audioRef.current;
@@ -1692,6 +1694,29 @@ function NanoAudioPlayer({ audio: audioUrl, thumbnail, gradient: colors = ['#cd7
 
         return () => audio.removeEventListener('timeupdate', handleTimeUpdate);
     }, []);
+
+    // Animation loop for smooth wave movement
+    useEffect(() => {
+        if (isPlaying) {
+            const animate = () => {
+                setAnimationTime(prev => prev + 0.1);
+                animationRef.current = requestAnimationFrame(animate);
+            };
+            animationRef.current = requestAnimationFrame(animate);
+        } else {
+            if (animationRef.current) {
+                cancelAnimationFrame(animationRef.current);
+                animationRef.current = null;
+            }
+            setAnimationTime(0); // Reset animation time when paused
+        }
+
+        return () => {
+            if (animationRef.current) {
+                cancelAnimationFrame(animationRef.current);
+            }
+        };
+    }, [isPlaying]);
 
     useEffect(() => {
         if (audioUrl && audioRef.current && autoPlay) {
@@ -1754,11 +1779,12 @@ function NanoAudioPlayer({ audio: audioUrl, thumbnail, gradient: colors = ['#cd7
                                 width: '100%',
                                 background: `linear-gradient(to top, ${colors[0]}, ${colors[1]})`,
                                 height: isPlaying
-                                    ? `${8 + Math.sin((currentTime * 8 + i) * 0.6) * 10}px`
-                                    : '8px',
-                                opacity: isPlaying ? 0.6 + (Math.abs(i - 6) / 12) * 0.6 : 0.3
+                                    ? `${14 + Math.sin(i * 1.5 - animationTime * 0.15) * 10}px`
+                                    : `${14 + Math.sin(i * 0.5) * 4}px`,
+                                opacity: isPlaying ? 0.8 : 0.4
                             }}
-                        />
+                        >
+                        </div>
                     ))}
                 </div>
             </div>
