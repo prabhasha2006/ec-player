@@ -296,7 +296,7 @@ function VisualizePlayerDocs() {
     return (
         <div className="space-y-8">
             {/* Component Description */}
-            <div className={`${theme.featureBg} rounded-xl p-6 border transition-colors duration-500`}>
+            <div className={`${theme.featureBg} rounded-xl p-4 md:p-6 border transition-colors duration-500`}>
                 <h2 className={`text-2xl font-bold ${theme.title} mb-3`}>VisualizePlayer</h2>
                 <p className={`${theme.subtext} mb-4`}>
                     A feature-rich audio player with multi-band frequency visualization, customizable themes, comprehensive controls, and a 3-band equalizer.
@@ -2352,7 +2352,7 @@ export default function MediaPlayerDocs() {
                                 ))}
                             </div>
 
-                            <div className="p-6 md:p-8">
+                            <div className="p-3 md:p-8">
                                 {activeTab === 'visualize' && <VisualizePlayerDocs />}
                                 {activeTab === 'wave' && <WaveAudioPlayerDocs />}
                                 {activeTab === 'nano' && <NanoAudioPlayerDocs />}
