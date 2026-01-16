@@ -385,6 +385,7 @@ function VisualizePlayer({
     const bandPeaksRef = useRef(bands.map(() => 0));
     const peakHoldsRef = useRef(bands.map(() => 0));
     const peakHoldTimesRef = useRef(bands.map(() => 0));
+    const isPlayingRef = useRef(false);
     const themeRef = useRef<ThemeKey>(typeof theme === 'string' ? theme : 'purple');
 
     let currentTheme: Theme = (typeof theme === 'string') ? (themes[theme] || themes.purple) : (typeof theme === 'object') ? theme : themes.purple;
@@ -628,12 +629,19 @@ function VisualizePlayer({
 
     // Start/stop visualization
     useEffect(() => {
-        if (isPlaying && !animationRef.current) {
+        isPlayingRef.current = isPlaying;
+
+        if (animationRef.current) {
+            cancelAnimationFrame(animationRef.current);
+            animationRef.current = null;
+        }
+
+        if (isPlaying) {
             if (!audioContextRef.current) {
                 setupAudioContext();
             }
             analyze();
-        } else if (!isPlaying && animationRef.current) {
+        } else {
             fadeOutVisualization();
         }
     }, [isPlaying]);
@@ -691,7 +699,7 @@ function VisualizePlayer({
     };
 
     const fadeOutVisualization = () => {
-        if (!animationRef.current) return;
+        if (isPlayingRef.current) return;
 
         // Gradually reduce the wave heights
         bandPeaksRef.current = bandPeaksRef.current.map(peak => peak * 0.7);
@@ -713,17 +721,19 @@ function VisualizePlayer({
         if (maxPeak > 0.01 || maxHold > 0.01) {
             animationRef.current = requestAnimationFrame(fadeOutVisualization);
         } else {
-            bandPeaksRef.current = bands.map(() => 0);
-            peakHoldsRef.current = bands.map(() => 0);
-            peakHoldTimesRef.current = bands.map(() => 0);
-            updateVU();
+            if (!isPlayingRef.current) {
+                bandPeaksRef.current = bands.map(() => 0);
+                peakHoldsRef.current = bands.map(() => 0);
+                peakHoldTimesRef.current = bands.map(() => 0);
+                updateVU();
+            }
             cancelAnimationFrame(animationRef.current);
             animationRef.current = null;
         }
     };
 
     const analyze = () => {
-        if (!analyserRef.current || !isPlaying) return;
+        if (!analyserRef.current || !isPlayingRef.current) return;
 
         const bufferLength = analyserRef.current.frequencyBinCount;
         const dataArray = new Uint8Array(bufferLength);
@@ -1818,8 +1828,8 @@ function VideoPlayer({
     const rightHoldRef = useRef(0);
     const leftHoldTimeRef = useRef(0);
     const rightHoldTimeRef = useRef(0);
-
-    const isDark = mode === 'dark';
+    const isPlayingRef = useRef(false);
+    const isDark = mode === 'dark' || isFullscreen;
     const noControls = (typeof controls === 'object' && Object.keys(controls).length === 0);
 
     // Track container width for responsive UI
@@ -1980,12 +1990,19 @@ function VideoPlayer({
 
     // Start/stop visualization
     useEffect(() => {
-        if (isPlaying && audioVisual && !animationRef.current) {
+        isPlayingRef.current = isPlaying;
+
+        if (animationRef.current) {
+            cancelAnimationFrame(animationRef.current);
+            animationRef.current = null;
+        }
+
+        if (isPlaying && audioVisual) {
             if (!audioContextRef.current) {
                 setupAudioContext();
             }
             analyze();
-        } else if (!isPlaying && animationRef.current) {
+        } else if (!isPlaying && audioVisual) {
             fadeOutVisualization();
         }
     }, [isPlaying, audioVisual]);
@@ -2058,9 +2075,8 @@ function VideoPlayer({
             }
         }
     };
-
     const fadeOutVisualization = () => {
-        if (!animationRef.current) return;
+        if (isPlayingRef.current) return;
 
         leftPeakRef.current *= 0.7;
         rightPeakRef.current *= 0.7;
@@ -2080,18 +2096,20 @@ function VideoPlayer({
         if (maxPeak > 0.01 || maxHold > 0.01) {
             animationRef.current = requestAnimationFrame(fadeOutVisualization);
         } else {
-            leftPeakRef.current = 0;
-            rightPeakRef.current = 0;
-            leftHoldRef.current = 0;
-            rightHoldRef.current = 0;
-            updateVU();
+            if (!isPlayingRef.current) {
+                leftPeakRef.current = 0;
+                rightPeakRef.current = 0;
+                leftHoldRef.current = 0;
+                rightHoldRef.current = 0;
+                updateVU();
+            }
             cancelAnimationFrame(animationRef.current);
             animationRef.current = null;
         }
     };
 
     const analyze = () => {
-        if (!analyserRef.current || !isPlaying) return;
+        if (!analyserRef.current || !isPlayingRef.current) return;
 
         const bufferLength = analyserRef.current.frequencyBinCount;
         const dataArray = new Uint8Array(bufferLength);
