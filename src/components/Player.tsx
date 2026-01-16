@@ -1919,61 +1919,9 @@ function VideoPlayer({
             const wasPlaying = isPlaying;
             const currentVolume = volume;
 
-            // Stop animation
-            if (animationRef.current) {
-                cancelAnimationFrame(animationRef.current);
-                animationRef.current = null;
-            }
-
-            // Properly disconnect and close audio context
-            if (sourceRef.current) {
-                try {
-                    sourceRef.current.disconnect();
-                } catch (e) {
-                    console.warn("Source disconnect error:", e);
-                }
-                sourceRef.current = null;
-            }
-
-            if (analyserRef.current) {
-                try {
-                    analyserRef.current.disconnect();
-                } catch (e) {
-                    console.warn("Analyser disconnect error:", e);
-                }
-                analyserRef.current = null;
-            }
-
-            if (bassFilterRef.current) {
-                try {
-                    bassFilterRef.current.disconnect();
-                } catch (e) {
-                    console.warn("Bass filter disconnect error:", e);
-                }
-                bassFilterRef.current = null;
-            }
-
-            if (midFilterRef.current) {
-                try {
-                    midFilterRef.current.disconnect();
-                } catch (e) {
-                    console.warn("Mid filter disconnect error:", e);
-                }
-                midFilterRef.current = null;
-            }
-
-            if (trebleFilterRef.current) {
-                try {
-                    trebleFilterRef.current.disconnect();
-                } catch (e) {
-                    console.warn("Treble filter disconnect error:", e);
-                }
-                trebleFilterRef.current = null;
-            }
-
-            if (audioContextRef.current) {
-                audioContextRef.current.close().catch(e => console.warn("AudioContext close error:", e));
-                audioContextRef.current = null;
+            // Pause video
+            if (videoRef.current) {
+                videoRef.current.pause();
             }
 
             // Update video source
@@ -2050,6 +1998,18 @@ function VideoPlayer({
 
         document.addEventListener('fullscreenchange', handleFullscreenChange);
         return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    }, []);
+
+    // Cleanup AudioContext on unmount
+    useEffect(() => {
+        return () => {
+            if (animationRef.current) {
+                cancelAnimationFrame(animationRef.current);
+            }
+            if (audioContextRef.current) {
+                audioContextRef.current.close().catch(e => console.warn("AudioContext cleanup error:", e));
+            }
+        };
     }, []);
 
     const setupAudioContext = () => {
@@ -2186,7 +2146,7 @@ function VideoPlayer({
             vuContainerRef.current.innerHTML = `
                 <div class="flex flex-col gap-1 h-full justify-center">
                     <div class="flex items-center justify-center gap-2">
-                        <div class="text-xs text-white opacity-50 w-4 text-center">L</div>
+                        <div class="text-xs ${isDark ? 'text-gray-100' : 'text-gray-900'} opacity-80 w-4 text-center">L</div>
                         <div class="relative flex-1 h-3 bg-black/40 rounded-full overflow-hidden flex justify-end">
                             <div class="h-full rounded-l-full transition-all duration-75" style="width: ${leftHeight}%; background: ${color};"></div>
                             ${leftHoldRef.current > 0.1 ? `<div class="absolute top-0 w-1 h-full transition-all duration-100" style="right: ${leftHoldRef.current * 100}%; background: ${peakColor};"></div>` : ''}
@@ -2196,7 +2156,7 @@ function VideoPlayer({
                             <div class="h-full rounded-r-full transition-all duration-75" style="width: ${rightHeight}%; background: ${color};"></div>
                             ${rightHoldRef.current > 0.1 ? `<div class="absolute top-0 w-1 h-full transition-all duration-100" style="left: ${rightHoldRef.current * 100}%; background: ${peakColor};"></div>` : ''}
                         </div>
-                        <div class="text-xs text-white opacity-50 w-4 text-center">R</div>
+                        <div class="text-xs ${isDark ? 'text-gray-100' : 'text-gray-900'} opacity-80 w-4 text-center">R</div>
                     </div>
                 </div>
             `;
@@ -2340,9 +2300,9 @@ function VideoPlayer({
         <div
             ref={containerRef}
             className={`rounded-xl overflow-hidden transition-all duration-300 ${isFullscreen ? 'fixed inset-0 z-[9999] flex flex-col h-screen w-screen bg-black' : 'relative'}`}
-            style={{ backgroundColor: !isFullscreen && !(noControls || transparent) && (isDark ? '#49494937' : 'white') }}
+            style={{ backgroundColor: !(noControls || transparent) && (isDark ? '#49494937' : 'white') }}
         >
-            <div style={{ background: !isFullscreen && !(noControls || transparent) && (isDark ? '#1a1a1ab0' : '#f5f5f5'), height: isFullscreen ? '100%' : 'auto' }} className={`${!(noControls || transparent) && 'p-4'} ${isFullscreen ? 'flex flex-col flex-1' : ''}`}>
+            <div style={{ background: !(noControls || transparent) && (isDark ? '#1a1a1ab0' : '#f5f5f5'), height: isFullscreen ? '100%' : 'auto' }} className={`${!(noControls || transparent) && 'p-4'} ${isFullscreen ? 'flex flex-col flex-1' : ''}`}>
                 {/* Video Name */}
                 {controls.videoName && !isFullscreen && (
                     <div className="mb-4">
@@ -2354,7 +2314,7 @@ function VideoPlayer({
                 <div className={`relative ${isHorizontalVU ? 'flex flex-col gap-3' : 'flex gap-3'} ${isFullscreen ? 'flex-1 min-h-0' : 'mb-4'}`}>
                     {/* VU Meter - Top */}
                     {audioVisual && vuPosition === 'top' && (
-                        <div className="w-full h-16 bg-black/50 rounded-lg p-2" ref={vuContainerRef}></div>
+                        <div className="w-full h-12" ref={vuContainerRef}></div>
                     )}
 
                     <div className={`flex ${!isHorizontalVU && 'flex-1'} gap-3`}>
@@ -2364,7 +2324,7 @@ function VideoPlayer({
                         )}
 
                         {/* Video Element */}
-                        <div className="flex-1 bg-black rounded-lg overflow-hidden relative">
+                        <div className={`flex-1 ${isDark ? 'bg-black/70' : 'bg-white/70'} rounded-lg overflow-hidden relative`}>
                             <video
                                 ref={videoRef}
                                 className="w-full h-full object-contain"
@@ -2376,93 +2336,95 @@ function VideoPlayer({
 
                             {/* Equalizer Overlay */}
                             {showEqualizer && (
-                                <div className={`absolute inset-0 flex flex-col w-full justify-center z-10 ${isDark ? 'bg-black/60' : 'bg-white/60'} rounded-lg p-4 shadow-sm transition-all duration-300`}>
-                                    <h3 className={`text-sm font-medium mb-4 ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>Equalizer</h3>
+                                <div className={`absolute inset-0 flex flex-col w-full justify-center z-10 rounded-lg p-4 shadow-sm transition-all duration-300`}>
+                                    <div className={`max-w-[600px] w-full mx-auto flex flex-col justify-center z-10 ${isDark ? 'bg-black/70' : 'bg-white/80'} rounded-lg p-4 shadow-sm transition-all duration-300`}>
+                                        <h3 className={`text-sm font-medium mb-4 ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>Equalizer</h3>
 
-                                    <div className="space-y-4">
-                                        {/* Bass Control */}
-                                        <div>
-                                            <div className="flex justify-between mb-1">
-                                                <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Bass</span>
-                                                <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>{eqBands.bass} dB</span>
+                                        <div className="space-y-4">
+                                            {/* Bass Control */}
+                                            <div>
+                                                <div className="flex justify-between mb-1">
+                                                    <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Bass</span>
+                                                    <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>{eqBands.bass} dB</span>
+                                                </div>
+                                                <div className="flex items-center gap-3">
+                                                    <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>-20</span>
+                                                    <input
+                                                        type="range"
+                                                        min="-20"
+                                                        max="20"
+                                                        value={eqBands.bass}
+                                                        onChange={(e) => handleEqChange('bass', parseInt(e.target.value))}
+                                                        className="flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider"
+                                                        style={{
+                                                            background: `linear-gradient(to right, ${color} ${(eqBands.bass + 20) / 40 * 100}%, #e5e7eb ${(eqBands.bass + 20) / 40 * 100}%)`
+                                                        }}
+                                                    />
+                                                    <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>+20</span>
+                                                </div>
                                             </div>
-                                            <div className="flex items-center gap-3">
-                                                <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>-20</span>
-                                                <input
-                                                    type="range"
-                                                    min="-20"
-                                                    max="20"
-                                                    value={eqBands.bass}
-                                                    onChange={(e) => handleEqChange('bass', parseInt(e.target.value))}
-                                                    className="flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider"
-                                                    style={{
-                                                        background: `linear-gradient(to right, ${color} ${(eqBands.bass + 20) / 40 * 100}%, #e5e7eb ${(eqBands.bass + 20) / 40 * 100}%)`
-                                                    }}
-                                                />
-                                                <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>+20</span>
+
+                                            {/* Mid Control */}
+                                            <div>
+                                                <div className="flex justify-between mb-1">
+                                                    <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Mid</span>
+                                                    <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>{eqBands.mid} dB</span>
+                                                </div>
+                                                <div className="flex items-center gap-3">
+                                                    <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>-20</span>
+                                                    <input
+                                                        type="range"
+                                                        min="-20"
+                                                        max="20"
+                                                        value={eqBands.mid}
+                                                        onChange={(e) => handleEqChange('mid', parseInt(e.target.value))}
+                                                        className="flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider"
+                                                        style={{
+                                                            background: `linear-gradient(to right, ${color} ${(eqBands.mid + 20) / 40 * 100}%, #e5e7eb ${(eqBands.mid + 20) / 40 * 100}%)`
+                                                        }}
+                                                    />
+                                                    <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>+20</span>
+                                                </div>
+                                            </div>
+
+                                            {/* Treble Control */}
+                                            <div>
+                                                <div className="flex justify-between mb-1">
+                                                    <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Treble</span>
+                                                    <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>{eqBands.treble} dB</span>
+                                                </div>
+                                                <div className="flex items-center gap-3">
+                                                    <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>-20</span>
+                                                    <input
+                                                        type="range"
+                                                        min="-20"
+                                                        max="20"
+                                                        value={eqBands.treble}
+                                                        onChange={(e) => handleEqChange('treble', parseInt(e.target.value))}
+                                                        className="flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider"
+                                                        style={{
+                                                            background: `linear-gradient(to right, ${color} ${(eqBands.treble + 20) / 40 * 100}%, #e5e7eb ${(eqBands.treble + 20) / 40 * 100}%)`
+                                                        }}
+                                                    />
+                                                    <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>+20</span>
+                                                </div>
                                             </div>
                                         </div>
 
-                                        {/* Mid Control */}
-                                        <div>
-                                            <div className="flex justify-between mb-1">
-                                                <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Mid</span>
-                                                <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>{eqBands.mid} dB</span>
-                                            </div>
-                                            <div className="flex items-center gap-3">
-                                                <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>-20</span>
-                                                <input
-                                                    type="range"
-                                                    min="-20"
-                                                    max="20"
-                                                    value={eqBands.mid}
-                                                    onChange={(e) => handleEqChange('mid', parseInt(e.target.value))}
-                                                    className="flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider"
-                                                    style={{
-                                                        background: `linear-gradient(to right, ${color} ${(eqBands.mid + 20) / 40 * 100}%, #e5e7eb ${(eqBands.mid + 20) / 40 * 100}%)`
-                                                    }}
-                                                />
-                                                <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>+20</span>
-                                            </div>
+                                        <div className="flex justify-between mt-6">
+                                            <button
+                                                onClick={resetEqualizer}
+                                                className={`px-3 py-1 rounded text-xs ${isDark ? 'bg-gray-700 text-gray-200 hover:bg-gray-600' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'} transition-all`}
+                                            >
+                                                Reset
+                                            </button>
+                                            <button
+                                                onClick={() => setShowEqualizer(false)}
+                                                className={`ml-2 px-3 py-1 rounded text-xs ${isDark ? 'bg-gray-700 text-gray-200 hover:bg-gray-600' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'} transition-all`}
+                                            >
+                                                Close
+                                            </button>
                                         </div>
-
-                                        {/* Treble Control */}
-                                        <div>
-                                            <div className="flex justify-between mb-1">
-                                                <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Treble</span>
-                                                <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>{eqBands.treble} dB</span>
-                                            </div>
-                                            <div className="flex items-center gap-3">
-                                                <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>-20</span>
-                                                <input
-                                                    type="range"
-                                                    min="-20"
-                                                    max="20"
-                                                    value={eqBands.treble}
-                                                    onChange={(e) => handleEqChange('treble', parseInt(e.target.value))}
-                                                    className="flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider"
-                                                    style={{
-                                                        background: `linear-gradient(to right, ${color} ${(eqBands.treble + 20) / 40 * 100}%, #e5e7eb ${(eqBands.treble + 20) / 40 * 100}%)`
-                                                    }}
-                                                />
-                                                <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>+20</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex justify-between mt-6">
-                                        <button
-                                            onClick={resetEqualizer}
-                                            className={`px-3 py-1 rounded text-xs ${isDark ? 'bg-gray-700 text-gray-200 hover:bg-gray-600' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'} transition-all`}
-                                        >
-                                            Reset
-                                        </button>
-                                        <button
-                                            onClick={() => setShowEqualizer(false)}
-                                            className={`ml-2 px-3 py-1 rounded text-xs ${isDark ? 'bg-gray-700 text-gray-200 hover:bg-gray-600' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'} transition-all`}
-                                        >
-                                            Close
-                                        </button>
                                     </div>
                                 </div>
                             )}
@@ -2476,13 +2438,13 @@ function VideoPlayer({
 
                     {/* VU Meter - Bottom */}
                     {audioVisual && vuPosition === 'bottom' && (
-                        <div className="w-full h-16 bg-black/50 rounded-lg p-2" ref={vuContainerRef}></div>
+                        <div className="w-full h-12" ref={vuContainerRef}></div>
                     )}
                 </div>
 
                 {/* Seekbar */}
                 {controls.seekbar && (
-                    <div className="mb-4">
+                    <div className={`mb-4 ${isFullscreen ? 'mt-3' : ''}`}>
                         <div className="flex items-center gap-3">
                             <span className={`text-xs ${isDark ? 'text-gray-100' : 'text-gray-600'} font-mono w-12`}>{formatTime(currentTime)}</span>
                             <input
