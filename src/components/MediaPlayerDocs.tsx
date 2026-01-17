@@ -2303,9 +2303,9 @@ export default function MediaPlayerDocs() {
     const [isDark, setIsDark] = useState(() => {
         if (typeof window !== 'undefined') {
             const saved = localStorage.getItem('ecplayer-theme');
-            return saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            return saved === 'dark';
         }
-        return true;
+        return false;
     });
 
     const toggleTheme = () => setIsDark(!isDark);
