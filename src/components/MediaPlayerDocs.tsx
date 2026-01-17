@@ -4,7 +4,7 @@ import { VisualizePlayer, ThemeSelector, themes, WaveAudioPlayer, NanoAudioPlaye
 //import { VisualizePlayer, ThemeSelector, themes, WaveAudioPlayer, NanoAudioPlayer, VideoPlayer } from './Player.js';
 
 const importFrom = 'ecplayer'
-const npmVersion = '1.0.0'
+const npmVersion = '1.0.1'
 
 const themeConfig = {
     light: {
@@ -88,6 +88,147 @@ const themeConfig = {
 };
 
 const ThemeContext = React.createContext({ isDark: false, theme: themeConfig.dark, toggle: () => { } });
+
+// Installation Documentation Component
+function InstallationDocs() {
+    const { theme } = React.useContext(ThemeContext);
+    const [copiedCode, setCopiedCode] = useState(null);
+
+    const copyCode = (code, id) => {
+        navigator.clipboard.writeText(code);
+        setCopiedCode(id);
+        setTimeout(() => setCopiedCode(null), 2000);
+    };
+
+    const installCommands = {
+        npm: 'npm install ecplayer',
+        yarn: 'yarn add ecplayer',
+        pnpm: 'pnpm add ecplayer'
+    };
+
+    return (
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+            {/* Installation Section */}
+            <div className={`${theme.featureBg} rounded-xl p-8 border shadow-lg transition-all duration-500`}>
+                <div className="flex items-center gap-3 mb-6">
+                    <div className={`p-3 rounded-xl bg-purple-500/10 ${theme.featureIcon}`}>
+                        <Settings size={32} />
+                    </div>
+                    <div>
+                        <h2 className={`text-3xl font-bold ${theme.title}`}>Installation</h2>
+                        <p className={`${theme.subtext}`}>Get started with ecplayer in your React project</p>
+                    </div>
+                </div>
+
+                <div className="grid md:grid-cols-1 gap-6">
+                    <div className="space-y-4">
+                        <h3 className={`text-xl font-semibold ${theme.heading}`}>Package Manager</h3>
+                        <div className="flex flex-col gap-4">
+                            {Object.entries(installCommands).map(([pkg, cmd]) => (
+                                <div key={pkg} className={`${theme.card} p-4 rounded-xl border flex justify-between items-center group transition-all hover:border-purple-500/50`}>
+                                    <div className="flex items-center gap-4">
+                                        <div className={`px-3 py-1 rounded-md text-xs font-bold uppercase ${pkg === 'npm' ? 'bg-red-500/10 text-red-500' : pkg === 'yarn' ? 'bg-blue-500/10 text-blue-500' : 'bg-orange-500/10 text-orange-500'}`}>
+                                            {pkg}
+                                        </div>
+                                        <code className={`${theme.text} font-mono`}>{cmd}</code>
+                                    </div>
+                                    <button
+                                        onClick={() => copyCode(cmd, pkg)}
+                                        className={`p-2 rounded-lg transition-all ${theme.btnBg} ${theme.btnHover} border ${theme.btnBorder}`}
+                                    >
+                                        {copiedCode === pkg ? <Check size={18} className="text-green-500" /> : <Copy size={18} className={theme.secondaryText} />}
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Peer Dependencies */}
+            <div className={`${theme.card} rounded-xl p-8 border shadow-lg transition-all duration-500`}>
+                <div className="flex items-center gap-3 mb-6">
+                    <div className="p-3 rounded-xl bg-blue-500/10 text-blue-500">
+                        <Info size={32} />
+                    </div>
+                    <div>
+                        <h3 className={`text-2xl font-bold ${theme.heading}`}>Peer Dependencies</h3>
+                        <p className={`${theme.secondaryText}`}>Ensure you have these packages installed</p>
+                    </div>
+                </div>
+
+                <div className="grid sm:grid-cols-3 gap-4">
+                    {[
+                        { name: 'react', version: '>= 18.0.0' },
+                        { name: 'react-dom', version: '>= 18.0.0' },
+                        { name: 'lucide-react', version: 'latest' }
+                    ].map(dep => (
+                        <div key={dep.name} className={`${theme.bg} p-4 rounded-xl border border-gray-200 dark:border-gray-800 flex flex-col items-center justify-center text-center`}>
+                            <div className={`font-bold ${theme.text}`}>{dep.name}</div>
+                            <div className={`text-sm ${theme.secondaryText}`}>{dep.version}</div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Setup */}
+            <div className={`${theme.docsBg} rounded-xl p-8 border shadow-lg transition-all duration-500`}>
+                <div className="flex items-center gap-3 mb-6">
+                    <div className="p-3 rounded-xl bg-emerald-500/10 text-emerald-500">
+                        <Code size={32} />
+                    </div>
+                    <div>
+                        <h3 className={`text-2xl font-bold ${theme.heading}`}>Quick Setup</h3>
+                        <p className={`${theme.secondaryText}`}>Import styles and components</p>
+                    </div>
+                </div>
+
+                <div className="space-y-6">
+                    <div>
+                        <h4 className={`text-lg font-medium ${theme.label} mb-3`}>1. Import CSS</h4>
+                        <p className={`${theme.subtext} mb-3 text-sm`}>Add the styles to your main entry file (index.js, main.tsx, etc.)</p>
+                        <div className="relative group">
+                            <pre className={`${theme.codeBg} ${theme.codeText} p-5 rounded-xl overflow-x-auto text-sm border`}>
+                                <code>{`import 'ecplayer/dist/style.css';`}</code>
+                            </pre>
+                            <button
+                                onClick={() => copyCode("import 'ecplayer/dist/style.css';", 'css')}
+                                className="absolute top-4 right-4 p-2 rounded-lg bg-white/5 opacity-0 group-hover:opacity-100 transition-all hover:bg-white/10"
+                            >
+                                {copiedCode === 'css' ? <Check size={18} className="text-green-500" /> : <Copy size={18} className="text-gray-400" />}
+                            </button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 className={`text-lg font-medium ${theme.label} mb-3`}>2. Usage Example</h4>
+                        <div className="relative group">
+                            <pre className={`${theme.codeBg} ${theme.codeText} p-5 rounded-xl overflow-x-auto text-sm border`}>
+                                <code>{`import { VisualizePlayer } from 'ecplayer';
+
+function App() {
+  return (
+    <VisualizePlayer
+      audio="https://example.com/audio.mp3"
+      name="Song Name"
+      author="Artist"
+    />
+  );
+}`}</code>
+                            </pre>
+                            <button
+                                onClick={() => copyCode(`import { VisualizePlayer } from 'ecplayer';\n\nfunction App() {\n  return (\n    <VisualizePlayer\n      audio="https://example.com/audio.mp3"\n      name="Song Name"\n      author="Artist"\n    />\n  );\n}`, 'usage')}
+                                className="absolute top-4 right-4 p-2 rounded-lg bg-white/5 opacity-0 group-hover:opacity-100 transition-all hover:bg-white/10"
+                            >
+                                {copiedCode === 'usage' ? <Check size={18} className="text-green-500" /> : <Copy size={18} className="text-gray-400" />}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
 
 // VisualizePlayer Documentation Component
 function VisualizePlayerDocs() {
@@ -2259,7 +2400,7 @@ export default function MediaPlayerDocs() {
         <ThemeContext.Provider value={{ isDark, theme, toggle: toggleTheme }}>
             <div className={`min-h-screen flex flex-col transition-colors duration-500 ${theme.bg}`}>
                 {/* Hero Section */}
-                <div className="bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 text-white relative overflow-hidden">
+                <div className="pt-24 md:pt-0 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 text-white relative overflow-hidden">
                     {/* VU Meter Background */}
                     <canvas
                         ref={canvasRef}
@@ -2293,7 +2434,7 @@ export default function MediaPlayerDocs() {
                             </p>
 
                             {/* ud */}
-                            <p className="text-xl md:text-2xl text-gray-400 mb-6 leading-relaxed max-w-3xl mx-auto">
+                            <p className="text-xl md:text-2xl text-gray-300 mb-6 leading-relaxed max-w-3xl mx-auto">
                                 Version: {npmVersion}
                             </p>
 
@@ -2389,26 +2530,38 @@ export default function MediaPlayerDocs() {
                         <div className={`${theme.docsBg} shadow-2xl mb-8 overflow-hidden transition-colors duration-500`}>
                             <div className={`flex flex-wrap border-b h-[10vh] ${theme.tabBorder}`}>
                                 {[
+                                    { id: 'installation', label: 'Installation', icon: <Settings />, color: 'emerald' },
                                     { id: 'visualize', label: 'VisualizePlayer', icon: <AudioLines />, color: 'purple' },
                                     { id: 'wave', label: 'WaveAudioPlayer', icon: <CassetteTape />, color: 'blue' },
                                     { id: 'nano', label: 'NanoAudioPlayer', icon: <SquareMinus />, color: 'yellow' },
                                     { id: 'video', label: 'VideoPlayer', icon: <TvMinimalPlay />, color: 'red' }
-                                ].map(tab => (
-                                    <button
-                                        key={tab.id}
-                                        onClick={() => setActiveTab(tab.id)}
-                                        className={`flex-1 flex items-center justify-center min-w-fit px-6 h-full font-medium transition-all ${activeTab === tab.id
-                                            ? `bg-gradient-to-r from-${tab.color}-600 to-${tab.color === 'purple' ? 'pink' : tab.color === 'blue' ? 'cyan' : tab.color === 'yellow' ? 'amber' : 'pink'}-600 text-white shadow-inner`
-                                            : `${theme.tabText} ${theme.tabHover}`
-                                            }`}
-                                    >
-                                        <span className="">{tab.icon}</span>
-                                        <span className="hidden sm:inline ml-2">{tab.label}</span>
-                                    </button>
-                                ))}
+                                ].map(tab => {
+                                    const activeClasses = {
+                                        installation: 'bg-gradient-to-r from-emerald-600 to-teal-600',
+                                        visualize: 'bg-gradient-to-r from-purple-600 to-pink-600',
+                                        wave: 'bg-gradient-to-r from-blue-600 to-cyan-600',
+                                        nano: 'bg-gradient-to-r from-yellow-600 to-amber-600',
+                                        video: 'bg-gradient-to-r from-red-600 to-pink-600'
+                                    };
+
+                                    return (
+                                        <button
+                                            key={tab.id}
+                                            onClick={() => setActiveTab(tab.id as any)}
+                                            className={`flex-1 flex items-center justify-center min-w-fit px-6 h-full font-medium transition-all ${activeTab === tab.id
+                                                ? `${activeClasses[tab.id as keyof typeof activeClasses]} text-white shadow-inner`
+                                                : `${theme.tabText} ${theme.tabHover}`
+                                                }`}
+                                        >
+                                            <span className="">{tab.icon}</span>
+                                            <span className="hidden sm:inline ml-2">{tab.label}</span>
+                                        </button>
+                                    );
+                                })}
                             </div>
 
                             <div className="p-3 md:p-8">
+                                {activeTab === 'installation' && <InstallationDocs />}
                                 {activeTab === 'visualize' && <VisualizePlayerDocs />}
                                 {activeTab === 'wave' && <WaveAudioPlayerDocs />}
                                 {activeTab === 'nano' && <NanoAudioPlayerDocs />}

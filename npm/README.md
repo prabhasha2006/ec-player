@@ -17,19 +17,26 @@ npm install ecplayer
 yarn add ecplayer
 ```
 
+## 🚀 Quick Start
+
+```tsx
+import { VisualizePlayer, ThemeSelector, themes, WaveAudioPlayer, NanoAudioPlayer, VideoPlayer } from 'ecplayer';
+import 'ecplayer/dist/style.css';
+```
+
 ## 🎨 Visual Players
 
 ### VisualizePlayer
-![VisualizePlayer](./media/visualizeplayer.png)
+![VisualizePlayer](https://cdn.evelocore.com/files/Evelocore/projects/ec-player/visualizeplayer.png)
 
 ### WaveAudioPlayer
-![WaveAudioPlayer](./media/waveaudioplayer.png)
+![WaveAudioPlayer](https://cdn.evelocore.com/files/Evelocore/projects/ec-player/waveaudioplayer.png)
 
 ### NanoAudioPlayer
-![NanoAudioPlayer](./media/nanoaudioplayer.png)
+![NanoAudioPlayer](https://cdn.evelocore.com/files/Evelocore/projects/ec-player/nanoaudioplayer.png)
 
 ### VideoPlayer
-![VideoPlayer](./media/videoplayer.png)
+![VideoPlayer](https://cdn.evelocore.com/files/Evelocore/projects/ec-player/videoplayer.png)
 
 ## 🛠️ Features
 

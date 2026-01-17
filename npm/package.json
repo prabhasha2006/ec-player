@@ -1,6 +1,6 @@
 {
   "name": "ecplayer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Professional audio and video players with advanced visualization, customizable themes, and seamless responsive design",
   "license": "MIT",
   "author": "K.Prabhasha",
@@ -16,8 +16,7 @@
     }
   },
   "files": [
-    "dist",
-    "media"
+    "dist"
   ],
   "scripts": {
     "dev": "vite",
