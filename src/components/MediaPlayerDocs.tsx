@@ -2597,7 +2597,7 @@ export default function MediaPlayerDocs() {
                                 </div>
 
                                 <div className="text-center md:text-left">
-                                    <div className="text-gray-400 text-sm mb-1">Company</div>
+                                    <div className="text-gray-400 text-sm mb-1">Organization</div>
                                     <div className="font-medium">Evelocore</div>
                                     <a
                                         href="https://evelocore.com"
@@ -2610,15 +2610,15 @@ export default function MediaPlayerDocs() {
                                 </div>
 
                                 <div className="text-center md:text-left">
-                                    <div className="text-gray-400 text-sm mb-1">License</div>
-                                    <div className="font-medium">CC BY-NC-ND 4.0</div>
+                                    <div className="text-gray-400 text-sm mb-1">Npm</div>
+                                    <div className="font-medium">ecplayer</div>
                                     <a
-                                        href="https://github.com/prabhasha2006/ec-player/blob/main/LICENSE"
+                                        href="https://www.npmjs.com/package/ecplayer"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="text-purple-400 hover:text-purple-300 text-sm transition-colors"
                                     >
-                                        View License
+                                        View Npm
                                     </a>
                                 </div>
                             </div>
