@@ -189,10 +189,10 @@ function InstallationDocs() {
                         <p className={`${theme.subtext} mb-3 text-sm`}>Add the styles to your main entry file (index.js, main.tsx, etc.)</p>
                         <div className="relative group">
                             <pre className={`${theme.codeBg} ${theme.codeText} p-5 rounded-xl overflow-x-auto text-sm border`}>
-                                <code>{`import 'ecplayer/dist/style.css';`}</code>
+                                <code>{`import 'ecplayer/style.css';`}</code>
                             </pre>
                             <button
-                                onClick={() => copyCode("import 'ecplayer/dist/style.css';", 'css')}
+                                onClick={() => copyCode("import 'ecplayer/style.css';", 'css')}
                                 className="absolute top-4 right-4 p-2 rounded-lg bg-white/5 opacity-0 group-hover:opacity-100 transition-all hover:bg-white/10"
                             >
                                 {copiedCode === 'css' ? <Check size={18} className="text-green-500" /> : <Copy size={18} className="text-gray-400" />}

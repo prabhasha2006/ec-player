@@ -1,6 +1,6 @@
 {
   "name": "ecplayer",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Professional audio and video players with advanced visualization, customizable themes, and seamless responsive design",
   "license": "MIT",
   "author": "K.Prabhasha",
@@ -13,7 +13,9 @@
       "import": "./dist/ecplayer.es.js",
       "require": "./dist/ecplayer.umd.js",
       "types": "./dist/index.d.ts"
-    }
+    },
+    "./dist/style.css": "./dist/style.css",
+    "./style.css": "./dist/style.css"
   },
   "files": [
     "dist"
