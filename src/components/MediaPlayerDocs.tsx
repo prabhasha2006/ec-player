@@ -4,7 +4,7 @@ import { VisualizePlayer, ThemeSelector, themes, WaveAudioPlayer, NanoAudioPlaye
 //import { VisualizePlayer, ThemeSelector, themes, WaveAudioPlayer, NanoAudioPlayer, VideoPlayer } from './Player.js';
 
 const importFrom = 'ecplayer'
-const npmVersion = '1.0.1'
+const npmVersion = '1.0.2'
 
 const themeConfig = {
     light: {
