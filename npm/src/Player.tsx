@@ -39,6 +39,7 @@ export interface VisualizePlayerProps {
         loop?: boolean;
         trackName?: boolean;
         equalizer?: boolean;
+        speed?: boolean;
     };
     mode?: 'light' | 'dark';
     bands?: { freq: number }[] | null;
@@ -247,7 +248,8 @@ function VisualizePlayer({
         volume: true,
         loop: true,
         trackName: true,
-        equalizer: true
+        equalizer: true,
+        speed: true
     },
     mode = 'light' as 'light' | 'dark',
     bands: _bands = null,
@@ -273,6 +275,7 @@ function VisualizePlayer({
         mid: equalizer.mid || 0,
         treble: equalizer.treble || 0
     })
+    const [playbackRate, setPlaybackRate] = useState(1.0);
     const [containerWidth, setContainerWidth] = useState(0)
 
     const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -613,6 +616,13 @@ function VisualizePlayer({
         }
     }, [isLoop]);
 
+    // Update playback rate
+    useEffect(() => {
+        if (audioRef.current) {
+            audioRef.current.playbackRate = playbackRate;
+        }
+    }, [playbackRate]);
+
     // Update equalizer bands
     useEffect(() => {
         if (audioContextRef.current) {
@@ -865,6 +875,10 @@ function VisualizePlayer({
         setIsMuted(!isMuted);
     };
 
+    const handleSpeedChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setPlaybackRate(parseFloat(e.target.value));
+    };
+
     const toggleLoop = () => {
         setIsLoop(!isLoop);
     };
@@ -1100,6 +1114,23 @@ function VisualizePlayer({
                             <Repeat size={16} className={`${isLoop ? 'rotate-180' : ''} transition-all`} />
                             <span style={{ display: containerWidth < 700 ? 'none' : 'block' }}>Loop</span>
                         </button>
+                    )}
+
+                    {controls.speed && (
+                        <div className="flex items-center">
+                            <select
+                                value={playbackRate}
+                                onChange={handleSpeedChange}
+                                className={`rounded-full text-sm font-medium border-none outline-none cursor-pointer transition-all bg-transparent ${!isDark ? 'text-gray-800' : 'text-gray-200'}`}
+                            >
+                                <option value="0.5" className={isDark ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800"}>0.5x</option>
+                                <option value="0.75" className={isDark ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800"}>0.75x</option>
+                                <option value="1" className={isDark ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800"}>1x</option>
+                                <option value="1.25" className={isDark ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800"}>1.25x</option>
+                                <option value="1.5" className={isDark ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800"}>1.5x</option>
+                                <option value="2" className={isDark ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800"}>2x</option>
+                            </select>
+                        </div>
                     )}
 
                     {controls.volume && (
@@ -2649,14 +2680,14 @@ function VideoPlayer({
                             <select
                                 value={playbackRate}
                                 onChange={handleSpeedChange}
-                                className={`${containerWidth < 600 ? 'px-2 py-1' : 'px-3 py-2'} rounded-full text-sm font-medium border-none outline-none cursor-pointer transition-all ${isDark ? 'bg-gray-100 text-black hover:bg-gray-300' : 'bg-gray-700 text-white hover:bg-gray-800'}`}
+                                className={`rounded-full text-sm font-medium border-none outline-none cursor-pointer transition-all bg-transparent ${!isDark ? 'text-gray-800' : 'text-gray-200'}`}
                             >
-                                <option value="0.5" className={isDark ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800"}>0.5x</option>
-                                <option value="0.75" className={isDark ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800"}>0.75x</option>
-                                <option value="1" className={isDark ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800"}>1x</option>
-                                <option value="1.25" className={isDark ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800"}>1.25x</option>
-                                <option value="1.5" className={isDark ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800"}>1.5x</option>
-                                <option value="2" className={isDark ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800"}>2x</option>
+                                <option value="0.5" className={isDark ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-gray-800"}>0.5x</option>
+                                <option value="0.75" className={isDark ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-gray-800"}>0.75x</option>
+                                <option value="1" className={isDark ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-gray-800"}>1x</option>
+                                <option value="1.25" className={isDark ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-gray-800"}>1.25x</option>
+                                <option value="1.5" className={isDark ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-gray-800"}>1.5x</option>
+                                <option value="2" className={isDark ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-gray-800"}>2x</option>
                             </select>
                         </div>
                     )}

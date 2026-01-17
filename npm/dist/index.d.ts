@@ -58,6 +58,7 @@ export declare interface VideoPlayerProps {
         fullscreen?: boolean;
         videoName?: boolean;
         equalizer?: boolean;
+        speed?: boolean;
     };
     mode?: 'light' | 'dark';
     transparent?: boolean;
@@ -88,6 +89,7 @@ export declare interface VisualizePlayerProps {
         loop?: boolean;
         trackName?: boolean;
         equalizer?: boolean;
+        speed?: boolean;
     };
     mode?: 'light' | 'dark';
     bands?: {

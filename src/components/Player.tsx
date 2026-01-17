@@ -616,6 +616,13 @@ function VisualizePlayer({
         }
     }, [isLoop]);
 
+    // Update playback rate
+    useEffect(() => {
+        if (audioRef.current) {
+            audioRef.current.playbackRate = playbackRate;
+        }
+    }, [playbackRate]);
+
     // Update equalizer bands
     useEffect(() => {
         if (audioContextRef.current) {
@@ -1114,7 +1121,7 @@ function VisualizePlayer({
                             <select
                                 value={playbackRate}
                                 onChange={handleSpeedChange}
-                                className={`${containerWidth < 600 ? 'px-2 py-1' : 'px-3 py-2'} rounded-full text-sm font-medium border-none outline-none cursor-pointer transition-all ${isDark ? 'bg-gray-100 text-black hover:bg-gray-300' : 'bg-gray-700 text-white hover:bg-gray-800'}`}
+                                className={`rounded-full text-sm font-medium border-none outline-none cursor-pointer transition-all bg-transparent ${!isDark ? 'text-gray-800' : 'text-gray-200'}`}
                             >
                                 <option value="0.5" className={isDark ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800"}>0.5x</option>
                                 <option value="0.75" className={isDark ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800"}>0.75x</option>
@@ -2673,7 +2680,7 @@ function VideoPlayer({
                             <select
                                 value={playbackRate}
                                 onChange={handleSpeedChange}
-                                className={`${containerWidth < 600 ? 'px-2 py-1' : 'px-3 py-2'} rounded-full text-sm font-medium border-none outline-none cursor-pointer transition-all bg-transparent ${!isDark ? 'text-black' : 'text-white'}`}
+                                className={`rounded-full text-sm font-medium border-none outline-none cursor-pointer transition-all bg-transparent ${!isDark ? 'text-gray-800' : 'text-gray-200'}`}
                             >
                                 <option value="0.5" className={isDark ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-gray-800"}>0.5x</option>
                                 <option value="0.75" className={isDark ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-gray-800"}>0.75x</option>

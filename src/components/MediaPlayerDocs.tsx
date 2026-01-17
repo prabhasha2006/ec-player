@@ -107,6 +107,7 @@ function VisualizePlayerDocs() {
     const [vizShowVolume, setVizShowVolume] = useState(true);
     const [vizShowLoop, setVizShowLoop] = useState(true);
     const [vizShowStop, setVizShowStop] = useState(true);
+    const [vizShowSpeed, setVizShowSpeed] = useState(true);
     const [vizAuthor, setVizAuthor] = useState('Artist Name');
     const [vizThumbnail, setVizThumbnail] = useState('https://cdn-icons-png.flaticon.com/512/3845/3845874.png');
     const [vizAutoPlay, setVizAutoPlay] = useState(false);
@@ -170,7 +171,8 @@ function VisualizePlayerDocs() {
         volume: ${vizShowVolume},
         loop: ${vizShowLoop},
         trackName: ${vizShowTrackName},
-        equalizer: ${vizShowEqName}
+        equalizer: ${vizShowEqName},
+        speed: ${vizShowSpeed}
     }}
 />`;
         } else if (activeExample === 'custom') {
@@ -600,7 +602,8 @@ function VisualizePlayerDocs() {
                                                 ['vizShowVolume', vizShowVolume, setVizShowVolume, 'Show Volume'],
                                                 ['vizShowLoop', vizShowLoop, setVizShowLoop, 'Show Loop'],
                                                 ['vizShowStop', vizShowStop, setVizShowStop, 'Show Stop'],
-                                                ['vizAutoPlay', vizAutoPlay, setVizAutoPlay, 'Auto Play']
+                                                ['vizAutoPlay', vizAutoPlay, setVizAutoPlay, 'Auto Play'],
+                                                ['vizShowSpeed', vizShowSpeed, setVizShowSpeed, 'Show Speed']
                                             ].map(([key, value, setter, label]: any) => (
                                                 <label key={key as string} className={`flex items-center gap-2 cursor-pointer ${theme.label}`}>
                                                     <input
@@ -636,7 +639,8 @@ function VisualizePlayerDocs() {
                                         volume: vizShowVolume,
                                         loop: vizShowLoop,
                                         trackName: vizShowTrackName,
-                                        equalizer: vizShowEqName
+                                        equalizer: vizShowEqName,
+                                        speed: vizShowSpeed
                                     }}
                                     equalizer={{
                                         bass: vizEqBass,

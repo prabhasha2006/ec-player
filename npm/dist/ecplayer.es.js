@@ -1,5 +1,5 @@
-import dr, { forwardRef as fr, createElement as Ze, useState as j, useRef as N, useEffect as I } from "react";
-var er = { exports: {} }, Ye = {};
+import xt, { forwardRef as gt, createElement as rt, useState as v, useRef as C, useEffect as L } from "react";
+var nt = { exports: {} }, Je = {};
 /**
  * @license React
  * react-jsx-runtime.production.min.js
@@ -9,21 +9,21 @@ var er = { exports: {} }, Ye = {};
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var or;
-function $r() {
-  if (or) return Ye;
-  or = 1;
-  var o = dr, u = Symbol.for("react.element"), f = Symbol.for("react.fragment"), g = Object.prototype.hasOwnProperty, q = o.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner, p = { key: !0, ref: !0, __self: !0, __source: !0 };
-  function w(h, b, T) {
-    var L, M = {}, _ = null, Y = null;
-    T !== void 0 && (_ = "" + T), b.key !== void 0 && (_ = "" + b.key), b.ref !== void 0 && (Y = b.ref);
-    for (L in b) g.call(b, L) && !p.hasOwnProperty(L) && (M[L] = b[L]);
-    if (h && h.defaultProps) for (L in b = h.defaultProps, b) M[L] === void 0 && (M[L] = b[L]);
-    return { $$typeof: u, type: h, key: _, ref: Y, props: M, _owner: q.current };
+var ut;
+function $t() {
+  if (ut) return Je;
+  ut = 1;
+  var o = xt, u = Symbol.for("react.element"), g = Symbol.for("react.fragment"), m = Object.prototype.hasOwnProperty, _ = o.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner, p = { key: !0, ref: !0, __self: !0, __source: !0 };
+  function k(y, N, q) {
+    var M, O = {}, S = null, V = null;
+    q !== void 0 && (S = "" + q), N.key !== void 0 && (S = "" + N.key), N.ref !== void 0 && (V = N.ref);
+    for (M in N) m.call(N, M) && !p.hasOwnProperty(M) && (O[M] = N[M]);
+    if (y && y.defaultProps) for (M in N = y.defaultProps, N) O[M] === void 0 && (O[M] = N[M]);
+    return { $$typeof: u, type: y, key: S, ref: V, props: O, _owner: _.current };
   }
-  return Ye.Fragment = f, Ye.jsx = w, Ye.jsxs = w, Ye;
+  return Je.Fragment = g, Je.jsx = k, Je.jsxs = k, Je;
 }
-var Ke = {};
+var Xe = {};
 /**
  * @license React
  * react-jsx-runtime.development.js
@@ -33,91 +33,91 @@ var Ke = {};
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var cr;
-function Er() {
-  return cr || (cr = 1, process.env.NODE_ENV !== "production" && function() {
-    var o = dr, u = Symbol.for("react.element"), f = Symbol.for("react.portal"), g = Symbol.for("react.fragment"), q = Symbol.for("react.strict_mode"), p = Symbol.for("react.profiler"), w = Symbol.for("react.provider"), h = Symbol.for("react.context"), b = Symbol.for("react.forward_ref"), T = Symbol.for("react.suspense"), L = Symbol.for("react.suspense_list"), M = Symbol.for("react.memo"), _ = Symbol.for("react.lazy"), Y = Symbol.for("react.offscreen"), K = Symbol.iterator, G = "@@iterator";
-    function J(r) {
-      if (r === null || typeof r != "object")
+var dt;
+function Et() {
+  return dt || (dt = 1, process.env.NODE_ENV !== "production" && function() {
+    var o = xt, u = Symbol.for("react.element"), g = Symbol.for("react.portal"), m = Symbol.for("react.fragment"), _ = Symbol.for("react.strict_mode"), p = Symbol.for("react.profiler"), k = Symbol.for("react.provider"), y = Symbol.for("react.context"), N = Symbol.for("react.forward_ref"), q = Symbol.for("react.suspense"), M = Symbol.for("react.suspense_list"), O = Symbol.for("react.memo"), S = Symbol.for("react.lazy"), V = Symbol.for("react.offscreen"), U = Symbol.iterator, Y = "@@iterator";
+    function K(t) {
+      if (t === null || typeof t != "object")
         return null;
-      var n = K && r[K] || r[G];
+      var n = U && t[U] || t[Y];
       return typeof n == "function" ? n : null;
     }
-    var k = o.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-    function y(r) {
+    var $ = o.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+    function b(t) {
       {
-        for (var n = arguments.length, c = new Array(n > 1 ? n - 1 : 0), m = 1; m < n; m++)
-          c[m - 1] = arguments[m];
-        we("error", r, c);
+        for (var n = arguments.length, c = new Array(n > 1 ? n - 1 : 0), h = 1; h < n; h++)
+          c[h - 1] = arguments[h];
+        we("error", t, c);
       }
     }
-    function we(r, n, c) {
+    function we(t, n, c) {
       {
-        var m = k.ReactDebugCurrentFrame, B = m.getStackAddendum();
-        B !== "" && (n += "%s", c = c.concat([B]));
-        var V = c.map(function(S) {
-          return String(S);
+        var h = $.ReactDebugCurrentFrame, D = h.getStackAddendum();
+        D !== "" && (n += "%s", c = c.concat([D]));
+        var W = c.map(function(A) {
+          return String(A);
         });
-        V.unshift("Warning: " + n), Function.prototype.apply.call(console[r], console, V);
+        W.unshift("Warning: " + n), Function.prototype.apply.call(console[t], console, W);
       }
     }
-    var he = !1, $e = !1, le = !1, ue = !1, ve = !1, ye;
-    ye = Symbol.for("react.module.reference");
-    function Z(r) {
-      return !!(typeof r == "string" || typeof r == "function" || r === g || r === p || ve || r === q || r === T || r === L || ue || r === Y || he || $e || le || typeof r == "object" && r !== null && (r.$$typeof === _ || r.$$typeof === M || r.$$typeof === w || r.$$typeof === h || r.$$typeof === b || // This needs to include all possible module reference object
+    var me = !1, $e = !1, se = !1, ce = !1, ye = !1, he;
+    he = Symbol.for("react.module.reference");
+    function X(t) {
+      return !!(typeof t == "string" || typeof t == "function" || t === m || t === p || ye || t === _ || t === q || t === M || ce || t === V || me || $e || se || typeof t == "object" && t !== null && (t.$$typeof === S || t.$$typeof === O || t.$$typeof === k || t.$$typeof === y || t.$$typeof === N || // This needs to include all possible module reference object
       // types supported by any Flight configuration anywhere since
       // we don't know which Flight build this will end up being used
       // with.
-      r.$$typeof === ye || r.getModuleId !== void 0));
+      t.$$typeof === he || t.getModuleId !== void 0));
     }
-    function ke(r, n, c) {
-      var m = r.displayName;
-      if (m)
-        return m;
-      var B = n.displayName || n.name || "";
-      return B !== "" ? c + "(" + B + ")" : c;
+    function ke(t, n, c) {
+      var h = t.displayName;
+      if (h)
+        return h;
+      var D = n.displayName || n.name || "";
+      return D !== "" ? c + "(" + D + ")" : c;
     }
-    function W(r) {
-      return r.displayName || "Context";
+    function H(t) {
+      return t.displayName || "Context";
     }
-    function F(r) {
-      if (r == null)
+    function F(t) {
+      if (t == null)
         return null;
-      if (typeof r.tag == "number" && y("Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue."), typeof r == "function")
-        return r.displayName || r.name || null;
-      if (typeof r == "string")
-        return r;
-      switch (r) {
-        case g:
+      if (typeof t.tag == "number" && b("Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue."), typeof t == "function")
+        return t.displayName || t.name || null;
+      if (typeof t == "string")
+        return t;
+      switch (t) {
+        case m:
           return "Fragment";
-        case f:
+        case g:
           return "Portal";
         case p:
           return "Profiler";
-        case q:
+        case _:
           return "StrictMode";
-        case T:
+        case q:
           return "Suspense";
-        case L:
+        case M:
           return "SuspenseList";
       }
-      if (typeof r == "object")
-        switch (r.$$typeof) {
-          case h:
-            var n = r;
-            return W(n) + ".Consumer";
-          case w:
-            var c = r;
-            return W(c._context) + ".Provider";
-          case b:
-            return ke(r, r.render, "ForwardRef");
-          case M:
-            var m = r.displayName || null;
-            return m !== null ? m : F(r.type) || "Memo";
-          case _: {
-            var B = r, V = B._payload, S = B._init;
+      if (typeof t == "object")
+        switch (t.$$typeof) {
+          case y:
+            var n = t;
+            return H(n) + ".Consumer";
+          case k:
+            var c = t;
+            return H(c._context) + ".Provider";
+          case N:
+            return ke(t, t.render, "ForwardRef");
+          case O:
+            var h = t.displayName || null;
+            return h !== null ? h : F(t.type) || "Memo";
+          case S: {
+            var D = t, W = D._payload, A = D._init;
             try {
-              return F(S(V));
+              return F(A(W));
             } catch {
               return null;
             }
@@ -125,373 +125,373 @@ function Er() {
         }
       return null;
     }
-    var O = Object.assign, ee = 0, ne, C, x, H, ie, Ne, de;
-    function fe() {
+    var z = Object.assign, fe = 0, be, ue, le, R, f, B, ie;
+    function Ne() {
     }
-    fe.__reactDisabledLog = !0;
-    function re() {
+    Ne.__reactDisabledLog = !0;
+    function Q() {
       {
-        if (ee === 0) {
-          ne = console.log, C = console.info, x = console.warn, H = console.error, ie = console.group, Ne = console.groupCollapsed, de = console.groupEnd;
-          var r = {
+        if (fe === 0) {
+          be = console.log, ue = console.info, le = console.warn, R = console.error, f = console.group, B = console.groupCollapsed, ie = console.groupEnd;
+          var t = {
             configurable: !0,
             enumerable: !0,
-            value: fe,
+            value: Ne,
             writable: !0
           };
           Object.defineProperties(console, {
-            info: r,
-            log: r,
-            warn: r,
-            error: r,
-            group: r,
-            groupCollapsed: r,
-            groupEnd: r
+            info: t,
+            log: t,
+            warn: t,
+            error: t,
+            group: t,
+            groupCollapsed: t,
+            groupEnd: t
           });
         }
-        ee++;
+        fe++;
       }
     }
-    function A() {
+    function xe() {
       {
-        if (ee--, ee === 0) {
-          var r = {
+        if (fe--, fe === 0) {
+          var t = {
             configurable: !0,
             enumerable: !0,
             writable: !0
           };
           Object.defineProperties(console, {
-            log: O({}, r, {
-              value: ne
+            log: z({}, t, {
+              value: be
             }),
-            info: O({}, r, {
-              value: C
+            info: z({}, t, {
+              value: ue
             }),
-            warn: O({}, r, {
-              value: x
+            warn: z({}, t, {
+              value: le
             }),
-            error: O({}, r, {
-              value: H
+            error: z({}, t, {
+              value: R
             }),
-            group: O({}, r, {
+            group: z({}, t, {
+              value: f
+            }),
+            groupCollapsed: z({}, t, {
+              value: B
+            }),
+            groupEnd: z({}, t, {
               value: ie
-            }),
-            groupCollapsed: O({}, r, {
-              value: Ne
-            }),
-            groupEnd: O({}, r, {
-              value: de
             })
           });
         }
-        ee < 0 && y("disabledDepth fell below zero. This is a bug in React. Please file an issue.");
+        fe < 0 && b("disabledDepth fell below zero. This is a bug in React. Please file an issue.");
       }
     }
-    var oe = k.ReactCurrentDispatcher, ae;
-    function P(r, n, c) {
+    var ne = $.ReactCurrentDispatcher, T;
+    function oe(t, n, c) {
       {
-        if (ae === void 0)
+        if (T === void 0)
           try {
             throw Error();
-          } catch (B) {
-            var m = B.stack.trim().match(/\n( *(at )?)/);
-            ae = m && m[1] || "";
+          } catch (D) {
+            var h = D.stack.trim().match(/\n( *(at )?)/);
+            T = h && h[1] || "";
           }
         return `
-` + ae + r;
+` + T + t;
       }
     }
-    var D = !1, s;
+    var ae = !1, s;
     {
-      var $ = typeof WeakMap == "function" ? WeakMap : Map;
-      s = new $();
+      var x = typeof WeakMap == "function" ? WeakMap : Map;
+      s = new x();
     }
-    function U(r, n) {
-      if (!r || D)
+    function E(t, n) {
+      if (!t || ae)
         return "";
       {
-        var c = s.get(r);
+        var c = s.get(t);
         if (c !== void 0)
           return c;
       }
-      var m;
-      D = !0;
-      var B = Error.prepareStackTrace;
+      var h;
+      ae = !0;
+      var D = Error.prepareStackTrace;
       Error.prepareStackTrace = void 0;
-      var V;
-      V = oe.current, oe.current = null, re();
+      var W;
+      W = ne.current, ne.current = null, Q();
       try {
         if (n) {
-          var S = function() {
+          var A = function() {
             throw Error();
           };
-          if (Object.defineProperty(S.prototype, "props", {
+          if (Object.defineProperty(A.prototype, "props", {
             set: function() {
               throw Error();
             }
           }), typeof Reflect == "object" && Reflect.construct) {
             try {
-              Reflect.construct(S, []);
-            } catch (me) {
-              m = me;
+              Reflect.construct(A, []);
+            } catch (pe) {
+              h = pe;
             }
-            Reflect.construct(r, [], S);
+            Reflect.construct(t, [], A);
           } else {
             try {
-              S.call();
-            } catch (me) {
-              m = me;
+              A.call();
+            } catch (pe) {
+              h = pe;
             }
-            r.call(S.prototype);
+            t.call(A.prototype);
           }
         } else {
           try {
             throw Error();
-          } catch (me) {
-            m = me;
+          } catch (pe) {
+            h = pe;
           }
-          r();
+          t();
         }
-      } catch (me) {
-        if (me && m && typeof me.stack == "string") {
-          for (var R = me.stack.split(`
-`), ge = m.stack.split(`
-`), te = R.length - 1, se = ge.length - 1; te >= 1 && se >= 0 && R[te] !== ge[se]; )
-            se--;
-          for (; te >= 1 && se >= 0; te--, se--)
-            if (R[te] !== ge[se]) {
-              if (te !== 1 || se !== 1)
+      } catch (pe) {
+        if (pe && h && typeof pe.stack == "string") {
+          for (var P = pe.stack.split(`
+`), ge = h.stack.split(`
+`), ee = P.length - 1, re = ge.length - 1; ee >= 1 && re >= 0 && P[ee] !== ge[re]; )
+            re--;
+          for (; ee >= 1 && re >= 0; ee--, re--)
+            if (P[ee] !== ge[re]) {
+              if (ee !== 1 || re !== 1)
                 do
-                  if (te--, se--, se < 0 || R[te] !== ge[se]) {
+                  if (ee--, re--, re < 0 || P[ee] !== ge[re]) {
                     var je = `
-` + R[te].replace(" at new ", " at ");
-                    return r.displayName && je.includes("<anonymous>") && (je = je.replace("<anonymous>", r.displayName)), typeof r == "function" && s.set(r, je), je;
+` + P[ee].replace(" at new ", " at ");
+                    return t.displayName && je.includes("<anonymous>") && (je = je.replace("<anonymous>", t.displayName)), typeof t == "function" && s.set(t, je), je;
                   }
-                while (te >= 1 && se >= 0);
+                while (ee >= 1 && re >= 0);
               break;
             }
         }
       } finally {
-        D = !1, oe.current = V, A(), Error.prepareStackTrace = B;
+        ae = !1, ne.current = W, xe(), Error.prepareStackTrace = D;
       }
-      var Ue = r ? r.displayName || r.name : "", Ie = Ue ? P(Ue) : "";
-      return typeof r == "function" && s.set(r, Ie), Ie;
+      var Ye = t ? t.displayName || t.name : "", Be = Ye ? oe(Ye) : "";
+      return typeof t == "function" && s.set(t, Be), Be;
     }
-    function X(r, n, c) {
-      return U(r, !1);
+    function G(t, n, c) {
+      return E(t, !1);
     }
-    function d(r) {
-      var n = r.prototype;
+    function J(t) {
+      var n = t.prototype;
       return !!(n && n.isReactComponent);
     }
-    function v(r, n, c) {
-      if (r == null)
+    function te(t, n, c) {
+      if (t == null)
         return "";
-      if (typeof r == "function")
-        return U(r, d(r));
-      if (typeof r == "string")
-        return P(r);
-      switch (r) {
-        case T:
-          return P("Suspense");
-        case L:
-          return P("SuspenseList");
+      if (typeof t == "function")
+        return E(t, J(t));
+      if (typeof t == "string")
+        return oe(t);
+      switch (t) {
+        case q:
+          return oe("Suspense");
+        case M:
+          return oe("SuspenseList");
       }
-      if (typeof r == "object")
-        switch (r.$$typeof) {
-          case b:
-            return X(r.render);
-          case M:
-            return v(r.type, n, c);
-          case _: {
-            var m = r, B = m._payload, V = m._init;
+      if (typeof t == "object")
+        switch (t.$$typeof) {
+          case N:
+            return G(t.render);
+          case O:
+            return te(t.type, n, c);
+          case S: {
+            var h = t, D = h._payload, W = h._init;
             try {
-              return v(V(B), n, c);
+              return te(W(D), n, c);
             } catch {
             }
           }
         }
       return "";
     }
-    var ce = Object.prototype.hasOwnProperty, Ee = {}, _e = k.ReactDebugCurrentFrame;
-    function be(r) {
-      if (r) {
-        var n = r._owner, c = v(r.type, r._source, n ? n.type : null);
-        _e.setExtraStackFrame(c);
+    var d = Object.prototype.hasOwnProperty, j = {}, ve = $.ReactDebugCurrentFrame;
+    function qe(t) {
+      if (t) {
+        var n = t._owner, c = te(t.type, t._source, n ? n.type : null);
+        ve.setExtraStackFrame(c);
       } else
-        _e.setExtraStackFrame(null);
+        ve.setExtraStackFrame(null);
     }
-    function Fe(r, n, c, m, B) {
+    function Fe(t, n, c, h, D) {
       {
-        var V = Function.call.bind(ce);
-        for (var S in r)
-          if (V(r, S)) {
-            var R = void 0;
+        var W = Function.call.bind(d);
+        for (var A in t)
+          if (W(t, A)) {
+            var P = void 0;
             try {
-              if (typeof r[S] != "function") {
-                var ge = Error((m || "React class") + ": " + c + " type `" + S + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof r[S] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.");
+              if (typeof t[A] != "function") {
+                var ge = Error((h || "React class") + ": " + c + " type `" + A + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof t[A] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.");
                 throw ge.name = "Invariant Violation", ge;
               }
-              R = r[S](n, S, m, c, null, "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED");
-            } catch (te) {
-              R = te;
+              P = t[A](n, A, h, c, null, "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED");
+            } catch (ee) {
+              P = ee;
             }
-            R && !(R instanceof Error) && (be(B), y("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", m || "React class", c, S, typeof R), be(null)), R instanceof Error && !(R.message in Ee) && (Ee[R.message] = !0, be(B), y("Failed %s type: %s", c, R.message), be(null));
+            P && !(P instanceof Error) && (qe(D), b("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", h || "React class", c, A, typeof P), qe(null)), P instanceof Error && !(P.message in j) && (j[P.message] = !0, qe(D), b("Failed %s type: %s", c, P.message), qe(null));
           }
       }
     }
-    var Ce = Array.isArray;
-    function Ae(r) {
-      return Ce(r);
+    var Ee = Array.isArray;
+    function _e(t) {
+      return Ee(t);
     }
-    function De(r) {
+    function Ce(t) {
       {
-        var n = typeof Symbol == "function" && Symbol.toStringTag, c = n && r[Symbol.toStringTag] || r.constructor.name || "Object";
+        var n = typeof Symbol == "function" && Symbol.toStringTag, c = n && t[Symbol.toStringTag] || t.constructor.name || "Object";
         return c;
       }
     }
-    function Be(r) {
+    function He(t) {
       try {
-        return Le(r), !1;
+        return Le(t), !1;
       } catch {
         return !0;
       }
     }
-    function Le(r) {
-      return "" + r;
+    function Le(t) {
+      return "" + t;
     }
-    function Me(r) {
-      if (Be(r))
-        return y("The provided key is an unsupported type %s. This value must be coerced to a string before before using it here.", De(r)), Le(r);
+    function Me(t) {
+      if (He(t))
+        return b("The provided key is an unsupported type %s. This value must be coerced to a string before before using it here.", Ce(t)), Le(t);
     }
-    var He = k.ReactCurrentOwner, Oe = {
+    var Oe = $.ReactCurrentOwner, We = {
       key: !0,
       ref: !0,
       __self: !0,
       __source: !0
-    }, We, Pe;
-    function Re(r) {
-      if (ce.call(r, "ref")) {
-        var n = Object.getOwnPropertyDescriptor(r, "ref").get;
+    }, Ve, Ue;
+    function ze(t) {
+      if (d.call(t, "ref")) {
+        var n = Object.getOwnPropertyDescriptor(t, "ref").get;
         if (n && n.isReactWarning)
           return !1;
       }
-      return r.ref !== void 0;
+      return t.ref !== void 0;
     }
-    function ze(r) {
-      if (ce.call(r, "key")) {
-        var n = Object.getOwnPropertyDescriptor(r, "key").get;
+    function Ke(t) {
+      if (d.call(t, "key")) {
+        var n = Object.getOwnPropertyDescriptor(t, "key").get;
         if (n && n.isReactWarning)
           return !1;
       }
-      return r.key !== void 0;
+      return t.key !== void 0;
     }
-    function t(r, n) {
-      typeof r.ref == "string" && He.current;
+    function Se(t, n) {
+      typeof t.ref == "string" && Oe.current;
     }
-    function a(r, n) {
+    function Re(t, n) {
       {
         var c = function() {
-          We || (We = !0, y("%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", n));
+          Ve || (Ve = !0, b("%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", n));
         };
-        c.isReactWarning = !0, Object.defineProperty(r, "key", {
+        c.isReactWarning = !0, Object.defineProperty(t, "key", {
           get: c,
           configurable: !0
         });
       }
     }
-    function l(r, n) {
+    function Ie(t, n) {
       {
         var c = function() {
-          Pe || (Pe = !0, y("%s: `ref` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", n));
+          Ue || (Ue = !0, b("%s: `ref` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", n));
         };
-        c.isReactWarning = !0, Object.defineProperty(r, "ref", {
+        c.isReactWarning = !0, Object.defineProperty(t, "ref", {
           get: c,
           configurable: !0
         });
       }
     }
-    var i = function(r, n, c, m, B, V, S) {
-      var R = {
+    var r = function(t, n, c, h, D, W, A) {
+      var P = {
         // This tag allows us to uniquely identify this as a React Element
         $$typeof: u,
         // Built-in properties that belong on the element
-        type: r,
+        type: t,
         key: n,
         ref: c,
-        props: S,
+        props: A,
         // Record the component responsible for creating this element.
-        _owner: V
+        _owner: W
       };
-      return R._store = {}, Object.defineProperty(R._store, "validated", {
+      return P._store = {}, Object.defineProperty(P._store, "validated", {
         configurable: !1,
         enumerable: !1,
         writable: !0,
         value: !1
-      }), Object.defineProperty(R, "_self", {
+      }), Object.defineProperty(P, "_self", {
         configurable: !1,
         enumerable: !1,
         writable: !1,
-        value: m
-      }), Object.defineProperty(R, "_source", {
+        value: h
+      }), Object.defineProperty(P, "_source", {
         configurable: !1,
         enumerable: !1,
         writable: !1,
-        value: B
-      }), Object.freeze && (Object.freeze(R.props), Object.freeze(R)), R;
+        value: D
+      }), Object.freeze && (Object.freeze(P.props), Object.freeze(P)), P;
     };
-    function E(r, n, c, m, B) {
+    function a(t, n, c, h, D) {
       {
-        var V, S = {}, R = null, ge = null;
-        c !== void 0 && (Me(c), R = "" + c), ze(n) && (Me(n.key), R = "" + n.key), Re(n) && (ge = n.ref, t(n, B));
-        for (V in n)
-          ce.call(n, V) && !Oe.hasOwnProperty(V) && (S[V] = n[V]);
-        if (r && r.defaultProps) {
-          var te = r.defaultProps;
-          for (V in te)
-            S[V] === void 0 && (S[V] = te[V]);
+        var W, A = {}, P = null, ge = null;
+        c !== void 0 && (Me(c), P = "" + c), Ke(n) && (Me(n.key), P = "" + n.key), ze(n) && (ge = n.ref, Se(n, D));
+        for (W in n)
+          d.call(n, W) && !We.hasOwnProperty(W) && (A[W] = n[W]);
+        if (t && t.defaultProps) {
+          var ee = t.defaultProps;
+          for (W in ee)
+            A[W] === void 0 && (A[W] = ee[W]);
         }
-        if (R || ge) {
-          var se = typeof r == "function" ? r.displayName || r.name || "Unknown" : r;
-          R && a(S, se), ge && l(S, se);
+        if (P || ge) {
+          var re = typeof t == "function" ? t.displayName || t.name || "Unknown" : t;
+          P && Re(A, re), ge && Ie(A, re);
         }
-        return i(r, R, ge, B, m, He.current, S);
+        return r(t, P, ge, D, h, Oe.current, A);
       }
     }
-    var z = k.ReactCurrentOwner, xe = k.ReactDebugCurrentFrame;
-    function pe(r) {
-      if (r) {
-        var n = r._owner, c = v(r.type, r._source, n ? n.type : null);
-        xe.setExtraStackFrame(c);
+    var l = $.ReactCurrentOwner, i = $.ReactDebugCurrentFrame;
+    function w(t) {
+      if (t) {
+        var n = t._owner, c = te(t.type, t._source, n ? n.type : null);
+        i.setExtraStackFrame(c);
       } else
-        xe.setExtraStackFrame(null);
+        i.setExtraStackFrame(null);
     }
-    var qe;
-    qe = !1;
-    function Q(r) {
-      return typeof r == "object" && r !== null && r.$$typeof === u;
+    var I;
+    I = !1;
+    function de(t) {
+      return typeof t == "object" && t !== null && t.$$typeof === u;
     }
-    function Ve() {
+    function Te() {
       {
-        if (z.current) {
-          var r = F(z.current.type);
-          if (r)
+        if (l.current) {
+          var t = F(l.current.type);
+          if (t)
             return `
 
-Check the render method of \`` + r + "`.";
+Check the render method of \`` + t + "`.";
         }
         return "";
       }
     }
-    function pr(r) {
+    function De(t) {
       return "";
     }
-    var nr = {};
-    function mr(r) {
+    var Z = {};
+    function Ge(t) {
       {
-        var n = Ve();
+        var n = Te();
         if (!n) {
-          var c = typeof r == "string" ? r : r.displayName || r.name;
+          var c = typeof t == "string" ? t : t.displayName || t.name;
           c && (n = `
 
 Check the top-level render call using <` + c + ">.");
@@ -499,145 +499,145 @@ Check the top-level render call using <` + c + ">.");
         return n;
       }
     }
-    function ar(r, n) {
+    function lt(t, n) {
       {
-        if (!r._store || r._store.validated || r.key != null)
+        if (!t._store || t._store.validated || t.key != null)
           return;
-        r._store.validated = !0;
-        var c = mr(n);
-        if (nr[c])
+        t._store.validated = !0;
+        var c = Ge(n);
+        if (Z[c])
           return;
-        nr[c] = !0;
-        var m = "";
-        r && r._owner && r._owner !== z.current && (m = " It was passed a child from " + F(r._owner.type) + "."), pe(r), y('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', c, m), pe(null);
+        Z[c] = !0;
+        var h = "";
+        t && t._owner && t._owner !== l.current && (h = " It was passed a child from " + F(t._owner.type) + "."), w(t), b('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', c, h), w(null);
       }
     }
-    function sr(r, n) {
+    function it(t, n) {
       {
-        if (typeof r != "object")
+        if (typeof t != "object")
           return;
-        if (Ae(r))
-          for (var c = 0; c < r.length; c++) {
-            var m = r[c];
-            Q(m) && ar(m, n);
+        if (_e(t))
+          for (var c = 0; c < t.length; c++) {
+            var h = t[c];
+            de(h) && lt(h, n);
           }
-        else if (Q(r))
-          r._store && (r._store.validated = !0);
-        else if (r) {
-          var B = J(r);
-          if (typeof B == "function" && B !== r.entries)
-            for (var V = B.call(r), S; !(S = V.next()).done; )
-              Q(S.value) && ar(S.value, n);
+        else if (de(t))
+          t._store && (t._store.validated = !0);
+        else if (t) {
+          var D = K(t);
+          if (typeof D == "function" && D !== t.entries)
+            for (var W = D.call(t), A; !(A = W.next()).done; )
+              de(A.value) && lt(A.value, n);
         }
       }
     }
-    function hr(r) {
+    function ht(t) {
       {
-        var n = r.type;
+        var n = t.type;
         if (n == null || typeof n == "string")
           return;
         var c;
         if (typeof n == "function")
           c = n.propTypes;
-        else if (typeof n == "object" && (n.$$typeof === b || // Note: Memo only checks outer props here.
+        else if (typeof n == "object" && (n.$$typeof === N || // Note: Memo only checks outer props here.
         // Inner props are checked in the reconciler.
-        n.$$typeof === M))
+        n.$$typeof === O))
           c = n.propTypes;
         else
           return;
         if (c) {
-          var m = F(n);
-          Fe(c, r.props, "prop", m, r);
-        } else if (n.PropTypes !== void 0 && !qe) {
-          qe = !0;
-          var B = F(n);
-          y("Component %s declared `PropTypes` instead of `propTypes`. Did you misspell the property assignment?", B || "Unknown");
+          var h = F(n);
+          Fe(c, t.props, "prop", h, t);
+        } else if (n.PropTypes !== void 0 && !I) {
+          I = !0;
+          var D = F(n);
+          b("Component %s declared `PropTypes` instead of `propTypes`. Did you misspell the property assignment?", D || "Unknown");
         }
-        typeof n.getDefaultProps == "function" && !n.getDefaultProps.isReactClassApproved && y("getDefaultProps is only used on classic React.createClass definitions. Use a static property named `defaultProps` instead.");
+        typeof n.getDefaultProps == "function" && !n.getDefaultProps.isReactClassApproved && b("getDefaultProps is only used on classic React.createClass definitions. Use a static property named `defaultProps` instead.");
       }
     }
-    function yr(r) {
+    function yt(t) {
       {
-        for (var n = Object.keys(r.props), c = 0; c < n.length; c++) {
-          var m = n[c];
-          if (m !== "children" && m !== "key") {
-            pe(r), y("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", m), pe(null);
+        for (var n = Object.keys(t.props), c = 0; c < n.length; c++) {
+          var h = n[c];
+          if (h !== "children" && h !== "key") {
+            w(t), b("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", h), w(null);
             break;
           }
         }
-        r.ref !== null && (pe(r), y("Invalid attribute `ref` supplied to `React.Fragment`."), pe(null));
+        t.ref !== null && (w(t), b("Invalid attribute `ref` supplied to `React.Fragment`."), w(null));
       }
     }
-    var lr = {};
-    function ir(r, n, c, m, B, V) {
+    var ot = {};
+    function ct(t, n, c, h, D, W) {
       {
-        var S = Z(r);
-        if (!S) {
-          var R = "";
-          (r === void 0 || typeof r == "object" && r !== null && Object.keys(r).length === 0) && (R += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.");
-          var ge = pr();
-          ge ? R += ge : R += Ve();
-          var te;
-          r === null ? te = "null" : Ae(r) ? te = "array" : r !== void 0 && r.$$typeof === u ? (te = "<" + (F(r.type) || "Unknown") + " />", R = " Did you accidentally export a JSX literal instead of a component?") : te = typeof r, y("React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", te, R);
+        var A = X(t);
+        if (!A) {
+          var P = "";
+          (t === void 0 || typeof t == "object" && t !== null && Object.keys(t).length === 0) && (P += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.");
+          var ge = De();
+          ge ? P += ge : P += Te();
+          var ee;
+          t === null ? ee = "null" : _e(t) ? ee = "array" : t !== void 0 && t.$$typeof === u ? (ee = "<" + (F(t.type) || "Unknown") + " />", P = " Did you accidentally export a JSX literal instead of a component?") : ee = typeof t, b("React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", ee, P);
         }
-        var se = E(r, n, c, B, V);
-        if (se == null)
-          return se;
-        if (S) {
+        var re = a(t, n, c, D, W);
+        if (re == null)
+          return re;
+        if (A) {
           var je = n.children;
           if (je !== void 0)
-            if (m)
-              if (Ae(je)) {
-                for (var Ue = 0; Ue < je.length; Ue++)
-                  sr(je[Ue], r);
+            if (h)
+              if (_e(je)) {
+                for (var Ye = 0; Ye < je.length; Ye++)
+                  it(je[Ye], t);
                 Object.freeze && Object.freeze(je);
               } else
-                y("React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead.");
+                b("React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead.");
             else
-              sr(je, r);
+              it(je, t);
         }
-        if (ce.call(n, "key")) {
-          var Ie = F(r), me = Object.keys(n).filter(function(Nr) {
-            return Nr !== "key";
-          }), Qe = me.length > 0 ? "{key: someKey, " + me.join(": ..., ") + ": ...}" : "{key: someKey}";
-          if (!lr[Ie + Qe]) {
-            var kr = me.length > 0 ? "{" + me.join(": ..., ") + ": ...}" : "{}";
-            y(`A props object containing a "key" prop is being spread into JSX:
+        if (d.call(n, "key")) {
+          var Be = F(t), pe = Object.keys(n).filter(function(Nt) {
+            return Nt !== "key";
+          }), tt = pe.length > 0 ? "{key: someKey, " + pe.join(": ..., ") + ": ...}" : "{key: someKey}";
+          if (!ot[Be + tt]) {
+            var kt = pe.length > 0 ? "{" + pe.join(": ..., ") + ": ...}" : "{}";
+            b(`A props object containing a "key" prop is being spread into JSX:
   let props = %s;
   <%s {...props} />
 React keys must be passed directly to JSX without using spread:
   let props = %s;
-  <%s key={someKey} {...props} />`, Qe, Ie, kr, Ie), lr[Ie + Qe] = !0;
+  <%s key={someKey} {...props} />`, tt, Be, kt, Be), ot[Be + tt] = !0;
           }
         }
-        return r === g ? yr(se) : hr(se), se;
+        return t === m ? yt(re) : ht(re), re;
       }
     }
-    function br(r, n, c) {
-      return ir(r, n, c, !0);
+    function bt(t, n, c) {
+      return ct(t, n, c, !0);
     }
-    function vr(r, n, c) {
-      return ir(r, n, c, !1);
+    function vt(t, n, c) {
+      return ct(t, n, c, !1);
     }
-    var jr = vr, wr = br;
-    Ke.Fragment = g, Ke.jsx = jr, Ke.jsxs = wr;
-  }()), Ke;
+    var jt = vt, wt = bt;
+    Xe.Fragment = m, Xe.jsx = jt, Xe.jsxs = wt;
+  }()), Xe;
 }
-process.env.NODE_ENV === "production" ? er.exports = $r() : er.exports = Er();
-var e = er.exports;
+process.env.NODE_ENV === "production" ? nt.exports = $t() : nt.exports = Et();
+var e = nt.exports;
 /**
  * @license lucide-react v0.540.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const Cr = (o) => o.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase(), Rr = (o) => o.replace(
+const Ct = (o) => o.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase(), Rt = (o) => o.replace(
   /^([A-Z])|[\s-_]+(\w)/g,
-  (u, f, g) => g ? g.toUpperCase() : f.toLowerCase()
-), ur = (o) => {
-  const u = Rr(o);
+  (u, g, m) => m ? m.toUpperCase() : g.toLowerCase()
+), ft = (o) => {
+  const u = Rt(o);
   return u.charAt(0).toUpperCase() + u.slice(1);
-}, xr = (...o) => o.filter((u, f, g) => !!u && u.trim() !== "" && g.indexOf(u) === f).join(" ").trim(), Tr = (o) => {
+}, pt = (...o) => o.filter((u, g, m) => !!u && u.trim() !== "" && m.indexOf(u) === g).join(" ").trim(), Tt = (o) => {
   for (const u in o)
     if (u.startsWith("aria-") || u === "role" || u === "title")
       return !0;
@@ -648,7 +648,7 @@ const Cr = (o) => o.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase(), Rr = (
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-var Pr = {
+var Pt = {
   xmlns: "http://www.w3.org/2000/svg",
   width: 24,
   height: 24,
@@ -665,31 +665,31 @@ var Pr = {
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const qr = fr(
+const qt = gt(
   ({
     color: o = "currentColor",
     size: u = 24,
-    strokeWidth: f = 2,
-    absoluteStrokeWidth: g,
-    className: q = "",
+    strokeWidth: g = 2,
+    absoluteStrokeWidth: m,
+    className: _ = "",
     children: p,
-    iconNode: w,
-    ...h
-  }, b) => Ze(
+    iconNode: k,
+    ...y
+  }, N) => rt(
     "svg",
     {
-      ref: b,
-      ...Pr,
+      ref: N,
+      ...Pt,
       width: u,
       height: u,
       stroke: o,
-      strokeWidth: g ? Number(f) * 24 / Number(u) : f,
-      className: xr("lucide", q),
-      ...!p && !Tr(h) && { "aria-hidden": "true" },
-      ...h
+      strokeWidth: m ? Number(g) * 24 / Number(u) : g,
+      className: pt("lucide", _),
+      ...!p && !Tt(y) && { "aria-hidden": "true" },
+      ...y
     },
     [
-      ...w.map(([T, L]) => Ze(T, L)),
+      ...k.map(([q, M]) => rt(q, M)),
       ...Array.isArray(p) ? p : [p]
     ]
   )
@@ -700,20 +700,20 @@ const qr = fr(
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const Te = (o, u) => {
-  const f = fr(
-    ({ className: g, ...q }, p) => Ze(qr, {
+const Pe = (o, u) => {
+  const g = gt(
+    ({ className: m, ..._ }, p) => rt(qt, {
       ref: p,
       iconNode: u,
-      className: xr(
-        `lucide-${Cr(ur(o))}`,
+      className: pt(
+        `lucide-${Ct(ft(o))}`,
         `lucide-${o}`,
-        g
+        m
       ),
-      ...q
+      ..._
     })
   );
-  return f.displayName = ur(o), f;
+  return g.displayName = ft(o), g;
 };
 /**
  * @license lucide-react v0.540.0 - ISC
@@ -721,41 +721,41 @@ const Te = (o, u) => {
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const _r = [
+const _t = [
   ["path", { d: "M8 3H5a2 2 0 0 0-2 2v3", key: "1dcmit" }],
   ["path", { d: "M21 8V5a2 2 0 0 0-2-2h-3", key: "1e4gt3" }],
   ["path", { d: "M3 16v3a2 2 0 0 0 2 2h3", key: "wsl5sc" }],
   ["path", { d: "M16 21h3a2 2 0 0 0 2-2v-3", key: "18trek" }]
-], Ar = Te("maximize", _r);
+], St = Pe("maximize", _t);
 /**
  * @license lucide-react v0.540.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const Sr = [
+const At = [
   ["path", { d: "M8 3v3a2 2 0 0 1-2 2H3", key: "hohbtr" }],
   ["path", { d: "M21 8h-3a2 2 0 0 1-2-2V3", key: "5jw1f3" }],
   ["path", { d: "M3 16h3a2 2 0 0 1 2 2v3", key: "198tvr" }],
   ["path", { d: "M16 21v-3a2 2 0 0 1 2-2h3", key: "ph8mxp" }]
-], Fr = Te("minimize", Sr);
+], Ft = Pe("minimize", At);
 /**
  * @license lucide-react v0.540.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const Lr = [
+const Lt = [
   ["rect", { x: "14", y: "3", width: "5", height: "18", rx: "1", key: "kaeet6" }],
   ["rect", { x: "5", y: "3", width: "5", height: "18", rx: "1", key: "1wsw3u" }]
-], Je = Te("pause", Lr);
+], Ze = Pe("pause", Lt);
 /**
  * @license lucide-react v0.540.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const Mr = [
+const Mt = [
   [
     "path",
     {
@@ -763,26 +763,26 @@ const Mr = [
       key: "10ikf1"
     }
   ]
-], Xe = Te("play", Mr);
+], et = Pe("play", Mt);
 /**
  * @license lucide-react v0.540.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const Or = [
+const Ot = [
   ["path", { d: "m17 2 4 4-4 4", key: "nntrym" }],
   ["path", { d: "M3 11v-1a4 4 0 0 1 4-4h14", key: "84bu3i" }],
   ["path", { d: "m7 22-4-4 4-4", key: "1wqhfi" }],
   ["path", { d: "M21 13v1a4 4 0 0 1-4 4H3", key: "1rx37r" }]
-], zr = Te("repeat", Or);
+], zt = Pe("repeat", Ot);
 /**
  * @license lucide-react v0.540.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const Ir = [
+const It = [
   ["line", { x1: "4", x2: "4", y1: "21", y2: "14", key: "1p332r" }],
   ["line", { x1: "4", x2: "4", y1: "10", y2: "3", key: "gb41h5" }],
   ["line", { x1: "12", x2: "12", y1: "21", y2: "12", key: "hf2csr" }],
@@ -792,34 +792,34 @@ const Ir = [
   ["line", { x1: "2", x2: "6", y1: "14", y2: "14", key: "1uebub" }],
   ["line", { x1: "10", x2: "14", y1: "8", y2: "8", key: "1yglbp" }],
   ["line", { x1: "18", x2: "22", y1: "16", y2: "16", key: "1jxqpz" }]
-], Ge = Te("sliders-vertical", Ir);
+], Qe = Pe("sliders-vertical", It);
 /**
  * @license lucide-react v0.540.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const Dr = [
+const Dt = [
   ["rect", { width: "18", height: "18", x: "3", y: "3", rx: "2", key: "afitv7" }]
-], gr = Te("square", Dr);
+], mt = Pe("square", Dt);
 /**
  * @license lucide-react v0.540.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const Br = [
+const Bt = [
   ["path", { d: "M12 3v12", key: "1x0j5s" }],
   ["path", { d: "m17 8-5-5-5 5", key: "7q97r8" }],
   ["path", { d: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4", key: "ih7n3h" }]
-], Hr = Te("upload", Br);
+], Ht = Pe("upload", Bt);
 /**
  * @license lucide-react v0.540.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const Wr = [
+const Wt = [
   [
     "path",
     {
@@ -829,14 +829,14 @@ const Wr = [
   ],
   ["path", { d: "M16 9a5 5 0 0 1 0 6", key: "1q6k2b" }],
   ["path", { d: "M19.364 18.364a9 9 0 0 0 0-12.728", key: "ijwkga" }]
-], rr = Te("volume-2", Wr);
+], at = Pe("volume-2", Wt);
 /**
  * @license lucide-react v0.540.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const Vr = [
+const Vt = [
   [
     "path",
     {
@@ -846,7 +846,7 @@ const Vr = [
   ],
   ["line", { x1: "22", x2: "16", y1: "9", y2: "15", key: "1ewh16" }],
   ["line", { x1: "16", x2: "22", y1: "9", y2: "15", key: "5ykzw1" }]
-], tr = Te("volume-x", Vr), Se = {
+], st = Pe("volume-x", Vt), Ae = {
   rainbow: {
     name: "Rainbow",
     bg: "linear-gradient(135deg, #ef444422 0%, #f9731622 15%, #f59e0b22 30%, #10b98122 45%, #06b6d422 60%, #3b82f622 75%, #6366f122 85%, #a855f722 92%, #ec489922 100%)",
@@ -946,11 +946,11 @@ const Vr = [
     slider: "#ec4899"
   }
 };
-function Ur({ theme: o, setTheme: u, close: f }) {
-  const g = Object.keys(Se).map((q) => ({
-    key: q,
-    name: Se[q].name,
-    colors: Se[q].bars
+function Ut({ theme: o, setTheme: u, close: g }) {
+  const m = Object.keys(Ae).map((_) => ({
+    key: _,
+    name: Ae[_].name,
+    colors: Ae[_].bars
   }));
   return /* @__PURE__ */ e.jsxs("div", { className: "container-glass rounded-xl p-6 mb-6", children: [
     /* @__PURE__ */ e.jsxs("div", { className: "flex justify-between items-center mb-4", children: [
@@ -958,34 +958,34 @@ function Ur({ theme: o, setTheme: u, close: f }) {
       /* @__PURE__ */ e.jsx(
         "button",
         {
-          onClick: () => f(),
+          onClick: () => g(),
           className: "text-gray-500 hover:text-gray-700 text-sm font-medium",
           children: "Close"
         }
       )
     ] }),
-    /* @__PURE__ */ e.jsx("div", { className: "theme-selector grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3", children: g.map((q) => /* @__PURE__ */ e.jsxs(
+    /* @__PURE__ */ e.jsx("div", { className: "theme-selector grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3", children: m.map((_) => /* @__PURE__ */ e.jsxs(
       "div",
       {
-        className: `theme-card bg-white p-4 rounded-lg cursor-pointer border-2 transition-all ${o === q.key ? "border-current shadow-lg" : "border-transparent"}`,
-        onClick: () => u(q.key),
+        className: `theme-card bg-white p-4 rounded-lg cursor-pointer border-2 transition-all ${o === _.key ? "border-current shadow-lg" : "border-transparent"}`,
+        onClick: () => u(_.key),
         children: [
-          /* @__PURE__ */ e.jsx("div", { className: "color-preview h-10 rounded mb-2", style: { background: `linear-gradient(to right, ${q.colors.join(", ")})` } }),
-          /* @__PURE__ */ e.jsx("div", { className: "text-sm font-medium text-gray-700", children: q.name })
+          /* @__PURE__ */ e.jsx("div", { className: "color-preview h-10 rounded mb-2", style: { background: `linear-gradient(to right, ${_.colors.join(", ")})` } }),
+          /* @__PURE__ */ e.jsx("div", { className: "text-sm font-medium text-gray-700", children: _.name })
         ]
       },
-      q.key
+      _.key
     )) })
   ] });
 }
-function Yr({
+function Yt({
   audio: o,
   name: u = "No track loaded",
-  author: f,
-  theme: g = "rainbow",
-  volume: q = 100,
+  author: g,
+  theme: m = "rainbow",
+  volume: _ = 100,
   thumbnail: p = null,
-  controls: w = {
+  controls: k = {
     play: !0,
     pause: !0,
     stop: !0,
@@ -993,47 +993,48 @@ function Yr({
     volume: !0,
     loop: !0,
     trackName: !0,
-    equalizer: !0
+    equalizer: !0,
+    speed: !0
   },
-  mode: h = "light",
-  bands: b = null,
-  transparent: T = !1,
-  autoPlay: L = !1,
-  equalizer: M = {
+  mode: y = "light",
+  bands: N = null,
+  transparent: q = !1,
+  autoPlay: M = !1,
+  equalizer: O = {
     bass: 0,
     mid: 0,
     treble: 0
   }
 }) {
-  const [_, Y] = j(!1), [K, G] = j(0), [J, k] = j(0), [y, we] = j(q || 100), [he, $e] = j(!1), [le, ue] = j(!1), [ve, ye] = j(!1), [Z, ke] = j([]), [W, F] = j(!1), [O, ee] = j({
-    bass: M.bass || 0,
-    mid: M.mid || 0,
-    treble: M.treble || 0
-  }), [ne, C] = j(0), x = N(null), H = N(null), ie = N(null), Ne = N(null), de = N(null), fe = N(null), re = N(null), A = N(null), oe = N(null), ae = N(null);
-  I(() => {
-    const t = ae.current;
-    if (!t) return;
+  const [S, V] = v(!1), [U, Y] = v(0), [K, $] = v(0), [b, we] = v(_ || 100), [me, $e] = v(!1), [se, ce] = v(!1), [ye, he] = v(!1), [X, ke] = v([]), [H, F] = v(!1), [z, fe] = v({
+    bass: O.bass || 0,
+    mid: O.mid || 0,
+    treble: O.treble || 0
+  }), [be, ue] = v(1), [le, R] = v(0), f = C(null), B = C(null), ie = C(null), Ne = C(null), Q = C(null), xe = C(null), ne = C(null), T = C(null), oe = C(null), ae = C(null);
+  L(() => {
+    const r = ae.current;
+    if (!r) return;
     const a = new ResizeObserver((l) => {
       for (let i of l)
-        C(i.contentRect.width);
+        R(i.contentRect.width);
     });
-    return a.observe(t), () => a.disconnect();
-  }, []), I(() => {
-    const t = [];
-    if (o && typeof o != "string" && t.push(["TypeError", "audio must be a string (URL or path)"]), u && typeof u != "string" && t.push(["TypeError", "name must be a string"]), g && typeof g != "string" && typeof g != "object")
-      t.push(["TypeError", "theme must be a string or a valid theme object"]);
-    else if (typeof g == "object") {
+    return a.observe(r), () => a.disconnect();
+  }, []), L(() => {
+    const r = [];
+    if (o && typeof o != "string" && r.push(["TypeError", "audio must be a string (URL or path)"]), u && typeof u != "string" && r.push(["TypeError", "name must be a string"]), m && typeof m != "string" && typeof m != "object")
+      r.push(["TypeError", "theme must be a string or a valid theme object"]);
+    else if (typeof m == "object") {
       const a = ["name", "bg", "bars", "peak", "button", "buttonHover", "slider"];
       for (const l of a)
-        l in g || t.push(["ThemeError", `theme object missing key: ${l}`]);
+        l in m || r.push(["ThemeError", `theme object missing key: ${l}`]);
     }
-    (typeof q != "number" || q < 0 || q > 100) && t.push(["TypeError", "volume must be a number between 0 and 100"]), typeof w != "object" || Array.isArray(w) ? t.push(["TypeError", "controls must be an object"]) : ["play", "pause", "stop", "seekbar", "volume", "loop", "trackName", "equalizer"].forEach((l) => {
-      w && l in w && typeof w[l] != "boolean" && t.push(["TypeError", `controls.${l} must be a boolean`]);
-    }), b && (Array.isArray(b) ? b.length === 0 ? t.push(["ValueError", "bands array cannot be empty"]) : b.forEach((a, l) => {
-      typeof a.freq != "number" && t.push(["TypeError", `bands[${l}].freq must be a number`]);
-    }) : t.push(["TypeError", "bands must be an array"])), t.length > 0 ? (ke(t), console.group("%cVisualizePlayer: Prop validation failed", "color:red"), t.forEach((a) => console.error(`${a[0]}: ${a[1]}`)), console.groupEnd()) : ke([]);
-  }, [o, u, g, q, w, h, b]);
-  const P = b || [
+    (typeof _ != "number" || _ < 0 || _ > 100) && r.push(["TypeError", "volume must be a number between 0 and 100"]), typeof k != "object" || Array.isArray(k) ? r.push(["TypeError", "controls must be an object"]) : ["play", "pause", "stop", "seekbar", "volume", "loop", "trackName", "equalizer"].forEach((l) => {
+      k && l in k && typeof k[l] != "boolean" && r.push(["TypeError", `controls.${l} must be a boolean`]);
+    }), N && (Array.isArray(N) ? N.length === 0 ? r.push(["ValueError", "bands array cannot be empty"]) : N.forEach((a, l) => {
+      typeof a.freq != "number" && r.push(["TypeError", `bands[${l}].freq must be a number`]);
+    }) : r.push(["TypeError", "bands must be an array"])), r.length > 0 ? (ke(r), console.group("%cVisualizePlayer: Prop validation failed", "color:red"), r.forEach((a) => console.error(`${a[0]}: ${a[1]}`)), console.groupEnd()) : ke([]);
+  }, [o, u, m, _, k, y, N]);
+  const s = N || [
     { freq: 0 },
     { freq: 10 },
     { freq: 20 },
@@ -1065,279 +1066,283 @@ function Yr({
     { freq: 8e3 },
     { freq: 1e4 },
     { freq: 12500 }
-  ], D = N(P.map(() => 0)), s = N(P.map(() => 0)), $ = N(P.map(() => 0)), U = N(!1), X = N(typeof g == "string" ? g : "purple");
-  let d = typeof g == "string" ? Se[g] || Se.purple : typeof g == "object" ? g : Se.purple;
-  const v = h === "dark", ce = typeof w == "object" && Object.keys(w).length === 0;
-  I(() => {
-    typeof g == "string" ? X.current = g : X.current = "purple", Ce();
-  }, [g]), I(() => {
-    x.current || (x.current = new Audio());
-    const t = x.current, a = () => {
-      ve || G(t.currentTime);
+  ], x = C(s.map(() => 0)), E = C(s.map(() => 0)), G = C(s.map(() => 0)), J = C(!1), te = C(typeof m == "string" ? m : "purple");
+  let d = typeof m == "string" ? Ae[m] || Ae.purple : typeof m == "object" ? m : Ae.purple;
+  const j = y === "dark", ve = typeof k == "object" && Object.keys(k).length === 0;
+  L(() => {
+    typeof m == "string" ? te.current = m : te.current = "purple", Ce();
+  }, [m]), L(() => {
+    f.current || (f.current = new Audio());
+    const r = f.current, a = () => {
+      ye || Y(r.currentTime);
     }, l = () => {
-      k(t.duration);
+      $(r.duration);
     }, i = () => {
-      le || (Y(!1), A.current && cancelAnimationFrame(A.current));
-    }, E = () => Y(!0), z = () => Y(!1);
-    return t.addEventListener("timeupdate", a), t.addEventListener("loadedmetadata", l), t.addEventListener("ended", i), t.addEventListener("play", E), t.addEventListener("pause", z), () => {
-      t.removeEventListener("timeupdate", a), t.removeEventListener("loadedmetadata", l), t.removeEventListener("ended", i), t.removeEventListener("play", E), t.removeEventListener("pause", z);
+      se || (V(!1), T.current && cancelAnimationFrame(T.current));
+    }, w = () => V(!0), I = () => V(!1);
+    return r.addEventListener("timeupdate", a), r.addEventListener("loadedmetadata", l), r.addEventListener("ended", i), r.addEventListener("play", w), r.addEventListener("pause", I), () => {
+      r.removeEventListener("timeupdate", a), r.removeEventListener("loadedmetadata", l), r.removeEventListener("ended", i), r.removeEventListener("play", w), r.removeEventListener("pause", I);
     };
-  }, [ve, le]), I(() => () => {
-    x.current && (x.current.pause(), x.current.src = "", x.current.load()), H.current && H.current.close().catch((t) => console.warn("AudioContext cleanup error:", t)), A.current && cancelAnimationFrame(A.current);
-  }, []), I(() => {
+  }, [ye, se]), L(() => () => {
+    f.current && (f.current.pause(), f.current.src = "", f.current.load()), B.current && B.current.close().catch((r) => console.warn("AudioContext cleanup error:", r)), T.current && cancelAnimationFrame(T.current);
+  }, []), L(() => {
     if (o) {
-      const t = _, a = y, l = le;
-      if (A.current && (cancelAnimationFrame(A.current), A.current = null), Ne.current) {
+      const r = S, a = b, l = se;
+      if (T.current && (cancelAnimationFrame(T.current), T.current = null), Ne.current) {
         try {
           Ne.current.disconnect();
-        } catch (Q) {
-          console.warn("Source disconnect error:", Q);
+        } catch (Z) {
+          console.warn("Source disconnect error:", Z);
         }
         Ne.current = null;
       }
       if (ie.current) {
         try {
           ie.current.disconnect();
-        } catch (Q) {
-          console.warn("Analyser disconnect error:", Q);
+        } catch (Z) {
+          console.warn("Analyser disconnect error:", Z);
         }
         ie.current = null;
       }
-      if (de.current) {
+      if (Q.current) {
         try {
-          de.current.disconnect();
-        } catch (Q) {
-          console.warn("Bass filter disconnect error:", Q);
+          Q.current.disconnect();
+        } catch (Z) {
+          console.warn("Bass filter disconnect error:", Z);
         }
-        de.current = null;
+        Q.current = null;
       }
-      if (fe.current) {
+      if (xe.current) {
         try {
-          fe.current.disconnect();
-        } catch (Q) {
-          console.warn("Mid filter disconnect error:", Q);
+          xe.current.disconnect();
+        } catch (Z) {
+          console.warn("Mid filter disconnect error:", Z);
         }
-        fe.current = null;
+        xe.current = null;
       }
-      if (re.current) {
+      if (ne.current) {
         try {
-          re.current.disconnect();
-        } catch (Q) {
-          console.warn("Treble filter disconnect error:", Q);
+          ne.current.disconnect();
+        } catch (Z) {
+          console.warn("Treble filter disconnect error:", Z);
         }
-        re.current = null;
+        ne.current = null;
       }
-      H.current && (H.current.close().catch((Q) => console.warn("AudioContext close error:", Q)), H.current = null), x.current && (x.current.pause(), x.current.src = "", x.current.load()), x.current = new Audio();
+      B.current && (B.current.close().catch((Z) => console.warn("AudioContext close error:", Z)), B.current = null), f.current && (f.current.pause(), f.current.src = "", f.current.load()), f.current = new Audio();
       try {
-        x.current.crossOrigin = "anonymous";
-      } catch (Q) {
-        console.debug("Could not set crossOrigin on audio element", Q);
+        f.current.crossOrigin = "anonymous";
+      } catch (Z) {
+        console.debug("Could not set crossOrigin on audio element", Z);
       }
-      x.current.src = o, x.current.preload = "auto", x.current.muted = !1, x.current.volume = he ? 0 : a / 100, x.current.loop = l, x.current.load();
-      const i = x.current, E = () => {
-        ve || G(i.currentTime);
-      }, z = () => {
-        k(i.duration);
-      }, xe = () => {
-        le || (Y(!1), A.current && cancelAnimationFrame(A.current));
-      }, pe = () => Y(!0), qe = () => Y(!1);
-      i.addEventListener("timeupdate", E), i.addEventListener("loadedmetadata", z), i.addEventListener("ended", xe), i.addEventListener("play", pe), i.addEventListener("pause", qe), G(0), Y(!1), console.debug("Audio element created", { src: x.current.src, volume: x.current.volume, loop: x.current.loop }), D.current = P.map(() => 0), s.current = P.map(() => 0), $.current = P.map(() => 0), Ce(), t && x.current.play().catch((Q) => console.error("Play failed:", Q));
+      f.current.src = o, f.current.preload = "auto", f.current.muted = !1, f.current.volume = me ? 0 : a / 100, f.current.loop = l, f.current.load();
+      const i = f.current, w = () => {
+        ye || Y(i.currentTime);
+      }, I = () => {
+        $(i.duration);
+      }, de = () => {
+        se || (V(!1), T.current && cancelAnimationFrame(T.current));
+      }, Te = () => V(!0), De = () => V(!1);
+      i.addEventListener("timeupdate", w), i.addEventListener("loadedmetadata", I), i.addEventListener("ended", de), i.addEventListener("play", Te), i.addEventListener("pause", De), Y(0), V(!1), console.debug("Audio element created", { src: f.current.src, volume: f.current.volume, loop: f.current.loop }), x.current = s.map(() => 0), E.current = s.map(() => 0), G.current = s.map(() => 0), Ce(), r && f.current.play().catch((Z) => console.error("Play failed:", Z));
     }
-  }, [o]), I(() => {
-    x.current && (x.current.volume = he ? 0 : y / 100);
-  }, [y, he]), I(() => {
-    x.current && (x.current.loop = le);
-  }, [le]), I(() => {
-    H.current && (de.current && (de.current.gain.value = O.bass), fe.current && (fe.current.gain.value = O.mid), re.current && (re.current.gain.value = O.treble));
-  }, [O]), I(() => {
-    U.current = _, A.current && (cancelAnimationFrame(A.current), A.current = null), _ ? (H.current || Ee(), Fe()) : be();
-  }, [_]);
-  const Ee = () => {
-    if (!H.current && x.current)
+  }, [o]), L(() => {
+    f.current && (f.current.volume = me ? 0 : b / 100);
+  }, [b, me]), L(() => {
+    f.current && (f.current.loop = se);
+  }, [se]), L(() => {
+    f.current && (f.current.playbackRate = be);
+  }, [be]), L(() => {
+    B.current && (Q.current && (Q.current.gain.value = z.bass), xe.current && (xe.current.gain.value = z.mid), ne.current && (ne.current.gain.value = z.treble));
+  }, [z]), L(() => {
+    J.current = S, T.current && (cancelAnimationFrame(T.current), T.current = null), S ? (B.current || qe(), _e()) : Ee();
+  }, [S]);
+  const qe = () => {
+    if (!B.current && f.current)
       try {
-        const t = window.AudioContext || window.webkitAudioContext;
-        if (t) {
-          const a = new t();
-          H.current = a;
+        const r = window.AudioContext || window.webkitAudioContext;
+        if (r) {
+          const a = new r();
+          B.current = a;
           const l = a.createBiquadFilter();
-          l.type = "lowshelf", l.frequency.value = 320, l.gain.value = O.bass;
+          l.type = "lowshelf", l.frequency.value = 320, l.gain.value = z.bass;
           const i = a.createBiquadFilter();
-          i.type = "peaking", i.frequency.value = 1e3, i.Q.value = 0.5, i.gain.value = O.mid;
-          const E = a.createBiquadFilter();
-          E.type = "highshelf", E.frequency.value = 3200, E.gain.value = O.treble;
-          const z = a.createAnalyser();
-          z.fftSize = 8192, z.smoothingTimeConstant = 0.7;
-          const xe = a.createMediaElementSource(x.current);
-          xe.connect(l), l.connect(i), i.connect(E), E.connect(z), z.connect(a.destination), de.current = l, fe.current = i, re.current = E, ie.current = z, Ne.current = xe;
+          i.type = "peaking", i.frequency.value = 1e3, i.Q.value = 0.5, i.gain.value = z.mid;
+          const w = a.createBiquadFilter();
+          w.type = "highshelf", w.frequency.value = 3200, w.gain.value = z.treble;
+          const I = a.createAnalyser();
+          I.fftSize = 8192, I.smoothingTimeConstant = 0.7;
+          const de = a.createMediaElementSource(f.current);
+          de.connect(l), l.connect(i), i.connect(w), w.connect(I), I.connect(a.destination), Q.current = l, xe.current = i, ne.current = w, ie.current = I, Ne.current = de;
         }
-      } catch (t) {
-        console.error("Failed to setup audio context:", t);
+      } catch (r) {
+        console.error("Failed to setup audio context:", r);
       }
-  }, _e = (t) => {
-    const a = H.current, l = ie.current;
+  }, Fe = (r) => {
+    const a = B.current, l = ie.current;
     if (!a || !l) return 0;
-    const i = a.sampleRate / 2, E = Math.round(t / i * l.frequencyBinCount);
-    return Math.min(E, l.frequencyBinCount - 1);
-  }, be = () => {
-    if (U.current) return;
-    D.current = D.current.map((i) => i * 0.7);
-    const t = Date.now();
-    s.current = s.current.map((i, E) => t - $.current[E] > 1500 ? i * 0.95 : i), Ce();
-    const a = Math.max(...D.current), l = Math.max(...s.current);
-    a > 0.01 || l > 0.01 ? A.current = requestAnimationFrame(be) : (U.current || (D.current = P.map(() => 0), s.current = P.map(() => 0), $.current = P.map(() => 0), Ce()), A.current && cancelAnimationFrame(A.current), A.current = null);
-  }, Fe = () => {
-    if (!ie.current || !U.current) return;
-    const t = ie.current.frequencyBinCount, a = new Uint8Array(t);
-    ie.current.getByteFrequencyData(a), P.forEach((l, i) => {
-      const E = _e(l.freq), z = i < P.length - 1 ? _e(P[i + 1].freq) : a.length;
-      let xe = 0, pe = 0;
-      for (let Ve = E; Ve < z; Ve++)
-        xe += a[Ve], pe++;
-      let qe = pe > 0 ? xe / pe / 255 : 0;
-      qe = Math.pow(qe, 0.6), D.current[i] = D.current[i] * 0.8 + qe * 0.2;
-      const Q = Date.now();
-      D.current[i] > s.current[i] ? (s.current[i] = D.current[i], $.current[i] = Q) : Q - $.current[i] > 1500 && (s.current[i] *= 0.95);
-    }), Ce(), A.current = requestAnimationFrame(Fe);
+    const i = a.sampleRate / 2, w = Math.round(r / i * l.frequencyBinCount);
+    return Math.min(w, l.frequencyBinCount - 1);
+  }, Ee = () => {
+    if (J.current) return;
+    x.current = x.current.map((i) => i * 0.7);
+    const r = Date.now();
+    E.current = E.current.map((i, w) => r - G.current[w] > 1500 ? i * 0.95 : i), Ce();
+    const a = Math.max(...x.current), l = Math.max(...E.current);
+    a > 0.01 || l > 0.01 ? T.current = requestAnimationFrame(Ee) : (J.current || (x.current = s.map(() => 0), E.current = s.map(() => 0), G.current = s.map(() => 0), Ce()), T.current && cancelAnimationFrame(T.current), T.current = null);
+  }, _e = () => {
+    if (!ie.current || !J.current) return;
+    const r = ie.current.frequencyBinCount, a = new Uint8Array(r);
+    ie.current.getByteFrequencyData(a), s.forEach((l, i) => {
+      const w = Fe(l.freq), I = i < s.length - 1 ? Fe(s[i + 1].freq) : a.length;
+      let de = 0, Te = 0;
+      for (let Ge = w; Ge < I; Ge++)
+        de += a[Ge], Te++;
+      let De = Te > 0 ? de / Te / 255 : 0;
+      De = Math.pow(De, 0.6), x.current[i] = x.current[i] * 0.8 + De * 0.2;
+      const Z = Date.now();
+      x.current[i] > E.current[i] ? (E.current[i] = x.current[i], G.current[i] = Z) : Z - G.current[i] > 1500 && (E.current[i] *= 0.95);
+    }), Ce(), T.current = requestAnimationFrame(_e);
   }, Ce = () => {
     if (!oe.current) return;
-    const t = Se[X.current] || Se.rainbow;
+    const r = Ae[te.current] || Ae.rainbow;
     let a = "";
-    P.forEach((l, i) => {
-      const E = D.current[i] * 100, z = 100 - s.current[i] * 100, xe = Math.floor(i / P.length * t.bars.length), pe = t.bars[Math.min(xe, t.bars.length - 1)];
+    s.forEach((l, i) => {
+      const w = x.current[i] * 100, I = 100 - E.current[i] * 100, de = Math.floor(i / s.length * r.bars.length), Te = r.bars[Math.min(de, r.bars.length - 1)];
       a += `
                 <div class="flex-1 h-full relative flex flex-col justify-end">
-                    <div class="rounded-t transition-all duration-75" style="height: ${E}%; background: ${pe};">
-                        ${s.current[i] > 0.1 ? `<div class="absolute w-full h-0.5 transition-all duration-100" style="top: ${z}%; background: ${t.peak};"></div>` : ""}
+                    <div class="rounded-t transition-all duration-75" style="height: ${w}%; background: ${Te};">
+                        ${E.current[i] > 0.1 ? `<div class="absolute w-full h-0.5 transition-all duration-100" style="top: ${I}%; background: ${r.peak};"></div>` : ""}
                     </div>
                 </div>
             `;
     }), oe.current.innerHTML = a;
-  }, Ae = () => {
-    !x.current || !o || (_ ? x.current.pause() : (H.current && H.current.state === "suspended" && H.current.resume(), x.current.play().catch((t) => console.error("Play failed:", t))));
-  }, De = () => {
-    x.current && (x.current.pause(), x.current.currentTime = 0, Y(!1), G(0), D.current = P.map(() => 0), s.current = P.map(() => 0), $.current = P.map(() => 0), Ce());
-  }, Be = (t) => {
-    const l = parseFloat(t.target.value) / 100 * J;
-    G(l), x.current && !ve && (x.current.currentTime = l);
+  }, He = () => {
+    !f.current || !o || (S ? f.current.pause() : (B.current && B.current.state === "suspended" && B.current.resume(), f.current.play().catch((r) => console.error("Play failed:", r))));
   }, Le = () => {
-    ye(!0);
-  }, Me = () => {
-    x.current && (x.current.currentTime = K), ye(!1);
-  }, He = (t) => {
-    const a = parseInt(t.target.value);
-    we(a), $e(a === 0);
+    f.current && (f.current.pause(), f.current.currentTime = 0, V(!1), Y(0), x.current = s.map(() => 0), E.current = s.map(() => 0), G.current = s.map(() => 0), Ce());
+  }, Me = (r) => {
+    const l = parseFloat(r.target.value) / 100 * K;
+    Y(l), f.current && !ye && (f.current.currentTime = l);
   }, Oe = () => {
-    $e(!he);
+    he(!0);
   }, We = () => {
-    ue(!le);
-  }, Pe = (t, a) => {
-    ee((l) => ({
+    f.current && (f.current.currentTime = U), he(!1);
+  }, Ve = (r) => {
+    const a = parseInt(r.target.value);
+    we(a), $e(a === 0);
+  }, Ue = () => {
+    $e(!me);
+  }, ze = (r) => {
+    ue(parseFloat(r.target.value));
+  }, Ke = () => {
+    ce(!se);
+  }, Se = (r, a) => {
+    fe((l) => ({
       ...l,
-      [t]: a
+      [r]: a
     }));
   }, Re = () => {
-    ee({ bass: 0, mid: 0, treble: 0 });
+    fe({ bass: 0, mid: 0, treble: 0 });
   };
-  I(() => {
-    ((typeof w == "object" && Object.keys(w).length === 0 || !w) && !_ || L) && Ae();
-  }, [w]);
-  const ze = (t) => {
-    if (isNaN(t)) return "0:00";
-    const a = Math.floor(t / 60), l = Math.floor(t % 60);
+  L(() => {
+    ((typeof k == "object" && Object.keys(k).length === 0 || !k) && !S || M) && He();
+  }, [k]);
+  const Ie = (r) => {
+    if (isNaN(r)) return "0:00";
+    const a = Math.floor(r / 60), l = Math.floor(r % 60);
     return `${a}:${l.toString().padStart(2, "0")}`;
   };
-  return Z && Z.length > 0 ? Z.map((t, a) => /* @__PURE__ */ e.jsxs("div", { className: "text-red-500 text-sm bg-red-50 p-3 rounded mb-4 border border-red-300", children: [
+  return X && X.length > 0 ? X.map((r, a) => /* @__PURE__ */ e.jsxs("div", { className: "text-red-500 text-sm bg-red-50 p-3 rounded mb-4 border border-red-300", children: [
     /* @__PURE__ */ e.jsxs("strong", { children: [
-      t[0],
+      r[0],
       ":"
     ] }),
     " ",
-    t[1]
-  ] }, a)) : /* @__PURE__ */ e.jsx("div", { ref: ae, className: "w-full rounded-xl overflow-hidden", style: { backgroundColor: ce || T ? void 0 : v ? "#6060606a" : "#ffffffab" }, children: /* @__PURE__ */ e.jsxs("div", { style: { background: ce || T ? void 0 : d.bg }, className: ce || T ? "" : "p-4", children: [
+    r[1]
+  ] }, a)) : /* @__PURE__ */ e.jsx("div", { ref: ae, className: "w-full rounded-xl overflow-hidden", style: { backgroundColor: ve || q ? void 0 : j ? "#6060606a" : "#ffffffab" }, children: /* @__PURE__ */ e.jsxs("div", { style: { background: ve || q ? void 0 : d.bg }, className: ve || q ? "" : "p-4", children: [
     /* @__PURE__ */ e.jsxs("div", { className: "relative", children: [
-      /* @__PURE__ */ e.jsx("div", { className: `${T && W ? "opacity-30" : ""} ${ce || T ? "" : v ? "bg-black/40" : "bg-white/70"} rounded-lg ${ce ? "" : "mb-6"} ${ce || T ? "" : "p-4"} shadow-sm`, children: /* @__PURE__ */ e.jsx("div", { className: "flex justify-center items-end gap-1 h-64", ref: oe }) }),
-      W && /* @__PURE__ */ e.jsxs("div", { className: `absolute inset-0 flex flex-col w-full justify-center z-10 ${!(ce || T) && (v ? "bg-black/50" : "bg-white/80")} rounded-lg p-4 shadow-sm transition-all duration-300`, children: [
-        /* @__PURE__ */ e.jsx("h3", { className: `text-sm font-medium mb-4 ${v ? "text-gray-200" : "text-gray-700"}`, children: "Equalizer" }),
+      /* @__PURE__ */ e.jsx("div", { className: `${q && H ? "opacity-30" : ""} ${ve || q ? "" : j ? "bg-black/40" : "bg-white/70"} rounded-lg ${ve ? "" : "mb-6"} ${ve || q ? "" : "p-4"} shadow-sm`, children: /* @__PURE__ */ e.jsx("div", { className: "flex justify-center items-end gap-1 h-64", ref: oe }) }),
+      H && /* @__PURE__ */ e.jsxs("div", { className: `absolute inset-0 flex flex-col w-full justify-center z-10 ${!(ve || q) && (j ? "bg-black/50" : "bg-white/80")} rounded-lg p-4 shadow-sm transition-all duration-300`, children: [
+        /* @__PURE__ */ e.jsx("h3", { className: `text-sm font-medium mb-4 ${j ? "text-gray-200" : "text-gray-700"}`, children: "Equalizer" }),
         /* @__PURE__ */ e.jsxs("div", { className: "space-y-4", children: [
           /* @__PURE__ */ e.jsxs("div", { children: [
             /* @__PURE__ */ e.jsxs("div", { className: "flex justify-between mb-1", children: [
-              /* @__PURE__ */ e.jsx("span", { className: `text-xs ${v ? "text-gray-300" : "text-gray-600"}`, children: "Bass" }),
-              /* @__PURE__ */ e.jsxs("span", { className: `text-xs ${v ? "text-gray-300" : "text-gray-600"}`, children: [
-                O.bass,
+              /* @__PURE__ */ e.jsx("span", { className: `text-xs ${j ? "text-gray-300" : "text-gray-600"}`, children: "Bass" }),
+              /* @__PURE__ */ e.jsxs("span", { className: `text-xs ${j ? "text-gray-300" : "text-gray-600"}`, children: [
+                z.bass,
                 " dB"
               ] })
             ] }),
             /* @__PURE__ */ e.jsxs("div", { className: "flex items-center gap-3", children: [
-              /* @__PURE__ */ e.jsx("span", { className: `text-xs ${v ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
+              /* @__PURE__ */ e.jsx("span", { className: `text-xs ${j ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
               /* @__PURE__ */ e.jsx(
                 "input",
                 {
                   type: "range",
                   min: "-20",
                   max: "20",
-                  value: O.bass,
-                  onChange: (t) => Pe("bass", parseInt(t.target.value)),
+                  value: z.bass,
+                  onChange: (r) => Se("bass", parseInt(r.target.value)),
                   className: "flex-1 h-8 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider",
                   style: {
-                    background: `linear-gradient(to right, ${d.slider} ${(O.bass + 20) / 40 * 100}%, ${d.slider + "30"} ${(O.bass + 20) / 40 * 100}%)`
+                    background: `linear-gradient(to right, ${d.slider} ${(z.bass + 20) / 40 * 100}%, ${d.slider + "30"} ${(z.bass + 20) / 40 * 100}%)`
                   }
                 }
               ),
-              /* @__PURE__ */ e.jsx("span", { className: `text-xs ${v ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
+              /* @__PURE__ */ e.jsx("span", { className: `text-xs ${j ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
             ] })
           ] }),
           /* @__PURE__ */ e.jsxs("div", { children: [
             /* @__PURE__ */ e.jsxs("div", { className: "flex justify-between mb-1", children: [
-              /* @__PURE__ */ e.jsx("span", { className: `text-xs ${v ? "text-gray-300" : "text-gray-600"}`, children: "Mid" }),
-              /* @__PURE__ */ e.jsxs("span", { className: `text-xs ${v ? "text-gray-300" : "text-gray-600"}`, children: [
-                O.mid,
+              /* @__PURE__ */ e.jsx("span", { className: `text-xs ${j ? "text-gray-300" : "text-gray-600"}`, children: "Mid" }),
+              /* @__PURE__ */ e.jsxs("span", { className: `text-xs ${j ? "text-gray-300" : "text-gray-600"}`, children: [
+                z.mid,
                 " dB"
               ] })
             ] }),
             /* @__PURE__ */ e.jsxs("div", { className: "flex items-center gap-3", children: [
-              /* @__PURE__ */ e.jsx("span", { className: `text-xs ${v ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
+              /* @__PURE__ */ e.jsx("span", { className: `text-xs ${j ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
               /* @__PURE__ */ e.jsx(
                 "input",
                 {
                   type: "range",
                   min: "-20",
                   max: "20",
-                  value: O.mid,
-                  onChange: (t) => Pe("mid", parseInt(t.target.value)),
+                  value: z.mid,
+                  onChange: (r) => Se("mid", parseInt(r.target.value)),
                   className: "flex-1 h-8 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider",
                   style: {
-                    background: `linear-gradient(to right, ${d.slider} ${(O.mid + 20) / 40 * 100}%, ${d.slider + "30"} ${(O.mid + 20) / 40 * 100}%)`
+                    background: `linear-gradient(to right, ${d.slider} ${(z.mid + 20) / 40 * 100}%, ${d.slider + "30"} ${(z.mid + 20) / 40 * 100}%)`
                   }
                 }
               ),
-              /* @__PURE__ */ e.jsx("span", { className: `text-xs ${v ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
+              /* @__PURE__ */ e.jsx("span", { className: `text-xs ${j ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
             ] })
           ] }),
           /* @__PURE__ */ e.jsxs("div", { children: [
             /* @__PURE__ */ e.jsxs("div", { className: "flex justify-between mb-1", children: [
-              /* @__PURE__ */ e.jsx("span", { className: `text-xs ${v ? "text-gray-300" : "text-gray-600"}`, children: "Treble" }),
-              /* @__PURE__ */ e.jsxs("span", { className: `text-xs ${v ? "text-gray-300" : "text-gray-600"}`, children: [
-                O.treble,
+              /* @__PURE__ */ e.jsx("span", { className: `text-xs ${j ? "text-gray-300" : "text-gray-600"}`, children: "Treble" }),
+              /* @__PURE__ */ e.jsxs("span", { className: `text-xs ${j ? "text-gray-300" : "text-gray-600"}`, children: [
+                z.treble,
                 " dB"
               ] })
             ] }),
             /* @__PURE__ */ e.jsxs("div", { className: "flex items-center gap-3", children: [
-              /* @__PURE__ */ e.jsx("span", { className: `text-xs ${v ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
+              /* @__PURE__ */ e.jsx("span", { className: `text-xs ${j ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
               /* @__PURE__ */ e.jsx(
                 "input",
                 {
                   type: "range",
                   min: "-20",
                   max: "20",
-                  value: O.treble,
-                  onChange: (t) => Pe("treble", parseInt(t.target.value)),
+                  value: z.treble,
+                  onChange: (r) => Se("treble", parseInt(r.target.value)),
                   className: "flex-1 h-8 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider",
                   style: {
-                    background: `linear-gradient(to right, ${d.slider} ${(O.treble + 20) / 40 * 100}%, ${d.slider + "30"} ${(O.treble + 20) / 40 * 100}%)`
+                    background: `linear-gradient(to right, ${d.slider} ${(z.treble + 20) / 40 * 100}%, ${d.slider + "30"} ${(z.treble + 20) / 40 * 100}%)`
                   }
                 }
               ),
-              /* @__PURE__ */ e.jsx("span", { className: `text-xs ${v ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
+              /* @__PURE__ */ e.jsx("span", { className: `text-xs ${j ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
             ] })
           ] })
         ] }),
@@ -1345,104 +1350,120 @@ function Yr({
           "button",
           {
             onClick: Re,
-            className: `px-3 py-1 rounded text-xs ${v ? "bg-gray-700 text-gray-200 hover:bg-gray-600" : "bg-gray-200 text-gray-700 hover:bg-gray-300"} transition-all`,
+            className: `px-3 py-1 rounded text-xs ${j ? "bg-gray-700 text-gray-200 hover:bg-gray-600" : "bg-gray-200 text-gray-700 hover:bg-gray-300"} transition-all`,
             children: "Reset"
           }
         ) })
       ] })
     ] }),
-    w.trackName && /* @__PURE__ */ e.jsxs("div", { className: "mb-6 flex items-center", children: [
-      p && /* @__PURE__ */ e.jsx("div", { className: "mr-2", children: /* @__PURE__ */ e.jsx("img", { src: p, alt: "", className: `${_ ? "animation-spin" : ""} h-12 w-12 rounded-full` }) }),
+    k.trackName && /* @__PURE__ */ e.jsxs("div", { className: "mb-6 flex items-center", children: [
+      p && /* @__PURE__ */ e.jsx("div", { className: "mr-2", children: /* @__PURE__ */ e.jsx("img", { src: p, alt: "", className: `${S ? "animation-spin" : ""} h-12 w-12 rounded-full` }) }),
       /* @__PURE__ */ e.jsxs("div", { children: [
-        /* @__PURE__ */ e.jsx("div", { className: `${v ? "text-gray-100" : "text-gray-700"} font-medium truncate`, children: u }),
-        f && typeof f == "string" && /* @__PURE__ */ e.jsx("div", { className: `${v ? "text-gray-300" : "text-gray-500"} text-xs`, children: f })
+        /* @__PURE__ */ e.jsx("div", { className: `${j ? "text-gray-100" : "text-gray-700"} font-medium truncate`, children: u }),
+        g && typeof g == "string" && /* @__PURE__ */ e.jsx("div", { className: `${j ? "text-gray-300" : "text-gray-500"} text-xs`, children: g })
       ] })
     ] }),
-    w.seekbar && /* @__PURE__ */ e.jsx("div", { className: "mb-6", children: /* @__PURE__ */ e.jsxs("div", { className: "flex items-center md:gap-1", children: [
-      /* @__PURE__ */ e.jsx("span", { className: `text-xs ${v ? "text-gray-100" : "text-gray-600"} font-mono w-12`, children: ze(K) }),
+    k.seekbar && /* @__PURE__ */ e.jsx("div", { className: "mb-6", children: /* @__PURE__ */ e.jsxs("div", { className: "flex items-center md:gap-1", children: [
+      /* @__PURE__ */ e.jsx("span", { className: `text-xs ${j ? "text-gray-100" : "text-gray-600"} font-mono w-12`, children: Ie(U) }),
       /* @__PURE__ */ e.jsx(
         "input",
         {
           type: "range",
           min: "0",
           max: "100",
-          value: J > 0 ? K / J * 100 : 0,
-          onChange: Be,
-          onMouseDown: Le,
-          onMouseUp: Me,
-          onTouchStart: Le,
-          onTouchEnd: Me,
+          value: K > 0 ? U / K * 100 : 0,
+          onChange: Me,
+          onMouseDown: Oe,
+          onMouseUp: We,
+          onTouchStart: Oe,
+          onTouchEnd: We,
           disabled: !o,
           className: "flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed",
           style: {
-            background: o && J > 0 ? `linear-gradient(to right, ${d.slider} ${K / J * 100}%, ${d.slider + "30"} ${K / J * 100}%)` : d.slider + "30"
+            background: o && K > 0 ? `linear-gradient(to right, ${d.slider} ${U / K * 100}%, ${d.slider + "30"} ${U / K * 100}%)` : d.slider + "30"
           }
         }
       ),
-      /* @__PURE__ */ e.jsx("span", { className: `text-xs ${v ? "text-gray-100" : "text-gray-600"} font-mono w-12 text-right`, children: ze(J) })
+      /* @__PURE__ */ e.jsx("span", { className: `text-xs ${j ? "text-gray-100" : "text-gray-600"} font-mono w-12 text-right`, children: Ie(K) })
     ] }) }),
-    /* @__PURE__ */ e.jsxs("div", { className: `flex flex-wrap items-center ${ne < 330 ? "gap-2" : "gap-3"}`, children: [
-      w.play && /* @__PURE__ */ e.jsxs(
+    /* @__PURE__ */ e.jsxs("div", { className: `flex flex-wrap items-center ${le < 330 ? "gap-2" : "gap-3"}`, children: [
+      k.play && /* @__PURE__ */ e.jsxs(
         "button",
         {
-          onClick: Ae,
+          onClick: He,
           disabled: !o,
-          className: `${ne < 350 ? "px-3 py-5" : "px-4 py-2 md:w-24"} rounded-full text-sm font-medium text-white disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all hover:opacity-90`,
+          className: `${le < 350 ? "px-3 py-5" : "px-4 py-2 md:w-24"} rounded-full text-sm font-medium text-white disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all hover:opacity-90`,
           style: { backgroundColor: d.button },
           children: [
             /* @__PURE__ */ e.jsxs("div", { className: "relative w-4 flex items-center", children: [
-              /* @__PURE__ */ e.jsx(Je, { size: 16, className: `${_ ? "" : "scale-0 translate-y-10"} transition-all absolute` }),
-              /* @__PURE__ */ e.jsx(Xe, { size: 16, className: `${_ ? "scale-0 -translate-y-10" : ""} transition-all absolute` })
+              /* @__PURE__ */ e.jsx(Ze, { size: 16, className: `${S ? "" : "scale-0 translate-y-10"} transition-all absolute` }),
+              /* @__PURE__ */ e.jsx(et, { size: 16, className: `${S ? "scale-0 -translate-y-10" : ""} transition-all absolute` })
             ] }),
-            /* @__PURE__ */ e.jsx("span", { style: { display: ne < 350 ? "none" : "block" }, children: _ ? "Pause" : "Play" })
+            /* @__PURE__ */ e.jsx("span", { style: { display: le < 350 ? "none" : "block" }, children: S ? "Pause" : "Play" })
           ]
         }
       ),
-      w.stop && /* @__PURE__ */ e.jsxs(
+      k.stop && /* @__PURE__ */ e.jsxs(
         "button",
         {
-          onClick: De,
+          onClick: Le,
           disabled: !o,
-          className: `${v ? "bg-gray-100 text-black" : "bg-gray-700 text-white"} ${ne < 600 ? "px-3 py-3" : "px-4 py-2"} rounded-full text-sm font-medium ${v ? "hover:bg-gray-300" : "hover:bg-gray-800"} disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all`,
+          className: `${j ? "bg-gray-100 text-black" : "bg-gray-700 text-white"} ${le < 600 ? "px-3 py-3" : "px-4 py-2"} rounded-full text-sm font-medium ${j ? "hover:bg-gray-300" : "hover:bg-gray-800"} disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all`,
           children: [
-            /* @__PURE__ */ e.jsx(gr, { size: 16 }),
-            /* @__PURE__ */ e.jsx("span", { style: { display: ne < 600 ? "none" : "block" }, children: "Stop" })
+            /* @__PURE__ */ e.jsx(mt, { size: 16 }),
+            /* @__PURE__ */ e.jsx("span", { style: { display: le < 600 ? "none" : "block" }, children: "Stop" })
           ]
         }
       ),
-      w.equalizer && /* @__PURE__ */ e.jsxs(
+      k.equalizer && /* @__PURE__ */ e.jsxs(
         "button",
         {
-          onClick: () => F(!W),
+          onClick: () => F(!H),
           disabled: !o,
-          className: `${ne < 600 ? "px-3 py-3" : "px-4 py-2"} rounded-full text-sm font-medium flex items-center gap-2 transition-all ${W ? "text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-300"} disabled:opacity-40 disabled:cursor-not-allowed`,
-          style: W ? { backgroundColor: d.button } : {},
+          className: `${le < 600 ? "px-3 py-3" : "px-4 py-2"} rounded-full text-sm font-medium flex items-center gap-2 transition-all ${H ? "text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-300"} disabled:opacity-40 disabled:cursor-not-allowed`,
+          style: H ? { backgroundColor: d.button } : {},
           children: [
-            /* @__PURE__ */ e.jsx(Ge, { size: 16 }),
-            /* @__PURE__ */ e.jsx("span", { style: { display: ne < 600 ? "none" : "block" }, children: "EQ" })
+            /* @__PURE__ */ e.jsx(Qe, { size: 16 }),
+            /* @__PURE__ */ e.jsx("span", { style: { display: le < 600 ? "none" : "block" }, children: "EQ" })
           ]
         }
       ),
-      w.loop && /* @__PURE__ */ e.jsxs(
+      k.loop && /* @__PURE__ */ e.jsxs(
         "button",
         {
-          onClick: We,
+          onClick: Ke,
           disabled: !o,
-          className: `${ne < 700 ? "px-3 py-3" : "px-4 py-2"} rounded-full text-sm font-medium flex items-center gap-2 transition-all ${le ? "text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-300"} disabled:opacity-40 disabled:cursor-not-allowed`,
-          style: le ? { backgroundColor: d.button } : {},
+          className: `${le < 700 ? "px-3 py-3" : "px-4 py-2"} rounded-full text-sm font-medium flex items-center gap-2 transition-all ${se ? "text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-300"} disabled:opacity-40 disabled:cursor-not-allowed`,
+          style: se ? { backgroundColor: d.button } : {},
           children: [
-            /* @__PURE__ */ e.jsx(zr, { size: 16, className: `${le ? "rotate-180" : ""} transition-all` }),
-            /* @__PURE__ */ e.jsx("span", { style: { display: ne < 700 ? "none" : "block" }, children: "Loop" })
+            /* @__PURE__ */ e.jsx(zt, { size: 16, className: `${se ? "rotate-180" : ""} transition-all` }),
+            /* @__PURE__ */ e.jsx("span", { style: { display: le < 700 ? "none" : "block" }, children: "Loop" })
           ]
         }
       ),
-      w.volume && /* @__PURE__ */ e.jsxs("div", { className: "flex items-center gap-1 md:gap-3 ml-auto", children: [
+      k.speed && /* @__PURE__ */ e.jsx("div", { className: "flex items-center", children: /* @__PURE__ */ e.jsxs(
+        "select",
+        {
+          value: be,
+          onChange: ze,
+          className: `rounded-full text-sm font-medium border-none outline-none cursor-pointer transition-all bg-transparent ${j ? "text-gray-200" : "text-gray-800"}`,
+          children: [
+            /* @__PURE__ */ e.jsx("option", { value: "0.5", className: j ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800", children: "0.5x" }),
+            /* @__PURE__ */ e.jsx("option", { value: "0.75", className: j ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800", children: "0.75x" }),
+            /* @__PURE__ */ e.jsx("option", { value: "1", className: j ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800", children: "1x" }),
+            /* @__PURE__ */ e.jsx("option", { value: "1.25", className: j ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800", children: "1.25x" }),
+            /* @__PURE__ */ e.jsx("option", { value: "1.5", className: j ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800", children: "1.5x" }),
+            /* @__PURE__ */ e.jsx("option", { value: "2", className: j ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800", children: "2x" })
+          ]
+        }
+      ) }),
+      k.volume && /* @__PURE__ */ e.jsxs("div", { className: "flex items-center gap-1 md:gap-3 ml-auto", children: [
         /* @__PURE__ */ e.jsx(
           "button",
           {
-            onClick: Oe,
+            onClick: Ue,
             className: "p-2 rounded-full hover:bg-gray-100/50 transition-all",
-            children: he || y === 0 ? /* @__PURE__ */ e.jsx(tr, { size: 20, className: v ? "text-gray-100" : "text-gray-600" }) : /* @__PURE__ */ e.jsx(rr, { size: 20, className: v ? "text-gray-100" : "text-gray-600" })
+            children: me || b === 0 ? /* @__PURE__ */ e.jsx(st, { size: 20, className: j ? "text-gray-100" : "text-gray-600" }) : /* @__PURE__ */ e.jsx(at, { size: 20, className: j ? "text-gray-100" : "text-gray-600" })
           }
         ),
         /* @__PURE__ */ e.jsx(
@@ -1451,17 +1472,17 @@ function Yr({
             type: "range",
             min: "0",
             max: "100",
-            value: y,
-            onChange: He,
+            value: b,
+            onChange: Ve,
             className: "hide-for-xs w-24 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer",
             style: {
-              background: `linear-gradient(to right, ${d.slider} ${y}%, ${d.slider + "30"} ${y}%)`,
-              display: ne < 460 ? "none" : "block"
+              background: `linear-gradient(to right, ${d.slider} ${b}%, ${d.slider + "30"} ${b}%)`,
+              display: le < 460 ? "none" : "block"
             }
           }
         ),
-        /* @__PURE__ */ e.jsxs("span", { style: { display: ne < 800 ? "none" : "block" }, className: `hidden sm:block text-xs ${v ? "text-gray-100" : "text-gray-700"} font-mono w-10 text-right`, children: [
-          y,
+        /* @__PURE__ */ e.jsxs("span", { style: { display: le < 800 ? "none" : "block" }, className: `hidden sm:block text-xs ${j ? "text-gray-100" : "text-gray-700"} font-mono w-10 text-right`, children: [
+          b,
           "%"
         ] })
       ] })
@@ -1527,154 +1548,154 @@ function Yr({
             ` })
   ] }) });
 }
-function Kr({
+function Kt({
   audio: o,
-  gradient: u = ["#cd7eff", "#fe59f6"],
-  background: f = "#2f1f3aff",
-  autoPlay: g = !1,
-  thumbnail: q = null,
+  gradient: u = ["#cd7eff", "#ff00f2"],
+  background: g = "#f4e4ffff",
+  autoPlay: m = !1,
+  thumbnail: _ = null,
   width: p,
-  equalizer: w = {
+  equalizer: k = {
     bass: 0,
     mid: 0,
     treble: 0
   },
-  mode: h = "light"
+  mode: y = "light"
 }) {
-  const [b, T] = j(!1), [L, M] = j(0), [_, Y] = j(0), [K, G] = j(!1), [J, k] = j(80), [y, we] = j(1), [he, $e] = j([]), [le, ue] = j(null), [ve, ye] = j(!1), [Z, ke] = j({
-    bass: w.bass || 0,
-    mid: w.mid || 0,
-    treble: w.treble || 0
-  }), W = N(null), F = N(null), O = N(null), ee = N(null), ne = N(null), C = N(null), x = () => {
+  const [N, q] = v(!1), [M, O] = v(0), [S, V] = v(0), [U, Y] = v(!1), [K, $] = v(80), [b, we] = v(1), [me, $e] = v([]), [se, ce] = v(null), [ye, he] = v(!1), [X, ke] = v({
+    bass: k.bass || 0,
+    mid: k.mid || 0,
+    treble: k.treble || 0
+  }), H = C(null), F = C(null), z = C(null), fe = C(null), be = C(null), ue = C(null), le = () => {
     const s = [];
-    for (let $ = 0; $ < 100; $++) {
-      const U = 20 + Math.random() * 60;
-      s.push(U);
+    for (let x = 0; x < 100; x++) {
+      const E = 20 + Math.random() * 60;
+      s.push(E);
     }
     return s;
   };
-  I(() => {
+  L(() => {
     if (!o)
       return;
     if (!Array.isArray(u) || u.length < 2) {
-      ue("Gradient must be an array with at least 2 colors");
+      ce("Gradient must be an array with at least 2 colors");
       return;
     }
-    const s = W.current;
+    const s = H.current;
     if (!s) return;
-    const $ = () => M(s.currentTime), U = () => {
-      Y(s.duration), $e(x());
-    }, X = () => T(!1), d = (v) => {
-      var ce, Ee;
-      ue(`Audio error: ${((Ee = (ce = v.target) == null ? void 0 : ce.error) == null ? void 0 : Ee.message) || "Failed to load audio"}`);
+    const x = () => O(s.currentTime), E = () => {
+      V(s.duration), $e(le());
+    }, G = () => q(!1), J = (te) => {
+      var d, j;
+      ce(`Audio error: ${((j = (d = te.target) == null ? void 0 : d.error) == null ? void 0 : j.message) || "Failed to load audio"}`);
     };
-    return s.addEventListener("timeupdate", $), s.addEventListener("loadedmetadata", U), s.addEventListener("ended", X), s.addEventListener("error", d), () => {
-      s.removeEventListener("timeupdate", $), s.removeEventListener("loadedmetadata", U), s.removeEventListener("ended", X), s.removeEventListener("error", d);
+    return s.addEventListener("timeupdate", x), s.addEventListener("loadedmetadata", E), s.addEventListener("ended", G), s.addEventListener("error", J), () => {
+      s.removeEventListener("timeupdate", x), s.removeEventListener("loadedmetadata", E), s.removeEventListener("ended", G), s.removeEventListener("error", J);
     };
-  }, [o, u, h]), I(() => {
-    o && W.current && g && (W.current.play().catch((s) => {
-      console.error("Play failed:", s), T(!1);
-    }), T(!0));
-  }, [o]), I(() => {
-    if (W.current && !F.current && W.current) {
+  }, [o, u, y]), L(() => {
+    o && H.current && m && (H.current.play().catch((s) => {
+      console.error("Play failed:", s), q(!1);
+    }), q(!0));
+  }, [o]), L(() => {
+    if (H.current && !F.current && H.current) {
       const s = window.AudioContext || window.webkitAudioContext;
       if (s) {
-        const $ = new s();
-        F.current = $;
-        const U = $.createMediaElementSource(W.current);
-        O.current = U;
-        const X = $.createBiquadFilter();
-        X.type = "lowshelf", X.frequency.value = 200, ee.current = X;
-        const d = $.createBiquadFilter();
-        d.type = "peaking", d.frequency.value = 1e3, d.Q.value = 1, ne.current = d;
-        const v = $.createBiquadFilter();
-        v.type = "highshelf", v.frequency.value = 3e3, C.current = v, U.connect(X).connect(d).connect(v).connect($.destination);
+        const x = new s();
+        F.current = x;
+        const E = x.createMediaElementSource(H.current);
+        z.current = E;
+        const G = x.createBiquadFilter();
+        G.type = "lowshelf", G.frequency.value = 200, fe.current = G;
+        const J = x.createBiquadFilter();
+        J.type = "peaking", J.frequency.value = 1e3, J.Q.value = 1, be.current = J;
+        const te = x.createBiquadFilter();
+        te.type = "highshelf", te.frequency.value = 3e3, ue.current = te, E.connect(G).connect(J).connect(te).connect(x.destination);
       }
     }
-  }, [o]), I(() => {
-    W.current && (W.current.volume = K ? 0 : J / 100);
-  }, [J, K]), I(() => {
-    W.current && (W.current.playbackRate = y);
-  }, [y]);
-  const H = () => {
-    W.current && (b ? W.current.pause() : W.current.play().catch((s) => {
-      ue(`Playback failed: ${s instanceof Error ? s.message : String(s)}`);
-    }), T(!b));
-  }, ie = () => {
-    G(!K);
-  }, Ne = (s) => {
-    k(parseInt(s.target.value)), K && parseInt(s.target.value) > 0 && G(!1);
-  }, de = (s) => {
+  }, [o]), L(() => {
+    H.current && (H.current.volume = U ? 0 : K / 100);
+  }, [K, U]), L(() => {
+    H.current && (H.current.playbackRate = b);
+  }, [b]);
+  const R = () => {
+    H.current && (N ? H.current.pause() : H.current.play().catch((s) => {
+      ce(`Playback failed: ${s instanceof Error ? s.message : String(s)}`);
+    }), q(!N));
+  }, f = () => {
+    Y(!U);
+  }, B = (s) => {
+    $(parseInt(s.target.value)), U && parseInt(s.target.value) > 0 && Y(!1);
+  }, ie = (s) => {
     we(parseFloat(s.target.value));
-  }, fe = (s) => {
-    const $ = s.currentTarget.getBoundingClientRect(), d = (s.clientX - $.left) / $.width * _;
-    W.current && (W.current.currentTime = d, M(d));
-  }, re = (s, $) => {
-    ke((U) => ({ ...U, [s]: $ })), s === "bass" && ee.current && (ee.current.gain.value = $), s === "mid" && ne.current && (ne.current.gain.value = $), s === "treble" && C.current && (C.current.gain.value = $);
-  }, A = () => {
-    re("bass", 0), re("mid", 0), re("treble", 0);
-  }, oe = (s) => {
+  }, Ne = (s) => {
+    const x = s.currentTarget.getBoundingClientRect(), J = (s.clientX - x.left) / x.width * S;
+    H.current && (H.current.currentTime = J, O(J));
+  }, Q = (s, x) => {
+    ke((E) => ({ ...E, [s]: x })), s === "bass" && fe.current && (fe.current.gain.value = x), s === "mid" && be.current && (be.current.gain.value = x), s === "treble" && ue.current && (ue.current.gain.value = x);
+  }, xe = () => {
+    Q("bass", 0), Q("mid", 0), Q("treble", 0);
+  }, ne = (s) => {
     if (isNaN(s)) return "0:00";
-    const $ = Math.floor(s / 60), U = Math.floor(s % 60);
-    return `${$}:${U.toString().padStart(2, "0")}`;
-  }, ae = _ > 0 ? L / _ * 100 : 0;
-  if (le)
-    return /* @__PURE__ */ e.jsx("div", { className: "w-lg p-6 rounded-xl", style: { background: f }, children: /* @__PURE__ */ e.jsxs("div", { className: `text-center ${h === "dark" ? "text-red-300" : "text-red-600"}`, children: [
+    const x = Math.floor(s / 60), E = Math.floor(s % 60);
+    return `${x}:${E.toString().padStart(2, "0")}`;
+  }, T = S > 0 ? M / S * 100 : 0;
+  if (se)
+    return /* @__PURE__ */ e.jsx("div", { className: "w-lg p-6 rounded-xl", style: { background: g }, children: /* @__PURE__ */ e.jsxs("div", { className: `text-center ${y === "dark" ? "text-red-300" : "text-red-600"}`, children: [
       /* @__PURE__ */ e.jsx("p", { className: "font-medium", children: "Error" }),
-      /* @__PURE__ */ e.jsx("p", { className: "text-sm", children: le })
+      /* @__PURE__ */ e.jsx("p", { className: "text-sm", children: se })
     ] }) });
   if (!o) return null;
-  const P = h === "dark" ? "text-gray-300" : "text-gray-700", D = h === "dark" ? "text-gray-500" : "text-gray-400";
+  const oe = y === "dark" ? "text-gray-300" : "text-gray-700", ae = y === "dark" ? "text-gray-400" : "text-gray-500";
   return /* @__PURE__ */ e.jsxs("div", { className: "w-full max-w-lg relative", style: { width: p + "px" }, children: [
-    /* @__PURE__ */ e.jsx("audio", { ref: W, src: o }),
-    /* @__PURE__ */ e.jsx("div", { className: "rounded-2xl shadow-2xl", children: /* @__PURE__ */ e.jsxs("div", { className: "rounded-2xl p-6 backdrop-blur-xl", style: { background: f }, children: [
-      q && /* @__PURE__ */ e.jsx("div", { className: "w-full p-4", children: /* @__PURE__ */ e.jsx("img", { src: q, alt: "", className: "w-full aspect-square rounded-xl" }) }),
+    /* @__PURE__ */ e.jsx("audio", { ref: H, src: o }),
+    /* @__PURE__ */ e.jsx("div", { className: "rounded-2xl shadow-2xl", children: /* @__PURE__ */ e.jsxs("div", { className: "rounded-2xl p-6 backdrop-blur-xl", style: { background: g }, children: [
+      _ && /* @__PURE__ */ e.jsx("div", { className: "w-full p-4", children: /* @__PURE__ */ e.jsx("img", { src: _, alt: "", className: "w-full aspect-square rounded-xl" }) }),
       /* @__PURE__ */ e.jsxs(
         "div",
         {
           className: "relative h-20 mb-6 cursor-pointer",
-          onClick: fe,
+          onClick: Ne,
           children: [
-            /* @__PURE__ */ e.jsx("div", { className: "absolute inset-0 flex items-end justify-center h-full w-full gap-px", children: he.map((s, $) => {
-              const X = $ / he.length * 100 <= ae;
+            /* @__PURE__ */ e.jsx("div", { className: "absolute inset-0 flex items-end justify-center h-full w-full gap-px", children: me.map((s, x) => {
+              const G = x / me.length * 100 <= T;
               return /* @__PURE__ */ e.jsx(
                 "div",
                 {
                   className: "w-1 rounded-t transition-all duration-150",
                   style: {
                     height: `${s}%`,
-                    background: X ? u[0] : u[1],
-                    opacity: X ? 1 : 0.4
+                    background: G ? u[0] : u[1],
+                    opacity: G ? 1 : 0.4
                   }
                 },
-                $
+                x
               );
             }) }),
             /* @__PURE__ */ e.jsx(
               "div",
               {
                 className: "absolute top-0 h-full w-1 bg-white border-r border-black rounded-full transition-all duration-150",
-                style: { left: `${ae}%`, transform: "translateX(-50%)" }
+                style: { left: `${T}%`, transform: "translateX(-50%)" }
               }
             )
           ]
         }
       ),
-      /* @__PURE__ */ e.jsxs("div", { className: `flex justify-between text-sm ${D} mb-6`, children: [
-        /* @__PURE__ */ e.jsx("span", { children: oe(L) }),
-        /* @__PURE__ */ e.jsx("span", { children: oe(_) })
+      /* @__PURE__ */ e.jsxs("div", { className: `flex justify-between text-sm ${ae} mb-6`, children: [
+        /* @__PURE__ */ e.jsx("span", { children: ne(M) }),
+        /* @__PURE__ */ e.jsx("span", { children: ne(S) })
       ] }),
       /* @__PURE__ */ e.jsxs("div", { className: "grid grid-cols-3 items-center justify-between mb-4", children: [
         /* @__PURE__ */ e.jsxs("div", { className: "flex items-center gap-2", children: [
           /* @__PURE__ */ e.jsx(
             "button",
             {
-              onClick: ie,
+              onClick: f,
               className: "p-2 rounded-full transition-all",
               style: {
                 background: `linear-gradient(135deg, ${u[0]}, ${u[1]})`
               },
-              children: K || J === 0 ? /* @__PURE__ */ e.jsx(tr, { className: "w-4 h-4 text-white" }) : /* @__PURE__ */ e.jsx(rr, { className: "w-4 h-4 text-white" })
+              children: U || K === 0 ? /* @__PURE__ */ e.jsx(st, { className: "w-4 h-4 text-white" }) : /* @__PURE__ */ e.jsx(at, { className: "w-4 h-4 text-white" })
             }
           ),
           /* @__PURE__ */ e.jsx(
@@ -1683,11 +1704,11 @@ function Kr({
               type: "range",
               min: "0",
               max: "100",
-              value: J,
-              onChange: Ne,
+              value: K,
+              onChange: B,
               className: `${p ? "" : "hidden sm:block"} w-20 h-1.5 rounded-lg appearance-none cursor-pointer`,
               style: {
-                background: `linear-gradient(to right, ${u[0]} ${J}%, ${h === "dark" ? "#374151" : "#d1d5db"} ${J}%)`,
+                background: `linear-gradient(to right, ${u[0]} ${K}%, ${y === "dark" ? "#374151" : "#d1d5db"} ${K}%)`,
                 display: p && p < 400 ? "none" : void 0
               }
             }
@@ -1695,34 +1716,34 @@ function Kr({
           p && p < 400 && /* @__PURE__ */ e.jsx("div", { className: "flex items-center justify-end", children: /* @__PURE__ */ e.jsx(
             "button",
             {
-              onClick: () => ye(!ve),
+              onClick: () => he(!ye),
               className: "p-2 rounded-full transition-all",
               style: {
                 background: `linear-gradient(135deg, ${u[0]}, ${u[1]})`
               },
-              children: /* @__PURE__ */ e.jsx(Ge, { className: "w-4 h-4 text-white" })
+              children: /* @__PURE__ */ e.jsx(Qe, { className: "w-4 h-4 text-white" })
             }
           ) })
         ] }),
         /* @__PURE__ */ e.jsx("div", { className: "flex justify-center", children: /* @__PURE__ */ e.jsx(
           "button",
           {
-            onClick: H,
+            onClick: R,
             className: "p-4 rounded-full transition-all hover:scale-105 shadow-lg",
             style: {
               background: `linear-gradient(135deg, ${u[0]}, ${u[1]})`
             },
-            children: b ? /* @__PURE__ */ e.jsx(Je, { className: "w-6 h-6 text-white fill-white" }) : /* @__PURE__ */ e.jsx(Xe, { className: "w-6 h-6 text-white fill-white" })
+            children: N ? /* @__PURE__ */ e.jsx(Ze, { className: "w-6 h-6 text-white fill-white" }) : /* @__PURE__ */ e.jsx(et, { className: "w-6 h-6 text-white fill-white" })
           }
         ) }),
         /* @__PURE__ */ e.jsxs("div", { className: "flex items-center gap-3", children: [
           /* @__PURE__ */ e.jsx("div", { className: "flex items-center justify-end", children: /* @__PURE__ */ e.jsxs(
             "select",
             {
-              value: y,
-              style: { background: f, color: u[0] },
-              onChange: de,
-              className: `py-1 px-2 rounded-lg text-sm ${P} ${h === "dark" ? "bg-gray-800" : "bg-gray-100"}`,
+              value: b,
+              style: { background: g, color: u[0] },
+              onChange: ie,
+              className: `py-1 px-2 rounded-lg text-sm ${oe} ${y === "dark" ? "bg-gray-800" : "bg-gray-100"}`,
               children: [
                 /* @__PURE__ */ e.jsx("option", { value: "0.5", children: "0.5x" }),
                 /* @__PURE__ */ e.jsx("option", { value: "0.75", children: "0.75x" }),
@@ -1736,99 +1757,99 @@ function Kr({
           !(p && p < 400) && /* @__PURE__ */ e.jsx("div", { className: "flex items-center justify-end", children: /* @__PURE__ */ e.jsx(
             "button",
             {
-              onClick: () => ye(!ve),
+              onClick: () => he(!ye),
               className: "p-2 rounded-full transition-all",
               style: {
                 background: `linear-gradient(135deg, ${u[0]}, ${u[1]})`
               },
-              children: /* @__PURE__ */ e.jsx(Ge, { className: "w-4 h-4 text-white" })
+              children: /* @__PURE__ */ e.jsx(Qe, { className: "w-4 h-4 text-white" })
             }
           ) })
         ] })
       ] })
     ] }) }),
-    ve && /* @__PURE__ */ e.jsx("div", { className: "absolute inset-0 bg-black bg-opacity-80 flex items-center justify-center z-10 rounded-2xl p-4", children: /* @__PURE__ */ e.jsxs("div", { className: `max-w-xs w-full p-6 rounded-xl ${h === "dark" ? "bg-gray-800" : "bg-white"}`, children: [
-      /* @__PURE__ */ e.jsx("h3", { className: `text-lg font-medium mb-4 ${h === "dark" ? "text-gray-200" : "text-gray-700"}`, children: "Equalizer" }),
+    ye && /* @__PURE__ */ e.jsx("div", { className: "absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center z-10 rounded-2xl p-4", children: /* @__PURE__ */ e.jsxs("div", { className: `max-w-xs w-full p-4 pt-2 rounded-xl ${y === "dark" ? "bg-gray-800" : "bg-white"}`, children: [
+      /* @__PURE__ */ e.jsx("h3", { className: `text-lg font-medium mb-2 ${y === "dark" ? "text-gray-200" : "text-gray-700"}`, children: "Equalizer" }),
       /* @__PURE__ */ e.jsxs("div", { className: "space-y-4", children: [
         /* @__PURE__ */ e.jsxs("div", { children: [
           /* @__PURE__ */ e.jsxs("div", { className: "flex justify-between mb-1", children: [
-            /* @__PURE__ */ e.jsx("span", { className: `text-xs ${h === "dark" ? "text-gray-300" : "text-gray-600"}`, children: "Bass" }),
-            /* @__PURE__ */ e.jsxs("span", { className: `text-xs ${h === "dark" ? "text-gray-300" : "text-gray-600"}`, children: [
-              Z.bass,
+            /* @__PURE__ */ e.jsx("span", { className: `text-xs ${y === "dark" ? "text-gray-300" : "text-gray-600"}`, children: "Bass" }),
+            /* @__PURE__ */ e.jsxs("span", { className: `text-xs ${y === "dark" ? "text-gray-300" : "text-gray-600"}`, children: [
+              X.bass,
               " dB"
             ] })
           ] }),
           /* @__PURE__ */ e.jsxs("div", { className: "flex items-center gap-3", children: [
-            /* @__PURE__ */ e.jsx("span", { className: `text-xs ${h === "dark" ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
+            /* @__PURE__ */ e.jsx("span", { className: `text-xs ${y === "dark" ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
             /* @__PURE__ */ e.jsx(
               "input",
               {
                 type: "range",
                 min: "-20",
                 max: "20",
-                value: Z.bass,
-                onChange: (s) => re("bass", parseInt(s.target.value)),
+                value: X.bass,
+                onChange: (s) => Q("bass", parseInt(s.target.value)),
                 className: "flex-1 h-4 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider",
                 style: {
-                  background: `linear-gradient(to right, ${u[0]} ${(Z.bass + 20) / 40 * 100}%, ${u[1] + "30"} ${(Z.bass + 20) / 40 * 100}%)`
+                  background: `linear-gradient(to right, ${u[0]} ${(X.bass + 20) / 40 * 100}%, ${u[1] + "30"} ${(X.bass + 20) / 40 * 100}%)`
                 }
               }
             ),
-            /* @__PURE__ */ e.jsx("span", { className: `text-xs ${h === "dark" ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
+            /* @__PURE__ */ e.jsx("span", { className: `text-xs ${y === "dark" ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
           ] })
         ] }),
         /* @__PURE__ */ e.jsxs("div", { children: [
           /* @__PURE__ */ e.jsxs("div", { className: "flex justify-between mb-1", children: [
-            /* @__PURE__ */ e.jsx("span", { className: `text-xs ${h === "dark" ? "text-gray-300" : "text-gray-600"}`, children: "Mid" }),
-            /* @__PURE__ */ e.jsxs("span", { className: `text-xs ${h === "dark" ? "text-gray-300" : "text-gray-600"}`, children: [
-              Z.mid,
+            /* @__PURE__ */ e.jsx("span", { className: `text-xs ${y === "dark" ? "text-gray-300" : "text-gray-600"}`, children: "Mid" }),
+            /* @__PURE__ */ e.jsxs("span", { className: `text-xs ${y === "dark" ? "text-gray-300" : "text-gray-600"}`, children: [
+              X.mid,
               " dB"
             ] })
           ] }),
           /* @__PURE__ */ e.jsxs("div", { className: "flex items-center gap-3", children: [
-            /* @__PURE__ */ e.jsx("span", { className: `text-xs ${h === "dark" ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
+            /* @__PURE__ */ e.jsx("span", { className: `text-xs ${y === "dark" ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
             /* @__PURE__ */ e.jsx(
               "input",
               {
                 type: "range",
                 min: "-20",
                 max: "20",
-                value: Z.mid,
-                onChange: (s) => re("mid", parseInt(s.target.value)),
+                value: X.mid,
+                onChange: (s) => Q("mid", parseInt(s.target.value)),
                 className: "flex-1 h-4 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider",
                 style: {
-                  background: `linear-gradient(to right, ${u[0]} ${(Z.mid + 20) / 40 * 100}%, ${u[1] + "30"} ${(Z.mid + 20) / 40 * 100}%)`
+                  background: `linear-gradient(to right, ${u[0]} ${(X.mid + 20) / 40 * 100}%, ${u[1] + "30"} ${(X.mid + 20) / 40 * 100}%)`
                 }
               }
             ),
-            /* @__PURE__ */ e.jsx("span", { className: `text-xs ${h === "dark" ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
+            /* @__PURE__ */ e.jsx("span", { className: `text-xs ${y === "dark" ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
           ] })
         ] }),
         /* @__PURE__ */ e.jsxs("div", { children: [
           /* @__PURE__ */ e.jsxs("div", { className: "flex justify-between mb-1", children: [
-            /* @__PURE__ */ e.jsx("span", { className: `text-xs ${h === "dark" ? "text-gray-300" : "text-gray-600"}`, children: "Treble" }),
-            /* @__PURE__ */ e.jsxs("span", { className: `text-xs ${h === "dark" ? "text-gray-300" : "text-gray-600"}`, children: [
-              Z.treble,
+            /* @__PURE__ */ e.jsx("span", { className: `text-xs ${y === "dark" ? "text-gray-300" : "text-gray-600"}`, children: "Treble" }),
+            /* @__PURE__ */ e.jsxs("span", { className: `text-xs ${y === "dark" ? "text-gray-300" : "text-gray-600"}`, children: [
+              X.treble,
               " dB"
             ] })
           ] }),
           /* @__PURE__ */ e.jsxs("div", { className: "flex items-center gap-3", children: [
-            /* @__PURE__ */ e.jsx("span", { className: `text-xs ${h === "dark" ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
+            /* @__PURE__ */ e.jsx("span", { className: `text-xs ${y === "dark" ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
             /* @__PURE__ */ e.jsx(
               "input",
               {
                 type: "range",
                 min: "-20",
                 max: "20",
-                value: Z.treble,
-                onChange: (s) => re("treble", parseInt(s.target.value)),
+                value: X.treble,
+                onChange: (s) => Q("treble", parseInt(s.target.value)),
                 className: "flex-1 h-4 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider",
                 style: {
-                  background: `linear-gradient(to right, ${u[0]} ${(Z.treble + 20) / 40 * 100}%, ${u[1] + "30"} ${(Z.treble + 20) / 40 * 100}%)`
+                  background: `linear-gradient(to right, ${u[0]} ${(X.treble + 20) / 40 * 100}%, ${u[1] + "30"} ${(X.treble + 20) / 40 * 100}%)`
                 }
               }
             ),
-            /* @__PURE__ */ e.jsx("span", { className: `text-xs ${h === "dark" ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
+            /* @__PURE__ */ e.jsx("span", { className: `text-xs ${y === "dark" ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
           ] })
         ] })
       ] }),
@@ -1836,16 +1857,16 @@ function Kr({
         /* @__PURE__ */ e.jsx(
           "button",
           {
-            onClick: A,
-            className: `px-3 py-1 rounded text-xs ${h === "dark" ? "bg-gray-700 text-gray-200 hover:bg-gray-600" : "bg-gray-200 text-gray-700 hover:bg-gray-300"} transition-all`,
+            onClick: xe,
+            className: `px-3 py-1 rounded text-xs ${y === "dark" ? "bg-gray-700 text-gray-200 hover:bg-gray-600" : "bg-gray-200 text-gray-700 hover:bg-gray-300"} transition-all`,
             children: "Reset"
           }
         ),
         /* @__PURE__ */ e.jsx(
           "button",
           {
-            onClick: () => ye(!1),
-            className: `px-3 py-1 rounded text-xs ${h === "dark" ? "bg-gray-700 text-gray-200 hover:bg-gray-600" : "bg-gray-200 text-gray-700 hover:bg-gray-300"} transition-all`,
+            onClick: () => he(!1),
+            className: `px-3 py-1 rounded text-xs ${y === "dark" ? "bg-gray-700 text-gray-200 hover:bg-gray-600" : "bg-gray-200 text-gray-700 hover:bg-gray-300"} transition-all`,
             children: "Close"
           }
         )
@@ -1871,46 +1892,46 @@ function Kr({
             ` })
   ] });
 }
-function Gr({ audio: o, thumbnail: u, gradient: f = ["#cd7eff", "#fe59f6"], background: g = "#1f273a", autoPlay: q = !1 }) {
-  const [p, w] = j(!1), [, h] = j(0), b = N(null), [T, L] = j(0), [M, _] = j(0), [Y, K] = j(0);
-  I(() => {
-    const k = b.current;
-    if (!k) return;
-    const y = () => h(k.currentTime);
-    return k.addEventListener("timeupdate", y), () => k.removeEventListener("timeupdate", y);
-  }, []), I(() => {
-    const k = setInterval(() => {
-      p && L((y) => y + 0.1);
+function Gt({ audio: o, thumbnail: u, gradient: g = ["#cd7eff", "#fe59f6"], background: m = "#1f273a", autoPlay: _ = !1 }) {
+  const [p, k] = v(!1), [, y] = v(0), N = C(null), [q, M] = v(0), [O, S] = v(0), [V, U] = v(0);
+  L(() => {
+    const $ = N.current;
+    if (!$) return;
+    const b = () => y($.currentTime);
+    return $.addEventListener("timeupdate", b), () => $.removeEventListener("timeupdate", b);
+  }, []), L(() => {
+    const $ = setInterval(() => {
+      p && M((b) => b + 0.1);
     }, 100);
-    return () => clearInterval(k);
-  }, [p]), I(() => {
-    const k = setInterval(() => {
-      p && K((y) => y + 0.1);
+    return () => clearInterval($);
+  }, [p]), L(() => {
+    const $ = setInterval(() => {
+      p && U((b) => b + 0.1);
     }, 100);
-    return () => clearInterval(k);
-  }, [p]), I(() => {
-    o && b.current && q && (b.current.play().catch(() => w(!1)), w(!0));
-  }, [o]), I(() => {
-    const k = b.current;
-    if (!k) return;
-    const y = () => {
-      _(k.duration), console.log("Audio duration:", k.duration);
+    return () => clearInterval($);
+  }, [p]), L(() => {
+    o && N.current && _ && (N.current.play().catch(() => k(!1)), k(!0));
+  }, [o]), L(() => {
+    const $ = N.current;
+    if (!$) return;
+    const b = () => {
+      S($.duration), console.log("Audio duration:", $.duration);
     };
-    return K(0), k.addEventListener("loadedmetadata", y), () => {
-      k.removeEventListener("loadedmetadata", y);
+    return U(0), $.addEventListener("loadedmetadata", b), () => {
+      $.removeEventListener("loadedmetadata", b);
     };
   }, [o]);
-  const G = () => {
-    b.current && (p ? b.current.pause() : b.current.play().catch((k) => console.error("NanoPlayer play failed:", k)), w(!p));
+  const Y = () => {
+    N.current && (p ? N.current.pause() : N.current.play().catch(($) => console.error("NanoPlayer play failed:", $)), k(!p));
   };
   if (!o) return null;
-  const J = {
-    background: `linear-gradient(135deg, ${f[0]}, ${f[1]})`
+  const K = {
+    background: `linear-gradient(135deg, ${g[0]}, ${g[1]})`
   };
   return /* @__PURE__ */ e.jsxs(
     "div",
     {
-      style: { backgroundColor: g },
+      style: { backgroundColor: m },
       className: `
                 relative overflow-hidden inline-flex flex-col 
                 ${u ? "rounded-2xl" : "rounded-full"} 
@@ -1921,10 +1942,10 @@ function Gr({ audio: o, thumbnail: u, gradient: f = ["#cd7eff", "#fe59f6"], back
         /* @__PURE__ */ e.jsx(
           "audio",
           {
-            ref: b,
+            ref: N,
             src: o,
             onEnded: () => {
-              w(!1), K(0);
+              k(!1), U(0);
             }
           }
         ),
@@ -1932,8 +1953,8 @@ function Gr({ audio: o, thumbnail: u, gradient: f = ["#cd7eff", "#fe59f6"], back
           "div",
           {
             style: {
-              width: `${(M > 0 ? Y / M : 0) * 100}%`,
-              backgroundImage: J.background
+              width: `${(O > 0 ? V / O : 0) * 100}%`,
+              backgroundImage: K.background
             },
             className: "absolute top-0 left-0 h-full opacity-20"
           }
@@ -1944,24 +1965,24 @@ function Gr({ audio: o, thumbnail: u, gradient: f = ["#cd7eff", "#fe59f6"], back
             /* @__PURE__ */ e.jsx(
               "button",
               {
-                onClick: G,
-                style: J,
+                onClick: Y,
+                style: K,
                 className: "p-1.5 rounded-full hover:scale-110 transition-transform flex-shrink-0",
-                children: p ? /* @__PURE__ */ e.jsx(Je, { fill: g, className: "w-3 h-3 text-transparent" }) : /* @__PURE__ */ e.jsx(Xe, { fill: g, className: "w-3 h-3 text-transparent" })
+                children: p ? /* @__PURE__ */ e.jsx(Ze, { fill: m, className: "w-3 h-3 text-transparent" }) : /* @__PURE__ */ e.jsx(et, { fill: m, className: "w-3 h-3 text-transparent" })
               }
             ),
-            /* @__PURE__ */ e.jsx("div", { className: "flex w-full min-w-12 items-center gap-0.5 h-6", children: [...Array(12)].map((k, y) => /* @__PURE__ */ e.jsx(
+            /* @__PURE__ */ e.jsx("div", { className: "flex w-full min-w-12 items-center gap-0.5 h-6", children: [...Array(12)].map(($, b) => /* @__PURE__ */ e.jsx(
               "div",
               {
                 className: "rounded-full transition-all duration-200",
                 style: {
                   width: "100%",
-                  background: `linear-gradient(to top, ${f[0]}, ${f[1]})`,
-                  height: p ? `${8 + Math.sin((T * 8 + y) * 0.6) * 10}px` : "8px",
+                  background: `linear-gradient(to top, ${g[0]}, ${g[1]})`,
+                  height: p ? `${8 + Math.sin((q * 8 + b) * 0.6) * 10}px` : "8px",
                   opacity: p ? 0.8 : 0.4
                 }
               },
-              y
+              b
             )) })
           ] })
         ] })
@@ -1969,12 +1990,12 @@ function Gr({ audio: o, thumbnail: u, gradient: f = ["#cd7eff", "#fe59f6"], back
     }
   );
 }
-function Xr({
+function Xt({
   video: o,
   name: u = "No video loaded",
-  audioVisual: f = null,
-  volume: g = 100,
-  thumbnail: q = null,
+  audioVisual: g = null,
+  volume: m = 100,
+  thumbnail: _ = null,
   controls: p = {
     play: !0,
     pause: !0,
@@ -1983,126 +2004,129 @@ function Xr({
     volume: !0,
     fullscreen: !0,
     videoName: !0,
-    equalizer: !0
+    equalizer: !0,
+    speed: !0
   },
-  mode: w = "light",
-  transparent: h = !1,
-  autoPlay: b = !1,
-  color: T = "#3b82f6",
-  equalizer: L = {
+  mode: k = "light",
+  transparent: y = !1,
+  autoPlay: N = !1,
+  color: q = "#3b82f6",
+  equalizer: M = {
     bass: 0,
     mid: 0,
     treble: 0
   }
 }) {
-  const [M, _] = j(!1), [Y, K] = j(0), [G, J] = j(0), [k, y] = j(g || 100), [we, he] = j(!1), [$e, le] = j(!1), [ue, ve] = j(!1), [ye, Z] = j([]), [ke, W] = j(!1), [F, O] = j({
-    bass: L.bass || 0,
-    mid: L.mid || 0,
-    treble: L.treble || 0
-  }), [ee, ne] = j(0), C = N(null), x = N(null), H = N(null), ie = N(null), Ne = N(null), de = N(null), fe = N(null), re = N(null), A = N(null), oe = N(null), ae = N(0), P = N(0), D = N(0), s = N(0), $ = N(0), U = N(0), X = N(!1), d = w === "dark" || ue, v = typeof p == "object" && Object.keys(p).length === 0;
-  I(() => {
-    const t = x.current;
-    if (!t) return;
+  const [O, S] = v(!1), [V, U] = v(0), [Y, K] = v(0), [$, b] = v(m || 100), [we, me] = v(!1), [$e, se] = v(!1), [ce, ye] = v(!1), [he, X] = v([]), [ke, H] = v(!1), [F, z] = v({
+    bass: M.bass || 0,
+    mid: M.mid || 0,
+    treble: M.treble || 0
+  }), [fe, be] = v(1), [ue, le] = v(0), R = C(null), f = C(null), B = C(null), ie = C(null), Ne = C(null), Q = C(null), xe = C(null), ne = C(null), T = C(null), oe = C(null), ae = C(0), s = C(0), x = C(0), E = C(0), G = C(0), J = C(0), te = C(!1), d = k === "dark" || ce, j = typeof p == "object" && Object.keys(p).length === 0;
+  L(() => {
+    const r = f.current;
+    if (!r) return;
     const a = new ResizeObserver((l) => {
       for (let i of l)
-        ne(i.contentRect.width);
+        le(i.contentRect.width);
     });
-    return a.observe(t), () => a.disconnect();
-  }, []), I(() => {
-    const t = [];
-    o && typeof o != "string" && t.push(["TypeError", "video must be a string (URL or path)"]), u && typeof u != "string" && t.push(["TypeError", "name must be a string"]), (typeof g != "number" || g < 0 || g > 100) && t.push(["TypeError", "volume must be a number between 0 and 100"]), f && typeof f != "object" ? t.push(["TypeError", "audioVisual must be an object"]) : f && (["left", "right", "top", "bottom"].includes(f.side) || t.push(["ValueError", "audioVisual.side must be 'left', 'right', 'top', or 'bottom'"])), t.length > 0 ? (Z(t), console.group("%cVideoPlayer: Prop validation failed", "color:red"), t.forEach((a) => console.error(`${a[0]}: ${a[1]}`)), console.groupEnd()) : Z([]);
-  }, [o, u, g, f, p, w]), I(() => {
-    if (!C.current) return;
-    const t = C.current, a = () => {
-      $e || K(t.currentTime);
+    return a.observe(r), () => a.disconnect();
+  }, []), L(() => {
+    const r = [];
+    o && typeof o != "string" && r.push(["TypeError", "video must be a string (URL or path)"]), u && typeof u != "string" && r.push(["TypeError", "name must be a string"]), (typeof m != "number" || m < 0 || m > 100) && r.push(["TypeError", "volume must be a number between 0 and 100"]), g && typeof g != "object" ? r.push(["TypeError", "audioVisual must be an object"]) : g && (["left", "right", "top", "bottom"].includes(g.side) || r.push(["ValueError", "audioVisual.side must be 'left', 'right', 'top', or 'bottom'"])), r.length > 0 ? (X(r), console.group("%cVideoPlayer: Prop validation failed", "color:red"), r.forEach((a) => console.error(`${a[0]}: ${a[1]}`)), console.groupEnd()) : X([]);
+  }, [o, u, m, g, p, k]), L(() => {
+    if (!R.current) return;
+    const r = R.current, a = () => {
+      $e || U(r.currentTime);
     }, l = () => {
-      J(t.duration);
+      K(r.duration);
     }, i = () => {
-      _(!1), A.current && cancelAnimationFrame(A.current);
-    }, E = () => _(!0), z = () => _(!1);
-    return t.addEventListener("timeupdate", a), t.addEventListener("loadedmetadata", l), t.addEventListener("ended", i), t.addEventListener("play", E), t.addEventListener("pause", z), () => {
-      t.removeEventListener("timeupdate", a), t.removeEventListener("loadedmetadata", l), t.removeEventListener("ended", i), t.removeEventListener("play", E), t.removeEventListener("pause", z);
+      S(!1), T.current && cancelAnimationFrame(T.current);
+    }, w = () => S(!0), I = () => S(!1);
+    return r.addEventListener("timeupdate", a), r.addEventListener("loadedmetadata", l), r.addEventListener("ended", i), r.addEventListener("play", w), r.addEventListener("pause", I), () => {
+      r.removeEventListener("timeupdate", a), r.removeEventListener("loadedmetadata", l), r.removeEventListener("ended", i), r.removeEventListener("play", w), r.removeEventListener("pause", I);
     };
-  }, [$e]), I(() => {
+  }, [$e]), L(() => {
     if (o) {
-      const t = M, a = k;
-      if (C.current && C.current.pause(), C.current) {
-        C.current.pause(), C.current.src = o, C.current.volume = we ? 0 : a / 100;
+      const r = O, a = $;
+      if (R.current && R.current.pause(), R.current) {
+        R.current.pause(), R.current.src = o, R.current.volume = we ? 0 : a / 100;
         const l = () => {
-          t && C.current && C.current.play().catch((i) => console.error("Play failed:", i)), C.current && C.current.removeEventListener("canplay", l);
+          r && R.current && R.current.play().catch((i) => console.error("Play failed:", i)), R.current && R.current.removeEventListener("canplay", l);
         };
-        C.current.addEventListener("canplay", l), C.current.load();
+        R.current.addEventListener("canplay", l), R.current.load();
       }
-      K(0), _(!1), ae.current = 0, P.current = 0, D.current = 0, s.current = 0, $.current = 0, U.current = 0, be();
+      U(0), S(!1), ae.current = 0, s.current = 0, x.current = 0, E.current = 0, G.current = 0, J.current = 0, Ee();
     }
-  }, [o]), I(() => {
-    C.current && (C.current.volume = we ? 0 : k / 100);
-  }, [k, we]), I(() => {
-    H.current && (de.current && (de.current.gain.value = F.bass), fe.current && (fe.current.gain.value = F.mid), re.current && (re.current.gain.value = F.treble));
-  }, [F]), I(() => {
-    X.current = M, A.current && (cancelAnimationFrame(A.current), A.current = null), M && f ? (H.current || ce(), _e()) : !M && f && Ee();
-  }, [M, f]), I(() => {
-    const t = () => {
-      ve(!!document.fullscreenElement);
+  }, [o]), L(() => {
+    R.current && (R.current.volume = we ? 0 : $ / 100);
+  }, [$, we]), L(() => {
+    R.current && (R.current.playbackRate = fe);
+  }, [fe]), L(() => {
+    B.current && (Q.current && (Q.current.gain.value = F.bass), xe.current && (xe.current.gain.value = F.mid), ne.current && (ne.current.gain.value = F.treble));
+  }, [F]), L(() => {
+    te.current = O, T.current && (cancelAnimationFrame(T.current), T.current = null), O && g ? (B.current || ve(), Fe()) : !O && g && qe();
+  }, [O, g]), L(() => {
+    const r = () => {
+      ye(!!document.fullscreenElement);
     };
-    return document.addEventListener("fullscreenchange", t), () => document.removeEventListener("fullscreenchange", t);
-  }, []), I(() => () => {
-    A.current && cancelAnimationFrame(A.current), H.current && H.current.close().catch((t) => console.warn("AudioContext cleanup error:", t));
+    return document.addEventListener("fullscreenchange", r), () => document.removeEventListener("fullscreenchange", r);
+  }, []), L(() => () => {
+    T.current && cancelAnimationFrame(T.current), B.current && B.current.close().catch((r) => console.warn("AudioContext cleanup error:", r));
   }, []);
-  const ce = () => {
-    if (!H.current && C.current)
+  const ve = () => {
+    if (!B.current && R.current)
       try {
-        const t = window.AudioContext || window.webkitAudioContext;
-        if (t) {
-          const a = new t();
-          H.current = a;
+        const r = window.AudioContext || window.webkitAudioContext;
+        if (r) {
+          const a = new r();
+          B.current = a;
           const l = a.createBiquadFilter();
           l.type = "lowshelf", l.frequency.value = 320, l.gain.value = F.bass;
           const i = a.createBiquadFilter();
           i.type = "peaking", i.frequency.value = 1e3, i.Q.value = 0.5, i.gain.value = F.mid;
-          const E = a.createBiquadFilter();
-          E.type = "highshelf", E.frequency.value = 3200, E.gain.value = F.treble;
-          const z = a.createAnalyser();
-          z.fftSize = 2048, z.smoothingTimeConstant = 0.8;
-          const xe = a.createMediaElementSource(C.current);
-          xe.connect(l), l.connect(i), i.connect(E), E.connect(z), E.connect(a.destination), de.current = l, fe.current = i, re.current = E, ie.current = z, Ne.current = xe;
+          const w = a.createBiquadFilter();
+          w.type = "highshelf", w.frequency.value = 3200, w.gain.value = F.treble;
+          const I = a.createAnalyser();
+          I.fftSize = 2048, I.smoothingTimeConstant = 0.8;
+          const de = a.createMediaElementSource(R.current);
+          de.connect(l), l.connect(i), i.connect(w), w.connect(I), w.connect(a.destination), Q.current = l, xe.current = i, ne.current = w, ie.current = I, Ne.current = de;
         }
-      } catch (t) {
-        console.error("Failed to setup audio context:", t);
+      } catch (r) {
+        console.error("Failed to setup audio context:", r);
       }
-  }, Ee = () => {
-    if (X.current) return;
-    ae.current *= 0.7, P.current *= 0.7;
-    const t = Date.now();
-    t - $.current > 1500 && (D.current *= 0.95), t - U.current > 1500 && (s.current *= 0.95), be();
-    const a = Math.max(ae.current, P.current), l = Math.max(D.current, s.current);
-    a > 0.01 || l > 0.01 ? A.current = requestAnimationFrame(Ee) : (X.current || (ae.current = 0, P.current = 0, D.current = 0, s.current = 0, be()), A.current && cancelAnimationFrame(A.current), A.current = null);
-  }, _e = () => {
-    if (!ie.current || !X.current) return;
-    const t = ie.current.frequencyBinCount, a = new Uint8Array(t);
+  }, qe = () => {
+    if (te.current) return;
+    ae.current *= 0.7, s.current *= 0.7;
+    const r = Date.now();
+    r - G.current > 1500 && (x.current *= 0.95), r - J.current > 1500 && (E.current *= 0.95), Ee();
+    const a = Math.max(ae.current, s.current), l = Math.max(x.current, E.current);
+    a > 0.01 || l > 0.01 ? T.current = requestAnimationFrame(qe) : (te.current || (ae.current = 0, s.current = 0, x.current = 0, E.current = 0, Ee()), T.current && cancelAnimationFrame(T.current), T.current = null);
+  }, Fe = () => {
+    if (!ie.current || !te.current) return;
+    const r = ie.current.frequencyBinCount, a = new Uint8Array(r);
     ie.current.getByteFrequencyData(a);
     let l = 0;
-    for (let z = 0; z < t; z++)
-      l += a[z];
-    let i = l / t / 255;
-    i = Math.pow(i, 0.5), ae.current = ae.current * 0.7 + i * 0.3, P.current = P.current * 0.7 + i * 0.3;
-    const E = Date.now();
-    ae.current > D.current ? (D.current = ae.current, $.current = E) : E - $.current > 1500 && (D.current *= 0.95), P.current > s.current ? (s.current = P.current, U.current = E) : E - U.current > 1500 && (s.current *= 0.95), be(), A.current = requestAnimationFrame(_e);
-  }, be = () => {
-    if (!oe.current || !f) return;
-    const t = f.color || "#00ff00", a = f.peak || "#ff0000", l = ae.current * 100, i = P.current * 100, E = 100 - D.current * 100, z = 100 - s.current * 100;
-    f.side === "top" || f.side === "bottom" ? oe.current.innerHTML = `
+    for (let I = 0; I < r; I++)
+      l += a[I];
+    let i = l / r / 255;
+    i = Math.pow(i, 0.5), ae.current = ae.current * 0.7 + i * 0.3, s.current = s.current * 0.7 + i * 0.3;
+    const w = Date.now();
+    ae.current > x.current ? (x.current = ae.current, G.current = w) : w - G.current > 1500 && (x.current *= 0.95), s.current > E.current ? (E.current = s.current, J.current = w) : w - J.current > 1500 && (E.current *= 0.95), Ee(), T.current = requestAnimationFrame(Fe);
+  }, Ee = () => {
+    if (!oe.current || !g) return;
+    const r = g.color || "#00ff00", a = g.peak || "#ff0000", l = ae.current * 100, i = s.current * 100, w = 100 - x.current * 100, I = 100 - E.current * 100;
+    g.side === "top" || g.side === "bottom" ? oe.current.innerHTML = `
                 <div class="flex flex-col gap-1 h-full justify-center">
                     <div class="flex items-center justify-center gap-2">
                         <div class="text-xs ${d ? "text-gray-100" : "text-gray-900"} opacity-80 w-4 text-center">L</div>
                         <div class="relative flex-1 h-3 bg-black/40 rounded-full overflow-hidden flex justify-end">
-                            <div class="h-full rounded-l-full transition-all duration-75" style="width: ${l}%; background: ${t};"></div>
-                            ${D.current > 0.1 ? `<div class="absolute top-0 w-1 h-full transition-all duration-100" style="right: ${D.current * 100}%; background: ${a};"></div>` : ""}
+                            <div class="h-full rounded-l-full transition-all duration-75" style="width: ${l}%; background: ${r};"></div>
+                            ${x.current > 0.1 ? `<div class="absolute top-0 w-1 h-full transition-all duration-100" style="right: ${x.current * 100}%; background: ${a};"></div>` : ""}
                         </div>
                         <div class="w-px h-4 bg-white/20"></div>
                         <div class="relative flex-1 h-3 bg-black/40 rounded-full overflow-hidden flex justify-start">
-                            <div class="h-full rounded-r-full transition-all duration-75" style="width: ${i}%; background: ${t};"></div>
-                            ${s.current > 0.1 ? `<div class="absolute top-0 w-1 h-full transition-all duration-100" style="left: ${s.current * 100}%; background: ${a};"></div>` : ""}
+                            <div class="h-full rounded-r-full transition-all duration-75" style="width: ${i}%; background: ${r};"></div>
+                            ${E.current > 0.1 ? `<div class="absolute top-0 w-1 h-full transition-all duration-100" style="left: ${E.current * 100}%; background: ${a};"></div>` : ""}
                         </div>
                         <div class="text-xs ${d ? "text-gray-100" : "text-gray-900"} opacity-80 w-4 text-center">R</div>
                     </div>
@@ -2112,77 +2136,79 @@ function Xr({
                     <div class="flex-1 flex flex-col">
                         <div class="text-xs text-white opacity-70 text-center mb-1">L</div>
                         <div class="flex-1 relative flex flex-col justify-end bg-black/30 rounded-lg overflow-hidden">
-                            <div class="rounded-t transition-all duration-75" style="height: ${l}%; background: ${t};">
-                                ${D.current > 0.1 ? `<div class="absolute w-full h-1 transition-all duration-100" style="top: ${E}%; background: ${a};"></div>` : ""}
+                            <div class="rounded-t transition-all duration-75" style="height: ${l}%; background: ${r};">
+                                ${x.current > 0.1 ? `<div class="absolute w-full h-1 transition-all duration-100" style="top: ${w}%; background: ${a};"></div>` : ""}
                             </div>
                         </div>
                     </div>
                     <div class="flex-1 flex flex-col">
                         <div class="text-xs text-white opacity-70 text-center mb-1">R</div>
                         <div class="flex-1 relative flex flex-col justify-end bg-black/30 rounded-lg overflow-hidden">
-                            <div class="rounded-t transition-all duration-75" style="height: ${i}%; background: ${t};">
-                                ${s.current > 0.1 ? `<div class="absolute w-full h-1 transition-all duration-100" style="top: ${z}%; background: ${a};"></div>` : ""}
+                            <div class="rounded-t transition-all duration-75" style="height: ${i}%; background: ${r};">
+                                ${E.current > 0.1 ? `<div class="absolute w-full h-1 transition-all duration-100" style="top: ${I}%; background: ${a};"></div>` : ""}
                         </div>
                     </div>
                 </div>
             `;
-  }, Fe = () => {
-    !C.current || !o || (M ? C.current.pause() : (H.current && H.current.state === "suspended" && H.current.resume(), C.current.play().catch((t) => console.error("Play failed:", t))));
+  }, _e = () => {
+    !R.current || !o || (O ? R.current.pause() : (B.current && B.current.state === "suspended" && B.current.resume(), R.current.play().catch((r) => console.error("Play failed:", r))));
   }, Ce = () => {
-    C.current && (C.current.pause(), C.current.currentTime = 0, _(!1), K(0), ae.current = 0, P.current = 0, D.current = 0, s.current = 0, be());
-  }, Ae = (t) => {
-    const l = parseFloat(t.target.value) / 100 * G;
-    K(l), C.current && !$e && (C.current.currentTime = l);
-  }, De = () => le(!0), Be = () => {
-    C.current && (C.current.currentTime = Y), le(!1);
-  }, Le = (t) => {
-    const a = parseInt(t.target.value);
-    y(a), he(a === 0);
-  }, Me = () => he(!we), He = () => {
-    x.current && (document.fullscreenElement ? document.exitFullscreen() : x.current.requestFullscreen().catch((t) => console.error("Fullscreen failed:", t)));
-  }, Oe = (t, a) => {
-    O((l) => ({
+    R.current && (R.current.pause(), R.current.currentTime = 0, S(!1), U(0), ae.current = 0, s.current = 0, x.current = 0, E.current = 0, Ee());
+  }, He = (r) => {
+    const l = parseFloat(r.target.value) / 100 * Y;
+    U(l), R.current && !$e && (R.current.currentTime = l);
+  }, Le = () => se(!0), Me = () => {
+    R.current && (R.current.currentTime = V), se(!1);
+  }, Oe = (r) => {
+    const a = parseInt(r.target.value);
+    b(a), me(a === 0);
+  }, We = (r) => {
+    be(parseFloat(r.target.value));
+  }, Ve = () => me(!we), Ue = () => {
+    f.current && (document.fullscreenElement ? document.exitFullscreen() : f.current.requestFullscreen().catch((r) => console.error("Fullscreen failed:", r)));
+  }, ze = (r, a) => {
+    z((l) => ({
       ...l,
-      [t]: a
-    })), H.current && (t === "bass" && de.current && (de.current.gain.value = a), t === "mid" && fe.current && (fe.current.gain.value = a), t === "treble" && re.current && (re.current.gain.value = a));
-  }, We = () => {
-    O({ bass: 0, mid: 0, treble: 0 });
-  }, Pe = (t) => {
-    if (isNaN(t)) return "0:00";
-    const a = Math.floor(t / 60), l = Math.floor(t % 60);
+      [r]: a
+    })), B.current && (r === "bass" && Q.current && (Q.current.gain.value = a), r === "mid" && xe.current && (xe.current.gain.value = a), r === "treble" && ne.current && (ne.current.gain.value = a));
+  }, Ke = () => {
+    z({ bass: 0, mid: 0, treble: 0 });
+  }, Se = (r) => {
+    if (isNaN(r)) return "0:00";
+    const a = Math.floor(r / 60), l = Math.floor(r % 60);
     return `${a}:${l.toString().padStart(2, "0")}`;
   };
-  if (I(() => {
-    (v && !M || b) && Fe();
-  }, [p]), ye && ye.length > 0)
-    return ye.map((t, a) => /* @__PURE__ */ e.jsxs("div", { className: "text-red-500 text-sm bg-red-50 p-3 rounded mb-4 border border-red-300", children: [
+  if (L(() => {
+    (j && !O || N) && _e();
+  }, [p]), he && he.length > 0)
+    return he.map((r, a) => /* @__PURE__ */ e.jsxs("div", { className: "text-red-500 text-sm bg-red-50 p-3 rounded mb-4 border border-red-300", children: [
       /* @__PURE__ */ e.jsxs("strong", { children: [
-        t[0],
+        r[0],
         ":"
       ] }),
       " ",
-      t[1]
+      r[1]
     ] }, a));
-  const Re = f ? f.side : null, ze = Re === "top" || Re === "bottom";
+  const Re = g ? g.side : null, Ie = Re === "top" || Re === "bottom";
   return /* @__PURE__ */ e.jsx(
     "div",
     {
-      ref: x,
-      className: `rounded-xl overflow-hidden transition-all duration-300 ${ue ? "fixed inset-0 z-[9999] flex flex-col h-screen w-screen bg-black" : "relative"}`,
-      style: { backgroundColor: v || h ? void 0 : d ? "#49494937" : "white" },
-      children: /* @__PURE__ */ e.jsxs("div", { style: { background: v || h ? void 0 : d ? "#1a1a1ab0" : "#f5f5f5", height: ue ? "100%" : "auto" }, className: `${v || h ? "" : "p-4"} ${ue ? "flex flex-col flex-1" : ""}`, children: [
-        p.videoName && !ue && /* @__PURE__ */ e.jsx("div", { className: "mb-4", children: /* @__PURE__ */ e.jsx("div", { className: `${d ? "text-gray-100" : "text-gray-700"} font-medium`, children: u }) }),
-        /* @__PURE__ */ e.jsxs("div", { className: `relative ${ze ? "flex flex-col gap-3" : "flex gap-3"} ${ue ? "flex-1 min-h-0" : "mb-4"}`, children: [
-          f && Re === "top" && /* @__PURE__ */ e.jsx("div", { className: "w-full h-12", ref: oe }),
-          /* @__PURE__ */ e.jsxs("div", { className: `flex ${!ze && "flex-1"} gap-3`, children: [
-            f && Re === "left" && /* @__PURE__ */ e.jsx("div", { className: "w-12 bg-black/50 rounded-lg p-1", ref: oe }),
+      ref: f,
+      className: `rounded-xl overflow-hidden transition-all duration-300 ${ce ? "fixed inset-0 z-[9999] flex flex-col h-screen w-screen bg-black" : "relative"}`,
+      style: { backgroundColor: j || y ? void 0 : d ? "#49494937" : "white" },
+      children: /* @__PURE__ */ e.jsxs("div", { style: { background: j || y ? void 0 : d ? "#1a1a1ab0" : "#f5f5f5", height: ce ? "100%" : "auto" }, className: `${j || y ? "" : "p-4"} ${ce ? "flex flex-col flex-1" : ""}`, children: [
+        p.videoName && !ce && /* @__PURE__ */ e.jsx("div", { className: "mb-4", children: /* @__PURE__ */ e.jsx("div", { className: `${d ? "text-gray-100" : "text-gray-700"} font-medium`, children: u }) }),
+        /* @__PURE__ */ e.jsxs("div", { className: `relative ${Ie ? "flex flex-col gap-3" : "flex gap-3"} ${ce ? "flex-1 min-h-0" : "mb-4"}`, children: [
+          g && Re === "top" && /* @__PURE__ */ e.jsx("div", { className: "w-full h-12", ref: oe }),
+          /* @__PURE__ */ e.jsxs("div", { className: `flex ${!Ie && "flex-1"} gap-3`, children: [
+            g && Re === "left" && /* @__PURE__ */ e.jsx("div", { className: "w-12 bg-black/50 rounded-lg p-1", ref: oe }),
             /* @__PURE__ */ e.jsxs("div", { className: `flex-1 ${d ? "bg-black/70" : "bg-white/70"} rounded-lg overflow-hidden relative`, children: [
               /* @__PURE__ */ e.jsxs(
                 "video",
                 {
-                  ref: C,
+                  ref: R,
                   className: "w-full h-full object-contain",
-                  poster: q || void 0,
+                  poster: _ || void 0,
                   children: [
                     o && /* @__PURE__ */ e.jsx("source", { src: o }),
                     "Your browser does not support the video tag."
@@ -2209,10 +2235,10 @@ function Xr({
                           min: "-20",
                           max: "20",
                           value: F.bass,
-                          onChange: (t) => Oe("bass", parseInt(t.target.value)),
+                          onChange: (r) => ze("bass", parseInt(r.target.value)),
                           className: "flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider",
                           style: {
-                            background: `linear-gradient(to right, ${T} ${(F.bass + 20) / 40 * 100}%, #e5e7eb ${(F.bass + 20) / 40 * 100}%)`
+                            background: `linear-gradient(to right, ${q} ${(F.bass + 20) / 40 * 100}%, #e5e7eb ${(F.bass + 20) / 40 * 100}%)`
                           }
                         }
                       ),
@@ -2236,10 +2262,10 @@ function Xr({
                           min: "-20",
                           max: "20",
                           value: F.mid,
-                          onChange: (t) => Oe("mid", parseInt(t.target.value)),
+                          onChange: (r) => ze("mid", parseInt(r.target.value)),
                           className: "flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider",
                           style: {
-                            background: `linear-gradient(to right, ${T} ${(F.mid + 20) / 40 * 100}%, #e5e7eb ${(F.mid + 20) / 40 * 100}%)`
+                            background: `linear-gradient(to right, ${q} ${(F.mid + 20) / 40 * 100}%, #e5e7eb ${(F.mid + 20) / 40 * 100}%)`
                           }
                         }
                       ),
@@ -2263,10 +2289,10 @@ function Xr({
                           min: "-20",
                           max: "20",
                           value: F.treble,
-                          onChange: (t) => Oe("treble", parseInt(t.target.value)),
+                          onChange: (r) => ze("treble", parseInt(r.target.value)),
                           className: "flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider",
                           style: {
-                            background: `linear-gradient(to right, ${T} ${(F.treble + 20) / 40 * 100}%, #e5e7eb ${(F.treble + 20) / 40 * 100}%)`
+                            background: `linear-gradient(to right, ${q} ${(F.treble + 20) / 40 * 100}%, #e5e7eb ${(F.treble + 20) / 40 * 100}%)`
                           }
                         }
                       ),
@@ -2278,7 +2304,7 @@ function Xr({
                   /* @__PURE__ */ e.jsx(
                     "button",
                     {
-                      onClick: We,
+                      onClick: Ke,
                       className: `px-3 py-1 rounded text-xs ${d ? "bg-gray-700 text-gray-200 hover:bg-gray-600" : "bg-gray-200 text-gray-700 hover:bg-gray-300"} transition-all`,
                       children: "Reset"
                     }
@@ -2286,7 +2312,7 @@ function Xr({
                   /* @__PURE__ */ e.jsx(
                     "button",
                     {
-                      onClick: () => W(!1),
+                      onClick: () => H(!1),
                       className: `ml-2 px-3 py-1 rounded text-xs ${d ? "bg-gray-700 text-gray-200 hover:bg-gray-600" : "bg-gray-200 text-gray-700 hover:bg-gray-300"} transition-all`,
                       children: "Close"
                     }
@@ -2294,47 +2320,47 @@ function Xr({
                 ] })
               ] }) })
             ] }),
-            f && Re === "right" && /* @__PURE__ */ e.jsx("div", { className: "w-12 bg-black/50 rounded-lg p-1", ref: oe })
+            g && Re === "right" && /* @__PURE__ */ e.jsx("div", { className: "w-12 bg-black/50 rounded-lg p-1", ref: oe })
           ] }),
-          f && Re === "bottom" && /* @__PURE__ */ e.jsx("div", { className: "w-full h-12", ref: oe })
+          g && Re === "bottom" && /* @__PURE__ */ e.jsx("div", { className: "w-full h-12", ref: oe })
         ] }),
-        p.seekbar && /* @__PURE__ */ e.jsx("div", { className: `mb-4 ${ue ? "mt-3" : ""}`, children: /* @__PURE__ */ e.jsxs("div", { className: "flex items-center gap-3", children: [
-          /* @__PURE__ */ e.jsx("span", { className: `text-xs ${d ? "text-gray-100" : "text-gray-600"} font-mono w-12`, children: Pe(Y) }),
+        p.seekbar && /* @__PURE__ */ e.jsx("div", { className: `mb-4 ${ce ? "mt-3" : ""}`, children: /* @__PURE__ */ e.jsxs("div", { className: "flex items-center gap-3", children: [
+          /* @__PURE__ */ e.jsx("span", { className: `text-xs ${d ? "text-gray-100" : "text-gray-600"} font-mono w-12`, children: Se(V) }),
           /* @__PURE__ */ e.jsx(
             "input",
             {
               type: "range",
               min: "0",
               max: "100",
-              value: G > 0 ? Y / G * 100 : 0,
-              onChange: Ae,
-              onMouseDown: De,
-              onMouseUp: Be,
-              onTouchStart: De,
-              onTouchEnd: Be,
+              value: Y > 0 ? V / Y * 100 : 0,
+              onChange: He,
+              onMouseDown: Le,
+              onMouseUp: Me,
+              onTouchStart: Le,
+              onTouchEnd: Me,
               disabled: !o,
               className: "flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed",
               style: {
-                background: o && G > 0 ? `linear-gradient(to right, ${T} ${Y / G * 100}%, #e5e7eb ${Y / G * 100}%)` : "#e5e7eb"
+                background: o && Y > 0 ? `linear-gradient(to right, ${q} ${V / Y * 100}%, #e5e7eb ${V / Y * 100}%)` : "#e5e7eb"
               }
             }
           ),
-          /* @__PURE__ */ e.jsx("span", { className: `text-xs ${d ? "text-gray-100" : "text-gray-600"} font-mono w-12 text-right`, children: Pe(G) })
+          /* @__PURE__ */ e.jsx("span", { className: `text-xs ${d ? "text-gray-100" : "text-gray-600"} font-mono w-12 text-right`, children: Se(Y) })
         ] }) }),
         /* @__PURE__ */ e.jsxs("div", { className: "flex flex-wrap items-center gap-3", children: [
           p.play && /* @__PURE__ */ e.jsxs(
             "button",
             {
-              onClick: Fe,
+              onClick: _e,
               disabled: !o,
-              style: { backgroundColor: T },
-              className: `${ee > 400 ? " px-4 py-2" : "px-3 py-5"} rounded-full text-sm font-medium text-white hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all`,
+              style: { backgroundColor: q },
+              className: `${ue > 400 ? " px-4 py-2" : "px-3 py-5"} rounded-full text-sm font-medium text-white hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all`,
               children: [
                 /* @__PURE__ */ e.jsxs("div", { className: "relative w-4 flex items-center", children: [
-                  /* @__PURE__ */ e.jsx(Je, { size: 16, className: `${M ? "" : "scale-0 translate-y-10"} transition-all absolute` }),
-                  /* @__PURE__ */ e.jsx(Xe, { size: 16, className: `${M ? "scale-0 -translate-y-10" : ""} transition-all absolute` })
+                  /* @__PURE__ */ e.jsx(Ze, { size: 16, className: `${O ? "" : "scale-0 translate-y-10"} transition-all absolute` }),
+                  /* @__PURE__ */ e.jsx(et, { size: 16, className: `${O ? "scale-0 -translate-y-10" : ""} transition-all absolute` })
                 ] }),
-                ee > 400 && (M ? "Pause" : "Play")
+                ue > 400 && (O ? "Pause" : "Play")
               ]
             }
           ),
@@ -2344,40 +2370,56 @@ function Xr({
               onClick: Ce,
               disabled: !o,
               className: `${d ? "bg-gray-100 text-black hover:bg-gray-300" : "bg-gray-700 text-white hover:bg-gray-800"} px-3 py-3 rounded-full text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all`,
-              children: /* @__PURE__ */ e.jsx(gr, { size: 16 })
+              children: /* @__PURE__ */ e.jsx(mt, { size: 16 })
             }
           ),
           p.fullscreen && /* @__PURE__ */ e.jsxs(
             "button",
             {
-              onClick: He,
-              className: `${ee < 800 ? "px-3 py-3" : "px-4 py-2"} rounded-full text-sm font-medium flex items-center gap-2 transition-all ${d ? "bg-gray-100 text-black hover:bg-gray-300" : "bg-gray-700 text-white hover:bg-gray-800"}`,
+              onClick: Ue,
+              className: `${ue < 800 ? "px-3 py-3" : "px-4 py-2"} rounded-full text-sm font-medium flex items-center gap-2 transition-all ${d ? "bg-gray-100 text-black hover:bg-gray-300" : "bg-gray-700 text-white hover:bg-gray-800"}`,
               children: [
-                ue ? /* @__PURE__ */ e.jsx(Fr, { size: 16 }) : /* @__PURE__ */ e.jsx(Ar, { size: 16 }),
-                /* @__PURE__ */ e.jsx("span", { style: { display: ee < 800 ? "none" : "block" }, children: ue ? "Exit" : "Full" })
+                ce ? /* @__PURE__ */ e.jsx(Ft, { size: 16 }) : /* @__PURE__ */ e.jsx(St, { size: 16 }),
+                /* @__PURE__ */ e.jsx("span", { style: { display: ue < 800 ? "none" : "block" }, children: ce ? "Exit" : "Full" })
               ]
             }
           ),
           p.equalizer && /* @__PURE__ */ e.jsxs(
             "button",
             {
-              onClick: () => W(!ke),
+              onClick: () => H(!ke),
               disabled: !o,
-              className: `${ee < 700 ? "px-3 py-3" : "px-4 py-2"} rounded-full text-sm font-medium flex items-center gap-2 transition-all ${ke ? "text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-300"} disabled:opacity-40 disabled:cursor-not-allowed`,
-              style: ke ? { backgroundColor: T } : {},
+              className: `${ue < 700 ? "px-3 py-3" : "px-4 py-2"} rounded-full text-sm font-medium flex items-center gap-2 transition-all ${ke ? "text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-300"} disabled:opacity-40 disabled:cursor-not-allowed`,
+              style: ke ? { backgroundColor: q } : {},
               children: [
-                /* @__PURE__ */ e.jsx(Ge, { size: 16 }),
-                /* @__PURE__ */ e.jsx("span", { style: { display: ee < 700 ? "none" : "block" }, children: "EQ" })
+                /* @__PURE__ */ e.jsx(Qe, { size: 16 }),
+                /* @__PURE__ */ e.jsx("span", { style: { display: ue < 700 ? "none" : "block" }, children: "EQ" })
               ]
             }
           ),
+          p.speed && /* @__PURE__ */ e.jsx("div", { className: "flex items-center", children: /* @__PURE__ */ e.jsxs(
+            "select",
+            {
+              value: fe,
+              onChange: We,
+              className: `rounded-full text-sm font-medium border-none outline-none cursor-pointer transition-all bg-transparent ${d ? "text-gray-200" : "text-gray-800"}`,
+              children: [
+                /* @__PURE__ */ e.jsx("option", { value: "0.5", className: d ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-gray-800", children: "0.5x" }),
+                /* @__PURE__ */ e.jsx("option", { value: "0.75", className: d ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-gray-800", children: "0.75x" }),
+                /* @__PURE__ */ e.jsx("option", { value: "1", className: d ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-gray-800", children: "1x" }),
+                /* @__PURE__ */ e.jsx("option", { value: "1.25", className: d ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-gray-800", children: "1.25x" }),
+                /* @__PURE__ */ e.jsx("option", { value: "1.5", className: d ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-gray-800", children: "1.5x" }),
+                /* @__PURE__ */ e.jsx("option", { value: "2", className: d ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-gray-800", children: "2x" })
+              ]
+            }
+          ) }),
           p.volume && /* @__PURE__ */ e.jsxs("div", { className: "flex items-center gap-1 md:gap-3 ml-auto", children: [
             /* @__PURE__ */ e.jsx(
               "button",
               {
-                onClick: Me,
+                onClick: Ve,
                 className: "p-2 rounded-lg hover:bg-gray-100 transition-all",
-                children: we || k === 0 ? /* @__PURE__ */ e.jsx(tr, { size: 20, className: d ? "text-gray-100" : "text-gray-600" }) : /* @__PURE__ */ e.jsx(rr, { size: 20, className: d ? "text-gray-100" : "text-gray-600" })
+                children: we || $ === 0 ? /* @__PURE__ */ e.jsx(st, { size: 20, className: d ? "text-gray-100" : "text-gray-600" }) : /* @__PURE__ */ e.jsx(at, { size: 20, className: d ? "text-gray-100" : "text-gray-600" })
               }
             ),
             /* @__PURE__ */ e.jsx(
@@ -2386,17 +2428,17 @@ function Xr({
                 type: "range",
                 min: "0",
                 max: "100",
-                value: k,
-                onChange: Le,
+                value: $,
+                onChange: Oe,
                 className: "hide-for-xs w-24 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer",
                 style: {
-                  background: `linear-gradient(to right, ${T} ${k}%, #e5e7eb ${k}%)`,
-                  display: ee < 460 ? "none" : "block"
+                  background: `linear-gradient(to right, ${q} ${$}%, #e5e7eb ${$}%)`,
+                  display: ue < 460 ? "none" : "block"
                 }
               }
             ),
-            /* @__PURE__ */ e.jsxs("span", { style: { display: ee < 800 ? "none" : "block" }, className: `text-xs ${d ? "text-gray-100" : "text-gray-700"} font-mono w-10 text-right`, children: [
-              k,
+            /* @__PURE__ */ e.jsxs("span", { style: { display: ue < 800 ? "none" : "block" }, className: `text-xs ${d ? "text-gray-100" : "text-gray-700"} font-mono w-10 text-right`, children: [
+              $,
               "%"
             ] })
           ] })
@@ -2408,7 +2450,7 @@ function Xr({
                         width: 16px;
                         height: 16px;
                         border-radius: 50%;
-                        background: ${T};
+                        background: ${q};
                         cursor: pointer;
                         border: 2px solid white;
                         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
@@ -2418,7 +2460,7 @@ function Xr({
                         width: 16px;
                         height: 16px;
                         border-radius: 50%;
-                        background: ${T};
+                        background: ${q};
                         cursor: pointer;
                         border: 2px solid white;
                         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
@@ -2452,30 +2494,30 @@ function Xr({
     }
   );
 }
-function Qr() {
-  const [o, u] = j(null), [f, g] = j("No track loaded"), [q, p] = j("purple"), [w, h] = j(!1), [b, T] = j(!1), [L, M] = j("light"), _ = N(null), Y = (G) => {
-    var k;
-    const J = (k = G.target.files) == null ? void 0 : k[0];
-    if (J) {
-      const y = URL.createObjectURL(J);
-      u(y), g(J.name);
+function Qt() {
+  const [o, u] = v(null), [g, m] = v("No track loaded"), [_, p] = v("purple"), [k, y] = v(!1), [N, q] = v(!1), [M, O] = v("light"), S = C(null), V = (Y) => {
+    var $;
+    const K = ($ = Y.target.files) == null ? void 0 : $[0];
+    if (K) {
+      const b = URL.createObjectURL(K);
+      u(b), m(K.name);
     }
-  }, K = () => {
-    var G;
-    (G = _.current) == null || G.click();
+  }, U = () => {
+    var Y;
+    (Y = S.current) == null || Y.click();
   };
-  return /* @__PURE__ */ e.jsx("div", { className: "min-h-screen flex items-center justify-center p-4 md:p-8", style: { backgroundColor: L === "dark" ? "#222" : "white" }, children: /* @__PURE__ */ e.jsxs("div", { className: "w-full h-full md:h-auto md:max-w-4xl", children: [
-    w && /* @__PURE__ */ e.jsx(Ur, { theme: q, setTheme: p, close: () => h(!1) }),
+  return /* @__PURE__ */ e.jsx("div", { className: "min-h-screen flex items-center justify-center p-4 md:p-8", style: { backgroundColor: M === "dark" ? "#222" : "white" }, children: /* @__PURE__ */ e.jsxs("div", { className: "w-full h-full md:h-auto md:max-w-4xl", children: [
+    k && /* @__PURE__ */ e.jsx(Ut, { theme: _, setTheme: p, close: () => y(!1) }),
     /* @__PURE__ */ e.jsxs("div", { className: "container-glass rounded-xl p-8", children: [
       /* @__PURE__ */ e.jsxs("div", { className: "mb-6 flex justify-between items-start", children: [
         /* @__PURE__ */ e.jsxs("div", { children: [
-          /* @__PURE__ */ e.jsx("h1", { className: `text-2xl font-semibold ${L === "dark" ? "text-gray-200" : "text-gray-800"} mb-1`, children: "Audio Visualizer" }),
+          /* @__PURE__ */ e.jsx("h1", { className: `text-2xl font-semibold ${M === "dark" ? "text-gray-200" : "text-gray-800"} mb-1`, children: "Audio Visualizer" }),
           /* @__PURE__ */ e.jsx("p", { className: "text-sm text-gray-500", children: "Professional frequency analyzer" })
         ] }),
         /* @__PURE__ */ e.jsxs(
           "button",
           {
-            onClick: () => h(!w),
+            onClick: () => y(!k),
             className: "bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 flex items-center gap-2",
             children: [
               /* @__PURE__ */ e.jsx("span", { children: "🎨" }),
@@ -2485,16 +2527,16 @@ function Qr() {
         )
       ] }),
       /* @__PURE__ */ e.jsx(
-        Yr,
+        Yt,
         {
           audio: o || void 0,
-          name: f || void 0,
+          name: g || void 0,
           author: "K.Prabhasha",
-          theme: q,
+          theme: _,
           autoPlay: !1,
           thumbnail: "https://cdn-icons-png.flaticon.com/512/3845/3845874.png",
-          mode: L,
-          transparent: b,
+          mode: M,
+          transparent: N,
           volume: 70,
           controls: {
             play: !0,
@@ -2507,15 +2549,15 @@ function Qr() {
           }
         }
       ),
-      /* @__PURE__ */ e.jsx(Kr, { audio: o || "", width: 400, thumbnail: "https://cdn-icons-png.flaticon.com/512/8316/8316619.png", autoPlay: !1, gradient: ["#26ce3aff", "#39eed9ff"], background: "#c0ffefff" }),
-      /* @__PURE__ */ e.jsx(Gr, { audio: o || "", thumbnail: "https://cdn-icons-png.flaticon.com/512/17524/17524837.png", autoPlay: !1, gradient: ["#26ce3aff", "#39eed9ff"], background: "#c0ffefff" }),
+      /* @__PURE__ */ e.jsx(Kt, { audio: o || "", width: 400, thumbnail: "https://cdn-icons-png.flaticon.com/512/8316/8316619.png", autoPlay: !1, gradient: ["#26ce3aff", "#39eed9ff"], background: "#c0ffefff" }),
+      /* @__PURE__ */ e.jsx(Gt, { audio: o || "", thumbnail: "https://cdn-icons-png.flaticon.com/512/17524/17524837.png", autoPlay: !1, gradient: ["#26ce3aff", "#39eed9ff"], background: "#c0ffefff" }),
       /* @__PURE__ */ e.jsxs("div", { className: "mt-6 flex flex-wrap items-center gap-3", children: [
         /* @__PURE__ */ e.jsx(
           "input",
           {
             type: "file",
-            ref: _,
-            onChange: Y,
+            ref: S,
+            onChange: V,
             accept: "audio/*",
             className: "hidden"
           }
@@ -2523,10 +2565,10 @@ function Qr() {
         /* @__PURE__ */ e.jsxs(
           "button",
           {
-            onClick: K,
+            onClick: U,
             className: "bg-white border border-gray-300 text-gray-700 px-6 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 flex items-center gap-2",
             children: [
-              /* @__PURE__ */ e.jsx(Hr, { size: 16 }),
+              /* @__PURE__ */ e.jsx(Ht, { size: 16 }),
               "Load Audio"
             ]
           }
@@ -2534,19 +2576,19 @@ function Qr() {
         /* @__PURE__ */ e.jsx(
           "button",
           {
-            onClick: () => M(L === "dark" ? "light" : "dark"),
+            onClick: () => O(M === "dark" ? "light" : "dark"),
             className: "bg-white border border-gray-300 text-gray-700 px-6 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 flex items-center gap-2",
-            children: L === "dark" ? "Light" : "Dark"
+            children: M === "dark" ? "Light" : "Dark"
           }
         ),
         /* @__PURE__ */ e.jsxs(
           "button",
           {
-            onClick: () => T(!b),
+            onClick: () => q(!N),
             className: "bg-white border border-gray-300 text-gray-700 px-6 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 flex items-center gap-2",
             children: [
               "Transparent: ",
-              String(b)
+              String(N)
             ]
           }
         )
@@ -2555,11 +2597,11 @@ function Qr() {
   ] }) });
 }
 export {
-  Qr as DemoVisualizePlayer,
-  Gr as NanoAudioPlayer,
-  Ur as ThemeSelector,
-  Xr as VideoPlayer,
-  Yr as VisualizePlayer,
-  Kr as WaveAudioPlayer,
-  Se as themes
+  Qt as DemoVisualizePlayer,
+  Gt as NanoAudioPlayer,
+  Ut as ThemeSelector,
+  Xt as VideoPlayer,
+  Yt as VisualizePlayer,
+  Kt as WaveAudioPlayer,
+  Ae as themes
 };
