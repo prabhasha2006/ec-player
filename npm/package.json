@@ -1,0 +1,45 @@
+{
+  "name": "ecplayer",
+  "version": "1.0.0",
+  "description": "Professional audio and video players with advanced visualization, customizable themes, and seamless responsive design",
+  "license": "ISC",
+  "author": "K.Prabhasha",
+  "type": "module",
+  "main": "dist/ecplayer.umd.js",
+  "module": "dist/ecplayer.es.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/ecplayer.es.js",
+      "require": "./dist/ecplayer.umd.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "dependencies": {
+    "lucide-react": "^0.540.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.9",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3",
+    "typescript": "^5.5.3",
+    "vite": "^5.4.1",
+    "vite-plugin-dts": "^4.0.3"
+  }
+}

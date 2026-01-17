@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Play, Pause, Square, Volume2, VolumeX, Repeat, Upload, Maximize, Minimize, Sliders } from 'lucide-react';
 
 // --- Types ---
@@ -19,7 +19,7 @@ export type Themes = Record<ThemeKey, Theme>;
 
 export interface ThemeSelectorProps {
     theme: ThemeKey | Theme;
-    setTheme: (theme: any) => void;
+    setTheme: React.Dispatch<React.SetStateAction<ThemeKey | Theme | string>>;
     close: () => void;
 }
 
@@ -265,7 +265,7 @@ function VisualizePlayer({
     const [isMuted, setIsMuted] = useState(false);
     const [isLoop, setIsLoop] = useState(false);
     const [isSeeking, setIsSeeking] = useState(false);
-    const [error, setError] = useState<string[][]>([]);
+    const [error, setError] = useState([]);
     const [showEqualizer, setShowEqualizer] = useState(false);
     const [eqBands, setEqBands] = useState({
         bass: equalizer.bass || 0,
@@ -274,16 +274,16 @@ function VisualizePlayer({
     })
     const [containerWidth, setContainerWidth] = useState(0)
 
-    const audioRef = useRef<HTMLAudioElement | null>(null);
-    const audioContextRef = useRef<AudioContext | null>(null);
-    const analyserRef = useRef<AnalyserNode | null>(null);
-    const sourceRef = useRef<MediaElementAudioSourceNode | null>(null);
-    const bassFilterRef = useRef<BiquadFilterNode | null>(null);
-    const midFilterRef = useRef<BiquadFilterNode | null>(null);
-    const trebleFilterRef = useRef<BiquadFilterNode | null>(null);
-    const animationRef = useRef<number | null>(null);
-    const vuContainerRef = useRef<HTMLDivElement | null>(null);
-    const containerRef = useRef<HTMLDivElement | null>(null)
+    const audioRef = useRef(null);
+    const audioContextRef = useRef(null);
+    const analyserRef = useRef(null);
+    const sourceRef = useRef(null);
+    const bassFilterRef = useRef(null);
+    const midFilterRef = useRef(null);
+    const trebleFilterRef = useRef(null);
+    const animationRef = useRef(null);
+    const vuContainerRef = useRef(null);
+    const containerRef = useRef(null)
 
     useEffect(() => {
         const el = containerRef.current;
@@ -335,9 +335,9 @@ function VisualizePlayer({
         if (typeof controls !== 'object' || Array.isArray(controls)) {
             errors.push(['TypeError', 'controls must be an object']);
         } else {
-            const controlKeys = ['play', 'pause', 'stop', 'seekbar', 'volume', 'loop', 'trackName', 'equalizer'] as const;
+            const controlKeys = ['play', 'pause', 'stop', 'seekbar', 'volume', 'loop', 'trackName', 'equalizer'];
             controlKeys.forEach(key => {
-                if (controls && key in controls && typeof (controls as any)[key] !== 'boolean') {
+                if (key in controls && typeof controls[key] !== 'boolean') {
                     errors.push(['TypeError', `controls.${key} must be a boolean`]);
                 }
             });
@@ -382,10 +382,10 @@ function VisualizePlayer({
         { freq: 6300 }, { freq: 8000 }, { freq: 10000 }, { freq: 12500 }
     ];
 
-    const bandPeaksRef = useRef<number[]>(bands.map(() => 0));
-    const peakHoldsRef = useRef<number[]>(bands.map(() => 0));
-    const peakHoldTimesRef = useRef<number[]>(bands.map(() => 0));
-    const isPlayingRef = useRef<boolean>(false);
+    const bandPeaksRef = useRef(bands.map(() => 0));
+    const peakHoldsRef = useRef(bands.map(() => 0));
+    const peakHoldTimesRef = useRef(bands.map(() => 0));
+    const isPlayingRef = useRef(false);
     const themeRef = useRef<ThemeKey>(typeof theme === 'string' ? theme : 'purple');
 
     let currentTheme: Theme = (typeof theme === 'string') ? (themes[theme] || themes.purple) : (typeof theme === 'object') ? theme : themes.purple;
@@ -651,47 +651,39 @@ function VisualizePlayer({
             try {
                 const AudioContextClass: any = (window as any).AudioContext || (window as any).webkitAudioContext;
                 if (AudioContextClass) {
-                    const ctx = new AudioContextClass();
-                    audioContextRef.current = ctx;
+                    audioContextRef.current = new AudioContextClass();
 
                     // Create filters
-                    const bassFilter = ctx.createBiquadFilter();
-                    bassFilter.type = 'lowshelf';
-                    bassFilter.frequency.value = 320;
-                    bassFilter.gain.value = eqBands.bass;
+                    bassFilterRef.current = audioContextRef.current.createBiquadFilter();
+                    bassFilterRef.current.type = 'lowshelf';
+                    bassFilterRef.current.frequency.value = 320;
+                    bassFilterRef.current.gain.value = eqBands.bass;
 
-                    const midFilter = ctx.createBiquadFilter();
-                    midFilter.type = 'peaking';
-                    midFilter.frequency.value = 1000;
-                    midFilter.Q.value = 0.5;
-                    midFilter.gain.value = eqBands.mid;
+                    midFilterRef.current = audioContextRef.current.createBiquadFilter();
+                    midFilterRef.current.type = 'peaking';
+                    midFilterRef.current.frequency.value = 1000;
+                    midFilterRef.current.Q.value = 0.5;
+                    midFilterRef.current.gain.value = eqBands.mid;
 
-                    const trebleFilter = ctx.createBiquadFilter();
-                    trebleFilter.type = 'highshelf';
-                    trebleFilter.frequency.value = 3200;
-                    trebleFilter.gain.value = eqBands.treble;
+                    trebleFilterRef.current = audioContextRef.current.createBiquadFilter();
+                    trebleFilterRef.current.type = 'highshelf';
+                    trebleFilterRef.current.frequency.value = 3200;
+                    trebleFilterRef.current.gain.value = eqBands.treble;
 
                     // Create analyser
-                    const analyser = ctx.createAnalyser();
-                    analyser.fftSize = 8192;
-                    analyser.smoothingTimeConstant = 0.7;
+                    analyserRef.current = audioContextRef.current.createAnalyser();
+                    analyserRef.current.fftSize = 8192;
+                    analyserRef.current.smoothingTimeConstant = 0.7;
 
                     // Create source
-                    const source = ctx.createMediaElementSource(audioRef.current);
+                    sourceRef.current = audioContextRef.current.createMediaElementSource(audioRef.current);
 
                     // Connect nodes: source -> filters -> analyser -> destination
-                    source.connect(bassFilter);
-                    bassFilter.connect(midFilter);
-                    midFilter.connect(trebleFilter);
-                    trebleFilter.connect(analyser);
-                    analyser.connect(ctx.destination);
-
-                    // Assign to refs
-                    bassFilterRef.current = bassFilter;
-                    midFilterRef.current = midFilter;
-                    trebleFilterRef.current = trebleFilter;
-                    analyserRef.current = analyser;
-                    sourceRef.current = source;
+                    sourceRef.current.connect(bassFilterRef.current);
+                    bassFilterRef.current.connect(midFilterRef.current);
+                    midFilterRef.current.connect(trebleFilterRef.current);
+                    trebleFilterRef.current.connect(analyserRef.current);
+                    analyserRef.current.connect(audioContextRef.current.destination);
                 }
             } catch (error) {
                 console.error("Failed to setup audio context:", error);
@@ -699,13 +691,11 @@ function VisualizePlayer({
         }
     };
 
-    const getFrequencyIndex = (frequency: number) => {
-        const ctx = audioContextRef.current;
-        const analyser = analyserRef.current;
-        if (!ctx || !analyser) return 0;
-        const nyquist = ctx.sampleRate / 2;
-        const index = Math.round(frequency / nyquist * analyser.frequencyBinCount);
-        return Math.min(index, analyser.frequencyBinCount - 1);
+    const getFrequencyIndex = (frequency) => {
+        if (!audioContextRef.current || !analyserRef.current) return 0;
+        const nyquist = audioContextRef.current.sampleRate / 2;
+        const index = Math.round(frequency / nyquist * analyserRef.current.frequencyBinCount);
+        return Math.min(index, analyserRef.current.frequencyBinCount - 1);
     };
 
     const fadeOutVisualization = () => {
@@ -737,9 +727,7 @@ function VisualizePlayer({
                 peakHoldTimesRef.current = bands.map(() => 0);
                 updateVU();
             }
-            if (animationRef.current) {
-                cancelAnimationFrame(animationRef.current);
-            }
+            cancelAnimationFrame(animationRef.current);
             animationRef.current = null;
         }
     };
@@ -788,7 +776,7 @@ function VisualizePlayer({
         const currentTheme = themes[themeRef.current] || themes.rainbow;
 
         let html = '';
-        bands.forEach((_, index) => {
+        bands.forEach((band, index) => {
             const height = bandPeaksRef.current[index] * 100;
             const peakPos = 100 - (peakHoldsRef.current[index] * 100);
             const colorIndex = Math.floor((index / bands.length) * currentTheme.bars.length);
@@ -833,7 +821,7 @@ function VisualizePlayer({
         updateVU();
     };
 
-    const handleSeekChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleSeekChange = (e) => {
         const value = parseFloat(e.target.value);
         const seekTime = (value / 100) * duration;
         setCurrentTime(seekTime);
@@ -854,7 +842,7 @@ function VisualizePlayer({
         setIsSeeking(false);
     };
 
-    const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleVolumeChange = (e) => {
         const newVolume = parseInt(e.target.value);
         setVolume(newVolume);
         setIsMuted(newVolume === 0);
@@ -868,7 +856,7 @@ function VisualizePlayer({
         setIsLoop(!isLoop);
     };
 
-    const handleEqChange = (band: 'bass' | 'mid' | 'treble', value: number) => {
+    const handleEqChange = (band, value) => {
         setEqBands(prev => ({
             ...prev,
             [band]: value
@@ -885,7 +873,7 @@ function VisualizePlayer({
         }
     }, [controls]);
 
-    const formatTime = (time: number) => {
+    const formatTime = (time) => {
         if (isNaN(time)) return '0:00';
         const minutes = Math.floor(time / 60);
         const seconds = Math.floor(time % 60);
@@ -903,11 +891,11 @@ function VisualizePlayer({
     }
 
     return (
-        <div ref={containerRef} className='w-full rounded-xl overflow-hidden' style={{ backgroundColor: !(noControls || transparent) ? (isDark ? '#6060606a' : '#ffffffab') : undefined }}>
-            <div style={{ background: !(noControls || transparent) ? currentTheme.bg : undefined }} className={!(noControls || transparent) ? 'p-4' : ''}>
+        <div ref={containerRef} className='w-full rounded-xl overflow-hidden' style={{ backgroundColor: !(noControls || transparent) && (isDark ? '#6060606a' : '#ffffffab') }}>
+            <div style={{ background: !(noControls || transparent) && currentTheme.bg }} className={!(noControls || transparent) && 'p-4'}>
                 {/* VU Meter */}
                 <div className='relative'>
-                    <div className={`${(transparent && showEqualizer) ? 'opacity-30' : ''} ${!(noControls || transparent) ? (isDark ? 'bg-black/40' : 'bg-white/70') : ''} rounded-lg ${!noControls ? "mb-6" : ""} ${!(noControls || transparent) ? "p-4" : ""} shadow-sm`}>
+                    <div className={`${transparent && showEqualizer && 'opacity-30'} ${!(noControls || transparent) && (isDark ? 'bg-black/40' : 'bg-white/70')} rounded-lg ${!noControls && "mb-6"} ${!(noControls || transparent) && "p-4"} shadow-sm`}>
                         <div className="flex justify-center items-end gap-1 h-64" ref={vuContainerRef}></div>
                     </div>
                     {showEqualizer && (
@@ -1002,7 +990,7 @@ function VisualizePlayer({
                     <div className="mb-6 flex items-center">
                         {thumbnail && (
                             <div className="mr-2">
-                                <img src={thumbnail} alt="" className={`${isPlaying ? 'animation-spin' : ''} h-12 w-12 rounded-full`} />
+                                <img src={thumbnail} alt="" className={`${isPlaying && 'animation-spin'} h-12 w-12 rounded-full`} />
                             </div>
                         )}
                         <div>
@@ -1196,8 +1184,8 @@ function VisualizePlayer({
 
 function WaveAudioPlayer({
     audio: audioUrl,
-    gradient = ['#cd7eff', '#ff00f2'],
-    background = '#f4e4ffff',
+    gradient = ['#cd7eff', '#fe59f6'],
+    background = '#2f1f3aff',
     autoPlay = false,
     thumbnail = null,
     width,
@@ -1214,20 +1202,20 @@ function WaveAudioPlayer({
     const [isMuted, setIsMuted] = useState(false);
     const [volume, setVolume] = useState(80);
     const [playbackRate, setPlaybackRate] = useState(1.0);
-    const [waveformData, setWaveformData] = useState<number[]>([]);
-    const [error, setError] = useState<string | null>(null);
+    const [waveformData, setWaveformData] = useState([]);
+    const [error, setError] = useState(null);
     const [showEqualizer, setShowEqualizer] = useState(false);
     const [eqBands, setEqBands] = useState({
         bass: equalizer.bass || 0,
         mid: equalizer.mid || 0,
         treble: equalizer.treble || 0
     })
-    const audioRef = useRef<HTMLAudioElement | null>(null);
-    const audioCtxRef = useRef<AudioContext | null>(null);
-    const sourceRef = useRef<MediaElementAudioSourceNode | null>(null);
-    const bassFilterRef = useRef<BiquadFilterNode | null>(null);
-    const midFilterRef = useRef<BiquadFilterNode | null>(null);
-    const trebleFilterRef = useRef<BiquadFilterNode | null>(null);
+    const audioRef = useRef(null);
+    const audioCtxRef = useRef(null);
+    const sourceRef = useRef(null);
+    const bassFilterRef = useRef(null);
+    const midFilterRef = useRef(null);
+    const trebleFilterRef = useRef(null);
     // mode comes from props and is typed
 
     // Generate random waveform data for visualization
@@ -1265,8 +1253,8 @@ function WaveAudioPlayer({
             setWaveformData(generateWaveformData());
         };
         const handleEnded = () => setIsPlaying(false);
-        const handleError = (e: any) => {
-            setError(`Audio error: ${e.target?.error?.message || 'Failed to load audio'}`);
+        const handleError = (e) => {
+            setError(`Audio error: ${e.message || 'Failed to load audio'}`);
         };
 
         audio.addEventListener('timeupdate', handleTimeUpdate);
@@ -1284,10 +1272,7 @@ function WaveAudioPlayer({
 
     useEffect(() => {
         if (audioUrl && audioRef.current && autoPlay) {
-            audioRef.current.play().catch((e: any) => {
-                console.error("Play failed:", e);
-                setIsPlaying(false);
-            });
+            audioRef.current.play().catch(() => setIsPlaying(false));
             setIsPlaying(true);
         }
     }, [audioUrl]);
@@ -1296,38 +1281,32 @@ function WaveAudioPlayer({
         if (!audioRef.current) return;
 
         // Only create AudioContext if not already created
-        if (!audioCtxRef.current && audioRef.current) {
+        if (!audioCtxRef.current) {
             const AudioCtxClass: any = (window as any).AudioContext || (window as any).webkitAudioContext;
             if (AudioCtxClass) {
-                const ctx = new AudioCtxClass();
-                audioCtxRef.current = ctx;
-
-                const source = ctx.createMediaElementSource(audioRef.current);
-                sourceRef.current = source;
+                audioCtxRef.current = new AudioCtxClass();
+                sourceRef.current = audioCtxRef.current.createMediaElementSource(audioRef.current);
 
                 // Filters
-                const bassFilter = ctx.createBiquadFilter();
-                bassFilter.type = "lowshelf";
-                bassFilter.frequency.value = 200;
-                bassFilterRef.current = bassFilter;
+                bassFilterRef.current = audioCtxRef.current.createBiquadFilter();
+                bassFilterRef.current.type = "lowshelf";
+                bassFilterRef.current.frequency.value = 200;
 
-                const midFilter = ctx.createBiquadFilter();
-                midFilter.type = "peaking";
-                midFilter.frequency.value = 1000;
-                midFilter.Q.value = 1;
-                midFilterRef.current = midFilter;
+                midFilterRef.current = audioCtxRef.current.createBiquadFilter();
+                midFilterRef.current.type = "peaking";
+                midFilterRef.current.frequency.value = 1000;
+                midFilterRef.current.Q.value = 1;
 
-                const trebleFilter = ctx.createBiquadFilter();
-                trebleFilter.type = "highshelf";
-                trebleFilter.frequency.value = 3000;
-                trebleFilterRef.current = trebleFilter;
+                trebleFilterRef.current = audioCtxRef.current.createBiquadFilter();
+                trebleFilterRef.current.type = "highshelf";
+                trebleFilterRef.current.frequency.value = 3000;
 
                 // Connect
-                source
-                    .connect(bassFilter)
-                    .connect(midFilter)
-                    .connect(trebleFilter)
-                    .connect(ctx.destination);
+                sourceRef.current
+                    .connect(bassFilterRef.current)
+                    .connect(midFilterRef.current)
+                    .connect(trebleFilterRef.current)
+                    .connect(audioCtxRef.current.destination);
             }
         }
     }, [audioUrl]);
@@ -1352,7 +1331,7 @@ function WaveAudioPlayer({
                 audioRef.current.pause();
             } else {
                 audioRef.current.play().catch(e => {
-                    setError(`Playback failed: ${e instanceof Error ? e.message : String(e)}`);
+                    setError(`Playback failed: ${e.message}`);
                 });
             }
             setIsPlaying(!isPlaying);
@@ -1363,18 +1342,18 @@ function WaveAudioPlayer({
         setIsMuted(!isMuted);
     };
 
-    const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleVolumeChange = (e) => {
         setVolume(parseInt(e.target.value));
         if (isMuted && parseInt(e.target.value) > 0) {
             setIsMuted(false);
         }
     };
 
-    const handleSpeedChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleSpeedChange = (e) => {
         setPlaybackRate(parseFloat(e.target.value));
     };
 
-    const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
+    const handleSeek = (e) => {
         const rect = e.currentTarget.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const percentage = x / rect.width;
@@ -1386,7 +1365,7 @@ function WaveAudioPlayer({
         }
     };
 
-    const handleEqChange = (band: 'bass' | 'mid' | 'treble', value: number) => {
+    const handleEqChange = (band, value) => {
         setEqBands(prev => ({ ...prev, [band]: value }));
 
         if (band === "bass" && bassFilterRef.current)
@@ -1405,7 +1384,7 @@ function WaveAudioPlayer({
         handleEqChange("treble", 0)
     }
 
-    const formatTime = (time: number) => {
+    const formatTime = (time) => {
         if (isNaN(time)) return '0:00';
         const minutes = Math.floor(time / 60);
         const seconds = Math.floor(time % 60);
@@ -1429,7 +1408,7 @@ function WaveAudioPlayer({
 
     // Determine text color based on mode
     const textColor = mode === 'dark' ? 'text-gray-300' : 'text-gray-700';
-    const secondaryTextColor = mode === 'dark' ? 'text-gray-400' : 'text-gray-500';
+    const secondaryTextColor = mode === 'dark' ? 'text-gray-500' : 'text-gray-400';
 
     return (
         <div className="w-full max-w-lg relative" style={{ width: width + 'px' }}>
@@ -1506,10 +1485,10 @@ function WaveAudioPlayer({
                                 max="100"
                                 value={volume}
                                 onChange={handleVolumeChange}
-                                className={`${!width ? 'hidden sm:block' : ''} w-20 h-1.5 rounded-lg appearance-none cursor-pointer`}
+                                className={`${!width && 'hidden sm:block'} w-20 h-1.5 rounded-lg appearance-none cursor-pointer`}
                                 style={{
                                     background: `linear-gradient(to right, ${gradient[0]} ${volume}%, ${mode === 'dark' ? '#374151' : '#d1d5db'} ${volume}%)`,
-                                    display: (width && width < 400) ? 'none' : undefined
+                                    display: (width && width < 400) && 'none'
                                 }}
                             />
 
@@ -1585,9 +1564,9 @@ function WaveAudioPlayer({
 
             {/* Equalizer Overlay */}
             {showEqualizer && (
-                <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center z-10 rounded-2xl p-4">
-                    <div className={`max-w-xs w-full p-4 pt-2 rounded-xl ${mode === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
-                        <h3 className={`text-lg font-medium mb-2 ${mode === 'dark' ? 'text-gray-200' : 'text-gray-700'}`}>Equalizer</h3>
+                <div className="absolute inset-0 bg-black bg-opacity-80 flex items-center justify-center z-10 rounded-2xl p-4">
+                    <div className={`max-w-xs w-full p-6 rounded-xl ${mode === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
+                        <h3 className={`text-lg font-medium mb-4 ${mode === 'dark' ? 'text-gray-200' : 'text-gray-700'}`}>Equalizer</h3>
 
                         <div className="space-y-4">
                             {/* Bass Control */}
@@ -1701,11 +1680,11 @@ function WaveAudioPlayer({
 
 function NanoAudioPlayer({ audio: audioUrl, thumbnail, gradient: colors = ['#cd7eff', '#fe59f6'], background = '#1f273a', autoPlay = false }: NanoAudioPlayerProps) {
     const [isPlaying, setIsPlaying] = useState(false);
-    const [, setCurrentTime] = useState(0);
-    const audioRef = useRef<HTMLAudioElement | null>(null);
-    const [animationTime, setAnimationTime] = useState<number>(0);
-    const [audioDuration, setAudioDuration] = useState<number>(0); // total duration of audio
-    const [playedDuration, setPlayedDuration] = useState<number>(0); // duration of audio that has been played
+    const [currentTime, setCurrentTime] = useState(0);
+    const audioRef = useRef(null);
+    const [animationTime, setAnimationTime] = useState<any>(0);
+    const [audioDuration, setAudioDuration] = useState<any>(0); // total duration of audio
+    const [playedDuration, setPlayedDuration] = useState<any>(0); // duration of audio that has been played
 
     useEffect(() => {
         const audio = audioRef.current;
@@ -1761,7 +1740,7 @@ function NanoAudioPlayer({ audio: audioUrl, thumbnail, gradient: colors = ['#cd7
             if (isPlaying) {
                 audioRef.current.pause();
             } else {
-                audioRef.current.play().catch((e: any) => console.error("NanoPlayer play failed:", e));
+                audioRef.current.play();
             }
             setIsPlaying(!isPlaying);
         }
@@ -1795,7 +1774,7 @@ function NanoAudioPlayer({ audio: audioUrl, thumbnail, gradient: colors = ['#cd7
 
             <div
                 style={{
-                    width: `${(audioDuration > 0 ? playedDuration / audioDuration : 0) * 100}%`,
+                    width: `${playedDuration / audioDuration * 100}%`,
                     backgroundImage: buttonGradient.background
                 }}
                 className="absolute top-0 left-0 h-full opacity-20"
@@ -1879,7 +1858,7 @@ function VideoPlayer({
     const [isMuted, setIsMuted] = useState(false);
     const [isSeeking, setIsSeeking] = useState(false);
     const [isFullscreen, setIsFullscreen] = useState(false);
-    const [error, setError] = useState<string[][]>([]);
+    const [error, setError] = useState([]);
     const [showEqualizer, setShowEqualizer] = useState(false);
     const [eqBands, setEqBands] = useState({
         bass: equalizer.bass || 0,
@@ -1888,25 +1867,25 @@ function VideoPlayer({
     });
     const [containerWidth, setContainerWidth] = useState(0);
 
-    const videoRef = useRef<HTMLVideoElement | null>(null);
-    const containerRef = useRef<HTMLDivElement | null>(null);
-    const audioContextRef = useRef<AudioContext | null>(null);
-    const analyserRef = useRef<AnalyserNode | null>(null);
-    const sourceRef = useRef<MediaElementAudioSourceNode | null>(null);
-    const bassFilterRef = useRef<BiquadFilterNode | null>(null);
-    const midFilterRef = useRef<BiquadFilterNode | null>(null);
-    const trebleFilterRef = useRef<BiquadFilterNode | null>(null);
-    const animationRef = useRef<number | null>(null);
-    const vuContainerRef = useRef<HTMLDivElement | null>(null);
+    const videoRef = useRef(null);
+    const containerRef = useRef(null);
+    const audioContextRef = useRef(null);
+    const analyserRef = useRef(null);
+    const sourceRef = useRef(null);
+    const bassFilterRef = useRef(null);
+    const midFilterRef = useRef(null);
+    const trebleFilterRef = useRef(null);
+    const animationRef = useRef(null);
+    const vuContainerRef = useRef(null);
 
     // Audio visualization data for L and R channels
-    const leftPeakRef = useRef<number>(0);
-    const rightPeakRef = useRef<number>(0);
-    const leftHoldRef = useRef<number>(0);
-    const rightHoldRef = useRef<number>(0);
-    const leftHoldTimeRef = useRef<number>(0);
-    const rightHoldTimeRef = useRef<number>(0);
-    const isPlayingRef = useRef<boolean>(false);
+    const leftPeakRef = useRef(0);
+    const rightPeakRef = useRef(0);
+    const leftHoldRef = useRef(0);
+    const rightHoldRef = useRef(0);
+    const leftHoldTimeRef = useRef(0);
+    const rightHoldTimeRef = useRef(0);
+    const isPlayingRef = useRef(false);
     const isDark = mode === 'dark' || isFullscreen;
     const noControls = (typeof controls === 'object' && Object.keys(controls).length === 0);
 
@@ -2020,12 +1999,10 @@ function VideoPlayer({
 
                 // Add event listener for when video is ready to play
                 const handleCanPlay = () => {
-                    if (wasPlaying && videoRef.current) {
-                        videoRef.current.play().catch((e: any) => console.error("Play failed:", e));
+                    if (wasPlaying) {
+                        videoRef.current.play().catch(e => console.error("Play failed:", e));
                     }
-                    if (videoRef.current) {
-                        videoRef.current.removeEventListener('canplay', handleCanPlay);
-                    }
+                    videoRef.current.removeEventListener('canplay', handleCanPlay);
                 };
 
                 videoRef.current.addEventListener('canplay', handleCanPlay);
@@ -2114,49 +2091,41 @@ function VideoPlayer({
             try {
                 const AudioContextClass: any = (window as any).AudioContext || (window as any).webkitAudioContext;
                 if (AudioContextClass) {
-                    const ctx = new AudioContextClass();
-                    audioContextRef.current = ctx;
+                    audioContextRef.current = new AudioContextClass();
 
                     // Create filters
-                    const bassFilter = ctx.createBiquadFilter();
-                    bassFilter.type = 'lowshelf';
-                    bassFilter.frequency.value = 320;
-                    bassFilter.gain.value = eqBands.bass;
+                    bassFilterRef.current = audioContextRef.current.createBiquadFilter();
+                    bassFilterRef.current.type = 'lowshelf';
+                    bassFilterRef.current.frequency.value = 320;
+                    bassFilterRef.current.gain.value = eqBands.bass;
 
-                    const midFilter = ctx.createBiquadFilter();
-                    midFilter.type = 'peaking';
-                    midFilter.frequency.value = 1000;
-                    midFilter.Q.value = 0.5;
-                    midFilter.gain.value = eqBands.mid;
+                    midFilterRef.current = audioContextRef.current.createBiquadFilter();
+                    midFilterRef.current.type = 'peaking';
+                    midFilterRef.current.frequency.value = 1000;
+                    midFilterRef.current.Q.value = 0.5;
+                    midFilterRef.current.gain.value = eqBands.mid;
 
-                    const trebleFilter = ctx.createBiquadFilter();
-                    trebleFilter.type = 'highshelf';
-                    trebleFilter.frequency.value = 3200;
-                    trebleFilter.gain.value = eqBands.treble;
+                    trebleFilterRef.current = audioContextRef.current.createBiquadFilter();
+                    trebleFilterRef.current.type = 'highshelf';
+                    trebleFilterRef.current.frequency.value = 3200;
+                    trebleFilterRef.current.gain.value = eqBands.treble;
 
                     // Create analyser for visualization
-                    const analyser = ctx.createAnalyser();
-                    analyser.fftSize = 2048;
-                    analyser.smoothingTimeConstant = 0.8;
+                    analyserRef.current = audioContextRef.current.createAnalyser();
+                    analyserRef.current.fftSize = 2048;
+                    analyserRef.current.smoothingTimeConstant = 0.8;
 
                     // Create source
-                    const source = ctx.createMediaElementSource(videoRef.current);
+                    sourceRef.current = audioContextRef.current.createMediaElementSource(videoRef.current);
 
                     // Connect the filters in series and then to the destination
-                    source.connect(bassFilter);
-                    bassFilter.connect(midFilter);
-                    midFilter.connect(trebleFilter);
+                    sourceRef.current.connect(bassFilterRef.current);
+                    bassFilterRef.current.connect(midFilterRef.current);
+                    midFilterRef.current.connect(trebleFilterRef.current);
 
                     // Connect the last filter to both the analyser (for visualization) and the destination
-                    trebleFilter.connect(analyser);
-                    trebleFilter.connect(ctx.destination);
-
-                    // Assign to refs
-                    bassFilterRef.current = bassFilter;
-                    midFilterRef.current = midFilter;
-                    trebleFilterRef.current = trebleFilter;
-                    analyserRef.current = analyser;
-                    sourceRef.current = source;
+                    trebleFilterRef.current.connect(analyserRef.current);
+                    trebleFilterRef.current.connect(audioContextRef.current.destination);
                 }
             } catch (error) {
                 console.error("Failed to setup audio context:", error);
@@ -2191,9 +2160,7 @@ function VideoPlayer({
                 rightHoldRef.current = 0;
                 updateVU();
             }
-            if (animationRef.current) {
-                cancelAnimationFrame(animationRef.current);
-            }
+            cancelAnimationFrame(animationRef.current);
             animationRef.current = null;
         }
     };
@@ -2301,7 +2268,7 @@ function VideoPlayer({
             if (audioContextRef.current && audioContextRef.current.state === 'suspended') {
                 audioContextRef.current.resume();
             }
-            videoRef.current.play().catch((e: any) => console.error("Play failed:", e));
+            videoRef.current.play().catch(e => console.error("Play failed:", e));
         }
     };
 
@@ -2320,7 +2287,7 @@ function VideoPlayer({
         updateVU();
     };
 
-    const handleSeekChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleSeekChange = (e) => {
         const value = parseFloat(e.target.value);
         const seekTime = (value / 100) * duration;
         setCurrentTime(seekTime);
@@ -2338,7 +2305,7 @@ function VideoPlayer({
         setIsSeeking(false);
     };
 
-    const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleVolumeChange = (e) => {
         const newVolume = parseInt(e.target.value);
         setVolume(newVolume);
         setIsMuted(newVolume === 0);
@@ -2356,7 +2323,7 @@ function VideoPlayer({
         }
     };
 
-    const handleEqChange = (band: 'bass' | 'mid' | 'treble', value: number) => {
+    const handleEqChange = (band, value) => {
         setEqBands(prev => ({
             ...prev,
             [band]: value
@@ -2380,7 +2347,7 @@ function VideoPlayer({
         setEqBands({ bass: 0, mid: 0, treble: 0 });
     };
 
-    const formatTime = (time: number) => {
+    const formatTime = (time) => {
         if (isNaN(time)) return '0:00';
         const minutes = Math.floor(time / 60);
         const seconds = Math.floor(time % 60);
@@ -2408,9 +2375,9 @@ function VideoPlayer({
         <div
             ref={containerRef}
             className={`rounded-xl overflow-hidden transition-all duration-300 ${isFullscreen ? 'fixed inset-0 z-[9999] flex flex-col h-screen w-screen bg-black' : 'relative'}`}
-            style={{ backgroundColor: !(noControls || transparent) ? (isDark ? '#49494937' : 'white') : undefined }}
+            style={{ backgroundColor: !(noControls || transparent) && (isDark ? '#49494937' : 'white') }}
         >
-            <div style={{ background: !(noControls || transparent) ? (isDark ? '#1a1a1ab0' : '#f5f5f5') : undefined, height: isFullscreen ? '100%' : 'auto' }} className={`${!(noControls || transparent) ? 'p-4' : ''} ${isFullscreen ? 'flex flex-col flex-1' : ''}`}>
+            <div style={{ background: !(noControls || transparent) && (isDark ? '#1a1a1ab0' : '#f5f5f5'), height: isFullscreen ? '100%' : 'auto' }} className={`${!(noControls || transparent) && 'p-4'} ${isFullscreen ? 'flex flex-col flex-1' : ''}`}>
                 {/* Video Name */}
                 {controls.videoName && !isFullscreen && (
                     <div className="mb-4">
@@ -2436,7 +2403,7 @@ function VideoPlayer({
                             <video
                                 ref={videoRef}
                                 className="w-full h-full object-contain"
-                                poster={thumbnail || undefined}
+                                poster={thumbnail}
                             >
                                 {video && <source src={video} />}
                                 Your browser does not support the video tag.
@@ -2712,16 +2679,16 @@ function VideoPlayer({
 }
 
 function DemoVisualizePlayer() {
-    const [audioFile, setAudioFile] = useState<string | null>(null);
-    const [audioName, setAudioName] = useState<string>('No track loaded');
+    const [audioFile, setAudioFile] = useState(null);
+    const [audioName, setAudioName] = useState('No track loaded');
     const [selectedTheme, setSelectedTheme] = useState<ThemeKey>('purple');
     const [showThemeSelector, setShowThemeSelector] = useState(false);
     const [transparent, setTransparent] = useState(false)
     const [mode, setMode] = useState<'light' | 'dark'>('light')
-    const fileInputRef = useRef<HTMLInputElement>(null);
+    const fileInputRef = useRef(null);
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
         if (file) {
             const url = URL.createObjectURL(file);
             setAudioFile(url);
@@ -2730,7 +2697,7 @@ function DemoVisualizePlayer() {
     };
 
     const handleLoadAudio = () => {
-        fileInputRef.current?.click();
+        fileInputRef.current.click();
     }
 
     return (
@@ -2758,8 +2725,8 @@ function DemoVisualizePlayer() {
 
                     {/* Player Component */}
                     <VisualizePlayer
-                        audio={audioFile || undefined}
-                        name={audioName || undefined}
+                        audio={audioFile}
+                        name={audioName}
                         author={'K.Prabhasha'}
                         theme={selectedTheme}
                         autoPlay={false}
@@ -2777,8 +2744,8 @@ function DemoVisualizePlayer() {
                             trackName: true
                         }}
                     />
-                    <WaveAudioPlayer audio={audioFile || ''} width={400} thumbnail={'https://cdn-icons-png.flaticon.com/512/8316/8316619.png'} autoPlay={false} gradient={['#26ce3aff', '#39eed9ff']} background={'#c0ffefff'} />
-                    <NanoAudioPlayer audio={audioFile || ''} thumbnail={'https://cdn-icons-png.flaticon.com/512/17524/17524837.png'} autoPlay={false} gradient={['#26ce3aff', '#39eed9ff']} background={'#c0ffefff'} />
+                    <WaveAudioPlayer audio={audioFile} width={400} thumbnail={'https://cdn-icons-png.flaticon.com/512/8316/8316619.png'} autoPlay={false} gradient={['#26ce3aff', '#39eed9ff']} background={'#c0ffefff'} />
+                    <NanoAudioPlayer audio={audioFile} thumbnail={'https://cdn-icons-png.flaticon.com/512/17524/17524837.png'} autoPlay={false} gradient={['#26ce3aff', '#39eed9ff']} background={'#c0ffefff'} />
 
                     {/* Load Audio Button */}
                     <div className="mt-6 flex flex-wrap items-center gap-3">

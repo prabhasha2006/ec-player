@@ -1196,8 +1196,8 @@ function VisualizePlayer({
 
 function WaveAudioPlayer({
     audio: audioUrl,
-    gradient = ['#cd7eff', '#ff00f2'],
-    background = '#f4e4ffff',
+    gradient = ['#cd7eff', '#fe59f6'],
+    background = '#2f1f3aff',
     autoPlay = false,
     thumbnail = null,
     width,
@@ -1429,7 +1429,7 @@ function WaveAudioPlayer({
 
     // Determine text color based on mode
     const textColor = mode === 'dark' ? 'text-gray-300' : 'text-gray-700';
-    const secondaryTextColor = mode === 'dark' ? 'text-gray-400' : 'text-gray-500';
+    const secondaryTextColor = mode === 'dark' ? 'text-gray-500' : 'text-gray-400';
 
     return (
         <div className="w-full max-w-lg relative" style={{ width: width + 'px' }}>
@@ -1585,9 +1585,9 @@ function WaveAudioPlayer({
 
             {/* Equalizer Overlay */}
             {showEqualizer && (
-                <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center z-10 rounded-2xl p-4">
-                    <div className={`max-w-xs w-full p-4 pt-2 rounded-xl ${mode === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
-                        <h3 className={`text-lg font-medium mb-2 ${mode === 'dark' ? 'text-gray-200' : 'text-gray-700'}`}>Equalizer</h3>
+                <div className="absolute inset-0 bg-black bg-opacity-80 flex items-center justify-center z-10 rounded-2xl p-4">
+                    <div className={`max-w-xs w-full p-6 rounded-xl ${mode === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
+                        <h3 className={`text-lg font-medium mb-4 ${mode === 'dark' ? 'text-gray-200' : 'text-gray-700'}`}>Equalizer</h3>
 
                         <div className="space-y-4">
                             {/* Bass Control */}

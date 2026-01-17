@@ -765,11 +765,12 @@ function WaveAudioPlayerDocs() {
 
     // Customization states
     const [waveGradient1, setWaveGradient1] = useState('#cd7eff');
-    const [waveGradient2, setWaveGradient2] = useState('#fe59f6');
-    const [waveBackground, setWaveBackground] = useState('#2f1f3a');
+    const [waveGradient2, setWaveGradient2] = useState('#ff00f2');
+    const [waveBackground, setWaveBackground] = useState('#f4e4ff');
     const [waveWidth, setWaveWidth] = useState(400);
     const [waveThumbnail, setWaveThumbnail] = useState('https://cdn-icons-png.flaticon.com/512/8316/8316619.png');
     const [waveAutoPlay, setWaveAutoPlay] = useState(false);
+    const [waveMode, setWaveMode] = useState<'light' | 'dark'>('light');
 
     // Equalizer states
     const [waveEqBass, setWaveEqBass] = useState(0);
@@ -793,28 +794,29 @@ function WaveAudioPlayerDocs() {
     };
 
     const getExampleCode = () => {
+        const modeStr = waveMode === 'dark' ? '\n    mode="dark"' : '';
         if (activeExample === 'basic') {
             return `<WaveAudioPlayer
-    audio="${audioFile || 'path/to/audio.mp3'}"
+    audio="${audioFile || 'path/to/audio.mp3'}"${modeStr}
 />`;
         } else if (activeExample === 'custom') {
             return `<WaveAudioPlayer
     audio="${audioFile || 'path/to/audio.mp3'}"
     gradient={['${waveGradient1}', '${waveGradient2}']}
-    background="${waveBackground}"
+    background="${waveBackground}"${modeStr}
 />`;
         } else if (activeExample === 'sized') {
             return `<WaveAudioPlayer
     audio="${audioFile || 'path/to/audio.mp3'}"
     width={${waveWidth}}
-    thumbnail="${waveThumbnail}"
+    thumbnail="${waveThumbnail}"${modeStr}
 />`;
         } else if (activeExample === 'autoplay') {
             return `<WaveAudioPlayer
     audio="${audioFile || 'path/to/audio.mp3'}"
     autoPlay={${waveAutoPlay}}
     gradient={['${waveGradient1}', '${waveGradient2}']}
-    background="${waveBackground}"
+    background="${waveBackground}"${modeStr}
 />`;
         } else if (activeExample === 'equalizer') {
             return `<WaveAudioPlayer
@@ -825,7 +827,7 @@ function WaveAudioPlayerDocs() {
         treble: ${waveEqTreble}
     }}
     gradient={['${waveGradient1}', '${waveGradient2}']}
-    background="${waveBackground}"
+    background="${waveBackground}"${modeStr}
 />`;
         }
         return '';
@@ -851,12 +853,13 @@ function WaveAudioPlayerDocs() {
 
     const propDocs = [
         { prop: 'audio', type: 'string', default: 'null', required: true, description: 'URL or path to audio file' },
-        { prop: 'gradient', type: 'array', default: "['#cd7eff', '#fe59f6']", description: 'Two-color gradient array' },
-        { prop: 'background', type: 'string', default: '"#2f1f3a"', description: 'Background color' },
+        { prop: 'gradient', type: 'array', default: "['#cd7eff', '#ff00f2']", description: 'Two-color gradient array' },
+        { prop: 'background', type: 'string', default: '"#f4e4ffff"', description: 'Background color' },
         { prop: 'width', type: 'number', default: 'undefined', description: 'Player width in pixels' },
         { prop: 'thumbnail', type: 'string', default: 'null', description: 'URL to thumbnail image' },
         { prop: 'autoPlay', type: 'boolean', default: 'false', description: 'Start playing automatically' },
-        { prop: 'equalizer', type: 'object', default: '{ bass: 0, mid: 0, treble: 0 }', description: 'Initial equalizer settings for bass, mid, and treble (-20 to +20)' }
+        { prop: 'equalizer', type: 'object', default: '{ bass: 0, mid: 0, treble: 0 }', description: 'Initial equalizer settings for bass, mid, and treble (-20 to +20)' },
+        { prop: 'mode', type: '"light" | "dark"', default: '"light"', description: 'Color mode for the player UI' }
     ];
 
     const features = [
@@ -1006,6 +1009,24 @@ function WaveAudioPlayerDocs() {
                                 </div>
 
                                 <div>
+                                    <label className={`block text-sm font-medium ${theme.label} mb-2`}>Mode</label>
+                                    <div className="flex gap-2">
+                                        <button
+                                            onClick={() => setWaveMode('light')}
+                                            className={`flex-1 px-4 py-2 rounded-lg transition-all ${waveMode === 'light' ? 'bg-blue-600 text-white shadow-lg' : `${theme.btnBg} ${theme.btnText} border ${theme.btnBorder} ${theme.btnHover}`}`}
+                                        >
+                                            Light
+                                        </button>
+                                        <button
+                                            onClick={() => setWaveMode('dark')}
+                                            className={`flex-1 px-4 py-2 rounded-lg transition-all ${waveMode === 'dark' ? 'bg-blue-600 text-white shadow-lg' : `${theme.btnBg} ${theme.btnText} border ${theme.btnBorder} ${theme.btnHover}`}`}
+                                        >
+                                            Dark
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div>
                                     <label className={`block text-sm font-medium ${theme.label} mb-2`}>
                                         Width: {waveWidth}px
                                     </label>
@@ -1108,6 +1129,7 @@ function WaveAudioPlayerDocs() {
                                         width={waveWidth}
                                         thumbnail={waveThumbnail}
                                         autoPlay={waveAutoPlay}
+                                        mode={waveMode}
                                         equalizer={{
                                             bass: waveEqBass,
                                             mid: waveEqMid,
