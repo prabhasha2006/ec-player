@@ -94,6 +94,7 @@ export interface VideoPlayerProps {
         fullscreen?: boolean;
         videoName?: boolean;
         equalizer?: boolean;
+        speed?: boolean;
     };
     mode?: 'light' | 'dark';
     transparent?: boolean;
@@ -1196,8 +1197,8 @@ function VisualizePlayer({
 
 function WaveAudioPlayer({
     audio: audioUrl,
-    gradient = ['#cd7eff', '#fe59f6'],
-    background = '#2f1f3aff',
+    gradient = ['#cd7eff', '#ff00f2'],
+    background = '#f4e4ffff',
     autoPlay = false,
     thumbnail = null,
     width,
@@ -1429,7 +1430,7 @@ function WaveAudioPlayer({
 
     // Determine text color based on mode
     const textColor = mode === 'dark' ? 'text-gray-300' : 'text-gray-700';
-    const secondaryTextColor = mode === 'dark' ? 'text-gray-500' : 'text-gray-400';
+    const secondaryTextColor = mode === 'dark' ? 'text-gray-400' : 'text-gray-500';
 
     return (
         <div className="w-full max-w-lg relative" style={{ width: width + 'px' }}>
@@ -1585,9 +1586,9 @@ function WaveAudioPlayer({
 
             {/* Equalizer Overlay */}
             {showEqualizer && (
-                <div className="absolute inset-0 bg-black bg-opacity-80 flex items-center justify-center z-10 rounded-2xl p-4">
-                    <div className={`max-w-xs w-full p-6 rounded-xl ${mode === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
-                        <h3 className={`text-lg font-medium mb-4 ${mode === 'dark' ? 'text-gray-200' : 'text-gray-700'}`}>Equalizer</h3>
+                <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center z-10 rounded-2xl p-4">
+                    <div className={`max-w-xs w-full p-4 pt-2 rounded-xl ${mode === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
+                        <h3 className={`text-lg font-medium mb-2 ${mode === 'dark' ? 'text-gray-200' : 'text-gray-700'}`}>Equalizer</h3>
 
                         <div className="space-y-4">
                             {/* Bass Control */}
@@ -1860,7 +1861,8 @@ function VideoPlayer({
         volume: true,
         fullscreen: true,
         videoName: true,
-        equalizer: true
+        equalizer: true,
+        speed: true
     },
     mode = 'light' as 'light' | 'dark',
     transparent = false,
@@ -1886,6 +1888,7 @@ function VideoPlayer({
         mid: equalizer.mid || 0,
         treble: equalizer.treble || 0
     });
+    const [playbackRate, setPlaybackRate] = useState(1.0);
     const [containerWidth, setContainerWidth] = useState(0);
 
     const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -2052,6 +2055,13 @@ function VideoPlayer({
             videoRef.current.volume = isMuted ? 0 : volume / 100;
         }
     }, [volume, isMuted]);
+
+    // Update playback rate
+    useEffect(() => {
+        if (videoRef.current) {
+            videoRef.current.playbackRate = playbackRate;
+        }
+    }, [playbackRate]);
 
     // Update equalizer bands
     useEffect(() => {
@@ -2344,6 +2354,10 @@ function VideoPlayer({
         setIsMuted(newVolume === 0);
     };
 
+    const handleSpeedChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setPlaybackRate(parseFloat(e.target.value));
+    };
+
     const toggleMute = () => setIsMuted(!isMuted);
 
     const toggleFullscreen = () => {
@@ -2628,6 +2642,23 @@ function VideoPlayer({
                             <Sliders size={16} />
                             <span style={{ display: containerWidth < 700 ? 'none' : 'block' }}>EQ</span>
                         </button>
+                    )}
+
+                    {controls.speed && (
+                        <div className="flex items-center">
+                            <select
+                                value={playbackRate}
+                                onChange={handleSpeedChange}
+                                className={`${containerWidth < 600 ? 'px-2 py-1' : 'px-3 py-2'} rounded-full text-sm font-medium border-none outline-none cursor-pointer transition-all ${isDark ? 'bg-gray-100 text-black hover:bg-gray-300' : 'bg-gray-700 text-white hover:bg-gray-800'}`}
+                            >
+                                <option value="0.5" className={isDark ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800"}>0.5x</option>
+                                <option value="0.75" className={isDark ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800"}>0.75x</option>
+                                <option value="1" className={isDark ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800"}>1x</option>
+                                <option value="1.25" className={isDark ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800"}>1.25x</option>
+                                <option value="1.5" className={isDark ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800"}>1.5x</option>
+                                <option value="2" className={isDark ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800"}>2x</option>
+                            </select>
+                        </div>
                     )}
 
                     {controls.volume && (

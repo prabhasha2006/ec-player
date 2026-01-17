@@ -1,2 +1,2 @@
 import './index.css';
-export * from './Player';
+export * from './___';

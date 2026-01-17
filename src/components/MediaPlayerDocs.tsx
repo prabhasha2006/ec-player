@@ -1700,7 +1700,8 @@ function VideoPlayerDocs() {
         volume: true,
         fullscreen: true,
         videoName: true,
-        equalizer: true
+        equalizer: true,
+        speed: true
     }}
 />`;
         } else if (activeExample === 'advanced') {
@@ -1747,7 +1748,7 @@ function VideoPlayerDocs() {
         { prop: 'transparent', type: 'boolean', default: 'false', description: 'Remove background' },
         { prop: 'autoPlay', type: 'boolean', default: 'false', description: 'Start playing automatically' },
         { prop: 'color', type: 'string', default: '"#3b82f6"', description: 'Color for controls and buttons' },
-        { prop: 'controls', type: 'object', default: '{...}', description: 'Configure which controls to show' },
+        { prop: 'controls', type: 'object', default: '{...}', description: 'Configure which controls to show (play, pause, stop, seekbar, volume, fullscreen, videoName, equalizer, speed)' },
         { prop: 'audioVisual', type: 'object', default: 'null', description: 'VU meter configuration {side, color, peak}' }
     ];
 
@@ -2030,7 +2031,8 @@ function VideoPlayerDocs() {
                                             volume: true,
                                             fullscreen: true,
                                             videoName: true,
-                                            equalizer: true
+                                            equalizer: true,
+                                            speed: true
                                         } : {}}
                                         audioVisual={videoShowAudioVisual ? {
                                             side: videoVuSide as "left" | "right" | "top" | "bottom",
