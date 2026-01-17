@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { AudioLines, Upload, CassetteTape, SquareMinus, ChevronDown, ChevronUp, Copy, Check, Settings, Info, TvMinimalPlay, Code, Sun, Moon } from 'lucide-react';
+import { VisualizePlayer, ThemeSelector, themes, WaveAudioPlayer, NanoAudioPlayer, VideoPlayer } from 'ecplayer';
+//import { VisualizePlayer, ThemeSelector, themes, WaveAudioPlayer, NanoAudioPlayer, VideoPlayer } from './Player.js';
 
-import { VisualizePlayer, ThemeSelector, themes, WaveAudioPlayer, NanoAudioPlayer, VideoPlayer } from './Player.js';
-
-const importFrom = 'ecplayer/react'
+const importFrom = 'ecplayer'
+const npmVersion = '1.0.0'
 
 const themeConfig = {
     light: {
@@ -2292,8 +2293,8 @@ export default function MediaPlayerDocs() {
                             </p>
 
                             {/* ud */}
-                            <p className="text-xl md:text-2xl text-red-400 mb-6 leading-relaxed max-w-3xl mx-auto">
-                                Under Development !
+                            <p className="text-xl md:text-2xl text-gray-400 mb-6 leading-relaxed max-w-3xl mx-auto">
+                                Version: {npmVersion}
                             </p>
 
                             {/* CTA Buttons */}
