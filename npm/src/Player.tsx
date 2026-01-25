@@ -1016,11 +1016,11 @@ function VisualizePlayer({
                 {controls.trackName && (
                     <div className="mb-6 flex items-center">
                         {thumbnail && (
-                            <div className="mr-2">
+                            <div className="mr-2 w-12 flex-shrink-0">
                                 <img src={thumbnail} alt="" className={`${isPlaying ? 'animation-spin' : ''} h-12 w-12 rounded-full`} />
                             </div>
                         )}
-                        <div>
+                        <div className='w-full min-w-0'>
                             <div className={`${isDark ? 'text-gray-100' : 'text-gray-700'} font-medium truncate`}>{name}</div>
                             {author && typeof author === 'string' && (
                                 <div className={`${isDark ? 'text-gray-300' : 'text-gray-500'} text-xs`}>{author}</div>

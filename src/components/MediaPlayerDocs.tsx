@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { AudioLines, Upload, CassetteTape, SquareMinus, ChevronDown, ChevronUp, Copy, Check, Settings, Info, TvMinimalPlay, Code, Sun, Moon } from 'lucide-react';
-import { VisualizePlayer, ThemeSelector, themes, WaveAudioPlayer, NanoAudioPlayer, VideoPlayer } from 'ecplayer';
-//import { VisualizePlayer, ThemeSelector, themes, WaveAudioPlayer, NanoAudioPlayer, VideoPlayer } from './Player.js';
+//import { VisualizePlayer, ThemeSelector, themes, WaveAudioPlayer, NanoAudioPlayer, VideoPlayer } from 'ecplayer';
+import { VisualizePlayer, ThemeSelector, themes, WaveAudioPlayer, NanoAudioPlayer, VideoPlayer } from './Player.js';
 
 const importFrom = 'ecplayer'
 const npmVersion = '1.0.2'
@@ -765,7 +765,7 @@ function VisualizePlayerDocs() {
                                 <h4 className={`font-semibold ${theme.heading} mb-4`}>Live Preview</h4>
                                 <VisualizePlayer
                                     audio={audioFile}
-                                    name="Sample Track"
+                                    name="Eka-Dawasaka-Api-Sandeep-Jayalath-Ft-Kalpana-Kavindi-www.song.lk (mp3cut.net).mp3"
                                     author={vizAuthor}
                                     theme={(vizTheme === 'custom' ? customTheme : vizTheme) as any}
                                     mode={vizMode}

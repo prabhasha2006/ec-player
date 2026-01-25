@@ -8,11 +8,11 @@ import { forwardRef as Oe, createElement as Ie, useState as f, useRef as y, useE
  */
 const We = (i) => i.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase(), Qe = (i) => i.replace(
   /^([A-Z])|[\s-_]+(\w)/g,
-  (c, g, h) => h ? h.toUpperCase() : g.toLowerCase()
+  (c, g, p) => p ? p.toUpperCase() : g.toLowerCase()
 ), _e = (i) => {
   const c = Qe(i);
   return c.charAt(0).toUpperCase() + c.slice(1);
-}, Ve = (...i) => i.filter((c, g, h) => !!c && c.trim() !== "" && h.indexOf(c) === g).join(" ").trim(), Ge = (i) => {
+}, Ve = (...i) => i.filter((c, g, p) => !!c && c.trim() !== "" && p.indexOf(c) === g).join(" ").trim(), Ge = (i) => {
   for (const c in i)
     if (c.startsWith("aria-") || c === "role" || c === "title")
       return !0;
@@ -45,7 +45,7 @@ const Xe = Oe(
     color: i = "currentColor",
     size: c = 24,
     strokeWidth: g = 2,
-    absoluteStrokeWidth: h,
+    absoluteStrokeWidth: p,
     className: q = "",
     children: m,
     iconNode: x,
@@ -58,7 +58,7 @@ const Xe = Oe(
       width: c,
       height: c,
       stroke: i,
-      strokeWidth: h ? Number(g) * 24 / Number(c) : g,
+      strokeWidth: p ? Number(g) * 24 / Number(c) : g,
       className: Ve("lucide", q),
       ...!m && !Ge(v) && { "aria-hidden": "true" },
       ...v
@@ -77,13 +77,13 @@ const Xe = Oe(
  */
 const ce = (i, c) => {
   const g = Oe(
-    ({ className: h, ...q }, m) => Ie(Xe, {
+    ({ className: p, ...q }, m) => Ie(Xe, {
       ref: m,
       iconNode: c,
       className: Ve(
         `lucide-${We(_e(i))}`,
         `lucide-${i}`,
-        h
+        p
       ),
       ...q
     })
@@ -322,7 +322,7 @@ const dt = [
   }
 };
 function ut({ theme: i, setTheme: c, close: g }) {
-  const h = Object.keys(be).map((q) => ({
+  const p = Object.keys(be).map((q) => ({
     key: q,
     name: be[q].name,
     colors: be[q].bars
@@ -339,7 +339,7 @@ function ut({ theme: i, setTheme: c, close: g }) {
         }
       )
     ] }),
-    /* @__PURE__ */ e("div", { className: "theme-selector grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3", children: h.map((q) => /* @__PURE__ */ r(
+    /* @__PURE__ */ e("div", { className: "theme-selector grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3", children: p.map((q) => /* @__PURE__ */ r(
       "div",
       {
         className: `theme-card bg-white p-4 rounded-lg cursor-pointer border-2 transition-all ${i === q.key ? "border-current shadow-lg" : "border-transparent"}`,
@@ -357,7 +357,7 @@ function gt({
   audio: i,
   name: c = "No track loaded",
   author: g,
-  theme: h = "rainbow",
+  theme: p = "rainbow",
   volume: q = 100,
   thumbnail: m = null,
   controls: x = {
@@ -396,19 +396,19 @@ function gt({
     return n.observe(t), () => n.disconnect();
   }, []), C(() => {
     const t = [];
-    if (i && typeof i != "string" && t.push(["TypeError", "audio must be a string (URL or path)"]), c && typeof c != "string" && t.push(["TypeError", "name must be a string"]), h && typeof h != "string" && typeof h != "object")
+    if (i && typeof i != "string" && t.push(["TypeError", "audio must be a string (URL or path)"]), c && typeof c != "string" && t.push(["TypeError", "name must be a string"]), p && typeof p != "string" && typeof p != "object")
       t.push(["TypeError", "theme must be a string or a valid theme object"]);
-    else if (typeof h == "object") {
+    else if (typeof p == "object") {
       const n = ["name", "bg", "bars", "peak", "button", "buttonHover", "slider"];
       for (const s of n)
-        s in h || t.push(["ThemeError", `theme object missing key: ${s}`]);
+        s in p || t.push(["ThemeError", `theme object missing key: ${s}`]);
     }
     (typeof q != "number" || q < 0 || q > 100) && t.push(["TypeError", "volume must be a number between 0 and 100"]), typeof x != "object" || Array.isArray(x) ? t.push(["TypeError", "controls must be an object"]) : ["play", "pause", "stop", "seekbar", "volume", "loop", "trackName", "equalizer"].forEach((s) => {
       x && s in x && typeof x[s] != "boolean" && t.push(["TypeError", `controls.${s} must be a boolean`]);
     }), P && (Array.isArray(P) ? P.length === 0 ? t.push(["ValueError", "bands array cannot be empty"]) : P.forEach((n, s) => {
       typeof n.freq != "number" && t.push(["TypeError", `bands[${s}].freq must be a number`]);
     }) : t.push(["TypeError", "bands must be an array"])), t.length > 0 ? (de(t), console.group("%cVisualizePlayer: Prop validation failed", "color:red"), t.forEach((n) => console.error(`${n[0]}: ${n[1]}`)), console.groupEnd()) : de([]);
-  }, [i, c, h, q, x, v, P]);
+  }, [i, c, p, q, x, v, P]);
   const a = P || [
     { freq: 0 },
     { freq: 10 },
@@ -441,12 +441,12 @@ function gt({
     { freq: 8e3 },
     { freq: 1e4 },
     { freq: 12500 }
-  ], d = y(a.map(() => 0)), b = y(a.map(() => 0)), B = y(a.map(() => 0)), D = y(!1), J = y(typeof h == "string" ? h : "purple");
-  let o = typeof h == "string" ? be[h] || be.purple : typeof h == "object" ? h : be.purple;
-  const p = v === "dark", ge = typeof x == "object" && Object.keys(x).length === 0;
+  ], d = y(a.map(() => 0)), b = y(a.map(() => 0)), B = y(a.map(() => 0)), D = y(!1), J = y(typeof p == "string" ? p : "purple");
+  let o = typeof p == "string" ? be[p] || be.purple : typeof p == "object" ? p : be.purple;
+  const h = v === "dark", ge = typeof x == "object" && Object.keys(x).length === 0;
   C(() => {
-    typeof h == "string" ? J.current = h : J.current = "purple", he();
-  }, [h]), C(() => {
+    typeof p == "string" ? J.current = p : J.current = "purple", pe();
+  }, [p]), C(() => {
     u.current || (u.current = new Audio());
     const t = u.current, n = () => {
       se || z(t.currentTime);
@@ -517,7 +517,7 @@ function gt({
       }, ne = () => {
         Q || (_(!1), $.current && cancelAnimationFrame($.current));
       }, xe = () => _(!0), Ce = () => _(!1);
-      l.addEventListener("timeupdate", w), l.addEventListener("loadedmetadata", L), l.addEventListener("ended", ne), l.addEventListener("play", xe), l.addEventListener("pause", Ce), z(0), _(!1), console.debug("Audio element created", { src: u.current.src, volume: u.current.volume, loop: u.current.loop }), d.current = a.map(() => 0), b.current = a.map(() => 0), B.current = a.map(() => 0), he(), t && u.current.play().catch((W) => console.error("Play failed:", W));
+      l.addEventListener("timeupdate", w), l.addEventListener("loadedmetadata", L), l.addEventListener("ended", ne), l.addEventListener("play", xe), l.addEventListener("pause", Ce), z(0), _(!1), console.debug("Audio element created", { src: u.current.src, volume: u.current.volume, loop: u.current.loop }), d.current = a.map(() => 0), b.current = a.map(() => 0), B.current = a.map(() => 0), pe(), t && u.current.play().catch((W) => console.error("Play failed:", W));
     }
   }, [i]), C(() => {
     u.current && (u.current.volume = ae ? 0 : E / 100);
@@ -528,7 +528,7 @@ function gt({
   }, [ue]), C(() => {
     A.current && (V.current && (V.current.gain.value = j.bass), te.current && (te.current.gain.value = j.mid), Z.current && (Z.current.gain.value = j.treble));
   }, [j]), C(() => {
-    D.current = M, $.current && (cancelAnimationFrame($.current), $.current = null), M ? (A.current || qe(), ke()) : pe();
+    D.current = M, $.current && (cancelAnimationFrame($.current), $.current = null), M ? (A.current || qe(), ke()) : he();
   }, [M]);
   const qe = () => {
     if (!A.current && u.current)
@@ -556,13 +556,13 @@ function gt({
     if (!n || !s) return 0;
     const l = n.sampleRate / 2, w = Math.round(t / l * s.frequencyBinCount);
     return Math.min(w, s.frequencyBinCount - 1);
-  }, pe = () => {
+  }, he = () => {
     if (D.current) return;
     d.current = d.current.map((l) => l * 0.7);
     const t = Date.now();
-    b.current = b.current.map((l, w) => t - B.current[w] > 1500 ? l * 0.95 : l), he();
+    b.current = b.current.map((l, w) => t - B.current[w] > 1500 ? l * 0.95 : l), pe();
     const n = Math.max(...d.current), s = Math.max(...b.current);
-    n > 0.01 || s > 0.01 ? $.current = requestAnimationFrame(pe) : (D.current || (d.current = a.map(() => 0), b.current = a.map(() => 0), B.current = a.map(() => 0), he()), $.current && cancelAnimationFrame($.current), $.current = null);
+    n > 0.01 || s > 0.01 ? $.current = requestAnimationFrame(he) : (D.current || (d.current = a.map(() => 0), b.current = a.map(() => 0), B.current = a.map(() => 0), pe()), $.current && cancelAnimationFrame($.current), $.current = null);
   }, ke = () => {
     if (!X.current || !D.current) return;
     const t = X.current.frequencyBinCount, n = new Uint8Array(t);
@@ -575,8 +575,8 @@ function gt({
       Ce = Math.pow(Ce, 0.6), d.current[l] = d.current[l] * 0.8 + Ce * 0.2;
       const W = Date.now();
       d.current[l] > b.current[l] ? (b.current[l] = d.current[l], B.current[l] = W) : W - B.current[l] > 1500 && (b.current[l] *= 0.95);
-    }), he(), $.current = requestAnimationFrame(ke);
-  }, he = () => {
+    }), pe(), $.current = requestAnimationFrame(ke);
+  }, pe = () => {
     if (!re.current) return;
     const t = be[J.current] || be.rainbow;
     let n = "";
@@ -593,7 +593,7 @@ function gt({
   }, Ee = () => {
     !u.current || !i || (M ? u.current.pause() : (A.current && A.current.state === "suspended" && A.current.resume(), u.current.play().catch((t) => console.error("Play failed:", t))));
   }, Te = () => {
-    u.current && (u.current.pause(), u.current.currentTime = 0, _(!1), z(0), d.current = a.map(() => 0), b.current = a.map(() => 0), B.current = a.map(() => 0), he());
+    u.current && (u.current.pause(), u.current.currentTime = 0, _(!1), z(0), d.current = a.map(() => 0), b.current = a.map(() => 0), B.current = a.map(() => 0), pe());
   }, Le = (t) => {
     const s = parseFloat(t.target.value) / 100 * S;
     z(s), u.current && !se && (u.current.currentTime = s);
@@ -633,22 +633,22 @@ function gt({
     ] }),
     " ",
     t[1]
-  ] }, n)) : /* @__PURE__ */ e("div", { ref: Y, className: "w-full rounded-xl overflow-hidden", style: { backgroundColor: ge || T ? void 0 : p ? "#6060606a" : "#ffffffab" }, children: /* @__PURE__ */ r("div", { style: { background: ge || T ? void 0 : o.bg }, className: ge || T ? "" : "p-4", children: [
+  ] }, n)) : /* @__PURE__ */ e("div", { ref: Y, className: "w-full rounded-xl overflow-hidden", style: { backgroundColor: ge || T ? void 0 : h ? "#6060606a" : "#ffffffab" }, children: /* @__PURE__ */ r("div", { style: { background: ge || T ? void 0 : o.bg }, className: ge || T ? "" : "p-4", children: [
     /* @__PURE__ */ r("div", { className: "relative", children: [
-      /* @__PURE__ */ e("div", { className: `${T && R ? "opacity-30" : ""} ${ge || T ? "" : p ? "bg-black/40" : "bg-white/70"} rounded-lg ${ge ? "" : "mb-6"} ${ge || T ? "" : "p-4"} shadow-sm`, children: /* @__PURE__ */ e("div", { className: "flex justify-center items-end gap-1 h-64", ref: re }) }),
-      R && /* @__PURE__ */ r("div", { className: `absolute inset-0 flex flex-col w-full justify-center z-10 ${!(ge || T) && (p ? "bg-black/50" : "bg-white/80")} rounded-lg p-4 shadow-sm transition-all duration-300`, children: [
-        /* @__PURE__ */ e("h3", { className: `text-sm font-medium mb-4 ${p ? "text-gray-200" : "text-gray-700"}`, children: "Equalizer" }),
+      /* @__PURE__ */ e("div", { className: `${T && R ? "opacity-30" : ""} ${ge || T ? "" : h ? "bg-black/40" : "bg-white/70"} rounded-lg ${ge ? "" : "mb-6"} ${ge || T ? "" : "p-4"} shadow-sm`, children: /* @__PURE__ */ e("div", { className: "flex justify-center items-end gap-1 h-64", ref: re }) }),
+      R && /* @__PURE__ */ r("div", { className: `absolute inset-0 flex flex-col w-full justify-center z-10 ${!(ge || T) && (h ? "bg-black/50" : "bg-white/80")} rounded-lg p-4 shadow-sm transition-all duration-300`, children: [
+        /* @__PURE__ */ e("h3", { className: `text-sm font-medium mb-4 ${h ? "text-gray-200" : "text-gray-700"}`, children: "Equalizer" }),
         /* @__PURE__ */ r("div", { className: "space-y-4", children: [
           /* @__PURE__ */ r("div", { children: [
             /* @__PURE__ */ r("div", { className: "flex justify-between mb-1", children: [
-              /* @__PURE__ */ e("span", { className: `text-xs ${p ? "text-gray-300" : "text-gray-600"}`, children: "Bass" }),
-              /* @__PURE__ */ r("span", { className: `text-xs ${p ? "text-gray-300" : "text-gray-600"}`, children: [
+              /* @__PURE__ */ e("span", { className: `text-xs ${h ? "text-gray-300" : "text-gray-600"}`, children: "Bass" }),
+              /* @__PURE__ */ r("span", { className: `text-xs ${h ? "text-gray-300" : "text-gray-600"}`, children: [
                 j.bass,
                 " dB"
               ] })
             ] }),
             /* @__PURE__ */ r("div", { className: "flex items-center gap-3", children: [
-              /* @__PURE__ */ e("span", { className: `text-xs ${p ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
+              /* @__PURE__ */ e("span", { className: `text-xs ${h ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
               /* @__PURE__ */ e(
                 "input",
                 {
@@ -663,19 +663,19 @@ function gt({
                   }
                 }
               ),
-              /* @__PURE__ */ e("span", { className: `text-xs ${p ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
+              /* @__PURE__ */ e("span", { className: `text-xs ${h ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
             ] })
           ] }),
           /* @__PURE__ */ r("div", { children: [
             /* @__PURE__ */ r("div", { className: "flex justify-between mb-1", children: [
-              /* @__PURE__ */ e("span", { className: `text-xs ${p ? "text-gray-300" : "text-gray-600"}`, children: "Mid" }),
-              /* @__PURE__ */ r("span", { className: `text-xs ${p ? "text-gray-300" : "text-gray-600"}`, children: [
+              /* @__PURE__ */ e("span", { className: `text-xs ${h ? "text-gray-300" : "text-gray-600"}`, children: "Mid" }),
+              /* @__PURE__ */ r("span", { className: `text-xs ${h ? "text-gray-300" : "text-gray-600"}`, children: [
                 j.mid,
                 " dB"
               ] })
             ] }),
             /* @__PURE__ */ r("div", { className: "flex items-center gap-3", children: [
-              /* @__PURE__ */ e("span", { className: `text-xs ${p ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
+              /* @__PURE__ */ e("span", { className: `text-xs ${h ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
               /* @__PURE__ */ e(
                 "input",
                 {
@@ -690,19 +690,19 @@ function gt({
                   }
                 }
               ),
-              /* @__PURE__ */ e("span", { className: `text-xs ${p ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
+              /* @__PURE__ */ e("span", { className: `text-xs ${h ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
             ] })
           ] }),
           /* @__PURE__ */ r("div", { children: [
             /* @__PURE__ */ r("div", { className: "flex justify-between mb-1", children: [
-              /* @__PURE__ */ e("span", { className: `text-xs ${p ? "text-gray-300" : "text-gray-600"}`, children: "Treble" }),
-              /* @__PURE__ */ r("span", { className: `text-xs ${p ? "text-gray-300" : "text-gray-600"}`, children: [
+              /* @__PURE__ */ e("span", { className: `text-xs ${h ? "text-gray-300" : "text-gray-600"}`, children: "Treble" }),
+              /* @__PURE__ */ r("span", { className: `text-xs ${h ? "text-gray-300" : "text-gray-600"}`, children: [
                 j.treble,
                 " dB"
               ] })
             ] }),
             /* @__PURE__ */ r("div", { className: "flex items-center gap-3", children: [
-              /* @__PURE__ */ e("span", { className: `text-xs ${p ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
+              /* @__PURE__ */ e("span", { className: `text-xs ${h ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
               /* @__PURE__ */ e(
                 "input",
                 {
@@ -717,7 +717,7 @@ function gt({
                   }
                 }
               ),
-              /* @__PURE__ */ e("span", { className: `text-xs ${p ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
+              /* @__PURE__ */ e("span", { className: `text-xs ${h ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
             ] })
           ] })
         ] }),
@@ -725,21 +725,21 @@ function gt({
           "button",
           {
             onClick: ye,
-            className: `px-3 py-1 rounded text-xs ${p ? "bg-gray-700 text-gray-200 hover:bg-gray-600" : "bg-gray-200 text-gray-700 hover:bg-gray-300"} transition-all`,
+            className: `px-3 py-1 rounded text-xs ${h ? "bg-gray-700 text-gray-200 hover:bg-gray-600" : "bg-gray-200 text-gray-700 hover:bg-gray-300"} transition-all`,
             children: "Reset"
           }
         ) })
       ] })
     ] }),
     x.trackName && /* @__PURE__ */ r("div", { className: "mb-6 flex items-center", children: [
-      m && /* @__PURE__ */ e("div", { className: "mr-2", children: /* @__PURE__ */ e("img", { src: m, alt: "", className: `${M ? "animation-spin" : ""} h-12 w-12 rounded-full` }) }),
-      /* @__PURE__ */ r("div", { children: [
-        /* @__PURE__ */ e("div", { className: `${p ? "text-gray-100" : "text-gray-700"} font-medium truncate`, children: c }),
-        g && typeof g == "string" && /* @__PURE__ */ e("div", { className: `${p ? "text-gray-300" : "text-gray-500"} text-xs`, children: g })
+      m && /* @__PURE__ */ e("div", { className: "mr-2 w-12 flex-shrink-0", children: /* @__PURE__ */ e("img", { src: m, alt: "", className: `${M ? "animation-spin" : ""} h-12 w-12 rounded-full` }) }),
+      /* @__PURE__ */ r("div", { className: "w-full min-w-0", children: [
+        /* @__PURE__ */ e("div", { className: `${h ? "text-gray-100" : "text-gray-700"} font-medium truncate`, children: c }),
+        g && typeof g == "string" && /* @__PURE__ */ e("div", { className: `${h ? "text-gray-300" : "text-gray-500"} text-xs`, children: g })
       ] })
     ] }),
     x.seekbar && /* @__PURE__ */ e("div", { className: "mb-6", children: /* @__PURE__ */ r("div", { className: "flex items-center md:gap-1", children: [
-      /* @__PURE__ */ e("span", { className: `text-xs ${p ? "text-gray-100" : "text-gray-600"} font-mono w-12`, children: $e(H) }),
+      /* @__PURE__ */ e("span", { className: `text-xs ${h ? "text-gray-100" : "text-gray-600"} font-mono w-12`, children: $e(H) }),
       /* @__PURE__ */ e(
         "input",
         {
@@ -759,7 +759,7 @@ function gt({
           }
         }
       ),
-      /* @__PURE__ */ e("span", { className: `text-xs ${p ? "text-gray-100" : "text-gray-600"} font-mono w-12 text-right`, children: $e(S) })
+      /* @__PURE__ */ e("span", { className: `text-xs ${h ? "text-gray-100" : "text-gray-600"} font-mono w-12 text-right`, children: $e(S) })
     ] }) }),
     /* @__PURE__ */ r("div", { className: `flex flex-wrap items-center ${K < 330 ? "gap-2" : "gap-3"}`, children: [
       x.play && /* @__PURE__ */ r(
@@ -783,7 +783,7 @@ function gt({
         {
           onClick: Te,
           disabled: !i,
-          className: `${p ? "bg-gray-100 text-black" : "bg-gray-700 text-white"} ${K < 600 ? "px-3 py-3" : "px-4 py-2"} rounded-full text-sm font-medium ${p ? "hover:bg-gray-300" : "hover:bg-gray-800"} disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all`,
+          className: `${h ? "bg-gray-100 text-black" : "bg-gray-700 text-white"} ${K < 600 ? "px-3 py-3" : "px-4 py-2"} rounded-full text-sm font-medium ${h ? "hover:bg-gray-300" : "hover:bg-gray-800"} disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all`,
           children: [
             /* @__PURE__ */ e(Ue, { size: 16 }),
             /* @__PURE__ */ e("span", { style: { display: K < 600 ? "none" : "block" }, children: "Stop" })
@@ -821,14 +821,14 @@ function gt({
         {
           value: ue,
           onChange: Ne,
-          className: `rounded-full text-sm font-medium border-none outline-none cursor-pointer transition-all bg-transparent ${p ? "text-gray-200" : "text-gray-800"}`,
+          className: `rounded-full text-sm font-medium border-none outline-none cursor-pointer transition-all bg-transparent ${h ? "text-gray-200" : "text-gray-800"}`,
           children: [
-            /* @__PURE__ */ e("option", { value: "0.5", className: p ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800", children: "0.5x" }),
-            /* @__PURE__ */ e("option", { value: "0.75", className: p ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800", children: "0.75x" }),
-            /* @__PURE__ */ e("option", { value: "1", className: p ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800", children: "1x" }),
-            /* @__PURE__ */ e("option", { value: "1.25", className: p ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800", children: "1.25x" }),
-            /* @__PURE__ */ e("option", { value: "1.5", className: p ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800", children: "1.5x" }),
-            /* @__PURE__ */ e("option", { value: "2", className: p ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800", children: "2x" })
+            /* @__PURE__ */ e("option", { value: "0.5", className: h ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800", children: "0.5x" }),
+            /* @__PURE__ */ e("option", { value: "0.75", className: h ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800", children: "0.75x" }),
+            /* @__PURE__ */ e("option", { value: "1", className: h ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800", children: "1x" }),
+            /* @__PURE__ */ e("option", { value: "1.25", className: h ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800", children: "1.25x" }),
+            /* @__PURE__ */ e("option", { value: "1.5", className: h ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800", children: "1.5x" }),
+            /* @__PURE__ */ e("option", { value: "2", className: h ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800", children: "2x" })
           ]
         }
       ) }),
@@ -838,7 +838,7 @@ function gt({
           {
             onClick: ze,
             className: "p-2 rounded-full hover:bg-gray-100/50 transition-all",
-            children: ae || E === 0 ? /* @__PURE__ */ e(De, { size: 20, className: p ? "text-gray-100" : "text-gray-600" }) : /* @__PURE__ */ e(He, { size: 20, className: p ? "text-gray-100" : "text-gray-600" })
+            children: ae || E === 0 ? /* @__PURE__ */ e(De, { size: 20, className: h ? "text-gray-100" : "text-gray-600" }) : /* @__PURE__ */ e(He, { size: 20, className: h ? "text-gray-100" : "text-gray-600" })
           }
         ),
         /* @__PURE__ */ e(
@@ -856,7 +856,7 @@ function gt({
             }
           }
         ),
-        /* @__PURE__ */ r("span", { style: { display: K < 800 ? "none" : "block" }, className: `hidden sm:block text-xs ${p ? "text-gray-100" : "text-gray-700"} font-mono w-10 text-right`, children: [
+        /* @__PURE__ */ r("span", { style: { display: K < 800 ? "none" : "block" }, className: `hidden sm:block text-xs ${h ? "text-gray-100" : "text-gray-700"} font-mono w-10 text-right`, children: [
           E,
           "%"
         ] })
@@ -927,7 +927,7 @@ function ft({
   audio: i,
   gradient: c = ["#cd7eff", "#ff00f2"],
   background: g = "#f4e4ffff",
-  autoPlay: h = !1,
+  autoPlay: p = !1,
   thumbnail: q = null,
   width: m,
   equalizer: x = {
@@ -961,14 +961,14 @@ function ft({
     const d = () => I(a.currentTime), b = () => {
       _(a.duration), fe(K());
     }, B = () => T(!1), D = (J) => {
-      var o, p;
-      G(`Audio error: ${((p = (o = J.target) == null ? void 0 : o.error) == null ? void 0 : p.message) || "Failed to load audio"}`);
+      var o, h;
+      G(`Audio error: ${((h = (o = J.target) == null ? void 0 : o.error) == null ? void 0 : h.message) || "Failed to load audio"}`);
     };
     return a.addEventListener("timeupdate", d), a.addEventListener("loadedmetadata", b), a.addEventListener("ended", B), a.addEventListener("error", D), () => {
       a.removeEventListener("timeupdate", d), a.removeEventListener("loadedmetadata", b), a.removeEventListener("ended", B), a.removeEventListener("error", D);
     };
   }, [i, c, v]), C(() => {
-    i && R.current && h && (R.current.play().catch((a) => {
+    i && R.current && p && (R.current.play().catch((a) => {
       console.error("Play failed:", a), T(!1);
     }), T(!0));
   }, [i]), C(() => {
@@ -1267,7 +1267,7 @@ function ft({
             ` })
   ] });
 }
-function mt({ audio: i, thumbnail: c, gradient: g = ["#cd7eff", "#fe59f6"], background: h = "#1f273a", autoPlay: q = !1 }) {
+function mt({ audio: i, thumbnail: c, gradient: g = ["#cd7eff", "#fe59f6"], background: p = "#1f273a", autoPlay: q = !1 }) {
   const [m, x] = f(!1), [, v] = f(0), P = y(null), [T, U] = f(0), [I, M] = f(0), [_, H] = f(0);
   C(() => {
     const N = P.current;
@@ -1306,7 +1306,7 @@ function mt({ audio: i, thumbnail: c, gradient: g = ["#cd7eff", "#fe59f6"], back
   return /* @__PURE__ */ r(
     "div",
     {
-      style: { backgroundColor: h },
+      style: { backgroundColor: p },
       className: `
                 relative overflow-hidden inline-flex flex-col 
                 ${c ? "rounded-2xl" : "rounded-full"} 
@@ -1343,7 +1343,7 @@ function mt({ audio: i, thumbnail: c, gradient: g = ["#cd7eff", "#fe59f6"], back
                 onClick: z,
                 style: S,
                 className: "p-1.5 rounded-full hover:scale-110 transition-transform flex-shrink-0",
-                children: m ? /* @__PURE__ */ e(Re, { fill: h, className: "w-3 h-3 text-transparent" }) : /* @__PURE__ */ e(Fe, { fill: h, className: "w-3 h-3 text-transparent" })
+                children: m ? /* @__PURE__ */ e(Re, { fill: p, className: "w-3 h-3 text-transparent" }) : /* @__PURE__ */ e(Fe, { fill: p, className: "w-3 h-3 text-transparent" })
               }
             ),
             /* @__PURE__ */ e("div", { className: "flex w-full min-w-12 items-center gap-0.5 h-6", children: [...Array(12)].map((N, E) => /* @__PURE__ */ e(
@@ -1369,7 +1369,7 @@ function yt({
   video: i,
   name: c = "No video loaded",
   audioVisual: g = null,
-  volume: h = 100,
+  volume: p = 100,
   thumbnail: q = null,
   controls: m = {
     play: !0,
@@ -1392,11 +1392,11 @@ function yt({
     treble: 0
   }
 }) {
-  const [I, M] = f(!1), [_, H] = f(0), [z, S] = f(0), [N, E] = f(h || 100), [oe, ae] = f(!1), [fe, Q] = f(!1), [G, se] = f(!1), [le, O] = f([]), [de, R] = f(!1), [F, j] = f({
+  const [I, M] = f(!1), [_, H] = f(0), [z, S] = f(0), [N, E] = f(p || 100), [oe, ae] = f(!1), [fe, Q] = f(!1), [G, se] = f(!1), [le, O] = f([]), [de, R] = f(!1), [F, j] = f({
     bass: U.bass || 0,
     mid: U.mid || 0,
     treble: U.treble || 0
-  }), [ie, ue] = f(1), [ee, K] = f(0), k = y(null), u = y(null), A = y(null), X = y(null), me = y(null), V = y(null), te = y(null), Z = y(null), $ = y(null), re = y(null), Y = y(0), a = y(0), d = y(0), b = y(0), B = y(0), D = y(0), J = y(!1), o = x === "dark" || G, p = typeof m == "object" && Object.keys(m).length === 0;
+  }), [ie, ue] = f(1), [ee, K] = f(0), k = y(null), u = y(null), A = y(null), X = y(null), me = y(null), V = y(null), te = y(null), Z = y(null), $ = y(null), re = y(null), Y = y(0), a = y(0), d = y(0), b = y(0), B = y(0), D = y(0), J = y(!1), o = x === "dark" || G, h = typeof m == "object" && Object.keys(m).length === 0;
   C(() => {
     const t = u.current;
     if (!t) return;
@@ -1407,8 +1407,8 @@ function yt({
     return n.observe(t), () => n.disconnect();
   }, []), C(() => {
     const t = [];
-    i && typeof i != "string" && t.push(["TypeError", "video must be a string (URL or path)"]), c && typeof c != "string" && t.push(["TypeError", "name must be a string"]), (typeof h != "number" || h < 0 || h > 100) && t.push(["TypeError", "volume must be a number between 0 and 100"]), g && typeof g != "object" ? t.push(["TypeError", "audioVisual must be an object"]) : g && (["left", "right", "top", "bottom"].includes(g.side) || t.push(["ValueError", "audioVisual.side must be 'left', 'right', 'top', or 'bottom'"])), t.length > 0 ? (O(t), console.group("%cVideoPlayer: Prop validation failed", "color:red"), t.forEach((n) => console.error(`${n[0]}: ${n[1]}`)), console.groupEnd()) : O([]);
-  }, [i, c, h, g, m, x]), C(() => {
+    i && typeof i != "string" && t.push(["TypeError", "video must be a string (URL or path)"]), c && typeof c != "string" && t.push(["TypeError", "name must be a string"]), (typeof p != "number" || p < 0 || p > 100) && t.push(["TypeError", "volume must be a number between 0 and 100"]), g && typeof g != "object" ? t.push(["TypeError", "audioVisual must be an object"]) : g && (["left", "right", "top", "bottom"].includes(g.side) || t.push(["ValueError", "audioVisual.side must be 'left', 'right', 'top', or 'bottom'"])), t.length > 0 ? (O(t), console.group("%cVideoPlayer: Prop validation failed", "color:red"), t.forEach((n) => console.error(`${n[0]}: ${n[1]}`)), console.groupEnd()) : O([]);
+  }, [i, c, p, g, m, x]), C(() => {
     if (!k.current) return;
     const t = k.current, n = () => {
       fe || H(t.currentTime);
@@ -1430,7 +1430,7 @@ function yt({
         };
         k.current.addEventListener("canplay", s), k.current.load();
       }
-      H(0), M(!1), Y.current = 0, a.current = 0, d.current = 0, b.current = 0, B.current = 0, D.current = 0, pe();
+      H(0), M(!1), Y.current = 0, a.current = 0, d.current = 0, b.current = 0, B.current = 0, D.current = 0, he();
     }
   }, [i]), C(() => {
     k.current && (k.current.volume = oe ? 0 : N / 100);
@@ -1473,9 +1473,9 @@ function yt({
     if (J.current) return;
     Y.current *= 0.7, a.current *= 0.7;
     const t = Date.now();
-    t - B.current > 1500 && (d.current *= 0.95), t - D.current > 1500 && (b.current *= 0.95), pe();
+    t - B.current > 1500 && (d.current *= 0.95), t - D.current > 1500 && (b.current *= 0.95), he();
     const n = Math.max(Y.current, a.current), s = Math.max(d.current, b.current);
-    n > 0.01 || s > 0.01 ? $.current = requestAnimationFrame(qe) : (J.current || (Y.current = 0, a.current = 0, d.current = 0, b.current = 0, pe()), $.current && cancelAnimationFrame($.current), $.current = null);
+    n > 0.01 || s > 0.01 ? $.current = requestAnimationFrame(qe) : (J.current || (Y.current = 0, a.current = 0, d.current = 0, b.current = 0, he()), $.current && cancelAnimationFrame($.current), $.current = null);
   }, we = () => {
     if (!X.current || !J.current) return;
     const t = X.current.frequencyBinCount, n = new Uint8Array(t);
@@ -1486,8 +1486,8 @@ function yt({
     let l = s / t / 255;
     l = Math.pow(l, 0.5), Y.current = Y.current * 0.7 + l * 0.3, a.current = a.current * 0.7 + l * 0.3;
     const w = Date.now();
-    Y.current > d.current ? (d.current = Y.current, B.current = w) : w - B.current > 1500 && (d.current *= 0.95), a.current > b.current ? (b.current = a.current, D.current = w) : w - D.current > 1500 && (b.current *= 0.95), pe(), $.current = requestAnimationFrame(we);
-  }, pe = () => {
+    Y.current > d.current ? (d.current = Y.current, B.current = w) : w - B.current > 1500 && (d.current *= 0.95), a.current > b.current ? (b.current = a.current, D.current = w) : w - D.current > 1500 && (b.current *= 0.95), he(), $.current = requestAnimationFrame(we);
+  }, he = () => {
     if (!re.current || !g) return;
     const t = g.color || "#00ff00", n = g.peak || "#ff0000", s = Y.current * 100, l = a.current * 100, w = 100 - d.current * 100, L = 100 - b.current * 100;
     g.side === "top" || g.side === "bottom" ? re.current.innerHTML = `
@@ -1527,8 +1527,8 @@ function yt({
             `;
   }, ke = () => {
     !k.current || !i || (I ? k.current.pause() : (A.current && A.current.state === "suspended" && A.current.resume(), k.current.play().catch((t) => console.error("Play failed:", t))));
-  }, he = () => {
-    k.current && (k.current.pause(), k.current.currentTime = 0, M(!1), H(0), Y.current = 0, a.current = 0, d.current = 0, b.current = 0, pe());
+  }, pe = () => {
+    k.current && (k.current.pause(), k.current.currentTime = 0, M(!1), H(0), Y.current = 0, a.current = 0, d.current = 0, b.current = 0, he());
   }, Ee = (t) => {
     const s = parseFloat(t.target.value) / 100 * z;
     H(s), k.current && !fe && (k.current.currentTime = s);
@@ -1554,7 +1554,7 @@ function yt({
     return `${n}:${s.toString().padStart(2, "0")}`;
   };
   if (C(() => {
-    (p && !I || P) && ke();
+    (h && !I || P) && ke();
   }, [m]), le && le.length > 0)
     return le.map((t, n) => /* @__PURE__ */ r("div", { className: "text-red-500 text-sm bg-red-50 p-3 rounded mb-4 border border-red-300", children: [
       /* @__PURE__ */ r("strong", { children: [
@@ -1570,8 +1570,8 @@ function yt({
     {
       ref: u,
       className: `rounded-xl overflow-hidden transition-all duration-300 ${G ? "fixed inset-0 z-[9999] flex flex-col h-screen w-screen bg-black" : "relative"}`,
-      style: { backgroundColor: p || v ? void 0 : o ? "#49494937" : "white" },
-      children: /* @__PURE__ */ r("div", { style: { background: p || v ? void 0 : o ? "#1a1a1ab0" : "#f5f5f5", height: G ? "100%" : "auto" }, className: `${p || v ? "" : "p-4"} ${G ? "flex flex-col flex-1" : ""}`, children: [
+      style: { backgroundColor: h || v ? void 0 : o ? "#49494937" : "white" },
+      children: /* @__PURE__ */ r("div", { style: { background: h || v ? void 0 : o ? "#1a1a1ab0" : "#f5f5f5", height: G ? "100%" : "auto" }, className: `${h || v ? "" : "p-4"} ${G ? "flex flex-col flex-1" : ""}`, children: [
         m.videoName && !G && /* @__PURE__ */ e("div", { className: "mb-4", children: /* @__PURE__ */ e("div", { className: `${o ? "text-gray-100" : "text-gray-700"} font-medium`, children: c }) }),
         /* @__PURE__ */ r("div", { className: `relative ${$e ? "flex flex-col gap-3" : "flex gap-3"} ${G ? "flex-1 min-h-0" : "mb-4"}`, children: [
           g && ye === "top" && /* @__PURE__ */ e("div", { className: "w-full h-12", ref: re }),
@@ -1742,7 +1742,7 @@ function yt({
           m.stop && /* @__PURE__ */ e(
             "button",
             {
-              onClick: he,
+              onClick: pe,
               disabled: !i,
               className: `${o ? "bg-gray-100 text-black hover:bg-gray-300" : "bg-gray-700 text-white hover:bg-gray-800"} px-3 py-3 rounded-full text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all`,
               children: /* @__PURE__ */ e(Ue, { size: 16 })
@@ -1870,7 +1870,7 @@ function yt({
   );
 }
 function bt() {
-  const [i, c] = f(null), [g, h] = f("No track loaded"), [q, m] = f("purple"), [x, v] = f(!1), [P, T] = f(!1), [U, I] = f("light"), M = y(null);
+  const [i, c] = f(null), [g, p] = f("No track loaded"), [q, m] = f("purple"), [x, v] = f(!1), [P, T] = f(!1), [U, I] = f("light"), M = y(null);
   return /* @__PURE__ */ e("div", { className: "min-h-screen flex items-center justify-center p-4 md:p-8", style: { backgroundColor: U === "dark" ? "#222" : "white" }, children: /* @__PURE__ */ r("div", { className: "w-full h-full md:h-auto md:max-w-4xl", children: [
     x && /* @__PURE__ */ e(ut, { theme: q, setTheme: m, close: () => v(!1) }),
     /* @__PURE__ */ r("div", { className: "container-glass rounded-xl p-8", children: [
@@ -1927,7 +1927,7 @@ function bt() {
               const S = (N = z.target.files) == null ? void 0 : N[0];
               if (S) {
                 const E = URL.createObjectURL(S);
-                c(E), h(S.name);
+                c(E), p(S.name);
               }
             },
             accept: "audio/*",
