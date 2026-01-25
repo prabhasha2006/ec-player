@@ -765,7 +765,7 @@ function VisualizePlayerDocs() {
                                 <h4 className={`font-semibold ${theme.heading} mb-4`}>Live Preview</h4>
                                 <VisualizePlayer
                                     audio={audioFile}
-                                    name="Eka-Dawasaka-Api-Sandeep-Jayalath-Ft-Kalpana-Kavindi-www.song.lk (mp3cut.net).mp3"
+                                    name="Sample Music"
                                     author={vizAuthor}
                                     theme={(vizTheme === 'custom' ? customTheme : vizTheme) as any}
                                     mode={vizMode}
