@@ -1,6 +1,6 @@
 {
   "name": "ecplayer",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Professional audio and video players with advanced visualization, customizable themes, and seamless responsive design",
   "license": "MIT",
   "author": "K.Prabhasha",
@@ -42,6 +42,7 @@
     "tailwindcss": "^3.4.3",
     "typescript": "^5.5.3",
     "vite": "^5.4.1",
+    "vite-plugin-css-injected-by-js": "^4.0.1",
     "vite-plugin-dts": "^4.0.3"
   }
 }

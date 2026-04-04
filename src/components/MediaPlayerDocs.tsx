@@ -4,7 +4,7 @@ import { VisualizePlayer, ThemeSelector, themes, WaveAudioPlayer, NanoAudioPlaye
 //import { VisualizePlayer, ThemeSelector, themes, WaveAudioPlayer, NanoAudioPlayer, VideoPlayer } from './Player.js';
 
 const importFrom = 'ecplayer'
-const npmVersion = '1.0.3'
+const npmVersion = '1.0.4'
 
 const themeConfig = {
     light: {
@@ -184,7 +184,7 @@ function InstallationDocs() {
                 </div>
 
                 <div className="space-y-6">
-                    <div>
+                    {/* <div>
                         <h4 className={`text-lg font-medium ${theme.label} mb-3`}>1. Import CSS</h4>
                         <p className={`${theme.subtext} mb-3 text-sm`}>Add the styles to your main entry file (index.js, main.tsx, etc.)</p>
                         <div className="relative group">
@@ -198,10 +198,10 @@ function InstallationDocs() {
                                 {copiedCode === 'css' ? <Check size={18} className="text-green-500" /> : <Copy size={18} className="text-gray-400" />}
                             </button>
                         </div>
-                    </div>
+                    </div> */}
 
                     <div>
-                        <h4 className={`text-lg font-medium ${theme.label} mb-3`}>2. Usage Example</h4>
+                        <h4 className={`text-lg font-medium ${theme.label} mb-3`}>Usage Example</h4>
                         <div className="relative group">
                             <pre className={`${theme.codeBg} ${theme.codeText} p-5 rounded-xl overflow-x-auto text-sm border`}>
                                 <code>{`import { VisualizePlayer } from 'ecplayer';

@@ -37,7 +37,7 @@ export declare interface ThemeSelectorProps {
     close: () => void;
 }
 
-export declare function VideoPlayer({ video, name, audioVisual, volume: vol, thumbnail, controls, mode, transparent, autoPlay, color, equalizer }: VideoPlayerProps): JSX_2.Element | JSX_2.Element[];
+export declare function VideoPlayer({ video, name, audioVisual, volume: vol, thumbnail, controls, mode, transparent, autoPlay, color, equalizer }: VideoPlayerProps): JSX_2.Element;
 
 export declare interface VideoPlayerProps {
     video: string;
@@ -71,7 +71,7 @@ export declare interface VideoPlayerProps {
     };
 }
 
-export declare function VisualizePlayer({ audio, name, author, theme, volume: vol, thumbnail, controls, mode, bands: _bands, transparent, autoPlay, equalizer }: VisualizePlayerProps): JSX_2.Element | JSX_2.Element[];
+export declare function VisualizePlayer({ audio, name, author, theme, volume: vol, thumbnail, controls, mode, bands: _bands, transparent, autoPlay, equalizer }: VisualizePlayerProps): JSX_2.Element;
 
 export declare interface VisualizePlayerProps {
     audio?: string;

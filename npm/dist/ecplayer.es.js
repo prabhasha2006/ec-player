@@ -1,20 +1,21 @@
-import { jsxs as r, jsx as e } from "react/jsx-runtime";
-import { forwardRef as Oe, createElement as Ie, useState as f, useRef as y, useEffect as C } from "react";
+(function(){"use strict";try{if(typeof document<"u"){var e=document.createElement("style");e.appendChild(document.createTextNode(".ecp-full-width{width:100%}.ecp-h-full{height:100%}.ecp-relative{position:relative}.ecp-absolute{position:absolute}.ecp-inset-0{top:0;right:0;bottom:0;left:0}.ecp-z-10{z-index:10}.ecp-flex{display:flex}.ecp-inline-flex{display:inline-flex}.ecp-flex-col{flex-direction:column}.ecp-flex-wrap{flex-wrap:wrap}.ecp-flex-1{flex:1 1 0%}.ecp-flex-shrink-0{flex-shrink:0}.ecp-grid{display:grid}.ecp-grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.ecp-hidden{display:none}.ecp-items-center{align-items:center}.ecp-items-end{align-items:flex-end}.ecp-items-start{align-items:flex-start}.ecp-justify-center{justify-content:center}.ecp-justify-between{justify-content:space-between}.ecp-justify-end{justify-content:flex-end}.ecp-justify-start{justify-content:flex-start}.ecp-text-center{text-align:center}.ecp-text-right{text-align:right}.ecp-self-center{align-self:center}.ecp-gap-1{gap:.25rem}.ecp-gap-2{gap:.5rem}.ecp-gap-3{gap:.75rem}.ecp-gap-px{gap:1px}.ecp-gap-05{gap:2px}.ecp-mb-1{margin-bottom:.25rem}.ecp-mb-2{margin-bottom:.5rem}.ecp-mb-4{margin-bottom:1rem}.ecp-mb-6{margin-bottom:1.5rem}.ecp-mr-2{margin-right:.5rem}.ecp-mt-4{margin-top:1rem}.ecp-mt-6{margin-top:1.5rem}.ecp-ml-auto{margin-left:auto}.ecp-p-1{padding:.25rem}.ecp-p-1-5{padding:.375rem}.ecp-p-2{padding:.5rem}.ecp-p-3{padding:.75rem}.ecp-p-4{padding:1rem}.ecp-p-6{padding:1.5rem}.ecp-p-8{padding:2rem}.ecp-px-2{padding-left:.5rem;padding-right:.5rem}.ecp-px-3{padding-left:.75rem;padding-right:.75rem}.ecp-px-4{padding-left:1rem;padding-right:1rem}.ecp-px-6{padding-left:1.5rem;padding-right:1.5rem}.ecp-py-1{padding-top:.25rem;padding-bottom:.25rem}.ecp-py-2{padding-top:.5rem;padding-bottom:.5rem}.ecp-py-3{padding-top:.75rem;padding-bottom:.75rem}.ecp-py-5{padding-top:1.25rem;padding-bottom:1.25rem}.ecp-pb-2{padding-bottom:.5rem}.ecp-pt-2{padding-top:.5rem}.ecp-w-1{width:.25rem}.ecp-w-3{width:.75rem}.ecp-w-4{width:1rem}.ecp-w-10{width:2.5rem}.ecp-w-12{width:3rem}.ecp-w-20{width:5rem}.ecp-w-24{width:6rem}.ecp-w-px{width:1px}.ecp-w-full{width:100%}.ecp-max-w-xs{max-width:20rem}.ecp-max-w-lg{max-width:32rem}.ecp-max-w-4xl{max-width:56rem}.ecp-h-0-5{height:.125rem}.ecp-h-1{height:.25rem}.ecp-h-1-5{height:.375rem}.ecp-h-2{height:.5rem}.ecp-h-3{height:.75rem}.ecp-h-4{height:1rem}.ecp-h-6{height:1.5rem}.ecp-h-8{height:2rem}.ecp-h-10{height:2.5rem}.ecp-h-12{height:3rem}.ecp-h-20{height:5rem}.ecp-h-40{width:10rem;height:40px}.ecp-h-64{height:16rem}.ecp-h-screen{height:100vh}.ecp-min-h-screen{min-height:100vh}.ecp-min-h-0{min-height:0}.ecp-min-w-12{min-width:3rem}.ecp-min-w-0{min-width:0}.ecp-aspect-square{aspect-ratio:1 / 1}.ecp-text-xs{font-size:.75rem;line-height:1rem}.ecp-text-sm{font-size:.875rem;line-height:1.25rem}.ecp-text-lg{font-size:1.125rem;line-height:1.75rem}.ecp-text-2xl{font-size:1.5rem;line-height:2rem}.ecp-font-medium{font-weight:500}.ecp-font-semibold{font-weight:600}.ecp-font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}.ecp-truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ecp-text-white{color:#fff}.ecp-text-transparent{color:transparent}.ecp-text-gray-400{color:#9ca3af}.ecp-text-gray-500{color:#6b7280}.ecp-text-gray-600{color:#4b5563}.ecp-text-gray-700{color:#374151}.ecp-text-gray-800{color:#1f2937}.ecp-text-gray-100{color:#f3f4f6}.ecp-text-gray-200{color:#e5e7eb}.ecp-text-gray-300{color:#d1d5db}.ecp-text-red-500{color:#ef4444}.ecp-dark .ecp-text-dark-100{color:#f3f4f6}.ecp-dark .ecp-text-dark-200{color:#e5e7eb}.ecp-dark .ecp-text-dark-300{color:#d1d5db}.ecp-bg-white{background-color:#fff}.ecp-bg-black-20{background-color:#0003}.ecp-bg-black-30{background-color:#0000004d}.ecp-bg-black-40{background-color:#0006}.ecp-bg-black-50{background-color:#00000080}.ecp-bg-gray-100{background-color:#f3f4f6}.ecp-bg-gray-200{background-color:#e5e7eb}.ecp-bg-gray-300{background-color:#d1d5db}.ecp-bg-gray-700{background-color:#374151}.ecp-bg-gray-800{background-color:#1f2937}.ecp-bg-red-50{background-color:#fef2f2}.ecp-bg-transparent{background-color:transparent}.ecp-border{border-width:1px}.ecp-border-2{border-width:2px}.ecp-border-r{border-right-width:1px}.ecp-border-transparent{border-color:transparent}.ecp-border-gray-300{border-color:#d1d5db}.ecp-border-red-300{border-color:#fca5a5}.ecp-border-current{border-color:currentColor}.ecp-border-none{border:none}.ecp-outline-none{outline:none}.ecp-rounded{border-radius:.25rem}.ecp-rounded-lg{border-radius:.5rem}.ecp-rounded-xl{border-radius:.75rem}.ecp-rounded-2xl{border-radius:1rem}.ecp-rounded-full{border-radius:9999px}.ecp-rounded-t{border-top-left-radius:.25rem;border-top-right-radius:.25rem}.ecp-shadow-sm{box-shadow:0 1px 2px #0000000d}.ecp-shadow-lg{box-shadow:0 10px 15px -3px #0000001a,0 4px 6px -4px #0000001a}.ecp-shadow-2xl{box-shadow:0 25px 50px -12px #00000040}.ecp-opacity-20{opacity:.2}.ecp-opacity-40{opacity:.4}.ecp-opacity-70{opacity:.7}.ecp-opacity-80{opacity:.8}.ecp-cursor-pointer{cursor:pointer}.ecp-cursor-not-allowed{cursor:not-allowed}.ecp-pointer-events-none{pointer-events:none}.ecp-transition{transition-property:color,background-color,border-color,opacity,box-shadow,transform;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.ecp-transition-all{transition:all .15s cubic-bezier(.4,0,.2,1)}.ecp-duration-75{transition-duration:75ms}.ecp-duration-100{transition-duration:.1s}.ecp-duration-150{transition-duration:.15s}.ecp-duration-300{transition-duration:.3s}.ecp-scale-0{transform:scale(0)}.ecp-translate-y-10{transform:translateY(2.5rem)}.ecp--translate-y-10{transform:translateY(-2.5rem)}.ecp-rotate-180{transform:rotate(180deg)}.ecp-hover-scale-105:hover{transform:scale(1.05)}.ecp-hover-scale-110:hover{transform:scale(1.1)}@keyframes ecp-spin{0%{transform:rotate(0)}to{transform:rotate(360deg)}}.ecp-animation-spin{animation:ecp-spin 15s infinite linear}.ecp-object-contain{-o-object-fit:contain;object-fit:contain}.ecp-backdrop-blur-xl{-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px)}.ecp-overflow-hidden{overflow:hidden}.ecp-top-0{top:0}.ecp-left-0{left:0}.ecp-fixed{position:fixed}.ecp-z-9999{z-index:9999}.ecp-appearance-none{-webkit-appearance:none;-moz-appearance:none;appearance:none}.ecp-page-wrapper{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem}@media (min-width: 768px){.ecp-page-wrapper{padding:2rem}}.ecp-demo-container{width:100%;height:100%}@media (min-width: 768px){.ecp-demo-container{height:auto;max-width:56rem}}.ecp-container-glass{border-radius:.75rem;padding:2rem}.ecp-demo-header{margin-bottom:1.5rem;display:flex;justify-content:space-between;align-items:flex-start}.ecp-demo-title{font-size:1.5rem;font-weight:600;color:#1f2937;margin-bottom:.25rem}.ecp-demo-title--dark{color:#e5e7eb}.ecp-demo-subtitle{font-size:.875rem;color:#6b7280}.ecp-theme-btn{background:#fff;border:1px solid #d1d5db;color:#374151;padding:.5rem 1rem;border-radius:.5rem;font-size:.875rem;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:.5rem}.ecp-theme-btn:hover{background:#f9fafb}.ecp-demo-actions{margin-top:1.5rem;display:flex;flex-wrap:wrap;align-items:center;gap:.75rem}.ecp-action-btn{background:#fff;border:1px solid #d1d5db;color:#374151;padding:.5rem 1.5rem;border-radius:.5rem;font-size:.875rem;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:.5rem}.ecp-action-btn:hover{background:#f9fafb}.ecp-file-input-hidden{display:none}.ecp-theme-selector-panel{border-radius:.75rem;padding:1.5rem;margin-bottom:1.5rem}.ecp-theme-selector-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}.ecp-theme-selector-title{font-size:1.125rem;font-weight:600;color:#1f2937}.ecp-theme-selector-close{color:#6b7280;font-size:.875rem;font-weight:500;background:none;border:none;cursor:pointer}.ecp-theme-selector-close:hover{color:#374151}.ecp-theme-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem}@media (min-width: 640px){.ecp-theme-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media (min-width: 768px){.ecp-theme-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}.ecp-theme-card{background:#fff;padding:1rem;border-radius:.5rem;cursor:pointer;border:2px solid transparent;transition:all .15s cubic-bezier(.4,0,.2,1)}.ecp-theme-card--active{border-color:currentColor;box-shadow:0 10px 15px -3px #0000001a}.ecp-theme-color-preview{height:2.5rem;border-radius:.25rem;margin-bottom:.5rem}.ecp-theme-name{font-size:.875rem;font-weight:500;color:#374151}.ecp-vp-wrapper{width:100%;border-radius:.75rem;overflow:hidden}.ecp-vp-bg{padding:1rem}.ecp-vp-vu-outer{position:relative}.ecp-vp-vu-bg{border-radius:.5rem;margin-bottom:1.5rem;padding:1rem;box-shadow:0 1px 2px #0000000d}.ecp-vp-vu-bg--light{background:#ffffffb3}.ecp-vp-vu-bg--dark{background:#0006}.ecp-vp-vu-bg--dimmed{opacity:.3}.ecp-vp-vu-bg--no-margin{margin-bottom:0}.ecp-vp-vu-bars{display:flex;justify-content:center;align-items:flex-end;gap:.25rem;height:16rem}.ecp-vp-eq-overlay{position:absolute;top:0;right:0;bottom:0;left:0;display:flex;flex-direction:column;width:100%;justify-content:center;z-index:10;border-radius:.5rem;padding:1rem;box-shadow:0 1px 2px #0000000d;transition:all .3s cubic-bezier(.4,0,.2,1)}.ecp-vp-eq-overlay--light{background:#fffc}.ecp-vp-eq-overlay--dark{background:#00000080}.ecp-vp-eq-title{font-size:.875rem;font-weight:500;margin-bottom:1rem}.ecp-vp-eq-title--light{color:#374151}.ecp-vp-eq-title--dark{color:#e5e7eb}.ecp-vp-eq-bands{display:flex;flex-direction:column;gap:1rem}.ecp-vp-eq-band-header{display:flex;justify-content:space-between;margin-bottom:.25rem}.ecp-vp-eq-band-label{font-size:.75rem}.ecp-vp-eq-band-label--light{color:#4b5563}.ecp-vp-eq-band-label--dark{color:#d1d5db}.ecp-vp-eq-band-range{display:flex;align-items:center;gap:.75rem}.ecp-vp-eq-range-bound{font-size:.75rem}.ecp-vp-eq-range-bound--light{color:#6b7280}.ecp-vp-eq-range-bound--dark{color:#9ca3af}.ecp-vp-eq-slider{flex:1;height:2rem;background:#d1d5db;border-radius:.5rem;-webkit-appearance:none;-moz-appearance:none;appearance:none;cursor:pointer}.ecp-vp-eq-slider::-webkit-slider-thumb{-webkit-appearance:none;-moz-appearance:none;appearance:none;width:0;height:0;background:transparent;border:none;box-shadow:none}.ecp-vp-eq-slider::-moz-range-thumb{width:0;height:0;background:transparent;border:none;box-shadow:none}.ecp-vp-eq-footer{display:flex;justify-content:flex-end;margin-top:1rem}.ecp-vp-eq-reset{padding:.25rem .75rem;border-radius:.25rem;font-size:.75rem;cursor:pointer;transition:all .15s;border:none}.ecp-vp-eq-reset--light{background:#e5e7eb;color:#374151}.ecp-vp-eq-reset--light:hover{background:#d1d5db}.ecp-vp-eq-reset--dark{background:#374151;color:#e5e7eb}.ecp-vp-eq-reset--dark:hover{background:#4b5563}.ecp-vp-track{margin-bottom:1.5rem;display:flex;align-items:center}.ecp-vp-thumbnail-wrap{margin-right:.5rem;width:3rem;flex-shrink:0}.ecp-vp-thumbnail{height:3rem;width:3rem;border-radius:9999px}.ecp-vp-track-info{width:100%;min-width:0}.ecp-vp-track-name{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ecp-vp-track-name--light{color:#374151}.ecp-vp-track-name--dark{color:#f3f4f6}.ecp-vp-track-author{font-size:.75rem}.ecp-vp-track-author--light{color:#6b7280}.ecp-vp-track-author--dark{color:#d1d5db}.ecp-vp-seekbar{margin-bottom:1.5rem}.ecp-vp-seekbar-row{display:flex;align-items:center;gap:.25rem}.ecp-vp-time{font-size:.75rem;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;width:3rem}.ecp-vp-time--right{text-align:right}.ecp-vp-time--light{color:#4b5563}.ecp-vp-time--dark{color:#f3f4f6}.ecp-vp-seek-input{flex:1;height:.5rem;background:#e5e7eb;border-radius:.5rem;-webkit-appearance:none;-moz-appearance:none;appearance:none;cursor:pointer}.ecp-vp-seek-input:disabled{opacity:.4;cursor:not-allowed}.ecp-vp-seek-input::-webkit-slider-thumb{-webkit-appearance:none;-moz-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;cursor:pointer;border:2px solid white;box-shadow:0 2px 6px #0003}.ecp-vp-seek-input::-moz-range-thumb{width:16px;height:16px;border-radius:50%;cursor:pointer;border:2px solid white;box-shadow:0 2px 6px #0003}.ecp-vp-controls{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem}.ecp-vp-controls--sm{gap:.5rem}.ecp-vp-play-btn{padding:.5rem 1rem;min-width:6rem;border-radius:9999px;font-size:.875rem;font-weight:500;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;gap:.5rem;transition:opacity .15s}.ecp-vp-play-btn:hover{opacity:.9}.ecp-vp-play-btn:disabled{opacity:.4;cursor:not-allowed}.ecp-vp-play-btn--compact{padding:1.25rem .75rem;min-width:unset}.ecp-vp-play-icon-wrap{position:relative;width:1rem;display:flex;align-items:center}.ecp-vp-stop-btn{padding:.75rem;border-radius:9999px;font-size:.875rem;font-weight:500;border:none;cursor:pointer;display:flex;align-items:center;gap:.5rem;transition:all .15s}.ecp-vp-stop-btn--light{background:#374151;color:#fff}.ecp-vp-stop-btn--light:hover{background:#1f2937}.ecp-vp-stop-btn--dark{background:#f3f4f6;color:#000}.ecp-vp-stop-btn--dark:hover{background:#d1d5db}.ecp-vp-stop-btn:disabled{opacity:.4;cursor:not-allowed}.ecp-vp-stop-btn--wide{padding:.5rem 1rem}.ecp-vp-eq-btn{padding:.75rem;border-radius:9999px;font-size:.875rem;font-weight:500;border:none;cursor:pointer;display:flex;align-items:center;gap:.5rem;transition:all .15s}.ecp-vp-eq-btn--off{background:#f3f4f6;color:#374151}.ecp-vp-eq-btn--off:hover{background:#d1d5db}.ecp-vp-eq-btn--on{color:#fff}.ecp-vp-eq-btn:disabled{opacity:.4;cursor:not-allowed}.ecp-vp-eq-btn--wide{padding:.5rem 1rem}.ecp-vp-loop-btn{padding:.75rem;border-radius:9999px;font-size:.875rem;font-weight:500;border:none;cursor:pointer;display:flex;align-items:center;gap:.5rem;transition:all .15s}.ecp-vp-loop-btn--off{background:#f3f4f6;color:#374151}.ecp-vp-loop-btn--off:hover{background:#d1d5db}.ecp-vp-loop-btn--on{color:#fff}.ecp-vp-loop-btn:disabled{opacity:.4;cursor:not-allowed}.ecp-vp-loop-btn--wide{padding:.5rem 1rem}.ecp-vp-loop-icon--active{transform:rotate(180deg)}.ecp-vp-speed-wrap{display:flex;align-items:center}.ecp-vp-speed-select{border-radius:9999px;font-size:.875rem;font-weight:500;border:none;outline:none;cursor:pointer;transition:all .15s;background:transparent}.ecp-vp-speed-select--light{color:#1f2937}.ecp-vp-speed-select--dark{color:#e5e7eb}.ecp-vp-speed-option--light{background:#fff;color:#1f2937}.ecp-vp-speed-option--dark{background:#1f2937;color:#f3f4f6}.ecp-vp-volume{display:flex;align-items:center;gap:.25rem;margin-left:auto}@media (min-width: 768px){.ecp-vp-volume{gap:.75rem}}.ecp-vp-mute-btn{padding:.5rem;border-radius:9999px;background:none;border:none;cursor:pointer;transition:all .15s}.ecp-vp-mute-btn:hover{background:#f3f4f680}.ecp-vp-mute-icon--light{color:#4b5563}.ecp-vp-mute-icon--dark{color:#f3f4f6}.ecp-vp-volume-slider{width:6rem;height:.5rem;border-radius:.5rem;-webkit-appearance:none;-moz-appearance:none;appearance:none;cursor:pointer}.ecp-vp-volume-slider::-webkit-slider-thumb{-webkit-appearance:none;-moz-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;cursor:pointer;border:2px solid white;box-shadow:0 2px 6px #0003}.ecp-vp-volume-slider::-moz-range-thumb{width:16px;height:16px;border-radius:50%;cursor:pointer;border:2px solid white;box-shadow:0 2px 6px #0003}@media (max-width: 460px){.ecp-vp-volume-slider{display:none}}.ecp-vp-volume-pct{font-size:.75rem;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;width:2.5rem;text-align:right}.ecp-vp-volume-pct--light{color:#374151}.ecp-vp-volume-pct--dark{color:#f3f4f6}.ecp-vp-error{font-size:.875rem;color:#ef4444;background:#fef2f2;padding:.75rem;border-radius:.25rem;margin-bottom:1rem;border:1px solid #fca5a5}.ecp-wave-outer{width:100%;max-width:32rem;position:relative}.ecp-wave-audio-el{display:none}.ecp-wave-card{border-radius:1rem;box-shadow:0 25px 50px -12px #00000040}.ecp-wave-card-inner{border-radius:1rem;padding:1.5rem;-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px)}.ecp-wave-thumbnail-wrap{width:100%;padding:1rem}.ecp-wave-thumbnail{width:100%;aspect-ratio:1 / 1;border-radius:.75rem}.ecp-wave-seek{position:relative;height:5rem;margin-bottom:1.5rem;cursor:pointer}.ecp-wave-bars{position:absolute;top:0;right:0;bottom:0;left:0;display:flex;align-items:flex-end;justify-content:center;height:100%;width:100%;gap:1px}.ecp-wave-bar{width:.25rem;border-radius:.25rem .25rem 0 0;transition:all .15s}.ecp-wave-progress-line{position:absolute;top:0;height:100%;width:.25rem;background:#fff;border-right:1px solid black;border-radius:9999px;transition:all .15s;transform:translate(-50%)}.ecp-wave-times{display:flex;justify-content:space-between;font-size:.875rem;margin-bottom:1.5rem}.ecp-wave-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:center;justify-content:space-between;margin-bottom:1rem}.ecp-wave-left-controls{display:flex;align-items:center;gap:.5rem}.ecp-wave-vol-btn{padding:.5rem;border-radius:9999px;border:none;cursor:pointer;transition:all .15s}.ecp-wave-vol-slider{width:5rem;height:.375rem;border-radius:.5rem;-webkit-appearance:none;-moz-appearance:none;appearance:none;cursor:pointer}.ecp-wave-vol-slider::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;cursor:pointer;border:2px solid white;box-shadow:0 1px 3px #0003}.ecp-wave-vol-slider::-moz-range-thumb{width:14px;height:14px;border-radius:50%;cursor:pointer;border:2px solid white}.ecp-wave-center-controls{display:flex;justify-content:center}.ecp-wave-play-btn{padding:1rem;border-radius:9999px;border:none;cursor:pointer;transition:all .15s;box-shadow:0 10px 15px -3px #0000001a}.ecp-wave-play-btn:hover{transform:scale(1.05)}.ecp-wave-right-controls{display:flex;align-items:center;gap:.75rem}.ecp-wave-speed-select{padding:.25rem .5rem;border-radius:.5rem;font-size:.875rem;border:none;cursor:pointer}.ecp-wave-speed-select--light{background:#f3f4f6;color:#374151}.ecp-wave-speed-select--dark{background:#1f2937;color:#f3f4f6}.ecp-wave-eq-btn{padding:.5rem;border-radius:9999px;border:none;cursor:pointer;transition:all .15s}.ecp-wave-eq-overlay{position:absolute;top:0;right:0;bottom:0;left:0;background:#0003;display:flex;align-items:center;justify-content:center;z-index:10;border-radius:1rem;padding:1rem}.ecp-wave-eq-panel{max-width:20rem;width:100%;padding:.5rem 1rem 1rem;border-radius:.75rem}.ecp-wave-eq-panel--light{background:#fff}.ecp-wave-eq-panel--dark{background:#1f2937}.ecp-wave-eq-title{font-size:1.125rem;font-weight:500;margin-bottom:.5rem}.ecp-wave-eq-title--light{color:#374151}.ecp-wave-eq-title--dark{color:#e5e7eb}.ecp-wave-eq-bands{display:flex;flex-direction:column;gap:1rem}.ecp-wave-eq-band-header{display:flex;justify-content:space-between;margin-bottom:.25rem}.ecp-wave-eq-label--light{font-size:.75rem;color:#4b5563}.ecp-wave-eq-label--dark{font-size:.75rem;color:#d1d5db}.ecp-wave-eq-range-row{display:flex;align-items:center;gap:.75rem}.ecp-wave-eq-bound--light{font-size:.75rem;color:#6b7280}.ecp-wave-eq-bound--dark{font-size:.75rem;color:#9ca3af}.ecp-wave-eq-slider{flex:1;height:1rem;background:#d1d5db;border-radius:.5rem;-webkit-appearance:none;-moz-appearance:none;appearance:none;cursor:pointer}.ecp-wave-eq-slider::-webkit-slider-thumb{-webkit-appearance:none;width:0;height:0;background:transparent;border:none;box-shadow:none}.ecp-wave-eq-slider::-moz-range-thumb{width:0;height:0;background:transparent;border:none}.ecp-wave-eq-footer{display:flex;justify-content:space-between;margin-top:1.5rem}.ecp-wave-eq-footer-btn{padding:.25rem .75rem;border-radius:.25rem;font-size:.75rem;cursor:pointer;border:none;transition:all .15s}.ecp-wave-eq-footer-btn--light{background:#e5e7eb;color:#374151}.ecp-wave-eq-footer-btn--light:hover{background:#d1d5db}.ecp-wave-eq-footer-btn--dark{background:#374151;color:#e5e7eb}.ecp-wave-eq-footer-btn--dark:hover{background:#4b5563}.ecp-wave-error{padding:1.5rem;border-radius:.75rem;text-align:center}.ecp-wave-error-title{font-weight:500}.ecp-wave-error-msg{font-size:.875rem}.ecp-wave-error--light{color:#dc2626}.ecp-wave-error--dark{color:#fca5a5}.ecp-nano-wrapper{position:relative;overflow:hidden;display:inline-flex;flex-direction:column;padding:.5rem .75rem;box-shadow:0 10px 15px -3px #0000001a}.ecp-nano-wrapper--pill{border-radius:9999px;width:110px;height:40px}.ecp-nano-wrapper--card{border-radius:1rem;width:120px;height:150px}.ecp-nano-progress-bg{position:absolute;top:0;left:0;height:100%;opacity:.2}.ecp-nano-content{position:absolute;display:flex;flex-direction:column}.ecp-nano-thumbnail-wrap{width:6rem;padding-bottom:.5rem}.ecp-nano-thumbnail{width:6rem;aspect-ratio:1 / 1;border-radius:.75rem}.ecp-nano-row{display:flex;align-items:center;gap:.5rem}.ecp-nano-play-btn{padding:.375rem;border-radius:9999px;border:none;cursor:pointer;flex-shrink:0;transition:transform .15s}.ecp-nano-play-btn:hover{transform:scale(1.1)}.ecp-nano-waveform{display:flex;width:100%;min-width:3rem;align-items:center;gap:2px;height:1.5rem}.ecp-nano-wave-bar{border-radius:9999px;width:100%;transition:height .2s}.ecp-video-wrapper{border-radius:.75rem;overflow:hidden;transition:all .3s cubic-bezier(.4,0,.2,1)}.ecp-video-wrapper--fullscreen{position:fixed;top:0;right:0;bottom:0;left:0;z-index:9999;display:flex;flex-direction:column;height:100vh;width:100vw;background:#000}.ecp-video-inner{height:auto}.ecp-video-inner--fullscreen{display:flex;flex-direction:column;flex:1}.ecp-video-inner--padded{padding:1rem}.ecp-video-name{margin-bottom:1rem;font-weight:500}.ecp-video-name--light{color:#374151}.ecp-video-name--dark{color:#f3f4f6}.ecp-video-layout{position:relative;margin-bottom:1rem}.ecp-video-layout--row{display:flex;gap:.75rem}.ecp-video-layout--col{display:flex;flex-direction:column;gap:.75rem}.ecp-video-layout--fullscreen{flex:1;min-height:0}.ecp-video-vu-top,.ecp-video-vu-bottom{width:100%;height:3rem}.ecp-video-vu-side{width:3rem;background:#00000080;border-radius:.5rem;padding:.25rem}.ecp-video-el-wrap{flex:1;border-radius:.5rem;overflow:hidden;position:relative}.ecp-video-el-wrap--light{background:#ffffffb3}.ecp-video-el-wrap--dark{background:#000000b3}.ecp-video-el{width:100%;height:100%;-o-object-fit:contain;object-fit:contain}.ecp-video-eq-overlay{position:absolute;top:0;right:0;bottom:0;left:0;display:flex;flex-direction:column;width:100%;justify-content:center;z-index:10;border-radius:.5rem;padding:1rem;box-shadow:0 1px 2px #0000000d;transition:all .3s}.ecp-video-eq-panel{max-width:600px;width:100%;margin:0 auto;display:flex;flex-direction:column;justify-content:center;border-radius:.5rem;padding:1rem;box-shadow:0 1px 2px #0000000d;transition:all .3s}.ecp-video-eq-panel--light{background:#fffc}.ecp-video-eq-panel--dark{background:#000000b3}.ecp-video-eq-title{font-size:.875rem;font-weight:500;margin-bottom:1rem}.ecp-video-eq-title--light{color:#374151}.ecp-video-eq-title--dark{color:#e5e7eb}.ecp-video-eq-bands{display:flex;flex-direction:column;gap:1rem}.ecp-video-eq-band-header{display:flex;justify-content:space-between;margin-bottom:.25rem}.ecp-video-eq-label--light{font-size:.75rem;color:#4b5563}.ecp-video-eq-label--dark{font-size:.75rem;color:#d1d5db}.ecp-video-eq-range-row{display:flex;align-items:center;gap:.75rem}.ecp-video-eq-bound--light{font-size:.75rem;color:#6b7280}.ecp-video-eq-bound--dark{font-size:.75rem;color:#9ca3af}.ecp-video-eq-slider{flex:1;height:1.5rem;background:#d1d5db;border-radius:.5rem;-webkit-appearance:none;-moz-appearance:none;appearance:none;cursor:pointer}.ecp-video-eq-slider::-webkit-slider-thumb{-webkit-appearance:none;width:0;height:0;background:transparent;border:none;box-shadow:none}.ecp-video-eq-slider::-moz-range-thumb{width:0;height:0;background:transparent;border:none}.ecp-video-eq-footer{display:flex;justify-content:space-between;margin-top:1.5rem}.ecp-video-eq-footer-btn{padding:.25rem .75rem;border-radius:.25rem;font-size:.75rem;cursor:pointer;border:none;transition:all .15s}.ecp-video-eq-footer-btn--light{background:#e5e7eb;color:#374151}.ecp-video-eq-footer-btn--light:hover{background:#d1d5db}.ecp-video-eq-footer-btn--dark{background:#374151;color:#e5e7eb}.ecp-video-eq-footer-btn--dark:hover{background:#4b5563}.ecp-video-seekbar{margin-bottom:1rem}.ecp-video-seekbar--fullscreen{margin-top:.75rem}.ecp-video-seekbar-row{display:flex;align-items:center;gap:.75rem}.ecp-video-time{font-size:.75rem;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;width:3rem}.ecp-video-time--right{text-align:right}.ecp-video-time--light{color:#4b5563}.ecp-video-time--dark{color:#f3f4f6}.ecp-video-seek-input{flex:1;height:.5rem;border-radius:.5rem;-webkit-appearance:none;-moz-appearance:none;appearance:none;cursor:pointer}.ecp-video-seek-input:disabled{opacity:.4;cursor:not-allowed}.ecp-video-seek-input::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;cursor:pointer;border:2px solid white;box-shadow:0 2px 6px #0003}.ecp-video-seek-input::-moz-range-thumb{width:16px;height:16px;border-radius:50%;cursor:pointer;border:2px solid white;box-shadow:0 2px 6px #0003}.ecp-video-controls{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem}.ecp-video-play-btn{border-radius:9999px;font-size:.875rem;font-weight:500;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;gap:.5rem;transition:opacity .15s;padding:.5rem 1rem}.ecp-video-play-btn:hover{opacity:.9}.ecp-video-play-btn:disabled{opacity:.4;cursor:not-allowed}.ecp-video-play-btn--compact{padding:1.25rem .75rem}.ecp-video-play-icon-wrap{position:relative;width:1rem;display:flex;align-items:center}.ecp-video-stop-btn{padding:.75rem;border-radius:9999px;font-size:.875rem;font-weight:500;border:none;cursor:pointer;display:flex;align-items:center;gap:.5rem;transition:all .15s}.ecp-video-stop-btn--light{background:#374151;color:#fff}.ecp-video-stop-btn--light:hover{background:#1f2937}.ecp-video-stop-btn--dark{background:#f3f4f6;color:#000}.ecp-video-stop-btn--dark:hover{background:#d1d5db}.ecp-video-stop-btn:disabled{opacity:.4;cursor:not-allowed}.ecp-video-fullscreen-btn{border-radius:9999px;font-size:.875rem;font-weight:500;border:none;cursor:pointer;display:flex;align-items:center;gap:.5rem;transition:all .15s;padding:.75rem}.ecp-video-fullscreen-btn--light{background:#374151;color:#fff}.ecp-video-fullscreen-btn--light:hover{background:#1f2937}.ecp-video-fullscreen-btn--dark{background:#f3f4f6;color:#000}.ecp-video-fullscreen-btn--dark:hover{background:#d1d5db}.ecp-video-fullscreen-btn--wide{padding:.5rem 1rem}.ecp-video-eq-toggle-btn{padding:.75rem;border-radius:9999px;font-size:.875rem;font-weight:500;border:none;cursor:pointer;display:flex;align-items:center;gap:.5rem;transition:all .15s}.ecp-video-eq-toggle-btn--off{background:#f3f4f6;color:#374151}.ecp-video-eq-toggle-btn--off:hover{background:#d1d5db}.ecp-video-eq-toggle-btn--on{color:#fff}.ecp-video-eq-toggle-btn:disabled{opacity:.4;cursor:not-allowed}.ecp-video-eq-toggle-btn--wide{padding:.5rem 1rem}.ecp-video-speed-wrap{display:flex;align-items:center}.ecp-video-speed-select{border-radius:9999px;font-size:.875rem;font-weight:500;border:none;outline:none;cursor:pointer;background:transparent;transition:all .15s}.ecp-video-speed-select--light{color:#1f2937}.ecp-video-speed-select--dark{color:#e5e7eb}.ecp-video-speed-option--light{background:#f3f4f6;color:#1f2937}.ecp-video-speed-option--dark{background:#1f2937;color:#f3f4f6}.ecp-video-volume{display:flex;align-items:center;gap:.25rem;margin-left:auto}@media (min-width: 768px){.ecp-video-volume{gap:.75rem}}.ecp-video-mute-btn{padding:.5rem;border-radius:.5rem;background:none;border:none;cursor:pointer;transition:all .15s}.ecp-video-mute-btn:hover{background:#f3f4f6}.ecp-video-mute-icon--light{color:#4b5563}.ecp-video-mute-icon--dark{color:#f3f4f6}.ecp-video-vol-slider{width:6rem;height:.5rem;border-radius:.5rem;-webkit-appearance:none;-moz-appearance:none;appearance:none;cursor:pointer}.ecp-video-vol-slider::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;cursor:pointer;border:2px solid white;box-shadow:0 2px 6px #0003}.ecp-video-vol-slider::-moz-range-thumb{width:16px;height:16px;border-radius:50%;cursor:pointer;border:2px solid white;box-shadow:0 2px 6px #0003}@media (max-width: 460px){.ecp-video-vol-slider{display:none}}.ecp-video-vol-pct{font-size:.75rem;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;width:2.5rem;text-align:right}.ecp-video-vol-pct--light{color:#374151}.ecp-video-vol-pct--dark{color:#f3f4f6}.ecp-video-error{font-size:.875rem;color:#ef4444;background:#fef2f2;padding:.75rem;border-radius:.25rem;margin-bottom:1rem;border:1px solid #fca5a5}.ecp-vu-bar-wrap{flex:1;height:100%;position:relative;display:flex;flex-direction:column;justify-content:flex-end}.ecp-vu-bar-fill{border-radius:.25rem .25rem 0 0;transition:height 75ms}.ecp-vu-peak-line{position:absolute;width:100%;height:2px;transition:top .1s}")),document.head.appendChild(e)}}catch(r){console.error("vite-plugin-css-injected-by-js",r)}})();
+import { jsx as e, Fragment as Ve, jsxs as c } from "react/jsx-runtime";
+import { forwardRef as Qe, createElement as Ie, useState as m, useRef as h, useEffect as $ } from "react";
 /**
  * @license lucide-react v0.540.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const We = (i) => i.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase(), Qe = (i) => i.replace(
+const Ke = (s) => s.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase(), Xe = (s) => s.replace(
   /^([A-Z])|[\s-_]+(\w)/g,
-  (c, g, p) => p ? p.toUpperCase() : g.toLowerCase()
-), _e = (i) => {
-  const c = Qe(i);
-  return c.charAt(0).toUpperCase() + c.slice(1);
-}, Ve = (...i) => i.filter((c, g, p) => !!c && c.trim() !== "" && p.indexOf(c) === g).join(" ").trim(), Ge = (i) => {
-  for (const c in i)
-    if (c.startsWith("aria-") || c === "role" || c === "title")
+  (l, u, v) => v ? v.toUpperCase() : u.toLowerCase()
+), We = (s) => {
+  const l = Xe(s);
+  return l.charAt(0).toUpperCase() + l.slice(1);
+}, Ye = (...s) => s.filter((l, u, v) => !!l && l.trim() !== "" && v.indexOf(l) === u).join(" ").trim(), Ze = (s) => {
+  for (const l in s)
+    if (l.startsWith("aria-") || l === "role" || l === "title")
       return !0;
 };
 /**
@@ -23,7 +24,7 @@ const We = (i) => i.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase(), Qe = (
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-var Ke = {
+var Je = {
   xmlns: "http://www.w3.org/2000/svg",
   width: 24,
   height: 24,
@@ -40,32 +41,32 @@ var Ke = {
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const Xe = Oe(
+const et = Qe(
   ({
-    color: i = "currentColor",
-    size: c = 24,
-    strokeWidth: g = 2,
-    absoluteStrokeWidth: p,
-    className: q = "",
-    children: m,
-    iconNode: x,
-    ...v
-  }, P) => Ie(
+    color: s = "currentColor",
+    size: l = 24,
+    strokeWidth: u = 2,
+    absoluteStrokeWidth: v,
+    className: C = "",
+    children: f,
+    iconNode: y,
+    ...O
+  }, x) => Ie(
     "svg",
     {
-      ref: P,
-      ...Ke,
-      width: c,
-      height: c,
-      stroke: i,
-      strokeWidth: p ? Number(g) * 24 / Number(c) : g,
-      className: Ve("lucide", q),
-      ...!m && !Ge(v) && { "aria-hidden": "true" },
-      ...v
+      ref: x,
+      ...Je,
+      width: l,
+      height: l,
+      stroke: s,
+      strokeWidth: v ? Number(u) * 24 / Number(l) : u,
+      className: Ye("lucide", C),
+      ...!f && !Ze(O) && { "aria-hidden": "true" },
+      ...O
     },
     [
-      ...x.map(([T, U]) => Ie(T, U)),
-      ...Array.isArray(m) ? m : [m]
+      ...y.map(([j, I]) => Ie(j, I)),
+      ...Array.isArray(f) ? f : [f]
     ]
   )
 );
@@ -75,20 +76,20 @@ const Xe = Oe(
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const ce = (i, c) => {
-  const g = Oe(
-    ({ className: p, ...q }, m) => Ie(Xe, {
-      ref: m,
-      iconNode: c,
-      className: Ve(
-        `lucide-${We(_e(i))}`,
-        `lucide-${i}`,
-        p
+const le = (s, l) => {
+  const u = Qe(
+    ({ className: v, ...C }, f) => Ie(et, {
+      ref: f,
+      iconNode: l,
+      className: Ye(
+        `lucide-${Ke(We(s))}`,
+        `lucide-${s}`,
+        v
       ),
-      ...q
+      ...C
     })
   );
-  return g.displayName = _e(i), g;
+  return u.displayName = We(s), u;
 };
 /**
  * @license lucide-react v0.540.0 - ISC
@@ -96,49 +97,12 @@ const ce = (i, c) => {
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const Ze = [
+const tt = [
   ["path", { d: "M8 3H5a2 2 0 0 0-2 2v3", key: "1dcmit" }],
   ["path", { d: "M21 8V5a2 2 0 0 0-2-2h-3", key: "1e4gt3" }],
   ["path", { d: "M3 16v3a2 2 0 0 0 2 2h3", key: "wsl5sc" }],
   ["path", { d: "M16 21h3a2 2 0 0 0 2-2v-3", key: "18trek" }]
-], Ye = ce("maximize", Ze);
-/**
- * @license lucide-react v0.540.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const Je = [
-  ["path", { d: "M8 3v3a2 2 0 0 1-2 2H3", key: "hohbtr" }],
-  ["path", { d: "M21 8h-3a2 2 0 0 1-2-2V3", key: "5jw1f3" }],
-  ["path", { d: "M3 16h3a2 2 0 0 1 2 2v3", key: "198tvr" }],
-  ["path", { d: "M16 21v-3a2 2 0 0 1 2-2h3", key: "ph8mxp" }]
-], et = ce("minimize", Je);
-/**
- * @license lucide-react v0.540.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const tt = [
-  ["rect", { x: "14", y: "3", width: "5", height: "18", rx: "1", key: "kaeet6" }],
-  ["rect", { x: "5", y: "3", width: "5", height: "18", rx: "1", key: "1wsw3u" }]
-], Re = ce("pause", tt);
-/**
- * @license lucide-react v0.540.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const rt = [
-  [
-    "path",
-    {
-      d: "M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z",
-      key: "10ikf1"
-    }
-  ]
-], Fe = ce("play", rt);
+], rt = le("maximize", tt);
 /**
  * @license lucide-react v0.540.0 - ISC
  *
@@ -146,11 +110,21 @@ const rt = [
  * See the LICENSE file in the root directory of this source tree.
  */
 const nt = [
-  ["path", { d: "m17 2 4 4-4 4", key: "nntrym" }],
-  ["path", { d: "M3 11v-1a4 4 0 0 1 4-4h14", key: "84bu3i" }],
-  ["path", { d: "m7 22-4-4 4-4", key: "1wqhfi" }],
-  ["path", { d: "M21 13v1a4 4 0 0 1-4 4H3", key: "1rx37r" }]
-], at = ce("repeat", nt);
+  ["path", { d: "M8 3v3a2 2 0 0 1-2 2H3", key: "hohbtr" }],
+  ["path", { d: "M21 8h-3a2 2 0 0 1-2-2V3", key: "5jw1f3" }],
+  ["path", { d: "M3 16h3a2 2 0 0 1 2 2v3", key: "198tvr" }],
+  ["path", { d: "M16 21v-3a2 2 0 0 1 2-2h3", key: "ph8mxp" }]
+], at = le("minimize", nt);
+/**
+ * @license lucide-react v0.540.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const ct = [
+  ["rect", { x: "14", y: "3", width: "5", height: "18", rx: "1", key: "kaeet6" }],
+  ["rect", { x: "5", y: "3", width: "5", height: "18", rx: "1", key: "1wsw3u" }]
+], Pe = le("pause", ct);
 /**
  * @license lucide-react v0.540.0 - ISC
  *
@@ -158,6 +132,33 @@ const nt = [
  * See the LICENSE file in the root directory of this source tree.
  */
 const st = [
+  [
+    "path",
+    {
+      d: "M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z",
+      key: "10ikf1"
+    }
+  ]
+], Me = le("play", st);
+/**
+ * @license lucide-react v0.540.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const it = [
+  ["path", { d: "m17 2 4 4-4 4", key: "nntrym" }],
+  ["path", { d: "M3 11v-1a4 4 0 0 1 4-4h14", key: "84bu3i" }],
+  ["path", { d: "m7 22-4-4 4-4", key: "1wqhfi" }],
+  ["path", { d: "M21 13v1a4 4 0 0 1-4 4H3", key: "1rx37r" }]
+], ot = le("repeat", it);
+/**
+ * @license lucide-react v0.540.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const lt = [
   ["line", { x1: "4", x2: "4", y1: "21", y2: "14", key: "1p332r" }],
   ["line", { x1: "4", x2: "4", y1: "10", y2: "3", key: "gb41h5" }],
   ["line", { x1: "12", x2: "12", y1: "21", y2: "12", key: "hf2csr" }],
@@ -167,34 +168,34 @@ const st = [
   ["line", { x1: "2", x2: "6", y1: "14", y2: "14", key: "1uebub" }],
   ["line", { x1: "10", x2: "14", y1: "8", y2: "8", key: "1yglbp" }],
   ["line", { x1: "18", x2: "22", y1: "16", y2: "16", key: "1jxqpz" }]
-], Ae = ce("sliders-vertical", st);
+], Fe = le("sliders-vertical", lt);
 /**
  * @license lucide-react v0.540.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const lt = [
+const dt = [
   ["rect", { width: "18", height: "18", x: "3", y: "3", rx: "2", key: "afitv7" }]
-], Ue = ce("square", lt);
+], Ge = le("square", dt);
 /**
  * @license lucide-react v0.540.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const it = [
+const ut = [
   ["path", { d: "M12 3v12", key: "1x0j5s" }],
   ["path", { d: "m17 8-5-5-5 5", key: "7q97r8" }],
   ["path", { d: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4", key: "ih7n3h" }]
-], ct = ce("upload", it);
+], pt = le("upload", ut);
 /**
  * @license lucide-react v0.540.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const ot = [
+const mt = [
   [
     "path",
     {
@@ -204,14 +205,14 @@ const ot = [
   ],
   ["path", { d: "M16 9a5 5 0 0 1 0 6", key: "1q6k2b" }],
   ["path", { d: "M19.364 18.364a9 9 0 0 0 0-12.728", key: "ijwkga" }]
-], He = ce("volume-2", ot);
+], De = le("volume-2", mt);
 /**
  * @license lucide-react v0.540.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const dt = [
+const ft = [
   [
     "path",
     {
@@ -221,7 +222,7 @@ const dt = [
   ],
   ["line", { x1: "22", x2: "16", y1: "9", y2: "15", key: "1ewh16" }],
   ["line", { x1: "16", x2: "22", y1: "9", y2: "15", key: "5ykzw1" }]
-], De = ce("volume-x", dt), be = {
+], _e = le("volume-x", ft), ge = {
   rainbow: {
     name: "Rainbow",
     bg: "linear-gradient(135deg, #ef444422 0%, #f9731622 15%, #f59e0b22 30%, #10b98122 45%, #06b6d422 60%, #3b82f622 75%, #6366f122 85%, #a855f722 92%, #ec489922 100%)",
@@ -321,46 +322,45 @@ const dt = [
     slider: "#ec4899"
   }
 };
-function ut({ theme: i, setTheme: c, close: g }) {
-  const p = Object.keys(be).map((q) => ({
-    key: q,
-    name: be[q].name,
-    colors: be[q].bars
+function vt({ theme: s, setTheme: l, close: u }) {
+  const v = Object.keys(ge).map((C) => ({
+    key: C,
+    name: ge[C].name,
+    colors: ge[C].bars
   }));
-  return /* @__PURE__ */ r("div", { className: "container-glass rounded-xl p-6 mb-6", children: [
-    /* @__PURE__ */ r("div", { className: "flex justify-between items-center mb-4", children: [
-      /* @__PURE__ */ e("h2", { className: "text-lg font-semibold text-gray-800", children: "Choose Color Palette" }),
-      /* @__PURE__ */ e(
-        "button",
-        {
-          onClick: () => g(),
-          className: "text-gray-500 hover:text-gray-700 text-sm font-medium",
-          children: "Close"
-        }
-      )
+  return /* @__PURE__ */ c("div", { className: "ecp-theme-selector-panel", children: [
+    /* @__PURE__ */ c("div", { className: "ecp-theme-selector-header", children: [
+      /* @__PURE__ */ e("h2", { className: "ecp-theme-selector-title", children: "Choose Color Palette" }),
+      /* @__PURE__ */ e("button", { onClick: () => u(), className: "ecp-theme-selector-close", children: "Close" })
     ] }),
-    /* @__PURE__ */ e("div", { className: "theme-selector grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3", children: p.map((q) => /* @__PURE__ */ r(
+    /* @__PURE__ */ e("div", { className: "ecp-theme-grid", children: v.map((C) => /* @__PURE__ */ c(
       "div",
       {
-        className: `theme-card bg-white p-4 rounded-lg cursor-pointer border-2 transition-all ${i === q.key ? "border-current shadow-lg" : "border-transparent"}`,
-        onClick: () => c(q.key),
+        className: `ecp-theme-card${s === C.key ? " ecp-theme-card--active" : ""}`,
+        onClick: () => l(C.key),
         children: [
-          /* @__PURE__ */ e("div", { className: "color-preview h-10 rounded mb-2", style: { background: `linear-gradient(to right, ${q.colors.join(", ")})` } }),
-          /* @__PURE__ */ e("div", { className: "text-sm font-medium text-gray-700", children: q.name })
+          /* @__PURE__ */ e(
+            "div",
+            {
+              className: "ecp-theme-color-preview",
+              style: { background: `linear-gradient(to right, ${C.colors.join(", ")})` }
+            }
+          ),
+          /* @__PURE__ */ e("div", { className: "ecp-theme-name", children: C.name })
         ]
       },
-      q.key
+      C.key
     )) })
   ] });
 }
-function gt({
-  audio: i,
-  name: c = "No track loaded",
-  author: g,
-  theme: p = "rainbow",
-  volume: q = 100,
-  thumbnail: m = null,
-  controls: x = {
+function ht({
+  audio: s,
+  name: l = "No track loaded",
+  author: u,
+  theme: v = "rainbow",
+  volume: C = 100,
+  thumbnail: f = null,
+  controls: y = {
     play: !0,
     pause: !0,
     stop: !0,
@@ -371,45 +371,39 @@ function gt({
     equalizer: !0,
     speed: !0
   },
-  mode: v = "light",
-  bands: P = null,
-  transparent: T = !1,
-  autoPlay: U = !1,
-  equalizer: I = {
-    bass: 0,
-    mid: 0,
-    treble: 0
-  }
+  mode: O = "light",
+  bands: x = null,
+  transparent: j = !1,
+  autoPlay: I = !1,
+  equalizer: M = { bass: 0, mid: 0, treble: 0 }
 }) {
-  const [M, _] = f(!1), [H, z] = f(0), [S, N] = f(0), [E, oe] = f(q || 100), [ae, fe] = f(!1), [Q, G] = f(!1), [se, le] = f(!1), [O, de] = f([]), [R, F] = f(!1), [j, ie] = f({
-    bass: I.bass || 0,
-    mid: I.mid || 0,
-    treble: I.treble || 0
-  }), [ue, ee] = f(1), [K, k] = f(0), u = y(null), A = y(null), X = y(null), me = y(null), V = y(null), te = y(null), Z = y(null), $ = y(null), re = y(null), Y = y(null);
-  C(() => {
-    const t = Y.current;
+  const [L, H] = m(!1), [B, F] = m(0), [P, D] = m(0), [k, z] = m(C || 100), [ae, me] = m(!1), [V, ee] = m(!1), [se, ie] = m(!1), [ce, de] = m([]), [R, Q] = m(!1), [Y, oe] = m({
+    bass: M.bass || 0,
+    mid: M.mid || 0,
+    treble: M.treble || 0
+  }), [ue, te] = m(1), [G, w] = m(0), p = h(null), A = h(null), K = h(null), fe = h(null), W = h(null), re = h(null), X = h(null), N = h(null), T = h(null), Z = h(null);
+  $(() => {
+    const t = Z.current;
     if (!t) return;
-    const n = new ResizeObserver((s) => {
-      for (let l of s)
-        k(l.contentRect.width);
+    const a = new ResizeObserver((o) => {
+      for (let i of o) w(i.contentRect.width);
     });
-    return n.observe(t), () => n.disconnect();
-  }, []), C(() => {
+    return a.observe(t), () => a.disconnect();
+  }, []), $(() => {
     const t = [];
-    if (i && typeof i != "string" && t.push(["TypeError", "audio must be a string (URL or path)"]), c && typeof c != "string" && t.push(["TypeError", "name must be a string"]), p && typeof p != "string" && typeof p != "object")
-      t.push(["TypeError", "theme must be a string or a valid theme object"]);
-    else if (typeof p == "object") {
-      const n = ["name", "bg", "bars", "peak", "button", "buttonHover", "slider"];
-      for (const s of n)
-        s in p || t.push(["ThemeError", `theme object missing key: ${s}`]);
+    if (s && typeof s != "string" && t.push(["TypeError", "audio must be a string (URL or path)"]), l && typeof l != "string" && t.push(["TypeError", "name must be a string"]), v && typeof v != "string" && typeof v != "object") t.push(["TypeError", "theme must be a string or a valid theme object"]);
+    else if (typeof v == "object") {
+      const a = ["name", "bg", "bars", "peak", "button", "buttonHover", "slider"];
+      for (const o of a)
+        o in v || t.push(["ThemeError", `theme object missing key: ${o}`]);
     }
-    (typeof q != "number" || q < 0 || q > 100) && t.push(["TypeError", "volume must be a number between 0 and 100"]), typeof x != "object" || Array.isArray(x) ? t.push(["TypeError", "controls must be an object"]) : ["play", "pause", "stop", "seekbar", "volume", "loop", "trackName", "equalizer"].forEach((s) => {
-      x && s in x && typeof x[s] != "boolean" && t.push(["TypeError", `controls.${s} must be a boolean`]);
-    }), P && (Array.isArray(P) ? P.length === 0 ? t.push(["ValueError", "bands array cannot be empty"]) : P.forEach((n, s) => {
-      typeof n.freq != "number" && t.push(["TypeError", `bands[${s}].freq must be a number`]);
-    }) : t.push(["TypeError", "bands must be an array"])), t.length > 0 ? (de(t), console.group("%cVisualizePlayer: Prop validation failed", "color:red"), t.forEach((n) => console.error(`${n[0]}: ${n[1]}`)), console.groupEnd()) : de([]);
-  }, [i, c, p, q, x, v, P]);
-  const a = P || [
+    (typeof C != "number" || C < 0 || C > 100) && t.push(["TypeError", "volume must be a number between 0 and 100"]), typeof y != "object" || Array.isArray(y) ? t.push(["TypeError", "controls must be an object"]) : ["play", "pause", "stop", "seekbar", "volume", "loop", "trackName", "equalizer"].forEach((o) => {
+      y && o in y && typeof y[o] != "boolean" && t.push(["TypeError", `controls.${o} must be a boolean`]);
+    }), x && (Array.isArray(x) ? x.length === 0 ? t.push(["ValueError", "bands array cannot be empty"]) : x.forEach((a, o) => {
+      typeof a.freq != "number" && t.push(["TypeError", `bands[${o}].freq must be a number`]);
+    }) : t.push(["TypeError", "bands must be an array"])), t.length > 0 ? (de(t), console.group("%cVisualizePlayer: Prop validation failed", "color:red"), t.forEach((a) => console.error(`${a[0]}: ${a[1]}`)), console.groupEnd()) : de([]);
+  }, [s, l, v, C, y, O, x]);
+  const r = x || [
     { freq: 0 },
     { freq: 10 },
     { freq: 20 },
@@ -441,636 +435,444 @@ function gt({
     { freq: 8e3 },
     { freq: 1e4 },
     { freq: 12500 }
-  ], d = y(a.map(() => 0)), b = y(a.map(() => 0)), B = y(a.map(() => 0)), D = y(!1), J = y(typeof p == "string" ? p : "purple");
-  let o = typeof p == "string" ? be[p] || be.purple : typeof p == "object" ? p : be.purple;
-  const h = v === "dark", ge = typeof x == "object" && Object.keys(x).length === 0;
-  C(() => {
-    typeof p == "string" ? J.current = p : J.current = "purple", pe();
-  }, [p]), C(() => {
-    u.current || (u.current = new Audio());
-    const t = u.current, n = () => {
-      se || z(t.currentTime);
-    }, s = () => {
-      N(t.duration);
-    }, l = () => {
-      Q || (_(!1), $.current && cancelAnimationFrame($.current));
-    }, w = () => _(!0), L = () => _(!1);
-    return t.addEventListener("timeupdate", n), t.addEventListener("loadedmetadata", s), t.addEventListener("ended", l), t.addEventListener("play", w), t.addEventListener("pause", L), () => {
-      t.removeEventListener("timeupdate", n), t.removeEventListener("loadedmetadata", s), t.removeEventListener("ended", l), t.removeEventListener("play", w), t.removeEventListener("pause", L);
+  ], d = h(r.map(() => 0)), g = h(r.map(() => 0)), S = h(r.map(() => 0)), _ = h(!1), J = h(typeof v == "string" ? v : "purple"), b = typeof v == "string" ? ge[v] || ge.purple : typeof v == "object" ? v : ge.purple, E = O === "dark", ke = typeof y == "object" && Object.keys(y).length === 0;
+  $(() => {
+    typeof v == "string" ? J.current = v : J.current = "purple", he();
+  }, [v]), $(() => {
+    p.current || (p.current = new Audio());
+    const t = p.current, a = () => {
+      se || F(t.currentTime);
+    }, o = () => D(t.duration), i = () => {
+      V || (H(!1), N.current && cancelAnimationFrame(N.current));
+    }, q = () => H(!0), U = () => H(!1);
+    return t.addEventListener("timeupdate", a), t.addEventListener("loadedmetadata", o), t.addEventListener("ended", i), t.addEventListener("play", q), t.addEventListener("pause", U), () => {
+      t.removeEventListener("timeupdate", a), t.removeEventListener("loadedmetadata", o), t.removeEventListener("ended", i), t.removeEventListener("play", q), t.removeEventListener("pause", U);
     };
-  }, [se, Q]), C(() => () => {
-    u.current && (u.current.pause(), u.current.src = "", u.current.load()), A.current && A.current.close().catch((t) => console.warn("AudioContext cleanup error:", t)), $.current && cancelAnimationFrame($.current);
-  }, []), C(() => {
-    if (i) {
-      const t = M, n = E, s = Q;
-      if ($.current && (cancelAnimationFrame($.current), $.current = null), me.current) {
+  }, [se, V]), $(() => () => {
+    p.current && (p.current.pause(), p.current.src = "", p.current.load()), A.current && A.current.close().catch((t) => console.warn("AudioContext cleanup error:", t)), N.current && cancelAnimationFrame(N.current);
+  }, []), $(() => {
+    if (s) {
+      const t = L, a = k, o = V;
+      if (N.current && (cancelAnimationFrame(N.current), N.current = null), fe.current) {
         try {
-          me.current.disconnect();
-        } catch (W) {
-          console.warn("Source disconnect error:", W);
+          fe.current.disconnect();
+        } catch {
         }
-        me.current = null;
+        fe.current = null;
+      }
+      if (K.current) {
+        try {
+          K.current.disconnect();
+        } catch {
+        }
+        K.current = null;
+      }
+      if (W.current) {
+        try {
+          W.current.disconnect();
+        } catch {
+        }
+        W.current = null;
+      }
+      if (re.current) {
+        try {
+          re.current.disconnect();
+        } catch {
+        }
+        re.current = null;
       }
       if (X.current) {
         try {
           X.current.disconnect();
-        } catch (W) {
-          console.warn("Analyser disconnect error:", W);
+        } catch {
         }
         X.current = null;
       }
-      if (V.current) {
-        try {
-          V.current.disconnect();
-        } catch (W) {
-          console.warn("Bass filter disconnect error:", W);
-        }
-        V.current = null;
-      }
-      if (te.current) {
-        try {
-          te.current.disconnect();
-        } catch (W) {
-          console.warn("Mid filter disconnect error:", W);
-        }
-        te.current = null;
-      }
-      if (Z.current) {
-        try {
-          Z.current.disconnect();
-        } catch (W) {
-          console.warn("Treble filter disconnect error:", W);
-        }
-        Z.current = null;
-      }
-      A.current && (A.current.close().catch((W) => console.warn("AudioContext close error:", W)), A.current = null), u.current && (u.current.pause(), u.current.src = "", u.current.load()), u.current = new Audio();
+      A.current && (A.current.close().catch((ne) => console.warn("AudioContext close error:", ne)), A.current = null), p.current && (p.current.pause(), p.current.src = "", p.current.load()), p.current = new Audio();
       try {
-        u.current.crossOrigin = "anonymous";
-      } catch (W) {
-        console.debug("Could not set crossOrigin on audio element", W);
+        p.current.crossOrigin = "anonymous";
+      } catch {
       }
-      u.current.src = i, u.current.preload = "auto", u.current.muted = !1, u.current.volume = ae ? 0 : n / 100, u.current.loop = s, u.current.load();
-      const l = u.current, w = () => {
-        se || z(l.currentTime);
-      }, L = () => {
-        N(l.duration);
-      }, ne = () => {
-        Q || (_(!1), $.current && cancelAnimationFrame($.current));
-      }, xe = () => _(!0), Ce = () => _(!1);
-      l.addEventListener("timeupdate", w), l.addEventListener("loadedmetadata", L), l.addEventListener("ended", ne), l.addEventListener("play", xe), l.addEventListener("pause", Ce), z(0), _(!1), console.debug("Audio element created", { src: u.current.src, volume: u.current.volume, loop: u.current.loop }), d.current = a.map(() => 0), b.current = a.map(() => 0), B.current = a.map(() => 0), pe(), t && u.current.play().catch((W) => console.error("Play failed:", W));
+      p.current.src = s, p.current.preload = "auto", p.current.muted = !1, p.current.volume = ae ? 0 : a / 100, p.current.loop = o, p.current.load();
+      const i = p.current, q = () => {
+        se || F(i.currentTime);
+      }, U = () => D(i.duration), pe = () => {
+        V || (H(!1), N.current && cancelAnimationFrame(N.current));
+      }, ye = () => H(!0), $e = () => H(!1);
+      i.addEventListener("timeupdate", q), i.addEventListener("loadedmetadata", U), i.addEventListener("ended", pe), i.addEventListener("play", ye), i.addEventListener("pause", $e), F(0), H(!1), d.current = r.map(() => 0), g.current = r.map(() => 0), S.current = r.map(() => 0), he(), t && p.current.play().catch((ne) => console.error("Play failed:", ne));
     }
-  }, [i]), C(() => {
-    u.current && (u.current.volume = ae ? 0 : E / 100);
-  }, [E, ae]), C(() => {
-    u.current && (u.current.loop = Q);
-  }, [Q]), C(() => {
-    u.current && (u.current.playbackRate = ue);
-  }, [ue]), C(() => {
-    A.current && (V.current && (V.current.gain.value = j.bass), te.current && (te.current.gain.value = j.mid), Z.current && (Z.current.gain.value = j.treble));
-  }, [j]), C(() => {
-    D.current = M, $.current && (cancelAnimationFrame($.current), $.current = null), M ? (A.current || qe(), ke()) : he();
-  }, [M]);
-  const qe = () => {
-    if (!A.current && u.current)
+  }, [s]), $(() => {
+    p.current && (p.current.volume = ae ? 0 : k / 100);
+  }, [k, ae]), $(() => {
+    p.current && (p.current.loop = V);
+  }, [V]), $(() => {
+    p.current && (p.current.playbackRate = ue);
+  }, [ue]), $(() => {
+    A.current && (W.current && (W.current.gain.value = Y.bass), re.current && (re.current.gain.value = Y.mid), X.current && (X.current.gain.value = Y.treble));
+  }, [Y]), $(() => {
+    _.current = L, N.current && (cancelAnimationFrame(N.current), N.current = null), L ? (A.current || Ce(), Ne()) : ve();
+  }, [L]);
+  const Ce = () => {
+    if (!A.current && p.current)
       try {
         const t = window.AudioContext || window.webkitAudioContext;
         if (t) {
-          const n = new t();
-          A.current = n;
-          const s = n.createBiquadFilter();
-          s.type = "lowshelf", s.frequency.value = 320, s.gain.value = j.bass;
-          const l = n.createBiquadFilter();
-          l.type = "peaking", l.frequency.value = 1e3, l.Q.value = 0.5, l.gain.value = j.mid;
-          const w = n.createBiquadFilter();
-          w.type = "highshelf", w.frequency.value = 3200, w.gain.value = j.treble;
-          const L = n.createAnalyser();
-          L.fftSize = 8192, L.smoothingTimeConstant = 0.7;
-          const ne = n.createMediaElementSource(u.current);
-          ne.connect(s), s.connect(l), l.connect(w), w.connect(L), L.connect(n.destination), V.current = s, te.current = l, Z.current = w, X.current = L, me.current = ne;
+          const a = new t();
+          A.current = a;
+          const o = a.createBiquadFilter();
+          o.type = "lowshelf", o.frequency.value = 320, o.gain.value = Y.bass;
+          const i = a.createBiquadFilter();
+          i.type = "peaking", i.frequency.value = 1e3, i.Q.value = 0.5, i.gain.value = Y.mid;
+          const q = a.createBiquadFilter();
+          q.type = "highshelf", q.frequency.value = 3200, q.gain.value = Y.treble;
+          const U = a.createAnalyser();
+          U.fftSize = 8192, U.smoothingTimeConstant = 0.7;
+          const pe = a.createMediaElementSource(p.current);
+          pe.connect(o), o.connect(i), i.connect(q), q.connect(U), U.connect(a.destination), W.current = o, re.current = i, X.current = q, K.current = U, fe.current = pe;
         }
       } catch (t) {
         console.error("Failed to setup audio context:", t);
       }
   }, we = (t) => {
-    const n = A.current, s = X.current;
-    if (!n || !s) return 0;
-    const l = n.sampleRate / 2, w = Math.round(t / l * s.frequencyBinCount);
-    return Math.min(w, s.frequencyBinCount - 1);
-  }, he = () => {
-    if (D.current) return;
-    d.current = d.current.map((l) => l * 0.7);
+    const a = A.current, o = K.current;
+    if (!a || !o) return 0;
+    const i = a.sampleRate / 2, q = Math.round(t / i * o.frequencyBinCount);
+    return Math.min(q, o.frequencyBinCount - 1);
+  }, ve = () => {
+    if (_.current) return;
+    d.current = d.current.map((i) => i * 0.7);
     const t = Date.now();
-    b.current = b.current.map((l, w) => t - B.current[w] > 1500 ? l * 0.95 : l), pe();
-    const n = Math.max(...d.current), s = Math.max(...b.current);
-    n > 0.01 || s > 0.01 ? $.current = requestAnimationFrame(he) : (D.current || (d.current = a.map(() => 0), b.current = a.map(() => 0), B.current = a.map(() => 0), pe()), $.current && cancelAnimationFrame($.current), $.current = null);
-  }, ke = () => {
-    if (!X.current || !D.current) return;
-    const t = X.current.frequencyBinCount, n = new Uint8Array(t);
-    X.current.getByteFrequencyData(n), a.forEach((s, l) => {
-      const w = we(s.freq), L = l < a.length - 1 ? we(a[l + 1].freq) : n.length;
-      let ne = 0, xe = 0;
-      for (let Be = w; Be < L; Be++)
-        ne += n[Be], xe++;
-      let Ce = xe > 0 ? ne / xe / 255 : 0;
-      Ce = Math.pow(Ce, 0.6), d.current[l] = d.current[l] * 0.8 + Ce * 0.2;
-      const W = Date.now();
-      d.current[l] > b.current[l] ? (b.current[l] = d.current[l], B.current[l] = W) : W - B.current[l] > 1500 && (b.current[l] *= 0.95);
-    }), pe(), $.current = requestAnimationFrame(ke);
-  }, pe = () => {
-    if (!re.current) return;
-    const t = be[J.current] || be.rainbow;
-    let n = "";
-    a.forEach((s, l) => {
-      const w = d.current[l] * 100, L = 100 - b.current[l] * 100, ne = Math.floor(l / a.length * t.bars.length), xe = t.bars[Math.min(ne, t.bars.length - 1)];
-      n += `
-                <div class="flex-1 h-full relative flex flex-col justify-end">
-                    <div class="rounded-t transition-all duration-75" style="height: ${w}%; background: ${xe};">
-                        ${b.current[l] > 0.1 ? `<div class="absolute w-full h-0.5 transition-all duration-100" style="top: ${L}%; background: ${t.peak};"></div>` : ""}
+    g.current = g.current.map((i, q) => t - S.current[q] > 1500 ? i * 0.95 : i), he();
+    const a = Math.max(...d.current), o = Math.max(...g.current);
+    a > 0.01 || o > 0.01 ? N.current = requestAnimationFrame(ve) : (_.current || (d.current = r.map(() => 0), g.current = r.map(() => 0), S.current = r.map(() => 0), he()), N.current && cancelAnimationFrame(N.current), N.current = null);
+  }, Ne = () => {
+    if (!K.current || !_.current) return;
+    const t = K.current.frequencyBinCount, a = new Uint8Array(t);
+    K.current.getByteFrequencyData(a), r.forEach((o, i) => {
+      const q = we(o.freq), U = i < r.length - 1 ? we(r[i + 1].freq) : a.length;
+      let pe = 0, ye = 0;
+      for (let He = q; He < U; He++)
+        pe += a[He], ye++;
+      let $e = ye > 0 ? pe / ye / 255 : 0;
+      $e = Math.pow($e, 0.6), d.current[i] = d.current[i] * 0.8 + $e * 0.2;
+      const ne = Date.now();
+      d.current[i] > g.current[i] ? (g.current[i] = d.current[i], S.current[i] = ne) : ne - S.current[i] > 1500 && (g.current[i] *= 0.95);
+    }), he(), N.current = requestAnimationFrame(Ne);
+  }, he = () => {
+    if (!T.current) return;
+    const t = ge[J.current] || ge.rainbow;
+    let a = "";
+    r.forEach((o, i) => {
+      const q = d.current[i] * 100, U = 100 - g.current[i] * 100, pe = Math.floor(i / r.length * t.bars.length), ye = t.bars[Math.min(pe, t.bars.length - 1)];
+      a += `
+                <div class="ecp-vu-bar-wrap">
+                    <div class="ecp-vu-bar-fill" style="height: ${q}%; background: ${ye};">
+                        ${g.current[i] > 0.1 ? `<div class="ecp-vu-peak-line" style="top: ${U}%; background: ${t.peak};"></div>` : ""}
                     </div>
                 </div>
             `;
-    }), re.current.innerHTML = n;
+    }), T.current.innerHTML = a;
+  }, xe = () => {
+    !p.current || !s || (L ? p.current.pause() : (A.current && A.current.state === "suspended" && A.current.resume(), p.current.play().catch((t) => console.error("Play failed:", t))));
   }, Ee = () => {
-    !u.current || !i || (M ? u.current.pause() : (A.current && A.current.state === "suspended" && A.current.resume(), u.current.play().catch((t) => console.error("Play failed:", t))));
-  }, Te = () => {
-    u.current && (u.current.pause(), u.current.currentTime = 0, _(!1), z(0), d.current = a.map(() => 0), b.current = a.map(() => 0), B.current = a.map(() => 0), pe());
+    p.current && (p.current.pause(), p.current.currentTime = 0, H(!1), F(0), d.current = r.map(() => 0), g.current = r.map(() => 0), S.current = r.map(() => 0), he());
   }, Le = (t) => {
-    const s = parseFloat(t.target.value) / 100 * S;
-    z(s), u.current && !se && (u.current.currentTime = s);
-  }, Pe = () => {
-    le(!0);
-  }, Me = () => {
-    u.current && (u.current.currentTime = H), le(!1);
-  }, je = (t) => {
-    const n = parseInt(t.target.value);
-    oe(n), fe(n === 0);
-  }, ze = () => {
-    fe(!ae);
-  }, Ne = (t) => {
-    ee(parseFloat(t.target.value));
-  }, Se = () => {
-    G(!Q);
-  }, ve = (t, n) => {
-    ie((s) => ({
-      ...s,
-      [t]: n
-    }));
-  }, ye = () => {
-    ie({ bass: 0, mid: 0, treble: 0 });
-  };
-  C(() => {
-    ((typeof x == "object" && Object.keys(x).length === 0 || !x) && !M || U) && Ee();
-  }, [x]);
-  const $e = (t) => {
+    const o = parseFloat(t.target.value) / 100 * P;
+    F(o), p.current && !se && (p.current.currentTime = o);
+  }, Ae = () => ie(!0), Re = () => {
+    p.current && (p.current.currentTime = B), ie(!1);
+  }, ze = (t) => {
+    const a = parseInt(t.target.value);
+    z(a), me(a === 0);
+  }, Se = () => me(!ae), Be = (t) => te(parseFloat(t.target.value)), je = () => ee(!V), Te = (t, a) => oe((o) => ({ ...o, [t]: a })), be = () => oe({ bass: 0, mid: 0, treble: 0 });
+  $(() => {
+    ((typeof y == "object" && Object.keys(y).length === 0 || !y) && !L || I) && xe();
+  }, [y]);
+  const qe = (t) => {
     if (isNaN(t)) return "0:00";
-    const n = Math.floor(t / 60), s = Math.floor(t % 60);
-    return `${n}:${s.toString().padStart(2, "0")}`;
+    const a = Math.floor(t / 60), o = Math.floor(t % 60);
+    return `${a}:${o.toString().padStart(2, "0")}`;
   };
-  return O && O.length > 0 ? O.map((t, n) => /* @__PURE__ */ r("div", { className: "text-red-500 text-sm bg-red-50 p-3 rounded mb-4 border border-red-300", children: [
-    /* @__PURE__ */ r("strong", { children: [
-      t[0],
-      ":"
-    ] }),
-    " ",
-    t[1]
-  ] }, n)) : /* @__PURE__ */ e("div", { ref: Y, className: "w-full rounded-xl overflow-hidden", style: { backgroundColor: ge || T ? void 0 : h ? "#6060606a" : "#ffffffab" }, children: /* @__PURE__ */ r("div", { style: { background: ge || T ? void 0 : o.bg }, className: ge || T ? "" : "p-4", children: [
-    /* @__PURE__ */ r("div", { className: "relative", children: [
-      /* @__PURE__ */ e("div", { className: `${T && R ? "opacity-30" : ""} ${ge || T ? "" : h ? "bg-black/40" : "bg-white/70"} rounded-lg ${ge ? "" : "mb-6"} ${ge || T ? "" : "p-4"} shadow-sm`, children: /* @__PURE__ */ e("div", { className: "flex justify-center items-end gap-1 h-64", ref: re }) }),
-      R && /* @__PURE__ */ r("div", { className: `absolute inset-0 flex flex-col w-full justify-center z-10 ${!(ge || T) && (h ? "bg-black/50" : "bg-white/80")} rounded-lg p-4 shadow-sm transition-all duration-300`, children: [
-        /* @__PURE__ */ e("h3", { className: `text-sm font-medium mb-4 ${h ? "text-gray-200" : "text-gray-700"}`, children: "Equalizer" }),
-        /* @__PURE__ */ r("div", { className: "space-y-4", children: [
-          /* @__PURE__ */ r("div", { children: [
-            /* @__PURE__ */ r("div", { className: "flex justify-between mb-1", children: [
-              /* @__PURE__ */ e("span", { className: `text-xs ${h ? "text-gray-300" : "text-gray-600"}`, children: "Bass" }),
-              /* @__PURE__ */ r("span", { className: `text-xs ${h ? "text-gray-300" : "text-gray-600"}`, children: [
-                j.bass,
-                " dB"
-              ] })
-            ] }),
-            /* @__PURE__ */ r("div", { className: "flex items-center gap-3", children: [
-              /* @__PURE__ */ e("span", { className: `text-xs ${h ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
-              /* @__PURE__ */ e(
-                "input",
-                {
-                  type: "range",
-                  min: "-20",
-                  max: "20",
-                  value: j.bass,
-                  onChange: (t) => ve("bass", parseInt(t.target.value)),
-                  className: "flex-1 h-8 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider",
-                  style: {
-                    background: `linear-gradient(to right, ${o.slider} ${(j.bass + 20) / 40 * 100}%, ${o.slider + "30"} ${(j.bass + 20) / 40 * 100}%)`
-                  }
-                }
-              ),
-              /* @__PURE__ */ e("span", { className: `text-xs ${h ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
+  if (ce && ce.length > 0)
+    return /* @__PURE__ */ e(Ve, { children: ce.map((t, a) => /* @__PURE__ */ c("div", { className: "ecp-vp-error", children: [
+      /* @__PURE__ */ c("strong", { children: [
+        t[0],
+        ":"
+      ] }),
+      " ",
+      t[1]
+    ] }, a)) });
+  const Ue = ke || j ? void 0 : E ? "#6060606a" : "#ffffffab", Oe = ke || j ? void 0 : b.bg;
+  return /* @__PURE__ */ e("div", { ref: Z, className: "ecp-vp-wrapper", style: { backgroundColor: Ue }, children: /* @__PURE__ */ c("div", { className: "ecp-vp-bg", style: { background: Oe }, children: [
+    /* @__PURE__ */ c("div", { className: "ecp-vp-vu-outer", children: [
+      /* @__PURE__ */ e("div", { className: `ecp-vp-vu-bg${E ? " ecp-vp-vu-bg--dark" : " ecp-vp-vu-bg--light"}${R && j ? " ecp-vp-vu-bg--dimmed" : ""}${ke ? " ecp-vp-vu-bg--no-margin" : ""}`, children: /* @__PURE__ */ e("div", { className: "ecp-vp-vu-bars", ref: T }) }),
+      R && /* @__PURE__ */ c("div", { className: `ecp-vp-eq-overlay${E ? " ecp-vp-eq-overlay--dark" : " ecp-vp-eq-overlay--light"}`, children: [
+        /* @__PURE__ */ e("h3", { className: `ecp-vp-eq-title${E ? " ecp-vp-eq-title--dark" : " ecp-vp-eq-title--light"}`, children: "Equalizer" }),
+        /* @__PURE__ */ e("div", { className: "ecp-vp-eq-bands", children: ["bass", "mid", "treble"].map((t) => /* @__PURE__ */ c("div", { className: "ecp-vp-eq-band", children: [
+          /* @__PURE__ */ c("div", { className: "ecp-vp-eq-band-header", children: [
+            /* @__PURE__ */ e("span", { className: `ecp-vp-eq-band-label${E ? " ecp-vp-eq-band-label--dark" : " ecp-vp-eq-band-label--light"}`, children: t.charAt(0).toUpperCase() + t.slice(1) }),
+            /* @__PURE__ */ c("span", { className: `ecp-vp-eq-band-label${E ? " ecp-vp-eq-band-label--dark" : " ecp-vp-eq-band-label--light"}`, children: [
+              Y[t],
+              " dB"
             ] })
           ] }),
-          /* @__PURE__ */ r("div", { children: [
-            /* @__PURE__ */ r("div", { className: "flex justify-between mb-1", children: [
-              /* @__PURE__ */ e("span", { className: `text-xs ${h ? "text-gray-300" : "text-gray-600"}`, children: "Mid" }),
-              /* @__PURE__ */ r("span", { className: `text-xs ${h ? "text-gray-300" : "text-gray-600"}`, children: [
-                j.mid,
-                " dB"
-              ] })
-            ] }),
-            /* @__PURE__ */ r("div", { className: "flex items-center gap-3", children: [
-              /* @__PURE__ */ e("span", { className: `text-xs ${h ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
-              /* @__PURE__ */ e(
-                "input",
-                {
-                  type: "range",
-                  min: "-20",
-                  max: "20",
-                  value: j.mid,
-                  onChange: (t) => ve("mid", parseInt(t.target.value)),
-                  className: "flex-1 h-8 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider",
-                  style: {
-                    background: `linear-gradient(to right, ${o.slider} ${(j.mid + 20) / 40 * 100}%, ${o.slider + "30"} ${(j.mid + 20) / 40 * 100}%)`
-                  }
-                }
-              ),
-              /* @__PURE__ */ e("span", { className: `text-xs ${h ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
-            ] })
-          ] }),
-          /* @__PURE__ */ r("div", { children: [
-            /* @__PURE__ */ r("div", { className: "flex justify-between mb-1", children: [
-              /* @__PURE__ */ e("span", { className: `text-xs ${h ? "text-gray-300" : "text-gray-600"}`, children: "Treble" }),
-              /* @__PURE__ */ r("span", { className: `text-xs ${h ? "text-gray-300" : "text-gray-600"}`, children: [
-                j.treble,
-                " dB"
-              ] })
-            ] }),
-            /* @__PURE__ */ r("div", { className: "flex items-center gap-3", children: [
-              /* @__PURE__ */ e("span", { className: `text-xs ${h ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
-              /* @__PURE__ */ e(
-                "input",
-                {
-                  type: "range",
-                  min: "-20",
-                  max: "20",
-                  value: j.treble,
-                  onChange: (t) => ve("treble", parseInt(t.target.value)),
-                  className: "flex-1 h-8 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider",
-                  style: {
-                    background: `linear-gradient(to right, ${o.slider} ${(j.treble + 20) / 40 * 100}%, ${o.slider + "30"} ${(j.treble + 20) / 40 * 100}%)`
-                  }
-                }
-              ),
-              /* @__PURE__ */ e("span", { className: `text-xs ${h ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
-            ] })
+          /* @__PURE__ */ c("div", { className: "ecp-vp-eq-band-range", children: [
+            /* @__PURE__ */ e("span", { className: `ecp-vp-eq-range-bound${E ? " ecp-vp-eq-range-bound--dark" : " ecp-vp-eq-range-bound--light"}`, children: "-20" }),
+            /* @__PURE__ */ e(
+              "input",
+              {
+                type: "range",
+                min: "-20",
+                max: "20",
+                value: Y[t],
+                onChange: (a) => Te(t, parseInt(a.target.value)),
+                className: "ecp-vp-eq-slider",
+                style: { background: `linear-gradient(to right, ${b.slider} ${(Y[t] + 20) / 40 * 100}%, ${b.slider + "30"} ${(Y[t] + 20) / 40 * 100}%)` }
+              }
+            ),
+            /* @__PURE__ */ e("span", { className: `ecp-vp-eq-range-bound${E ? " ecp-vp-eq-range-bound--dark" : " ecp-vp-eq-range-bound--light"}`, children: "+20" })
           ] })
-        ] }),
-        /* @__PURE__ */ e("div", { className: "flex justify-end mt-4", children: /* @__PURE__ */ e(
-          "button",
-          {
-            onClick: ye,
-            className: `px-3 py-1 rounded text-xs ${h ? "bg-gray-700 text-gray-200 hover:bg-gray-600" : "bg-gray-200 text-gray-700 hover:bg-gray-300"} transition-all`,
-            children: "Reset"
-          }
-        ) })
+        ] }, t)) }),
+        /* @__PURE__ */ e("div", { className: "ecp-vp-eq-footer", children: /* @__PURE__ */ e("button", { onClick: be, className: `ecp-vp-eq-reset${E ? " ecp-vp-eq-reset--dark" : " ecp-vp-eq-reset--light"}`, children: "Reset" }) })
       ] })
     ] }),
-    x.trackName && /* @__PURE__ */ r("div", { className: "mb-6 flex items-center", children: [
-      m && /* @__PURE__ */ e("div", { className: "mr-2 w-12 flex-shrink-0", children: /* @__PURE__ */ e("img", { src: m, alt: "", className: `${M ? "animation-spin" : ""} h-12 w-12 rounded-full` }) }),
-      /* @__PURE__ */ r("div", { className: "w-full min-w-0", children: [
-        /* @__PURE__ */ e("div", { className: `${h ? "text-gray-100" : "text-gray-700"} font-medium truncate`, children: c }),
-        g && typeof g == "string" && /* @__PURE__ */ e("div", { className: `${h ? "text-gray-300" : "text-gray-500"} text-xs`, children: g })
+    y.trackName && /* @__PURE__ */ c("div", { className: "ecp-vp-track", children: [
+      f && /* @__PURE__ */ e("div", { className: "ecp-vp-thumbnail-wrap", children: /* @__PURE__ */ e("img", { src: f, alt: "", className: `ecp-vp-thumbnail${L ? " ecp-animation-spin" : ""}` }) }),
+      /* @__PURE__ */ c("div", { className: "ecp-vp-track-info", children: [
+        /* @__PURE__ */ e("div", { className: `ecp-vp-track-name${E ? " ecp-vp-track-name--dark" : " ecp-vp-track-name--light"}`, children: l }),
+        u && typeof u == "string" && /* @__PURE__ */ e("div", { className: `ecp-vp-track-author${E ? " ecp-vp-track-author--dark" : " ecp-vp-track-author--light"}`, children: u })
       ] })
     ] }),
-    x.seekbar && /* @__PURE__ */ e("div", { className: "mb-6", children: /* @__PURE__ */ r("div", { className: "flex items-center md:gap-1", children: [
-      /* @__PURE__ */ e("span", { className: `text-xs ${h ? "text-gray-100" : "text-gray-600"} font-mono w-12`, children: $e(H) }),
+    y.seekbar && /* @__PURE__ */ e("div", { className: "ecp-vp-seekbar", children: /* @__PURE__ */ c("div", { className: "ecp-vp-seekbar-row", children: [
+      /* @__PURE__ */ e("span", { className: `ecp-vp-time${E ? " ecp-vp-time--dark" : " ecp-vp-time--light"}`, children: qe(B) }),
       /* @__PURE__ */ e(
         "input",
         {
           type: "range",
           min: "0",
           max: "100",
-          value: S > 0 ? H / S * 100 : 0,
+          value: P > 0 ? B / P * 100 : 0,
           onChange: Le,
-          onMouseDown: Pe,
-          onMouseUp: Me,
-          onTouchStart: Pe,
-          onTouchEnd: Me,
-          disabled: !i,
-          className: "flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed",
+          onMouseDown: Ae,
+          onMouseUp: Re,
+          onTouchStart: Ae,
+          onTouchEnd: Re,
+          disabled: !s,
+          className: "ecp-vp-seek-input",
           style: {
-            background: i && S > 0 ? `linear-gradient(to right, ${o.slider} ${H / S * 100}%, ${o.slider + "30"} ${H / S * 100}%)` : o.slider + "30"
+            background: s && P > 0 ? `linear-gradient(to right, ${b.slider} ${B / P * 100}%, ${b.slider + "30"} ${B / P * 100}%)` : b.slider + "30",
+            "--thumb-color": b.slider
           }
         }
       ),
-      /* @__PURE__ */ e("span", { className: `text-xs ${h ? "text-gray-100" : "text-gray-600"} font-mono w-12 text-right`, children: $e(S) })
+      /* @__PURE__ */ e("span", { className: `ecp-vp-time ecp-vp-time--right${E ? " ecp-vp-time--dark" : " ecp-vp-time--light"}`, children: qe(P) })
     ] }) }),
-    /* @__PURE__ */ r("div", { className: `flex flex-wrap items-center ${K < 330 ? "gap-2" : "gap-3"}`, children: [
-      x.play && /* @__PURE__ */ r(
+    /* @__PURE__ */ c("div", { className: `ecp-vp-controls${G < 330 ? " ecp-vp-controls--sm" : ""}`, children: [
+      y.play && /* @__PURE__ */ c(
+        "button",
+        {
+          onClick: xe,
+          disabled: !s,
+          className: `ecp-vp-play-btn${G < 350 ? " ecp-vp-play-btn--compact" : ""}`,
+          style: { backgroundColor: b.button },
+          children: [
+            /* @__PURE__ */ c("div", { className: "ecp-vp-play-icon-wrap", children: [
+              /* @__PURE__ */ e(Pe, { size: 16, style: { position: "absolute", transform: L ? void 0 : "scale(0) translateY(2.5rem)", transition: "all 150ms" } }),
+              /* @__PURE__ */ e(Me, { size: 16, style: { position: "absolute", transform: L ? "scale(0) translateY(-2.5rem)" : void 0, transition: "all 150ms" } })
+            ] }),
+            /* @__PURE__ */ e("span", { style: { display: G < 350 ? "none" : "block" }, children: L ? "Pause" : "Play" })
+          ]
+        }
+      ),
+      y.stop && /* @__PURE__ */ c(
         "button",
         {
           onClick: Ee,
-          disabled: !i,
-          className: `${K < 350 ? "px-3 py-5" : "px-4 py-2 md:w-24"} rounded-full text-sm font-medium text-white disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all hover:opacity-90`,
-          style: { backgroundColor: o.button },
+          disabled: !s,
+          className: `ecp-vp-stop-btn${E ? " ecp-vp-stop-btn--dark" : " ecp-vp-stop-btn--light"}${G >= 600 ? " ecp-vp-stop-btn--wide" : ""}`,
           children: [
-            /* @__PURE__ */ r("div", { className: "relative w-4 flex items-center", children: [
-              /* @__PURE__ */ e(Re, { size: 16, className: `${M ? "" : "scale-0 translate-y-10"} transition-all absolute` }),
-              /* @__PURE__ */ e(Fe, { size: 16, className: `${M ? "scale-0 -translate-y-10" : ""} transition-all absolute` })
-            ] }),
-            /* @__PURE__ */ e("span", { style: { display: K < 350 ? "none" : "block" }, children: M ? "Pause" : "Play" })
+            /* @__PURE__ */ e(Ge, { size: 16 }),
+            /* @__PURE__ */ e("span", { style: { display: G < 600 ? "none" : "block" }, children: "Stop" })
           ]
         }
       ),
-      x.stop && /* @__PURE__ */ r(
+      y.equalizer && /* @__PURE__ */ c(
         "button",
         {
-          onClick: Te,
-          disabled: !i,
-          className: `${h ? "bg-gray-100 text-black" : "bg-gray-700 text-white"} ${K < 600 ? "px-3 py-3" : "px-4 py-2"} rounded-full text-sm font-medium ${h ? "hover:bg-gray-300" : "hover:bg-gray-800"} disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all`,
+          onClick: () => Q(!R),
+          disabled: !s,
+          className: `ecp-vp-eq-btn${R ? " ecp-vp-eq-btn--on" : " ecp-vp-eq-btn--off"}${G >= 600 ? " ecp-vp-eq-btn--wide" : ""}`,
+          style: R ? { backgroundColor: b.button } : {},
           children: [
-            /* @__PURE__ */ e(Ue, { size: 16 }),
-            /* @__PURE__ */ e("span", { style: { display: K < 600 ? "none" : "block" }, children: "Stop" })
+            /* @__PURE__ */ e(Fe, { size: 16 }),
+            /* @__PURE__ */ e("span", { style: { display: G < 600 ? "none" : "block" }, children: "EQ" })
           ]
         }
       ),
-      x.equalizer && /* @__PURE__ */ r(
+      y.loop && /* @__PURE__ */ c(
         "button",
         {
-          onClick: () => F(!R),
-          disabled: !i,
-          className: `${K < 600 ? "px-3 py-3" : "px-4 py-2"} rounded-full text-sm font-medium flex items-center gap-2 transition-all ${R ? "text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-300"} disabled:opacity-40 disabled:cursor-not-allowed`,
-          style: R ? { backgroundColor: o.button } : {},
+          onClick: je,
+          disabled: !s,
+          className: `ecp-vp-loop-btn${V ? " ecp-vp-loop-btn--on" : " ecp-vp-loop-btn--off"}${G >= 700 ? " ecp-vp-loop-btn--wide" : ""}`,
+          style: V ? { backgroundColor: b.button } : {},
           children: [
-            /* @__PURE__ */ e(Ae, { size: 16 }),
-            /* @__PURE__ */ e("span", { style: { display: K < 600 ? "none" : "block" }, children: "EQ" })
+            /* @__PURE__ */ e(ot, { size: 16, className: V ? "ecp-vp-loop-icon--active" : "" }),
+            /* @__PURE__ */ e("span", { style: { display: G < 700 ? "none" : "block" }, children: "Loop" })
           ]
         }
       ),
-      x.loop && /* @__PURE__ */ r(
-        "button",
-        {
-          onClick: Se,
-          disabled: !i,
-          className: `${K < 700 ? "px-3 py-3" : "px-4 py-2"} rounded-full text-sm font-medium flex items-center gap-2 transition-all ${Q ? "text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-300"} disabled:opacity-40 disabled:cursor-not-allowed`,
-          style: Q ? { backgroundColor: o.button } : {},
-          children: [
-            /* @__PURE__ */ e(at, { size: 16, className: `${Q ? "rotate-180" : ""} transition-all` }),
-            /* @__PURE__ */ e("span", { style: { display: K < 700 ? "none" : "block" }, children: "Loop" })
-          ]
-        }
-      ),
-      x.speed && /* @__PURE__ */ e("div", { className: "flex items-center", children: /* @__PURE__ */ r(
-        "select",
-        {
-          value: ue,
-          onChange: Ne,
-          className: `rounded-full text-sm font-medium border-none outline-none cursor-pointer transition-all bg-transparent ${h ? "text-gray-200" : "text-gray-800"}`,
-          children: [
-            /* @__PURE__ */ e("option", { value: "0.5", className: h ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800", children: "0.5x" }),
-            /* @__PURE__ */ e("option", { value: "0.75", className: h ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800", children: "0.75x" }),
-            /* @__PURE__ */ e("option", { value: "1", className: h ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800", children: "1x" }),
-            /* @__PURE__ */ e("option", { value: "1.25", className: h ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800", children: "1.25x" }),
-            /* @__PURE__ */ e("option", { value: "1.5", className: h ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800", children: "1.5x" }),
-            /* @__PURE__ */ e("option", { value: "2", className: h ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800", children: "2x" })
-          ]
-        }
-      ) }),
-      x.volume && /* @__PURE__ */ r("div", { className: "flex items-center gap-1 md:gap-3 ml-auto", children: [
-        /* @__PURE__ */ e(
-          "button",
-          {
-            onClick: ze,
-            className: "p-2 rounded-full hover:bg-gray-100/50 transition-all",
-            children: ae || E === 0 ? /* @__PURE__ */ e(De, { size: 20, className: h ? "text-gray-100" : "text-gray-600" }) : /* @__PURE__ */ e(He, { size: 20, className: h ? "text-gray-100" : "text-gray-600" })
-          }
-        ),
+      y.speed && /* @__PURE__ */ e("div", { className: "ecp-vp-speed-wrap", children: /* @__PURE__ */ e("select", { value: ue, onChange: Be, className: `ecp-vp-speed-select${E ? " ecp-vp-speed-select--dark" : " ecp-vp-speed-select--light"}`, children: ["0.5", "0.75", "1", "1.25", "1.5", "2"].map((t) => /* @__PURE__ */ c("option", { value: t, className: E ? "ecp-vp-speed-option--dark" : "ecp-vp-speed-option--light", children: [
+        t,
+        "x"
+      ] }, t)) }) }),
+      y.volume && /* @__PURE__ */ c("div", { className: "ecp-vp-volume", children: [
+        /* @__PURE__ */ e("button", { onClick: Se, className: "ecp-vp-mute-btn", children: ae || k === 0 ? /* @__PURE__ */ e(_e, { size: 20, className: E ? "ecp-vp-mute-icon--dark" : "ecp-vp-mute-icon--light" }) : /* @__PURE__ */ e(De, { size: 20, className: E ? "ecp-vp-mute-icon--dark" : "ecp-vp-mute-icon--light" }) }),
         /* @__PURE__ */ e(
           "input",
           {
             type: "range",
             min: "0",
             max: "100",
-            value: E,
-            onChange: je,
-            className: "hide-for-xs w-24 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer",
+            value: k,
+            onChange: ze,
+            className: "ecp-vp-volume-slider",
             style: {
-              background: `linear-gradient(to right, ${o.slider} ${E}%, ${o.slider + "30"} ${E}%)`,
-              display: K < 460 ? "none" : "block"
+              background: `linear-gradient(to right, ${b.slider} ${k}%, ${b.slider + "30"} ${k}%)`,
+              display: G < 460 ? "none" : "block"
             }
           }
         ),
-        /* @__PURE__ */ r("span", { style: { display: K < 800 ? "none" : "block" }, className: `hidden sm:block text-xs ${h ? "text-gray-100" : "text-gray-700"} font-mono w-10 text-right`, children: [
-          E,
-          "%"
-        ] })
+        /* @__PURE__ */ c(
+          "span",
+          {
+            className: `ecp-vp-volume-pct${E ? " ecp-vp-volume-pct--dark" : " ecp-vp-volume-pct--light"}`,
+            style: { display: G < 800 ? "none" : "block" },
+            children: [
+              k,
+              "%"
+            ]
+          }
+        )
       ] })
-    ] }),
-    /* @__PURE__ */ e("style", { children: `
-                input[type="range"]::-webkit-slider-thumb {
-                    -webkit-appearance: none;
-                    appearance: none;
-                    width: 16px;
-                    height: 16px;
-                    border-radius: 50%;
-                    background: ${o.slider};
-                    cursor: pointer;
-                    border: 2px solid white;
-                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-                }
-                
-                input[type="range"]::-moz-range-thumb {
-                    width: 16px;
-                    height: 16px;
-                    border-radius: 50%;
-                    background: ${o.slider};
-                    cursor: pointer;
-                    border: 2px solid white;
-                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-                }
-                input[type="range"].eq-slider::-webkit-slider-thumb {
-                    -webkit-appearance: none;
-                    appearance: none;
-                    width: 0;
-                    height: 0;
-                    background: transparent;
-                    border: none;
-                    box-shadow: none;
-                }
-                input[type="range"].eq-slider::-moz-range-thumb {
-                    width: 0;
-                    height: 0;
-                    background: transparent;
-                    border: none;
-                    box-shadow: none;
-                }
-                .hide-for-xs {
-                    display: flex;
-                }
-                @media (max-width: 480px) {
-                    .hide-for-xs {
-                        display: none;
-                    }
-                }
-                .animation-spin {
-                    animation: spin 15s infinite linear;
-                }
-
-                @keyframes spin {
-                    from {
-                        transform: rotate(0deg);
-                    }
-                    to {
-                        transform: rotate(360deg)
-                    }
-                }
-            ` })
+    ] })
   ] }) });
 }
-function ft({
-  audio: i,
-  gradient: c = ["#cd7eff", "#ff00f2"],
-  background: g = "#f4e4ffff",
-  autoPlay: p = !1,
-  thumbnail: q = null,
-  width: m,
-  equalizer: x = {
-    bass: 0,
-    mid: 0,
-    treble: 0
-  },
-  mode: v = "light"
+function bt({
+  audio: s,
+  gradient: l = ["#cd7eff", "#ff00f2"],
+  background: u = "#f4e4ffff",
+  autoPlay: v = !1,
+  thumbnail: C = null,
+  width: f,
+  equalizer: y = { bass: 0, mid: 0, treble: 0 },
+  mode: O = "light"
 }) {
-  const [P, T] = f(!1), [U, I] = f(0), [M, _] = f(0), [H, z] = f(!1), [S, N] = f(80), [E, oe] = f(1), [ae, fe] = f([]), [Q, G] = f(null), [se, le] = f(!1), [O, de] = f({
-    bass: x.bass || 0,
-    mid: x.mid || 0,
-    treble: x.treble || 0
-  }), R = y(null), F = y(null), j = y(null), ie = y(null), ue = y(null), ee = y(null), K = () => {
-    const a = [];
-    for (let d = 0; d < 100; d++) {
-      const b = 20 + Math.random() * 60;
-      a.push(b);
-    }
-    return a;
+  const [x, j] = m(!1), [I, M] = m(0), [L, H] = m(0), [B, F] = m(!1), [P, D] = m(80), [k, z] = m(1), [ae, me] = m([]), [V, ee] = m(null), [se, ie] = m(!1), [ce, de] = m({ bass: y.bass || 0, mid: y.mid || 0, treble: y.treble || 0 }), R = h(null), Q = h(null), Y = h(null), oe = h(null), ue = h(null), te = h(null), G = () => {
+    const r = [];
+    for (let d = 0; d < 100; d++) r.push(20 + Math.random() * 60);
+    return r;
   };
-  C(() => {
-    if (!i)
-      return;
-    if (!Array.isArray(c) || c.length < 2) {
-      G("Gradient must be an array with at least 2 colors");
+  $(() => {
+    if (!s) return;
+    if (!Array.isArray(l) || l.length < 2) {
+      ee("Gradient must be an array with at least 2 colors");
       return;
     }
-    const a = R.current;
-    if (!a) return;
-    const d = () => I(a.currentTime), b = () => {
-      _(a.duration), fe(K());
-    }, B = () => T(!1), D = (J) => {
-      var o, h;
-      G(`Audio error: ${((h = (o = J.target) == null ? void 0 : o.error) == null ? void 0 : h.message) || "Failed to load audio"}`);
+    const r = R.current;
+    if (!r) return;
+    const d = () => M(r.currentTime), g = () => {
+      H(r.duration), me(G());
+    }, S = () => j(!1), _ = (J) => {
+      var b, E;
+      return ee(`Audio error: ${((E = (b = J.target) == null ? void 0 : b.error) == null ? void 0 : E.message) || "Failed to load audio"}`);
     };
-    return a.addEventListener("timeupdate", d), a.addEventListener("loadedmetadata", b), a.addEventListener("ended", B), a.addEventListener("error", D), () => {
-      a.removeEventListener("timeupdate", d), a.removeEventListener("loadedmetadata", b), a.removeEventListener("ended", B), a.removeEventListener("error", D);
+    return r.addEventListener("timeupdate", d), r.addEventListener("loadedmetadata", g), r.addEventListener("ended", S), r.addEventListener("error", _), () => {
+      r.removeEventListener("timeupdate", d), r.removeEventListener("loadedmetadata", g), r.removeEventListener("ended", S), r.removeEventListener("error", _);
     };
-  }, [i, c, v]), C(() => {
-    i && R.current && p && (R.current.play().catch((a) => {
-      console.error("Play failed:", a), T(!1);
-    }), T(!0));
-  }, [i]), C(() => {
-    if (R.current && !F.current && R.current) {
-      const a = window.AudioContext || window.webkitAudioContext;
-      if (a) {
-        const d = new a();
-        F.current = d;
-        const b = d.createMediaElementSource(R.current);
-        j.current = b;
-        const B = d.createBiquadFilter();
-        B.type = "lowshelf", B.frequency.value = 200, ie.current = B;
-        const D = d.createBiquadFilter();
-        D.type = "peaking", D.frequency.value = 1e3, D.Q.value = 1, ue.current = D;
+  }, [s, l, O]), $(() => {
+    s && R.current && v && (R.current.play().catch((r) => {
+      console.error("Play failed:", r), j(!1);
+    }), j(!0));
+  }, [s]), $(() => {
+    if (R.current && !Q.current && R.current) {
+      const r = window.AudioContext || window.webkitAudioContext;
+      if (r) {
+        const d = new r();
+        Q.current = d;
+        const g = d.createMediaElementSource(R.current);
+        Y.current = g;
+        const S = d.createBiquadFilter();
+        S.type = "lowshelf", S.frequency.value = 200, oe.current = S;
+        const _ = d.createBiquadFilter();
+        _.type = "peaking", _.frequency.value = 1e3, _.Q.value = 1, ue.current = _;
         const J = d.createBiquadFilter();
-        J.type = "highshelf", J.frequency.value = 3e3, ee.current = J, b.connect(B).connect(D).connect(J).connect(d.destination);
+        J.type = "highshelf", J.frequency.value = 3e3, te.current = J, g.connect(S).connect(_).connect(J).connect(d.destination);
       }
     }
-  }, [i]), C(() => {
-    R.current && (R.current.volume = H ? 0 : S / 100);
-  }, [S, H]), C(() => {
-    R.current && (R.current.playbackRate = E);
-  }, [E]);
-  const k = () => {
-    R.current && (P ? R.current.pause() : R.current.play().catch((a) => {
-      G(`Playback failed: ${a instanceof Error ? a.message : String(a)}`);
-    }), T(!P));
-  }, u = () => {
-    z(!H);
-  }, A = (a) => {
-    N(parseInt(a.target.value)), H && parseInt(a.target.value) > 0 && z(!1);
-  }, X = (a) => {
-    oe(parseFloat(a.target.value));
-  }, me = (a) => {
-    const d = a.currentTarget.getBoundingClientRect(), D = (a.clientX - d.left) / d.width * M;
-    R.current && (R.current.currentTime = D, I(D));
-  }, V = (a, d) => {
-    de((b) => ({ ...b, [a]: d })), a === "bass" && ie.current && (ie.current.gain.value = d), a === "mid" && ue.current && (ue.current.gain.value = d), a === "treble" && ee.current && (ee.current.gain.value = d);
-  }, te = () => {
-    V("bass", 0), V("mid", 0), V("treble", 0);
-  }, Z = (a) => {
-    if (isNaN(a)) return "0:00";
-    const d = Math.floor(a / 60), b = Math.floor(a % 60);
-    return `${d}:${b.toString().padStart(2, "0")}`;
-  }, $ = M > 0 ? U / M * 100 : 0;
-  if (Q)
-    return /* @__PURE__ */ e("div", { className: "w-lg p-6 rounded-xl", style: { background: g }, children: /* @__PURE__ */ r("div", { className: `text-center ${v === "dark" ? "text-red-300" : "text-red-600"}`, children: [
-      /* @__PURE__ */ e("p", { className: "font-medium", children: "Error" }),
-      /* @__PURE__ */ e("p", { className: "text-sm", children: Q })
-    ] }) });
-  if (!i) return null;
-  const re = v === "dark" ? "text-gray-300" : "text-gray-700", Y = v === "dark" ? "text-gray-400" : "text-gray-500";
-  return /* @__PURE__ */ r("div", { className: "w-full max-w-lg relative", style: { width: m + "px" }, children: [
-    /* @__PURE__ */ e("audio", { ref: R, src: i }),
-    /* @__PURE__ */ e("div", { className: "rounded-2xl shadow-2xl", children: /* @__PURE__ */ r("div", { className: "rounded-2xl p-6 backdrop-blur-xl", style: { background: g }, children: [
-      q && /* @__PURE__ */ e("div", { className: "w-full p-4", children: /* @__PURE__ */ e("img", { src: q, alt: "", className: "w-full aspect-square rounded-xl" }) }),
-      /* @__PURE__ */ r(
-        "div",
-        {
-          className: "relative h-20 mb-6 cursor-pointer",
-          onClick: me,
-          children: [
-            /* @__PURE__ */ e("div", { className: "absolute inset-0 flex items-end justify-center h-full w-full gap-px", children: ae.map((a, d) => {
-              const B = d / ae.length * 100 <= $;
-              return /* @__PURE__ */ e(
-                "div",
-                {
-                  className: "w-1 rounded-t transition-all duration-150",
-                  style: {
-                    height: `${a}%`,
-                    background: B ? c[0] : c[1],
-                    opacity: B ? 1 : 0.4
-                  }
-                },
-                d
-              );
-            }) }),
-            /* @__PURE__ */ e(
-              "div",
-              {
-                className: "absolute top-0 h-full w-1 bg-white border-r border-black rounded-full transition-all duration-150",
-                style: { left: `${$}%`, transform: "translateX(-50%)" }
+  }, [s]), $(() => {
+    R.current && (R.current.volume = B ? 0 : P / 100);
+  }, [P, B]), $(() => {
+    R.current && (R.current.playbackRate = k);
+  }, [k]);
+  const w = () => {
+    R.current && (x ? R.current.pause() : R.current.play().catch((r) => ee(`Playback failed: ${r instanceof Error ? r.message : String(r)}`)), j(!x));
+  }, p = () => F(!B), A = (r) => {
+    D(parseInt(r.target.value)), B && parseInt(r.target.value) > 0 && F(!1);
+  }, K = (r) => z(parseFloat(r.target.value)), fe = (r) => {
+    const d = r.currentTarget.getBoundingClientRect(), S = (r.clientX - d.left) / d.width * L;
+    R.current && (R.current.currentTime = S, M(S));
+  }, W = (r, d) => {
+    de((g) => ({ ...g, [r]: d })), r === "bass" && oe.current && (oe.current.gain.value = d), r === "mid" && ue.current && (ue.current.gain.value = d), r === "treble" && te.current && (te.current.gain.value = d);
+  }, re = () => {
+    W("bass", 0), W("mid", 0), W("treble", 0);
+  }, X = (r) => {
+    if (isNaN(r)) return "0:00";
+    const d = Math.floor(r / 60), g = Math.floor(r % 60);
+    return `${d}:${g.toString().padStart(2, "0")}`;
+  }, N = L > 0 ? I / L * 100 : 0, T = O === "dark";
+  if (V)
+    return /* @__PURE__ */ c("div", { className: "ecp-wave-error", style: { background: u }, children: [
+      /* @__PURE__ */ e("p", { className: `ecp-wave-error-title${T ? " ecp-wave-error--dark" : " ecp-wave-error--light"}`, children: "Error" }),
+      /* @__PURE__ */ e("p", { className: `ecp-wave-error-msg${T ? " ecp-wave-error--dark" : " ecp-wave-error--light"}`, children: V })
+    ] });
+  if (!s) return null;
+  const Z = T ? "#9ca3af" : "#6b7280";
+  return /* @__PURE__ */ c("div", { className: "ecp-wave-outer", style: { width: f ? `${f}px` : void 0 }, children: [
+    /* @__PURE__ */ e("audio", { ref: R, src: s, className: "ecp-wave-audio-el" }),
+    /* @__PURE__ */ e("div", { className: "ecp-wave-card", children: /* @__PURE__ */ c("div", { className: "ecp-wave-card-inner", style: { background: u }, children: [
+      C && /* @__PURE__ */ e("div", { className: "ecp-wave-thumbnail-wrap", children: /* @__PURE__ */ e("img", { src: C, alt: "", className: "ecp-wave-thumbnail" }) }),
+      /* @__PURE__ */ c("div", { className: "ecp-wave-seek", onClick: fe, children: [
+        /* @__PURE__ */ e("div", { className: "ecp-wave-bars", children: ae.map((r, d) => {
+          const g = d / ae.length * 100 <= N;
+          return /* @__PURE__ */ e(
+            "div",
+            {
+              className: "ecp-wave-bar",
+              style: {
+                height: `${r}%`,
+                background: g ? l[0] : l[1],
+                opacity: g ? 1 : 0.4
               }
-            )
-          ]
-        }
-      ),
-      /* @__PURE__ */ r("div", { className: `flex justify-between text-sm ${Y} mb-6`, children: [
-        /* @__PURE__ */ e("span", { children: Z(U) }),
-        /* @__PURE__ */ e("span", { children: Z(M) })
+            },
+            d
+          );
+        }) }),
+        /* @__PURE__ */ e("div", { className: "ecp-wave-progress-line", style: { left: `${N}%` } })
       ] }),
-      /* @__PURE__ */ r("div", { className: "grid grid-cols-3 items-center justify-between mb-4", children: [
-        /* @__PURE__ */ r("div", { className: "flex items-center gap-2", children: [
+      /* @__PURE__ */ c("div", { className: "ecp-wave-times", style: { color: Z }, children: [
+        /* @__PURE__ */ e("span", { children: X(I) }),
+        /* @__PURE__ */ e("span", { children: X(L) })
+      ] }),
+      /* @__PURE__ */ c("div", { className: "ecp-wave-controls", children: [
+        /* @__PURE__ */ c("div", { className: "ecp-wave-left-controls", children: [
           /* @__PURE__ */ e(
             "button",
             {
-              onClick: u,
-              className: "p-2 rounded-full transition-all",
-              style: {
-                background: `linear-gradient(135deg, ${c[0]}, ${c[1]})`
-              },
-              children: H || S === 0 ? /* @__PURE__ */ e(De, { className: "w-4 h-4 text-white" }) : /* @__PURE__ */ e(He, { className: "w-4 h-4 text-white" })
+              onClick: p,
+              className: "ecp-wave-vol-btn",
+              style: { background: `linear-gradient(135deg, ${l[0]}, ${l[1]})` },
+              children: B || P === 0 ? /* @__PURE__ */ e(_e, { style: { width: "1rem", height: "1rem", color: "white" } }) : /* @__PURE__ */ e(De, { style: { width: "1rem", height: "1rem", color: "white" } })
             }
           ),
           /* @__PURE__ */ e(
@@ -1079,285 +881,156 @@ function ft({
               type: "range",
               min: "0",
               max: "100",
-              value: S,
+              value: P,
               onChange: A,
-              className: `${m ? "" : "hidden sm:block"} w-20 h-1.5 rounded-lg appearance-none cursor-pointer`,
+              className: "ecp-wave-vol-slider",
               style: {
-                background: `linear-gradient(to right, ${c[0]} ${S}%, ${v === "dark" ? "#374151" : "#d1d5db"} ${S}%)`,
-                display: m && m < 400 ? "none" : void 0
+                background: `linear-gradient(to right, ${l[0]} ${P}%, ${T ? "#374151" : "#d1d5db"} ${P}%)`,
+                display: f && f < 400 ? "none" : void 0
               }
             }
           ),
-          m && m < 400 && /* @__PURE__ */ e("div", { className: "flex items-center justify-end", children: /* @__PURE__ */ e(
+          f && f < 400 && /* @__PURE__ */ e(
             "button",
             {
-              onClick: () => le(!se),
-              className: "p-2 rounded-full transition-all",
-              style: {
-                background: `linear-gradient(135deg, ${c[0]}, ${c[1]})`
-              },
-              children: /* @__PURE__ */ e(Ae, { className: "w-4 h-4 text-white" })
+              onClick: () => ie(!se),
+              className: "ecp-wave-eq-btn",
+              style: { background: `linear-gradient(135deg, ${l[0]}, ${l[1]})` },
+              children: /* @__PURE__ */ e(Fe, { style: { width: "1rem", height: "1rem", color: "white" } })
             }
-          ) })
+          )
         ] }),
-        /* @__PURE__ */ e("div", { className: "flex justify-center", children: /* @__PURE__ */ e(
+        /* @__PURE__ */ e("div", { className: "ecp-wave-center-controls", children: /* @__PURE__ */ e(
           "button",
           {
-            onClick: k,
-            className: "p-4 rounded-full transition-all hover:scale-105 shadow-lg",
-            style: {
-              background: `linear-gradient(135deg, ${c[0]}, ${c[1]})`
-            },
-            children: P ? /* @__PURE__ */ e(Re, { className: "w-6 h-6 text-white fill-white" }) : /* @__PURE__ */ e(Fe, { className: "w-6 h-6 text-white fill-white" })
+            onClick: w,
+            className: "ecp-wave-play-btn",
+            style: { background: `linear-gradient(135deg, ${l[0]}, ${l[1]})` },
+            children: x ? /* @__PURE__ */ e(Pe, { style: { width: "1.5rem", height: "1.5rem", color: "white", fill: "white" } }) : /* @__PURE__ */ e(Me, { style: { width: "1.5rem", height: "1.5rem", color: "white", fill: "white" } })
           }
         ) }),
-        /* @__PURE__ */ r("div", { className: "flex items-center gap-3", children: [
-          /* @__PURE__ */ e("div", { className: "flex items-center justify-end", children: /* @__PURE__ */ r(
+        /* @__PURE__ */ c("div", { className: "ecp-wave-right-controls", children: [
+          /* @__PURE__ */ e(
             "select",
             {
-              value: E,
-              style: { background: g, color: c[0] },
-              onChange: X,
-              className: `py-1 px-2 rounded-lg text-sm ${re} ${v === "dark" ? "bg-gray-800" : "bg-gray-100"}`,
-              children: [
-                /* @__PURE__ */ e("option", { value: "0.5", children: "0.5x" }),
-                /* @__PURE__ */ e("option", { value: "0.75", children: "0.75x" }),
-                /* @__PURE__ */ e("option", { value: "1", children: "1x" }),
-                /* @__PURE__ */ e("option", { value: "1.25", children: "1.25x" }),
-                /* @__PURE__ */ e("option", { value: "1.5", children: "1.5x" }),
-                /* @__PURE__ */ e("option", { value: "2", children: "2x" })
-              ]
+              value: k,
+              onChange: K,
+              className: `ecp-wave-speed-select${T ? " ecp-wave-speed-select--dark" : " ecp-wave-speed-select--light"}`,
+              style: { background: u, color: l[0] },
+              children: ["0.5", "0.75", "1", "1.25", "1.5", "2"].map((r) => /* @__PURE__ */ c("option", { value: r, children: [
+                r,
+                "x"
+              ] }, r))
             }
-          ) }),
-          !(m && m < 400) && /* @__PURE__ */ e("div", { className: "flex items-center justify-end", children: /* @__PURE__ */ e(
+          ),
+          !(f && f < 400) && /* @__PURE__ */ e(
             "button",
             {
-              onClick: () => le(!se),
-              className: "p-2 rounded-full transition-all",
-              style: {
-                background: `linear-gradient(135deg, ${c[0]}, ${c[1]})`
-              },
-              children: /* @__PURE__ */ e(Ae, { className: "w-4 h-4 text-white" })
+              onClick: () => ie(!se),
+              className: "ecp-wave-eq-btn",
+              style: { background: `linear-gradient(135deg, ${l[0]}, ${l[1]})` },
+              children: /* @__PURE__ */ e(Fe, { style: { width: "1rem", height: "1rem", color: "white" } })
             }
-          ) })
+          )
         ] })
       ] })
     ] }) }),
-    se && /* @__PURE__ */ e("div", { className: "absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center z-10 rounded-2xl p-4", children: /* @__PURE__ */ r("div", { className: `max-w-xs w-full p-4 pt-2 rounded-xl ${v === "dark" ? "bg-gray-800" : "bg-white"}`, children: [
-      /* @__PURE__ */ e("h3", { className: `text-lg font-medium mb-2 ${v === "dark" ? "text-gray-200" : "text-gray-700"}`, children: "Equalizer" }),
-      /* @__PURE__ */ r("div", { className: "space-y-4", children: [
-        /* @__PURE__ */ r("div", { children: [
-          /* @__PURE__ */ r("div", { className: "flex justify-between mb-1", children: [
-            /* @__PURE__ */ e("span", { className: `text-xs ${v === "dark" ? "text-gray-300" : "text-gray-600"}`, children: "Bass" }),
-            /* @__PURE__ */ r("span", { className: `text-xs ${v === "dark" ? "text-gray-300" : "text-gray-600"}`, children: [
-              O.bass,
-              " dB"
-            ] })
-          ] }),
-          /* @__PURE__ */ r("div", { className: "flex items-center gap-3", children: [
-            /* @__PURE__ */ e("span", { className: `text-xs ${v === "dark" ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
-            /* @__PURE__ */ e(
-              "input",
-              {
-                type: "range",
-                min: "-20",
-                max: "20",
-                value: O.bass,
-                onChange: (a) => V("bass", parseInt(a.target.value)),
-                className: "flex-1 h-4 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider",
-                style: {
-                  background: `linear-gradient(to right, ${c[0]} ${(O.bass + 20) / 40 * 100}%, ${c[1] + "30"} ${(O.bass + 20) / 40 * 100}%)`
-                }
-              }
-            ),
-            /* @__PURE__ */ e("span", { className: `text-xs ${v === "dark" ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
+    se && /* @__PURE__ */ e("div", { className: "ecp-wave-eq-overlay", children: /* @__PURE__ */ c("div", { className: `ecp-wave-eq-panel${T ? " ecp-wave-eq-panel--dark" : " ecp-wave-eq-panel--light"}`, children: [
+      /* @__PURE__ */ e("h3", { className: `ecp-wave-eq-title${T ? " ecp-wave-eq-title--dark" : " ecp-wave-eq-title--light"}`, children: "Equalizer" }),
+      /* @__PURE__ */ e("div", { className: "ecp-wave-eq-bands", children: ["bass", "mid", "treble"].map((r) => /* @__PURE__ */ c("div", { children: [
+        /* @__PURE__ */ c("div", { className: "ecp-wave-eq-band-header", children: [
+          /* @__PURE__ */ e("span", { className: T ? "ecp-wave-eq-label--dark" : "ecp-wave-eq-label--light", children: r.charAt(0).toUpperCase() + r.slice(1) }),
+          /* @__PURE__ */ c("span", { className: T ? "ecp-wave-eq-label--dark" : "ecp-wave-eq-label--light", children: [
+            ce[r],
+            " dB"
           ] })
         ] }),
-        /* @__PURE__ */ r("div", { children: [
-          /* @__PURE__ */ r("div", { className: "flex justify-between mb-1", children: [
-            /* @__PURE__ */ e("span", { className: `text-xs ${v === "dark" ? "text-gray-300" : "text-gray-600"}`, children: "Mid" }),
-            /* @__PURE__ */ r("span", { className: `text-xs ${v === "dark" ? "text-gray-300" : "text-gray-600"}`, children: [
-              O.mid,
-              " dB"
-            ] })
-          ] }),
-          /* @__PURE__ */ r("div", { className: "flex items-center gap-3", children: [
-            /* @__PURE__ */ e("span", { className: `text-xs ${v === "dark" ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
-            /* @__PURE__ */ e(
-              "input",
-              {
-                type: "range",
-                min: "-20",
-                max: "20",
-                value: O.mid,
-                onChange: (a) => V("mid", parseInt(a.target.value)),
-                className: "flex-1 h-4 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider",
-                style: {
-                  background: `linear-gradient(to right, ${c[0]} ${(O.mid + 20) / 40 * 100}%, ${c[1] + "30"} ${(O.mid + 20) / 40 * 100}%)`
-                }
-              }
-            ),
-            /* @__PURE__ */ e("span", { className: `text-xs ${v === "dark" ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
-          ] })
-        ] }),
-        /* @__PURE__ */ r("div", { children: [
-          /* @__PURE__ */ r("div", { className: "flex justify-between mb-1", children: [
-            /* @__PURE__ */ e("span", { className: `text-xs ${v === "dark" ? "text-gray-300" : "text-gray-600"}`, children: "Treble" }),
-            /* @__PURE__ */ r("span", { className: `text-xs ${v === "dark" ? "text-gray-300" : "text-gray-600"}`, children: [
-              O.treble,
-              " dB"
-            ] })
-          ] }),
-          /* @__PURE__ */ r("div", { className: "flex items-center gap-3", children: [
-            /* @__PURE__ */ e("span", { className: `text-xs ${v === "dark" ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
-            /* @__PURE__ */ e(
-              "input",
-              {
-                type: "range",
-                min: "-20",
-                max: "20",
-                value: O.treble,
-                onChange: (a) => V("treble", parseInt(a.target.value)),
-                className: "flex-1 h-4 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider",
-                style: {
-                  background: `linear-gradient(to right, ${c[0]} ${(O.treble + 20) / 40 * 100}%, ${c[1] + "30"} ${(O.treble + 20) / 40 * 100}%)`
-                }
-              }
-            ),
-            /* @__PURE__ */ e("span", { className: `text-xs ${v === "dark" ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
-          ] })
+        /* @__PURE__ */ c("div", { className: "ecp-wave-eq-range-row", children: [
+          /* @__PURE__ */ e("span", { className: T ? "ecp-wave-eq-bound--dark" : "ecp-wave-eq-bound--light", children: "-20" }),
+          /* @__PURE__ */ e(
+            "input",
+            {
+              type: "range",
+              min: "-20",
+              max: "20",
+              value: ce[r],
+              onChange: (d) => W(r, parseInt(d.target.value)),
+              className: "ecp-wave-eq-slider",
+              style: { background: `linear-gradient(to right, ${l[0]} ${(ce[r] + 20) / 40 * 100}%, ${l[1] + "30"} ${(ce[r] + 20) / 40 * 100}%)` }
+            }
+          ),
+          /* @__PURE__ */ e("span", { className: T ? "ecp-wave-eq-bound--dark" : "ecp-wave-eq-bound--light", children: "+20" })
         ] })
-      ] }),
-      /* @__PURE__ */ r("div", { className: "flex justify-between mt-6", children: [
-        /* @__PURE__ */ e(
-          "button",
-          {
-            onClick: te,
-            className: `px-3 py-1 rounded text-xs ${v === "dark" ? "bg-gray-700 text-gray-200 hover:bg-gray-600" : "bg-gray-200 text-gray-700 hover:bg-gray-300"} transition-all`,
-            children: "Reset"
-          }
-        ),
-        /* @__PURE__ */ e(
-          "button",
-          {
-            onClick: () => le(!1),
-            className: `px-3 py-1 rounded text-xs ${v === "dark" ? "bg-gray-700 text-gray-200 hover:bg-gray-600" : "bg-gray-200 text-gray-700 hover:bg-gray-300"} transition-all`,
-            children: "Close"
-          }
-        )
+      ] }, r)) }),
+      /* @__PURE__ */ c("div", { className: "ecp-wave-eq-footer", children: [
+        /* @__PURE__ */ e("button", { onClick: re, className: `ecp-wave-eq-footer-btn${T ? " ecp-wave-eq-footer-btn--dark" : " ecp-wave-eq-footer-btn--light"}`, children: "Reset" }),
+        /* @__PURE__ */ e("button", { onClick: () => ie(!1), className: `ecp-wave-eq-footer-btn${T ? " ecp-wave-eq-footer-btn--dark" : " ecp-wave-eq-footer-btn--light"}`, children: "Close" })
       ] })
-    ] }) }),
-    /* @__PURE__ */ e("style", { children: `
-                input[type="range"].eq-slider::-webkit-slider-thumb {
-                    -webkit-appearance: none;
-                    appearance: none;
-                    width: 0;
-                    height: 0;
-                    background: transparent;
-                    border: none;
-                    box-shadow: none;
-                }
-                input[type="range"].eq-slider::-moz-range-thumb {
-                    width: 0;
-                    height: 0;
-                    background: transparent;
-                    border: none;
-                    box-shadow: none;
-                }
-            ` })
+    ] }) })
   ] });
 }
-function mt({ audio: i, thumbnail: c, gradient: g = ["#cd7eff", "#fe59f6"], background: p = "#1f273a", autoPlay: q = !1 }) {
-  const [m, x] = f(!1), [, v] = f(0), P = y(null), [T, U] = f(0), [I, M] = f(0), [_, H] = f(0);
-  C(() => {
-    const N = P.current;
-    if (!N) return;
-    const E = () => v(N.currentTime);
-    return N.addEventListener("timeupdate", E), () => N.removeEventListener("timeupdate", E);
-  }, []), C(() => {
-    const N = setInterval(() => {
-      m && U((E) => E + 0.1);
+function gt({ audio: s, thumbnail: l, gradient: u = ["#cd7eff", "#fe59f6"], background: v = "#1f273a", autoPlay: C = !1 }) {
+  const [f, y] = m(!1), [, O] = m(0), x = h(null), [j, I] = m(0), [M, L] = m(0), [H, B] = m(0);
+  $(() => {
+    const k = x.current;
+    if (!k) return;
+    const z = () => O(k.currentTime);
+    return k.addEventListener("timeupdate", z), () => k.removeEventListener("timeupdate", z);
+  }, []), $(() => {
+    const k = setInterval(() => {
+      f && I((z) => z + 0.1);
     }, 100);
-    return () => clearInterval(N);
-  }, [m]), C(() => {
-    const N = setInterval(() => {
-      m && H((E) => E + 0.1);
+    return () => clearInterval(k);
+  }, [f]), $(() => {
+    const k = setInterval(() => {
+      f && B((z) => z + 0.1);
     }, 100);
-    return () => clearInterval(N);
-  }, [m]), C(() => {
-    i && P.current && q && (P.current.play().catch(() => x(!1)), x(!0));
-  }, [i]), C(() => {
-    const N = P.current;
-    if (!N) return;
-    const E = () => {
-      M(N.duration), console.log("Audio duration:", N.duration);
-    };
-    return H(0), N.addEventListener("loadedmetadata", E), () => {
-      N.removeEventListener("loadedmetadata", E);
-    };
-  }, [i]);
-  const z = () => {
-    P.current && (m ? P.current.pause() : P.current.play().catch((N) => console.error("NanoPlayer play failed:", N)), x(!m));
+    return () => clearInterval(k);
+  }, [f]), $(() => {
+    s && x.current && C && (x.current.play().catch(() => y(!1)), y(!0));
+  }, [s]), $(() => {
+    const k = x.current;
+    if (!k) return;
+    const z = () => L(k.duration);
+    return B(0), k.addEventListener("loadedmetadata", z), () => k.removeEventListener("loadedmetadata", z);
+  }, [s]);
+  const F = () => {
+    x.current && (f ? x.current.pause() : x.current.play().catch((k) => console.error("NanoPlayer play failed:", k)), y(!f));
   };
-  if (!i) return null;
-  const S = {
-    background: `linear-gradient(135deg, ${g[0]}, ${g[1]})`
-  };
-  return /* @__PURE__ */ r(
+  if (!s) return null;
+  const P = `linear-gradient(135deg, ${u[0]}, ${u[1]})`, D = `${(M > 0 ? H / M : 0) * 100}%`;
+  return /* @__PURE__ */ c(
     "div",
     {
-      style: { backgroundColor: p },
-      className: `
-                relative overflow-hidden inline-flex flex-col 
-                ${c ? "rounded-2xl" : "rounded-full"} 
-                px-3 py-2 shadow-lg
-                ${c ? "w-[120px] h-[150px]" : "w-[110px] h-[40px]"}
-            `,
+      className: `ecp-nano-wrapper${l ? " ecp-nano-wrapper--card" : " ecp-nano-wrapper--pill"}`,
+      style: { backgroundColor: v },
       children: [
         /* @__PURE__ */ e(
           "audio",
           {
-            ref: P,
-            src: i,
+            ref: x,
+            src: s,
             onEnded: () => {
-              x(!1), H(0);
+              y(!1), B(0);
             }
           }
         ),
-        /* @__PURE__ */ e(
-          "div",
-          {
-            style: {
-              width: `${(I > 0 ? _ / I : 0) * 100}%`,
-              backgroundImage: S.background
-            },
-            className: "absolute top-0 left-0 h-full opacity-20"
-          }
-        ),
-        /* @__PURE__ */ r("div", { className: "absolute flex flex-col", children: [
-          c && /* @__PURE__ */ e("div", { className: "w-24 pb-2", children: /* @__PURE__ */ e("img", { src: c, alt: "", className: "w-24 aspect-square rounded-xl" }) }),
-          /* @__PURE__ */ r("div", { className: "flex items-center gap-2", children: [
-            /* @__PURE__ */ e(
-              "button",
-              {
-                onClick: z,
-                style: S,
-                className: "p-1.5 rounded-full hover:scale-110 transition-transform flex-shrink-0",
-                children: m ? /* @__PURE__ */ e(Re, { fill: p, className: "w-3 h-3 text-transparent" }) : /* @__PURE__ */ e(Fe, { fill: p, className: "w-3 h-3 text-transparent" })
-              }
-            ),
-            /* @__PURE__ */ e("div", { className: "flex w-full min-w-12 items-center gap-0.5 h-6", children: [...Array(12)].map((N, E) => /* @__PURE__ */ e(
+        /* @__PURE__ */ e("div", { className: "ecp-nano-progress-bg", style: { width: D, backgroundImage: P } }),
+        /* @__PURE__ */ c("div", { className: "ecp-nano-content", children: [
+          l && /* @__PURE__ */ e("div", { className: "ecp-nano-thumbnail-wrap", children: /* @__PURE__ */ e("img", { src: l, alt: "", className: "ecp-nano-thumbnail" }) }),
+          /* @__PURE__ */ c("div", { className: "ecp-nano-row", children: [
+            /* @__PURE__ */ e("button", { onClick: F, className: "ecp-nano-play-btn", style: { background: P }, children: f ? /* @__PURE__ */ e(Pe, { fill: v, style: { width: "0.75rem", height: "0.75rem", color: "transparent" } }) : /* @__PURE__ */ e(Me, { fill: v, style: { width: "0.75rem", height: "0.75rem", color: "transparent" } }) }),
+            /* @__PURE__ */ e("div", { className: "ecp-nano-waveform", children: [...Array(12)].map((k, z) => /* @__PURE__ */ e(
               "div",
               {
-                className: "rounded-full transition-all duration-200",
+                className: "ecp-nano-wave-bar",
                 style: {
-                  width: "100%",
-                  background: `linear-gradient(to top, ${g[0]}, ${g[1]})`,
-                  height: m ? `${8 + Math.sin((T * 8 + E) * 0.6) * 10}px` : "8px",
-                  opacity: m ? 0.8 : 0.4
+                  background: `linear-gradient(to top, ${u[0]}, ${u[1]})`,
+                  height: f ? `${8 + Math.sin((j * 8 + z) * 0.6) * 10}px` : "8px",
+                  opacity: f ? 0.8 : 0.4
                 }
               },
-              E
+              z
             )) })
           ] })
         ] })
@@ -1365,13 +1038,13 @@ function mt({ audio: i, thumbnail: c, gradient: g = ["#cd7eff", "#fe59f6"], back
     }
   );
 }
-function yt({
-  video: i,
-  name: c = "No video loaded",
-  audioVisual: g = null,
-  volume: p = 100,
-  thumbnail: q = null,
-  controls: m = {
+function wt({
+  video: s,
+  name: l = "No video loaded",
+  audioVisual: u = null,
+  volume: v = 100,
+  thumbnail: C = null,
+  controls: f = {
     play: !0,
     pause: !0,
     stop: !0,
@@ -1382,526 +1055,359 @@ function yt({
     equalizer: !0,
     speed: !0
   },
-  mode: x = "light",
-  transparent: v = !1,
-  autoPlay: P = !1,
-  color: T = "#3b82f6",
-  equalizer: U = {
-    bass: 0,
-    mid: 0,
-    treble: 0
-  }
+  mode: y = "light",
+  transparent: O = !1,
+  autoPlay: x = !1,
+  color: j = "#3b82f6",
+  equalizer: I = { bass: 0, mid: 0, treble: 0 }
 }) {
-  const [I, M] = f(!1), [_, H] = f(0), [z, S] = f(0), [N, E] = f(p || 100), [oe, ae] = f(!1), [fe, Q] = f(!1), [G, se] = f(!1), [le, O] = f([]), [de, R] = f(!1), [F, j] = f({
-    bass: U.bass || 0,
-    mid: U.mid || 0,
-    treble: U.treble || 0
-  }), [ie, ue] = f(1), [ee, K] = f(0), k = y(null), u = y(null), A = y(null), X = y(null), me = y(null), V = y(null), te = y(null), Z = y(null), $ = y(null), re = y(null), Y = y(0), a = y(0), d = y(0), b = y(0), B = y(0), D = y(0), J = y(!1), o = x === "dark" || G, h = typeof m == "object" && Object.keys(m).length === 0;
-  C(() => {
-    const t = u.current;
-    if (!t) return;
-    const n = new ResizeObserver((s) => {
-      for (let l of s)
-        K(l.contentRect.width);
+  const [M, L] = m(!1), [H, B] = m(0), [F, P] = m(0), [D, k] = m(v || 100), [z, ae] = m(!1), [me, V] = m(!1), [ee, se] = m(!1), [ie, ce] = m([]), [de, R] = m(!1), [Q, Y] = m({ bass: I.bass || 0, mid: I.mid || 0, treble: I.treble || 0 }), [oe, ue] = m(1), [te, G] = m(0), w = h(null), p = h(null), A = h(null), K = h(null), fe = h(null), W = h(null), re = h(null), X = h(null), N = h(null), T = h(null), Z = h(0), r = h(0), d = h(0), g = h(0), S = h(0), _ = h(0), J = h(!1), b = y === "dark" || ee, E = typeof f == "object" && Object.keys(f).length === 0;
+  $(() => {
+    const n = p.current;
+    if (!n) return;
+    const t = new ResizeObserver((a) => {
+      for (let o of a) G(o.contentRect.width);
     });
-    return n.observe(t), () => n.disconnect();
-  }, []), C(() => {
-    const t = [];
-    i && typeof i != "string" && t.push(["TypeError", "video must be a string (URL or path)"]), c && typeof c != "string" && t.push(["TypeError", "name must be a string"]), (typeof p != "number" || p < 0 || p > 100) && t.push(["TypeError", "volume must be a number between 0 and 100"]), g && typeof g != "object" ? t.push(["TypeError", "audioVisual must be an object"]) : g && (["left", "right", "top", "bottom"].includes(g.side) || t.push(["ValueError", "audioVisual.side must be 'left', 'right', 'top', or 'bottom'"])), t.length > 0 ? (O(t), console.group("%cVideoPlayer: Prop validation failed", "color:red"), t.forEach((n) => console.error(`${n[0]}: ${n[1]}`)), console.groupEnd()) : O([]);
-  }, [i, c, p, g, m, x]), C(() => {
-    if (!k.current) return;
-    const t = k.current, n = () => {
-      fe || H(t.currentTime);
-    }, s = () => {
-      S(t.duration);
-    }, l = () => {
-      M(!1), $.current && cancelAnimationFrame($.current);
-    }, w = () => M(!0), L = () => M(!1);
-    return t.addEventListener("timeupdate", n), t.addEventListener("loadedmetadata", s), t.addEventListener("ended", l), t.addEventListener("play", w), t.addEventListener("pause", L), () => {
-      t.removeEventListener("timeupdate", n), t.removeEventListener("loadedmetadata", s), t.removeEventListener("ended", l), t.removeEventListener("play", w), t.removeEventListener("pause", L);
+    return t.observe(n), () => t.disconnect();
+  }, []), $(() => {
+    const n = [];
+    s && typeof s != "string" && n.push(["TypeError", "video must be a string (URL or path)"]), l && typeof l != "string" && n.push(["TypeError", "name must be a string"]), (typeof v != "number" || v < 0 || v > 100) && n.push(["TypeError", "volume must be a number between 0 and 100"]), u && typeof u != "object" ? n.push(["TypeError", "audioVisual must be an object"]) : u && !["left", "right", "top", "bottom"].includes(u.side) && n.push(["ValueError", "audioVisual.side must be 'left', 'right', 'top', or 'bottom'"]), n.length > 0 ? ce(n) : ce([]);
+  }, [s, l, v, u, f, y]), $(() => {
+    if (!w.current) return;
+    const n = w.current, t = () => {
+      me || B(n.currentTime);
+    }, a = () => P(n.duration), o = () => {
+      L(!1), N.current && cancelAnimationFrame(N.current);
+    }, i = () => L(!0), q = () => L(!1);
+    return n.addEventListener("timeupdate", t), n.addEventListener("loadedmetadata", a), n.addEventListener("ended", o), n.addEventListener("play", i), n.addEventListener("pause", q), () => {
+      n.removeEventListener("timeupdate", t), n.removeEventListener("loadedmetadata", a), n.removeEventListener("ended", o), n.removeEventListener("play", i), n.removeEventListener("pause", q);
     };
-  }, [fe]), C(() => {
-    if (i) {
-      const t = I, n = N;
-      if (k.current && k.current.pause(), k.current) {
-        k.current.pause(), k.current.src = i, k.current.volume = oe ? 0 : n / 100;
-        const s = () => {
-          t && k.current && k.current.play().catch((l) => console.error("Play failed:", l)), k.current && k.current.removeEventListener("canplay", s);
+  }, [me]), $(() => {
+    if (s) {
+      const n = M, t = D;
+      if (w.current) {
+        w.current.pause(), w.current.src = s, w.current.volume = z ? 0 : t / 100;
+        const a = () => {
+          n && w.current && w.current.play().catch((o) => console.error("Play failed:", o)), w.current && w.current.removeEventListener("canplay", a);
         };
-        k.current.addEventListener("canplay", s), k.current.load();
+        w.current.addEventListener("canplay", a), w.current.load();
       }
-      H(0), M(!1), Y.current = 0, a.current = 0, d.current = 0, b.current = 0, B.current = 0, D.current = 0, he();
+      B(0), L(!1), Z.current = 0, r.current = 0, d.current = 0, g.current = 0, S.current = 0, _.current = 0, ve();
     }
-  }, [i]), C(() => {
-    k.current && (k.current.volume = oe ? 0 : N / 100);
-  }, [N, oe]), C(() => {
-    k.current && (k.current.playbackRate = ie);
-  }, [ie]), C(() => {
-    A.current && (V.current && (V.current.gain.value = F.bass), te.current && (te.current.gain.value = F.mid), Z.current && (Z.current.gain.value = F.treble));
-  }, [F]), C(() => {
-    J.current = I, $.current && (cancelAnimationFrame($.current), $.current = null), I && g ? (A.current || ge(), we()) : !I && g && qe();
-  }, [I, g]), C(() => {
-    const t = () => {
-      se(!!document.fullscreenElement);
-    };
-    return document.addEventListener("fullscreenchange", t), () => document.removeEventListener("fullscreenchange", t);
-  }, []), C(() => () => {
-    $.current && cancelAnimationFrame($.current), A.current && A.current.close().catch((t) => console.warn("AudioContext cleanup error:", t));
+  }, [s]), $(() => {
+    w.current && (w.current.volume = z ? 0 : D / 100);
+  }, [D, z]), $(() => {
+    w.current && (w.current.playbackRate = oe);
+  }, [oe]), $(() => {
+    A.current && (W.current && (W.current.gain.value = Q.bass), re.current && (re.current.gain.value = Q.mid), X.current && (X.current.gain.value = Q.treble));
+  }, [Q]), $(() => {
+    J.current = M, N.current && (cancelAnimationFrame(N.current), N.current = null), M && u ? (A.current || ke(), we()) : !M && u && Ce();
+  }, [M, u]), $(() => {
+    const n = () => se(!!document.fullscreenElement);
+    return document.addEventListener("fullscreenchange", n), () => document.removeEventListener("fullscreenchange", n);
+  }, []), $(() => () => {
+    N.current && cancelAnimationFrame(N.current), A.current && A.current.close().catch((n) => console.warn("AudioContext cleanup error:", n));
   }, []);
-  const ge = () => {
-    if (!A.current && k.current)
+  const ke = () => {
+    if (!A.current && w.current)
       try {
-        const t = window.AudioContext || window.webkitAudioContext;
-        if (t) {
-          const n = new t();
-          A.current = n;
-          const s = n.createBiquadFilter();
-          s.type = "lowshelf", s.frequency.value = 320, s.gain.value = F.bass;
-          const l = n.createBiquadFilter();
-          l.type = "peaking", l.frequency.value = 1e3, l.Q.value = 0.5, l.gain.value = F.mid;
-          const w = n.createBiquadFilter();
-          w.type = "highshelf", w.frequency.value = 3200, w.gain.value = F.treble;
-          const L = n.createAnalyser();
-          L.fftSize = 2048, L.smoothingTimeConstant = 0.8;
-          const ne = n.createMediaElementSource(k.current);
-          ne.connect(s), s.connect(l), l.connect(w), w.connect(L), w.connect(n.destination), V.current = s, te.current = l, Z.current = w, X.current = L, me.current = ne;
+        const n = window.AudioContext || window.webkitAudioContext;
+        if (n) {
+          const t = new n();
+          A.current = t;
+          const a = t.createBiquadFilter();
+          a.type = "lowshelf", a.frequency.value = 320, a.gain.value = Q.bass;
+          const o = t.createBiquadFilter();
+          o.type = "peaking", o.frequency.value = 1e3, o.Q.value = 0.5, o.gain.value = Q.mid;
+          const i = t.createBiquadFilter();
+          i.type = "highshelf", i.frequency.value = 3200, i.gain.value = Q.treble;
+          const q = t.createAnalyser();
+          q.fftSize = 2048, q.smoothingTimeConstant = 0.8;
+          const U = t.createMediaElementSource(w.current);
+          U.connect(a), a.connect(o), o.connect(i), i.connect(q), i.connect(t.destination), W.current = a, re.current = o, X.current = i, K.current = q, fe.current = U;
         }
-      } catch (t) {
-        console.error("Failed to setup audio context:", t);
+      } catch (n) {
+        console.error("Failed to setup audio context:", n);
       }
-  }, qe = () => {
+  }, Ce = () => {
     if (J.current) return;
-    Y.current *= 0.7, a.current *= 0.7;
-    const t = Date.now();
-    t - B.current > 1500 && (d.current *= 0.95), t - D.current > 1500 && (b.current *= 0.95), he();
-    const n = Math.max(Y.current, a.current), s = Math.max(d.current, b.current);
-    n > 0.01 || s > 0.01 ? $.current = requestAnimationFrame(qe) : (J.current || (Y.current = 0, a.current = 0, d.current = 0, b.current = 0, he()), $.current && cancelAnimationFrame($.current), $.current = null);
+    Z.current *= 0.7, r.current *= 0.7;
+    const n = Date.now();
+    n - S.current > 1500 && (d.current *= 0.95), n - _.current > 1500 && (g.current *= 0.95), ve();
+    const t = Math.max(Z.current, r.current), a = Math.max(d.current, g.current);
+    t > 0.01 || a > 0.01 ? N.current = requestAnimationFrame(Ce) : (J.current || (Z.current = 0, r.current = 0, d.current = 0, g.current = 0, ve()), N.current && cancelAnimationFrame(N.current), N.current = null);
   }, we = () => {
-    if (!X.current || !J.current) return;
-    const t = X.current.frequencyBinCount, n = new Uint8Array(t);
-    X.current.getByteFrequencyData(n);
-    let s = 0;
-    for (let L = 0; L < t; L++)
-      s += n[L];
-    let l = s / t / 255;
-    l = Math.pow(l, 0.5), Y.current = Y.current * 0.7 + l * 0.3, a.current = a.current * 0.7 + l * 0.3;
-    const w = Date.now();
-    Y.current > d.current ? (d.current = Y.current, B.current = w) : w - B.current > 1500 && (d.current *= 0.95), a.current > b.current ? (b.current = a.current, D.current = w) : w - D.current > 1500 && (b.current *= 0.95), he(), $.current = requestAnimationFrame(we);
-  }, he = () => {
-    if (!re.current || !g) return;
-    const t = g.color || "#00ff00", n = g.peak || "#ff0000", s = Y.current * 100, l = a.current * 100, w = 100 - d.current * 100, L = 100 - b.current * 100;
-    g.side === "top" || g.side === "bottom" ? re.current.innerHTML = `
-                <div class="flex flex-col gap-1 h-full justify-center">
-                    <div class="flex items-center justify-center gap-2">
-                        <div class="text-xs ${o ? "text-gray-100" : "text-gray-900"} opacity-80 w-4 text-center">L</div>
-                        <div class="relative flex-1 h-3 bg-black/40 rounded-full overflow-hidden flex justify-end">
-                            <div class="h-full rounded-l-full transition-all duration-75" style="width: ${s}%; background: ${t};"></div>
-                            ${d.current > 0.1 ? `<div class="absolute top-0 w-1 h-full transition-all duration-100" style="right: ${d.current * 100}%; background: ${n};"></div>` : ""}
+    if (!K.current || !J.current) return;
+    const n = K.current.frequencyBinCount, t = new Uint8Array(n);
+    K.current.getByteFrequencyData(t);
+    let a = 0;
+    for (let q = 0; q < n; q++) a += t[q];
+    let o = Math.pow(a / n / 255, 0.5);
+    Z.current = Z.current * 0.7 + o * 0.3, r.current = r.current * 0.7 + o * 0.3;
+    const i = Date.now();
+    Z.current > d.current ? (d.current = Z.current, S.current = i) : i - S.current > 1500 && (d.current *= 0.95), r.current > g.current ? (g.current = r.current, _.current = i) : i - _.current > 1500 && (g.current *= 0.95), ve(), N.current = requestAnimationFrame(we);
+  }, ve = () => {
+    if (!T.current || !u) return;
+    const n = u.color || "#00ff00", t = u.peak || "#ff0000", a = Z.current * 100, o = r.current * 100, i = 100 - d.current * 100, q = 100 - g.current * 100;
+    u.side === "top" || u.side === "bottom" ? T.current.innerHTML = `
+                <div style="display:flex;flex-direction:column;gap:0.25rem;height:100%;justify-content:center;">
+                    <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;">
+                        <div style="font-size:0.75rem;opacity:0.8;width:1rem;text-align:center;color:${b ? "#f3f4f6" : "#111827"}">L</div>
+                        <div style="position:relative;flex:1;height:0.75rem;background:rgba(0,0,0,0.4);border-radius:9999px;overflow:hidden;display:flex;justify-content:flex-end;">
+                            <div style="height:100%;border-radius:9999px 0 0 9999px;transition:width 75ms;width:${a}%;background:${n};"></div>
+                            ${d.current > 0.1 ? `<div style="position:absolute;top:0;width:0.25rem;height:100%;transition:right 100ms;right:${d.current * 100}%;background:${t};"></div>` : ""}
                         </div>
-                        <div class="w-px h-4 bg-white/20"></div>
-                        <div class="relative flex-1 h-3 bg-black/40 rounded-full overflow-hidden flex justify-start">
-                            <div class="h-full rounded-r-full transition-all duration-75" style="width: ${l}%; background: ${t};"></div>
-                            ${b.current > 0.1 ? `<div class="absolute top-0 w-1 h-full transition-all duration-100" style="left: ${b.current * 100}%; background: ${n};"></div>` : ""}
+                        <div style="width:1px;height:1rem;background:rgba(255,255,255,0.2)"></div>
+                        <div style="position:relative;flex:1;height:0.75rem;background:rgba(0,0,0,0.4);border-radius:9999px;overflow:hidden;display:flex;justify-content:flex-start;">
+                            <div style="height:100%;border-radius:0 9999px 9999px 0;transition:width 75ms;width:${o}%;background:${n};"></div>
+                            ${g.current > 0.1 ? `<div style="position:absolute;top:0;width:0.25rem;height:100%;transition:left 100ms;left:${g.current * 100}%;background:${t};"></div>` : ""}
                         </div>
-                        <div class="text-xs ${o ? "text-gray-100" : "text-gray-900"} opacity-80 w-4 text-center">R</div>
+                        <div style="font-size:0.75rem;opacity:0.8;width:1rem;text-align:center;color:${b ? "#f3f4f6" : "#111827"}">R</div>
                     </div>
                 </div>
-            ` : re.current.innerHTML = `
-                <div class="flex gap-2 h-full">
-                    <div class="flex-1 flex flex-col">
-                        <div class="text-xs text-white opacity-70 text-center mb-1">L</div>
-                        <div class="flex-1 relative flex flex-col justify-end bg-black/30 rounded-lg overflow-hidden">
-                            <div class="rounded-t transition-all duration-75" style="height: ${s}%; background: ${t};">
-                                ${d.current > 0.1 ? `<div class="absolute w-full h-1 transition-all duration-100" style="top: ${w}%; background: ${n};"></div>` : ""}
+            ` : T.current.innerHTML = `
+                <div style="display:flex;gap:0.5rem;height:100%;">
+                    <div style="flex:1;display:flex;flex-direction:column;">
+                        <div style="font-size:0.75rem;color:white;opacity:0.7;text-align:center;margin-bottom:0.25rem;">L</div>
+                        <div style="flex:1;position:relative;display:flex;flex-direction:column;justify-content:flex-end;background:rgba(0,0,0,0.3);border-radius:0.5rem;overflow:hidden;">
+                            <div style="border-radius:0.25rem 0.25rem 0 0;transition:height 75ms;height:${a}%;background:${n};">
+                                ${d.current > 0.1 ? `<div style="position:absolute;width:100%;height:0.25rem;transition:top 100ms;top:${i}%;background:${t};"></div>` : ""}
                             </div>
                         </div>
                     </div>
-                    <div class="flex-1 flex flex-col">
-                        <div class="text-xs text-white opacity-70 text-center mb-1">R</div>
-                        <div class="flex-1 relative flex flex-col justify-end bg-black/30 rounded-lg overflow-hidden">
-                            <div class="rounded-t transition-all duration-75" style="height: ${l}%; background: ${t};">
-                                ${b.current > 0.1 ? `<div class="absolute w-full h-1 transition-all duration-100" style="top: ${L}%; background: ${n};"></div>` : ""}
+                    <div style="flex:1;display:flex;flex-direction:column;">
+                        <div style="font-size:0.75rem;color:white;opacity:0.7;text-align:center;margin-bottom:0.25rem;">R</div>
+                        <div style="flex:1;position:relative;display:flex;flex-direction:column;justify-content:flex-end;background:rgba(0,0,0,0.3);border-radius:0.5rem;overflow:hidden;">
+                            <div style="border-radius:0.25rem 0.25rem 0 0;transition:height 75ms;height:${o}%;background:${n};">
+                                ${g.current > 0.1 ? `<div style="position:absolute;width:100%;height:0.25rem;transition:top 100ms;top:${q}%;background:${t};"></div>` : ""}
+                            </div>
                         </div>
                     </div>
                 </div>
             `;
-  }, ke = () => {
-    !k.current || !i || (I ? k.current.pause() : (A.current && A.current.state === "suspended" && A.current.resume(), k.current.play().catch((t) => console.error("Play failed:", t))));
-  }, pe = () => {
-    k.current && (k.current.pause(), k.current.currentTime = 0, M(!1), H(0), Y.current = 0, a.current = 0, d.current = 0, b.current = 0, he());
-  }, Ee = (t) => {
-    const s = parseFloat(t.target.value) / 100 * z;
-    H(s), k.current && !fe && (k.current.currentTime = s);
-  }, Te = () => Q(!0), Le = () => {
-    k.current && (k.current.currentTime = _), Q(!1);
-  }, Pe = (t) => {
-    const n = parseInt(t.target.value);
-    E(n), ae(n === 0);
-  }, Me = (t) => {
-    ue(parseFloat(t.target.value));
-  }, je = () => ae(!oe), ze = () => {
-    u.current && (document.fullscreenElement ? document.exitFullscreen() : u.current.requestFullscreen().catch((t) => console.error("Fullscreen failed:", t)));
-  }, Ne = (t, n) => {
-    j((s) => ({
-      ...s,
-      [t]: n
-    })), A.current && (t === "bass" && V.current && (V.current.gain.value = n), t === "mid" && te.current && (te.current.gain.value = n), t === "treble" && Z.current && (Z.current.gain.value = n));
-  }, Se = () => {
-    j({ bass: 0, mid: 0, treble: 0 });
-  }, ve = (t) => {
-    if (isNaN(t)) return "0:00";
-    const n = Math.floor(t / 60), s = Math.floor(t % 60);
-    return `${n}:${s.toString().padStart(2, "0")}`;
+  }, Ne = () => {
+    !w.current || !s || (M ? w.current.pause() : (A.current && A.current.state === "suspended" && A.current.resume(), w.current.play().catch((n) => console.error("Play failed:", n))));
+  }, he = () => {
+    w.current && (w.current.pause(), w.current.currentTime = 0, L(!1), B(0), Z.current = 0, r.current = 0, d.current = 0, g.current = 0, ve());
+  }, xe = (n) => {
+    const a = parseFloat(n.target.value) / 100 * F;
+    B(a), w.current && !me && (w.current.currentTime = a);
+  }, Ee = () => V(!0), Le = () => {
+    w.current && (w.current.currentTime = H), V(!1);
+  }, Ae = (n) => {
+    const t = parseInt(n.target.value);
+    k(t), ae(t === 0);
+  }, Re = (n) => ue(parseFloat(n.target.value)), ze = () => ae(!z), Se = () => {
+    p.current && (document.fullscreenElement ? document.exitFullscreen() : p.current.requestFullscreen().catch((n) => console.error("Fullscreen failed:", n)));
+  }, Be = (n, t) => {
+    Y((a) => ({ ...a, [n]: t })), A.current && (n === "bass" && W.current && (W.current.gain.value = t), n === "mid" && re.current && (re.current.gain.value = t), n === "treble" && X.current && (X.current.gain.value = t));
+  }, je = () => Y({ bass: 0, mid: 0, treble: 0 }), Te = (n) => {
+    if (isNaN(n)) return "0:00";
+    const t = Math.floor(n / 60), a = Math.floor(n % 60);
+    return `${t}:${a.toString().padStart(2, "0")}`;
   };
-  if (C(() => {
-    (h && !I || P) && ke();
-  }, [m]), le && le.length > 0)
-    return le.map((t, n) => /* @__PURE__ */ r("div", { className: "text-red-500 text-sm bg-red-50 p-3 rounded mb-4 border border-red-300", children: [
-      /* @__PURE__ */ r("strong", { children: [
-        t[0],
+  if ($(() => {
+    (E && !M || x) && Ne();
+  }, [f]), ie && ie.length > 0)
+    return /* @__PURE__ */ e(Ve, { children: ie.map((n, t) => /* @__PURE__ */ c("div", { className: "ecp-video-error", children: [
+      /* @__PURE__ */ c("strong", { children: [
+        n[0],
         ":"
       ] }),
       " ",
-      t[1]
-    ] }, n));
-  const ye = g ? g.side : null, $e = ye === "top" || ye === "bottom";
+      n[1]
+    ] }, t)) });
+  const be = u ? u.side : null, qe = be === "top" || be === "bottom";
   return /* @__PURE__ */ e(
     "div",
     {
-      ref: u,
-      className: `rounded-xl overflow-hidden transition-all duration-300 ${G ? "fixed inset-0 z-[9999] flex flex-col h-screen w-screen bg-black" : "relative"}`,
-      style: { backgroundColor: h || v ? void 0 : o ? "#49494937" : "white" },
-      children: /* @__PURE__ */ r("div", { style: { background: h || v ? void 0 : o ? "#1a1a1ab0" : "#f5f5f5", height: G ? "100%" : "auto" }, className: `${h || v ? "" : "p-4"} ${G ? "flex flex-col flex-1" : ""}`, children: [
-        m.videoName && !G && /* @__PURE__ */ e("div", { className: "mb-4", children: /* @__PURE__ */ e("div", { className: `${o ? "text-gray-100" : "text-gray-700"} font-medium`, children: c }) }),
-        /* @__PURE__ */ r("div", { className: `relative ${$e ? "flex flex-col gap-3" : "flex gap-3"} ${G ? "flex-1 min-h-0" : "mb-4"}`, children: [
-          g && ye === "top" && /* @__PURE__ */ e("div", { className: "w-full h-12", ref: re }),
-          /* @__PURE__ */ r("div", { className: `flex ${!$e && "flex-1"} gap-3`, children: [
-            g && ye === "left" && /* @__PURE__ */ e("div", { className: "w-12 bg-black/50 rounded-lg p-1", ref: re }),
-            /* @__PURE__ */ r("div", { className: `flex-1 ${o ? "bg-black/70" : "bg-white/70"} rounded-lg overflow-hidden relative`, children: [
-              /* @__PURE__ */ r(
-                "video",
-                {
-                  ref: k,
-                  className: "w-full h-full object-contain",
-                  poster: q || void 0,
-                  children: [
-                    i && /* @__PURE__ */ e("source", { src: i }),
+      ref: p,
+      className: `ecp-video-wrapper${ee ? " ecp-video-wrapper--fullscreen" : ""}`,
+      style: { backgroundColor: E || O ? void 0 : b ? "#49494937" : "white" },
+      children: /* @__PURE__ */ c(
+        "div",
+        {
+          className: `ecp-video-inner${ee ? " ecp-video-inner--fullscreen" : ""}${E || O ? "" : " ecp-video-inner--padded"}`,
+          style: { background: E || O ? void 0 : b ? "#1a1a1ab0" : "#f5f5f5" },
+          children: [
+            f.videoName && !ee && /* @__PURE__ */ e("div", { className: `ecp-video-name${b ? " ecp-video-name--dark" : " ecp-video-name--light"}`, children: l }),
+            /* @__PURE__ */ c("div", { className: `ecp-video-layout${qe ? " ecp-video-layout--col" : " ecp-video-layout--row"}${ee ? " ecp-video-layout--fullscreen" : ""}`, children: [
+              u && be === "top" && /* @__PURE__ */ e("div", { className: "ecp-video-vu-top", ref: T }),
+              /* @__PURE__ */ c("div", { style: { display: "flex", flex: qe ? void 0 : 1, gap: "0.75rem" }, children: [
+                u && be === "left" && /* @__PURE__ */ e("div", { className: "ecp-video-vu-side", ref: T }),
+                /* @__PURE__ */ c("div", { className: `ecp-video-el-wrap${b ? " ecp-video-el-wrap--dark" : " ecp-video-el-wrap--light"}`, children: [
+                  /* @__PURE__ */ c("video", { ref: w, className: "ecp-video-el", poster: C || void 0, children: [
+                    s && /* @__PURE__ */ e("source", { src: s }),
                     "Your browser does not support the video tag."
+                  ] }),
+                  de && /* @__PURE__ */ e("div", { className: "ecp-video-eq-overlay", children: /* @__PURE__ */ c("div", { className: `ecp-video-eq-panel${b ? " ecp-video-eq-panel--dark" : " ecp-video-eq-panel--light"}`, children: [
+                    /* @__PURE__ */ e("h3", { className: `ecp-video-eq-title${b ? " ecp-video-eq-title--dark" : " ecp-video-eq-title--light"}`, children: "Equalizer" }),
+                    /* @__PURE__ */ e("div", { className: "ecp-video-eq-bands", children: ["bass", "mid", "treble"].map((n) => /* @__PURE__ */ c("div", { children: [
+                      /* @__PURE__ */ c("div", { className: "ecp-video-eq-band-header", children: [
+                        /* @__PURE__ */ e("span", { className: b ? "ecp-video-eq-label--dark" : "ecp-video-eq-label--light", children: n.charAt(0).toUpperCase() + n.slice(1) }),
+                        /* @__PURE__ */ c("span", { className: b ? "ecp-video-eq-label--dark" : "ecp-video-eq-label--light", children: [
+                          Q[n],
+                          " dB"
+                        ] })
+                      ] }),
+                      /* @__PURE__ */ c("div", { className: "ecp-video-eq-range-row", children: [
+                        /* @__PURE__ */ e("span", { className: b ? "ecp-video-eq-bound--dark" : "ecp-video-eq-bound--light", children: "-20" }),
+                        /* @__PURE__ */ e(
+                          "input",
+                          {
+                            type: "range",
+                            min: "-20",
+                            max: "20",
+                            value: Q[n],
+                            onChange: (t) => Be(n, parseInt(t.target.value)),
+                            className: "ecp-video-eq-slider",
+                            style: { background: `linear-gradient(to right, ${j} ${(Q[n] + 20) / 40 * 100}%, #e5e7eb ${(Q[n] + 20) / 40 * 100}%)` }
+                          }
+                        ),
+                        /* @__PURE__ */ e("span", { className: b ? "ecp-video-eq-bound--dark" : "ecp-video-eq-bound--light", children: "+20" })
+                      ] })
+                    ] }, n)) }),
+                    /* @__PURE__ */ c("div", { className: "ecp-video-eq-footer", children: [
+                      /* @__PURE__ */ e("button", { onClick: je, className: `ecp-video-eq-footer-btn${b ? " ecp-video-eq-footer-btn--dark" : " ecp-video-eq-footer-btn--light"}`, children: "Reset" }),
+                      /* @__PURE__ */ e("button", { onClick: () => R(!1), className: `ecp-video-eq-footer-btn${b ? " ecp-video-eq-footer-btn--dark" : " ecp-video-eq-footer-btn--light"}`, style: { marginLeft: "0.5rem" }, children: "Close" })
+                    ] })
+                  ] }) })
+                ] }),
+                u && be === "right" && /* @__PURE__ */ e("div", { className: "ecp-video-vu-side", ref: T })
+              ] }),
+              u && be === "bottom" && /* @__PURE__ */ e("div", { className: "ecp-video-vu-bottom", ref: T })
+            ] }),
+            f.seekbar && /* @__PURE__ */ e("div", { className: `ecp-video-seekbar${ee ? " ecp-video-seekbar--fullscreen" : ""}`, children: /* @__PURE__ */ c("div", { className: "ecp-video-seekbar-row", children: [
+              /* @__PURE__ */ e("span", { className: `ecp-video-time${b ? " ecp-video-time--dark" : " ecp-video-time--light"}`, children: Te(H) }),
+              /* @__PURE__ */ e(
+                "input",
+                {
+                  type: "range",
+                  min: "0",
+                  max: "100",
+                  value: F > 0 ? H / F * 100 : 0,
+                  onChange: xe,
+                  onMouseDown: Ee,
+                  onMouseUp: Le,
+                  onTouchStart: Ee,
+                  onTouchEnd: Le,
+                  disabled: !s,
+                  className: "ecp-video-seek-input",
+                  style: {
+                    background: s && F > 0 ? `linear-gradient(to right, ${j} ${H / F * 100}%, #e5e7eb ${H / F * 100}%)` : "#e5e7eb"
+                  }
+                }
+              ),
+              /* @__PURE__ */ e("span", { className: `ecp-video-time ecp-video-time--right${b ? " ecp-video-time--dark" : " ecp-video-time--light"}`, children: Te(F) })
+            ] }) }),
+            /* @__PURE__ */ c("div", { className: "ecp-video-controls", children: [
+              f.play && /* @__PURE__ */ c(
+                "button",
+                {
+                  onClick: Ne,
+                  disabled: !s,
+                  className: `ecp-video-play-btn${te <= 400 ? " ecp-video-play-btn--compact" : ""}`,
+                  style: { backgroundColor: j },
+                  children: [
+                    /* @__PURE__ */ c("div", { className: "ecp-video-play-icon-wrap", children: [
+                      /* @__PURE__ */ e(Pe, { size: 16, style: { position: "absolute", transform: M ? void 0 : "scale(0) translateY(2.5rem)", transition: "all 150ms" } }),
+                      /* @__PURE__ */ e(Me, { size: 16, style: { position: "absolute", transform: M ? "scale(0) translateY(-2.5rem)" : void 0, transition: "all 150ms" } })
+                    ] }),
+                    te > 400 && (M ? "Pause" : "Play")
                   ]
                 }
               ),
-              de && /* @__PURE__ */ e("div", { className: "absolute inset-0 flex flex-col w-full justify-center z-10 rounded-lg p-4 shadow-sm transition-all duration-300", children: /* @__PURE__ */ r("div", { className: `max-w-[600px] w-full mx-auto flex flex-col justify-center z-10 ${o ? "bg-black/70" : "bg-white/80"} rounded-lg p-4 shadow-sm transition-all duration-300`, children: [
-                /* @__PURE__ */ e("h3", { className: `text-sm font-medium mb-4 ${o ? "text-gray-200" : "text-gray-700"}`, children: "Equalizer" }),
-                /* @__PURE__ */ r("div", { className: "space-y-4", children: [
-                  /* @__PURE__ */ r("div", { children: [
-                    /* @__PURE__ */ r("div", { className: "flex justify-between mb-1", children: [
-                      /* @__PURE__ */ e("span", { className: `text-xs ${o ? "text-gray-300" : "text-gray-600"}`, children: "Bass" }),
-                      /* @__PURE__ */ r("span", { className: `text-xs ${o ? "text-gray-300" : "text-gray-600"}`, children: [
-                        F.bass,
-                        " dB"
-                      ] })
-                    ] }),
-                    /* @__PURE__ */ r("div", { className: "flex items-center gap-3", children: [
-                      /* @__PURE__ */ e("span", { className: `text-xs ${o ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
-                      /* @__PURE__ */ e(
-                        "input",
-                        {
-                          type: "range",
-                          min: "-20",
-                          max: "20",
-                          value: F.bass,
-                          onChange: (t) => Ne("bass", parseInt(t.target.value)),
-                          className: "flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider",
-                          style: {
-                            background: `linear-gradient(to right, ${T} ${(F.bass + 20) / 40 * 100}%, #e5e7eb ${(F.bass + 20) / 40 * 100}%)`
-                          }
-                        }
-                      ),
-                      /* @__PURE__ */ e("span", { className: `text-xs ${o ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ r("div", { children: [
-                    /* @__PURE__ */ r("div", { className: "flex justify-between mb-1", children: [
-                      /* @__PURE__ */ e("span", { className: `text-xs ${o ? "text-gray-300" : "text-gray-600"}`, children: "Mid" }),
-                      /* @__PURE__ */ r("span", { className: `text-xs ${o ? "text-gray-300" : "text-gray-600"}`, children: [
-                        F.mid,
-                        " dB"
-                      ] })
-                    ] }),
-                    /* @__PURE__ */ r("div", { className: "flex items-center gap-3", children: [
-                      /* @__PURE__ */ e("span", { className: `text-xs ${o ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
-                      /* @__PURE__ */ e(
-                        "input",
-                        {
-                          type: "range",
-                          min: "-20",
-                          max: "20",
-                          value: F.mid,
-                          onChange: (t) => Ne("mid", parseInt(t.target.value)),
-                          className: "flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider",
-                          style: {
-                            background: `linear-gradient(to right, ${T} ${(F.mid + 20) / 40 * 100}%, #e5e7eb ${(F.mid + 20) / 40 * 100}%)`
-                          }
-                        }
-                      ),
-                      /* @__PURE__ */ e("span", { className: `text-xs ${o ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ r("div", { children: [
-                    /* @__PURE__ */ r("div", { className: "flex justify-between mb-1", children: [
-                      /* @__PURE__ */ e("span", { className: `text-xs ${o ? "text-gray-300" : "text-gray-600"}`, children: "Treble" }),
-                      /* @__PURE__ */ r("span", { className: `text-xs ${o ? "text-gray-300" : "text-gray-600"}`, children: [
-                        F.treble,
-                        " dB"
-                      ] })
-                    ] }),
-                    /* @__PURE__ */ r("div", { className: "flex items-center gap-3", children: [
-                      /* @__PURE__ */ e("span", { className: `text-xs ${o ? "text-gray-400" : "text-gray-500"}`, children: "-20" }),
-                      /* @__PURE__ */ e(
-                        "input",
-                        {
-                          type: "range",
-                          min: "-20",
-                          max: "20",
-                          value: F.treble,
-                          onChange: (t) => Ne("treble", parseInt(t.target.value)),
-                          className: "flex-1 h-6 bg-gray-300 rounded-lg appearance-none cursor-pointer eq-slider",
-                          style: {
-                            background: `linear-gradient(to right, ${T} ${(F.treble + 20) / 40 * 100}%, #e5e7eb ${(F.treble + 20) / 40 * 100}%)`
-                          }
-                        }
-                      ),
-                      /* @__PURE__ */ e("span", { className: `text-xs ${o ? "text-gray-400" : "text-gray-500"}`, children: "+20" })
-                    ] })
-                  ] })
-                ] }),
-                /* @__PURE__ */ r("div", { className: "flex justify-between mt-6", children: [
-                  /* @__PURE__ */ e(
-                    "button",
-                    {
-                      onClick: Se,
-                      className: `px-3 py-1 rounded text-xs ${o ? "bg-gray-700 text-gray-200 hover:bg-gray-600" : "bg-gray-200 text-gray-700 hover:bg-gray-300"} transition-all`,
-                      children: "Reset"
-                    }
-                  ),
-                  /* @__PURE__ */ e(
-                    "button",
-                    {
-                      onClick: () => R(!1),
-                      className: `ml-2 px-3 py-1 rounded text-xs ${o ? "bg-gray-700 text-gray-200 hover:bg-gray-600" : "bg-gray-200 text-gray-700 hover:bg-gray-300"} transition-all`,
-                      children: "Close"
-                    }
-                  )
-                ] })
-              ] }) })
-            ] }),
-            g && ye === "right" && /* @__PURE__ */ e("div", { className: "w-12 bg-black/50 rounded-lg p-1", ref: re })
-          ] }),
-          g && ye === "bottom" && /* @__PURE__ */ e("div", { className: "w-full h-12", ref: re })
-        ] }),
-        m.seekbar && /* @__PURE__ */ e("div", { className: `mb-4 ${G ? "mt-3" : ""}`, children: /* @__PURE__ */ r("div", { className: "flex items-center gap-3", children: [
-          /* @__PURE__ */ e("span", { className: `text-xs ${o ? "text-gray-100" : "text-gray-600"} font-mono w-12`, children: ve(_) }),
-          /* @__PURE__ */ e(
-            "input",
-            {
-              type: "range",
-              min: "0",
-              max: "100",
-              value: z > 0 ? _ / z * 100 : 0,
-              onChange: Ee,
-              onMouseDown: Te,
-              onMouseUp: Le,
-              onTouchStart: Te,
-              onTouchEnd: Le,
-              disabled: !i,
-              className: "flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed",
-              style: {
-                background: i && z > 0 ? `linear-gradient(to right, ${T} ${_ / z * 100}%, #e5e7eb ${_ / z * 100}%)` : "#e5e7eb"
-              }
-            }
-          ),
-          /* @__PURE__ */ e("span", { className: `text-xs ${o ? "text-gray-100" : "text-gray-600"} font-mono w-12 text-right`, children: ve(z) })
-        ] }) }),
-        /* @__PURE__ */ r("div", { className: "flex flex-wrap items-center gap-3", children: [
-          m.play && /* @__PURE__ */ r(
-            "button",
-            {
-              onClick: ke,
-              disabled: !i,
-              style: { backgroundColor: T },
-              className: `${ee > 400 ? " px-4 py-2" : "px-3 py-5"} rounded-full text-sm font-medium text-white hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all`,
-              children: [
-                /* @__PURE__ */ r("div", { className: "relative w-4 flex items-center", children: [
-                  /* @__PURE__ */ e(Re, { size: 16, className: `${I ? "" : "scale-0 translate-y-10"} transition-all absolute` }),
-                  /* @__PURE__ */ e(Fe, { size: 16, className: `${I ? "scale-0 -translate-y-10" : ""} transition-all absolute` })
-                ] }),
-                ee > 400 && (I ? "Pause" : "Play")
-              ]
-            }
-          ),
-          m.stop && /* @__PURE__ */ e(
-            "button",
-            {
-              onClick: pe,
-              disabled: !i,
-              className: `${o ? "bg-gray-100 text-black hover:bg-gray-300" : "bg-gray-700 text-white hover:bg-gray-800"} px-3 py-3 rounded-full text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 transition-all`,
-              children: /* @__PURE__ */ e(Ue, { size: 16 })
-            }
-          ),
-          m.fullscreen && /* @__PURE__ */ r(
-            "button",
-            {
-              onClick: ze,
-              className: `${ee < 800 ? "px-3 py-3" : "px-4 py-2"} rounded-full text-sm font-medium flex items-center gap-2 transition-all ${o ? "bg-gray-100 text-black hover:bg-gray-300" : "bg-gray-700 text-white hover:bg-gray-800"}`,
-              children: [
-                G ? /* @__PURE__ */ e(et, { size: 16 }) : /* @__PURE__ */ e(Ye, { size: 16 }),
-                /* @__PURE__ */ e("span", { style: { display: ee < 800 ? "none" : "block" }, children: G ? "Exit" : "Full" })
-              ]
-            }
-          ),
-          m.equalizer && /* @__PURE__ */ r(
-            "button",
-            {
-              onClick: () => R(!de),
-              disabled: !i,
-              className: `${ee < 700 ? "px-3 py-3" : "px-4 py-2"} rounded-full text-sm font-medium flex items-center gap-2 transition-all ${de ? "text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-300"} disabled:opacity-40 disabled:cursor-not-allowed`,
-              style: de ? { backgroundColor: T } : {},
-              children: [
-                /* @__PURE__ */ e(Ae, { size: 16 }),
-                /* @__PURE__ */ e("span", { style: { display: ee < 700 ? "none" : "block" }, children: "EQ" })
-              ]
-            }
-          ),
-          m.speed && /* @__PURE__ */ e("div", { className: "flex items-center", children: /* @__PURE__ */ r(
-            "select",
-            {
-              value: ie,
-              onChange: Me,
-              className: `rounded-full text-sm font-medium border-none outline-none cursor-pointer transition-all bg-transparent ${o ? "text-gray-200" : "text-gray-800"}`,
-              children: [
-                /* @__PURE__ */ e("option", { value: "0.5", className: o ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-gray-800", children: "0.5x" }),
-                /* @__PURE__ */ e("option", { value: "0.75", className: o ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-gray-800", children: "0.75x" }),
-                /* @__PURE__ */ e("option", { value: "1", className: o ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-gray-800", children: "1x" }),
-                /* @__PURE__ */ e("option", { value: "1.25", className: o ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-gray-800", children: "1.25x" }),
-                /* @__PURE__ */ e("option", { value: "1.5", className: o ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-gray-800", children: "1.5x" }),
-                /* @__PURE__ */ e("option", { value: "2", className: o ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-gray-800", children: "2x" })
-              ]
-            }
-          ) }),
-          m.volume && /* @__PURE__ */ r("div", { className: "flex items-center gap-1 md:gap-3 ml-auto", children: [
-            /* @__PURE__ */ e(
-              "button",
-              {
-                onClick: je,
-                className: "p-2 rounded-lg hover:bg-gray-100 transition-all",
-                children: oe || N === 0 ? /* @__PURE__ */ e(De, { size: 20, className: o ? "text-gray-100" : "text-gray-600" }) : /* @__PURE__ */ e(He, { size: 20, className: o ? "text-gray-100" : "text-gray-600" })
-              }
-            ),
-            /* @__PURE__ */ e(
-              "input",
-              {
-                type: "range",
-                min: "0",
-                max: "100",
-                value: N,
-                onChange: Pe,
-                className: "hide-for-xs w-24 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer",
-                style: {
-                  background: `linear-gradient(to right, ${T} ${N}%, #e5e7eb ${N}%)`,
-                  display: ee < 460 ? "none" : "block"
+              f.stop && /* @__PURE__ */ e("button", { onClick: he, disabled: !s, className: `ecp-video-stop-btn${b ? " ecp-video-stop-btn--dark" : " ecp-video-stop-btn--light"}`, children: /* @__PURE__ */ e(Ge, { size: 16 }) }),
+              f.fullscreen && /* @__PURE__ */ c(
+                "button",
+                {
+                  onClick: Se,
+                  className: `ecp-video-fullscreen-btn${b ? " ecp-video-fullscreen-btn--dark" : " ecp-video-fullscreen-btn--light"}${te >= 800 ? " ecp-video-fullscreen-btn--wide" : ""}`,
+                  children: [
+                    ee ? /* @__PURE__ */ e(at, { size: 16 }) : /* @__PURE__ */ e(rt, { size: 16 }),
+                    /* @__PURE__ */ e("span", { style: { display: te < 800 ? "none" : "block" }, children: ee ? "Exit" : "Full" })
+                  ]
                 }
-              }
-            ),
-            /* @__PURE__ */ r("span", { style: { display: ee < 800 ? "none" : "block" }, className: `text-xs ${o ? "text-gray-100" : "text-gray-700"} font-mono w-10 text-right`, children: [
-              N,
-              "%"
+              ),
+              f.equalizer && /* @__PURE__ */ c(
+                "button",
+                {
+                  onClick: () => R(!de),
+                  disabled: !s,
+                  className: `ecp-video-eq-toggle-btn${de ? " ecp-video-eq-toggle-btn--on" : " ecp-video-eq-toggle-btn--off"}${te >= 700 ? " ecp-video-eq-toggle-btn--wide" : ""}`,
+                  style: de ? { backgroundColor: j } : {},
+                  children: [
+                    /* @__PURE__ */ e(Fe, { size: 16 }),
+                    /* @__PURE__ */ e("span", { style: { display: te < 700 ? "none" : "block" }, children: "EQ" })
+                  ]
+                }
+              ),
+              f.speed && /* @__PURE__ */ e("div", { className: "ecp-video-speed-wrap", children: /* @__PURE__ */ e("select", { value: oe, onChange: Re, className: `ecp-video-speed-select${b ? " ecp-video-speed-select--dark" : " ecp-video-speed-select--light"}`, children: ["0.5", "0.75", "1", "1.25", "1.5", "2"].map((n) => /* @__PURE__ */ c("option", { value: n, className: b ? "ecp-video-speed-option--dark" : "ecp-video-speed-option--light", children: [
+                n,
+                "x"
+              ] }, n)) }) }),
+              f.volume && /* @__PURE__ */ c("div", { className: "ecp-video-volume", children: [
+                /* @__PURE__ */ e("button", { onClick: ze, className: "ecp-video-mute-btn", children: z || D === 0 ? /* @__PURE__ */ e(_e, { size: 20, className: b ? "ecp-video-mute-icon--dark" : "ecp-video-mute-icon--light" }) : /* @__PURE__ */ e(De, { size: 20, className: b ? "ecp-video-mute-icon--dark" : "ecp-video-mute-icon--light" }) }),
+                /* @__PURE__ */ e(
+                  "input",
+                  {
+                    type: "range",
+                    min: "0",
+                    max: "100",
+                    value: D,
+                    onChange: Ae,
+                    className: "ecp-video-vol-slider",
+                    style: {
+                      background: `linear-gradient(to right, ${j} ${D}%, #e5e7eb ${D}%)`,
+                      display: te < 460 ? "none" : "block"
+                    }
+                  }
+                ),
+                /* @__PURE__ */ c(
+                  "span",
+                  {
+                    className: `ecp-video-vol-pct${b ? " ecp-video-vol-pct--dark" : " ecp-video-vol-pct--light"}`,
+                    style: { display: te < 800 ? "none" : "block" },
+                    children: [
+                      D,
+                      "%"
+                    ]
+                  }
+                )
+              ] })
             ] })
-          ] })
-        ] }),
-        /* @__PURE__ */ e("style", { children: `
-                    input[type="range"]::-webkit-slider-thumb {
-                        -webkit-appearance: none;
-                        appearance: none;
-                        width: 16px;
-                        height: 16px;
-                        border-radius: 50%;
-                        background: ${T};
-                        cursor: pointer;
-                        border: 2px solid white;
-                        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-                    }
-                    
-                    input[type="range"]::-moz-range-thumb {
-                        width: 16px;
-                        height: 16px;
-                        border-radius: 50%;
-                        background: ${T};
-                        cursor: pointer;
-                        border: 2px solid white;
-                        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-                    }
-                    input[type="range"].eq-slider::-webkit-slider-thumb {
-                        -webkit-appearance: none;
-                        appearance: none;
-                        width: 0;
-                        height: 0;
-                        background: transparent;
-                        border: none;
-                        box-shadow: none;
-                    }
-                    input[type="range"].eq-slider::-moz-range-thumb {
-                        width: 0;
-                        height: 0;
-                        background: transparent;
-                        border: none;
-                        box-shadow: none;
-                    }
-                    .hide-for-xs {
-                        display: flex;
-                    }
-                    @media (max-width: 480px) {
-                        .hide-for-xs {
-                            display: none;
-                        }
-                    }
-                ` })
-      ] })
+          ]
+        }
+      )
     }
   );
 }
-function bt() {
-  const [i, c] = f(null), [g, p] = f("No track loaded"), [q, m] = f("purple"), [x, v] = f(!1), [P, T] = f(!1), [U, I] = f("light"), M = y(null);
-  return /* @__PURE__ */ e("div", { className: "min-h-screen flex items-center justify-center p-4 md:p-8", style: { backgroundColor: U === "dark" ? "#222" : "white" }, children: /* @__PURE__ */ r("div", { className: "w-full h-full md:h-auto md:max-w-4xl", children: [
-    x && /* @__PURE__ */ e(ut, { theme: q, setTheme: m, close: () => v(!1) }),
-    /* @__PURE__ */ r("div", { className: "container-glass rounded-xl p-8", children: [
-      /* @__PURE__ */ r("div", { className: "mb-6 flex justify-between items-start", children: [
-        /* @__PURE__ */ r("div", { children: [
-          /* @__PURE__ */ e("h1", { className: `text-2xl font-semibold ${U === "dark" ? "text-gray-200" : "text-gray-800"} mb-1`, children: "Audio Visualizer" }),
-          /* @__PURE__ */ e("p", { className: "text-sm text-gray-500", children: "Professional frequency analyzer" })
+function Nt() {
+  const [s, l] = m(null), [u, v] = m("No track loaded"), [C, f] = m("purple"), [y, O] = m(!1), [x, j] = m(!1), [I, M] = m("light"), L = h(null);
+  return /* @__PURE__ */ e("div", { className: "ecp-page-wrapper", style: { backgroundColor: I === "dark" ? "#222" : "white" }, children: /* @__PURE__ */ c("div", { className: "ecp-demo-container", children: [
+    y && /* @__PURE__ */ e(vt, { theme: C, setTheme: f, close: () => O(!1) }),
+    /* @__PURE__ */ c("div", { className: "ecp-container-glass", children: [
+      /* @__PURE__ */ c("div", { className: "ecp-demo-header", children: [
+        /* @__PURE__ */ c("div", { children: [
+          /* @__PURE__ */ e("h1", { className: `ecp-demo-title${I === "dark" ? " ecp-demo-title--dark" : ""}`, children: "Audio Visualizer" }),
+          /* @__PURE__ */ e("p", { className: "ecp-demo-subtitle", children: "Professional frequency analyzer" })
         ] }),
-        /* @__PURE__ */ r(
-          "button",
-          {
-            onClick: () => v(!x),
-            className: "bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 flex items-center gap-2",
-            children: [
-              /* @__PURE__ */ e("span", { children: "🎨" }),
-              " Themes"
-            ]
-          }
-        )
+        /* @__PURE__ */ c("button", { onClick: () => O(!y), className: "ecp-theme-btn", children: [
+          /* @__PURE__ */ e("span", { children: "🎨" }),
+          " Themes"
+        ] })
       ] }),
       /* @__PURE__ */ e(
-        gt,
+        ht,
         {
-          audio: i || void 0,
-          name: g || void 0,
+          audio: s || void 0,
+          name: u || void 0,
           author: "K.Prabhasha",
-          theme: q,
+          theme: C,
           autoPlay: !1,
           thumbnail: "https://cdn-icons-png.flaticon.com/512/3845/3845874.png",
-          mode: U,
-          transparent: P,
+          mode: I,
+          transparent: x,
           volume: 70,
           controls: {
             play: !0,
@@ -1914,69 +1420,58 @@ function bt() {
           }
         }
       ),
-      /* @__PURE__ */ e(ft, { audio: i || "", width: 400, thumbnail: "https://cdn-icons-png.flaticon.com/512/8316/8316619.png", autoPlay: !1, gradient: ["#26ce3aff", "#39eed9ff"], background: "#c0ffefff" }),
-      /* @__PURE__ */ e(mt, { audio: i || "", thumbnail: "https://cdn-icons-png.flaticon.com/512/17524/17524837.png", autoPlay: !1, gradient: ["#26ce3aff", "#39eed9ff"], background: "#c0ffefff" }),
-      /* @__PURE__ */ r("div", { className: "mt-6 flex flex-wrap items-center gap-3", children: [
-        /* @__PURE__ */ e(
-          "input",
-          {
-            type: "file",
-            ref: M,
-            onChange: (z) => {
-              var N;
-              const S = (N = z.target.files) == null ? void 0 : N[0];
-              if (S) {
-                const E = URL.createObjectURL(S);
-                c(E), p(S.name);
-              }
-            },
-            accept: "audio/*",
-            className: "hidden"
+      /* @__PURE__ */ e(
+        bt,
+        {
+          audio: s || "",
+          width: 400,
+          thumbnail: "https://cdn-icons-png.flaticon.com/512/8316/8316619.png",
+          autoPlay: !1,
+          gradient: ["#26ce3aff", "#39eed9ff"],
+          background: "#c0ffefff"
+        }
+      ),
+      /* @__PURE__ */ e(
+        gt,
+        {
+          audio: s || "",
+          thumbnail: "https://cdn-icons-png.flaticon.com/512/17524/17524837.png",
+          autoPlay: !1,
+          gradient: ["#26ce3aff", "#39eed9ff"],
+          background: "#c0ffefff"
+        }
+      ),
+      /* @__PURE__ */ c("div", { className: "ecp-demo-actions", children: [
+        /* @__PURE__ */ e("input", { type: "file", ref: L, onChange: (F) => {
+          var D;
+          const P = (D = F.target.files) == null ? void 0 : D[0];
+          if (P) {
+            const k = URL.createObjectURL(P);
+            l(k), v(P.name);
           }
-        ),
-        /* @__PURE__ */ r(
-          "button",
-          {
-            onClick: () => {
-              var z;
-              (z = M.current) == null || z.click();
-            },
-            className: "bg-white border border-gray-300 text-gray-700 px-6 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 flex items-center gap-2",
-            children: [
-              /* @__PURE__ */ e(ct, { size: 16 }),
-              "Load Audio"
-            ]
-          }
-        ),
-        /* @__PURE__ */ e(
-          "button",
-          {
-            onClick: () => I(U === "dark" ? "light" : "dark"),
-            className: "bg-white border border-gray-300 text-gray-700 px-6 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 flex items-center gap-2",
-            children: U === "dark" ? "Light" : "Dark"
-          }
-        ),
-        /* @__PURE__ */ r(
-          "button",
-          {
-            onClick: () => T(!P),
-            className: "bg-white border border-gray-300 text-gray-700 px-6 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 flex items-center gap-2",
-            children: [
-              "Transparent: ",
-              String(P)
-            ]
-          }
-        )
+        }, accept: "audio/*", className: "ecp-file-input-hidden" }),
+        /* @__PURE__ */ c("button", { onClick: () => {
+          var F;
+          return (F = L.current) == null ? void 0 : F.click();
+        }, className: "ecp-action-btn", children: [
+          /* @__PURE__ */ e(pt, { size: 16 }),
+          "Load Audio"
+        ] }),
+        /* @__PURE__ */ e("button", { onClick: () => M(I === "dark" ? "light" : "dark"), className: "ecp-action-btn", children: I === "dark" ? "Light" : "Dark" }),
+        /* @__PURE__ */ c("button", { onClick: () => j(!x), className: "ecp-action-btn", children: [
+          "Transparent: ",
+          String(x)
+        ] })
       ] })
     ] })
   ] }) });
 }
 export {
-  bt as DemoVisualizePlayer,
-  mt as NanoAudioPlayer,
-  ut as ThemeSelector,
-  yt as VideoPlayer,
-  gt as VisualizePlayer,
-  ft as WaveAudioPlayer,
-  be as themes
+  Nt as DemoVisualizePlayer,
+  gt as NanoAudioPlayer,
+  vt as ThemeSelector,
+  wt as VideoPlayer,
+  ht as VisualizePlayer,
+  bt as WaveAudioPlayer,
+  ge as themes
 };
