@@ -609,7 +609,8 @@
   height: 16px;
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid white;
+  background: var(--thumb-color, #ffffff);
+  border: none;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 .ecp-vp-seek-input::-moz-range-thumb {
@@ -617,7 +618,8 @@
   height: 16px;
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid white;
+  background: var(--thumb-color, #ffffff);
+  border: none;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
@@ -783,7 +785,8 @@
   height: 16px;
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid white;
+  background: var(--thumb-color, #ffffff);
+  border: none;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 .ecp-vp-volume-slider::-moz-range-thumb {
@@ -791,7 +794,8 @@
   height: 16px;
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid white;
+  background: var(--thumb-color, #ffffff);
+  border: none;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
@@ -934,14 +938,16 @@
   width: 14px; height: 14px;
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid white;
+  background: var(--thumb-color, #ffffff);
+  border: none;
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 .ecp-wave-vol-slider::-moz-range-thumb {
   width: 14px; height: 14px;
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid white;
+  background: var(--thumb-color, #ffffff);
+  border: none;
 }
 
 .ecp-wave-center-controls {
@@ -1336,14 +1342,16 @@
   width: 16px; height: 16px;
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid white;
+  background: var(--thumb-color, #ffffff);
+  border: none;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 .ecp-video-seek-input::-moz-range-thumb {
   width: 16px; height: 16px;
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid white;
+  background: var(--thumb-color, #ffffff);
+  border: none;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
@@ -1488,14 +1496,16 @@
   width: 16px; height: 16px;
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid white;
+  background: var(--thumb-color, #ffffff);
+  border: none;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 .ecp-video-vol-slider::-moz-range-thumb {
   width: 16px; height: 16px;
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid white;
+  background: var(--thumb-color, #ffffff);
+  border: none;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 @media (max-width: 460px) {

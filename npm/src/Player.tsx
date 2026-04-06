@@ -392,15 +392,15 @@ function VisualizePlayer({
             const currentVolume = volume;
             const currentLoop = isLoop;
             if (animationRef.current) { cancelAnimationFrame(animationRef.current); animationRef.current = null; }
-            if (sourceRef.current) { try { sourceRef.current.disconnect(); } catch (e) {} sourceRef.current = null; }
-            if (analyserRef.current) { try { analyserRef.current.disconnect(); } catch (e) {} analyserRef.current = null; }
-            if (bassFilterRef.current) { try { bassFilterRef.current.disconnect(); } catch (e) {} bassFilterRef.current = null; }
-            if (midFilterRef.current) { try { midFilterRef.current.disconnect(); } catch (e) {} midFilterRef.current = null; }
-            if (trebleFilterRef.current) { try { trebleFilterRef.current.disconnect(); } catch (e) {} trebleFilterRef.current = null; }
+            if (sourceRef.current) { try { sourceRef.current.disconnect(); } catch (e) { } sourceRef.current = null; }
+            if (analyserRef.current) { try { analyserRef.current.disconnect(); } catch (e) { } analyserRef.current = null; }
+            if (bassFilterRef.current) { try { bassFilterRef.current.disconnect(); } catch (e) { } bassFilterRef.current = null; }
+            if (midFilterRef.current) { try { midFilterRef.current.disconnect(); } catch (e) { } midFilterRef.current = null; }
+            if (trebleFilterRef.current) { try { trebleFilterRef.current.disconnect(); } catch (e) { } trebleFilterRef.current = null; }
             if (audioContextRef.current) { audioContextRef.current.close().catch(e => console.warn("AudioContext close error:", e)); audioContextRef.current = null; }
             if (audioRef.current) { audioRef.current.pause(); audioRef.current.src = ''; audioRef.current.load(); }
             audioRef.current = new Audio();
-            try { audioRef.current.crossOrigin = 'anonymous'; } catch (e) {}
+            try { audioRef.current.crossOrigin = 'anonymous'; } catch (e) { }
             audioRef.current.src = audio;
             audioRef.current.preload = 'auto';
             audioRef.current.muted = false;
@@ -616,7 +616,10 @@ function VisualizePlayer({
                                                 type="range" min="-20" max="20" value={eqBands[band]}
                                                 onChange={(e) => handleEqChange(band, parseInt(e.target.value))}
                                                 className="ecp-vp-eq-slider"
-                                                style={{ background: `linear-gradient(to right, ${currentTheme.slider} ${(eqBands[band] + 20) / 40 * 100}%, ${currentTheme.slider + '30'} ${(eqBands[band] + 20) / 40 * 100}%)` }}
+                                                style={{
+                                                    background: `linear-gradient(to right, ${currentTheme.slider} ${(eqBands[band] + 20) / 40 * 100}%, ${currentTheme.slider + '30'} ${(eqBands[band] + 20) / 40 * 100}%)`,
+                                                    '--thumb-color': currentTheme.slider
+                                                } as React.CSSProperties}
                                             />
                                             <span className={`ecp-vp-eq-range-bound${isDark ? ' ecp-vp-eq-range-bound--dark' : ' ecp-vp-eq-range-bound--light'}`}>+20</span>
                                         </div>
@@ -744,8 +747,9 @@ function VisualizePlayer({
                                 className="ecp-vp-volume-slider"
                                 style={{
                                     background: `linear-gradient(to right, ${currentTheme.slider} ${volume}%, ${currentTheme.slider + '30'} ${volume}%)`,
+                                    '--thumb-color': currentTheme.slider,
                                     display: containerWidth < 460 ? 'none' : 'block'
-                                }}
+                                } as React.CSSProperties}
                             />
                             <span
                                 className={`ecp-vp-volume-pct${isDark ? ' ecp-vp-volume-pct--dark' : ' ecp-vp-volume-pct--light'}`}
@@ -944,8 +948,9 @@ function WaveAudioPlayer({
                                 className="ecp-wave-vol-slider"
                                 style={{
                                     background: `linear-gradient(to right, ${gradient[0]} ${volume}%, ${isDark ? '#374151' : '#d1d5db'} ${volume}%)`,
+                                    '--thumb-color': gradient[0],
                                     display: (width && width < 400) ? 'none' : undefined
-                                }}
+                                } as React.CSSProperties}
                             />
                             {(width && width < 400) && (
                                 <button
@@ -1013,7 +1018,10 @@ function WaveAudioPlayer({
                                             type="range" min="-20" max="20" value={eqBands[band]}
                                             onChange={(e) => handleEqChange(band, parseInt(e.target.value))}
                                             className="ecp-wave-eq-slider"
-                                            style={{ background: `linear-gradient(to right, ${gradient[0]} ${(eqBands[band] + 20) / 40 * 100}%, ${gradient[1] + '30'} ${(eqBands[band] + 20) / 40 * 100}%)` }}
+                                            style={{
+                                                background: `linear-gradient(to right, ${gradient[0]} ${(eqBands[band] + 20) / 40 * 100}%, ${gradient[1] + '30'} ${(eqBands[band] + 20) / 40 * 100}%)`,
+                                                '--thumb-color': gradient[0]
+                                            } as React.CSSProperties}
                                         />
                                         <span className={isDark ? 'ecp-wave-eq-bound--dark' : 'ecp-wave-eq-bound--light'}>+20</span>
                                     </div>
@@ -1496,7 +1504,10 @@ function VideoPlayer({
                                                             type="range" min="-20" max="20" value={eqBands[band]}
                                                             onChange={(e) => handleEqChange(band, parseInt(e.target.value))}
                                                             className="ecp-video-eq-slider"
-                                                            style={{ background: `linear-gradient(to right, ${color} ${(eqBands[band] + 20) / 40 * 100}%, #e5e7eb ${(eqBands[band] + 20) / 40 * 100}%)` }}
+                                                            style={{
+                                                                background: `linear-gradient(to right, ${color} ${(eqBands[band] + 20) / 40 * 100}%, #e5e7eb ${(eqBands[band] + 20) / 40 * 100}%)`,
+                                                                '--thumb-color': color
+                                                            } as React.CSSProperties}
                                                         />
                                                         <span className={isDark ? 'ecp-video-eq-bound--dark' : 'ecp-video-eq-bound--light'}>+20</span>
                                                     </div>
@@ -1534,8 +1545,9 @@ function VideoPlayer({
                                 style={{
                                     background: video && duration > 0
                                         ? `linear-gradient(to right, ${color} ${(currentTime / duration) * 100}%, #e5e7eb ${(currentTime / duration) * 100}%)`
-                                        : '#e5e7eb'
-                                }}
+                                        : '#e5e7eb',
+                                    '--thumb-color': color
+                                } as React.CSSProperties}
                             />
                             <span className={`ecp-video-time ecp-video-time--right${isDark ? ' ecp-video-time--dark' : ' ecp-video-time--light'}`}>{formatTime(duration)}</span>
                         </div>
@@ -1609,8 +1621,9 @@ function VideoPlayer({
                                 className="ecp-video-vol-slider"
                                 style={{
                                     background: `linear-gradient(to right, ${color} ${volume}%, #e5e7eb ${volume}%)`,
+                                    '--thumb-color': color,
                                     display: containerWidth < 460 ? 'none' : 'block'
-                                }}
+                                } as React.CSSProperties}
                             />
                             <span
                                 className={`ecp-video-vol-pct${isDark ? ' ecp-video-vol-pct--dark' : ' ecp-video-vol-pct--light'}`}
