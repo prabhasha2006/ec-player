@@ -589,7 +589,9 @@ function VisualizePlayer({
 
     const wrapperBg = !(noControls || transparent) ? (isDark ? '#6060606a' : '#ffffffab') : undefined;
     const innerBg = !(noControls || transparent) ? currentTheme.bg : undefined;
-    const vuBgClass = `ecp-vp-vu-bg${isDark ? ' ecp-vp-vu-bg--dark' : ' ecp-vp-vu-bg--light'}${showEqualizer && transparent ? ' ecp-vp-vu-bg--dimmed' : ''}${noControls ? ' ecp-vp-vu-bg--no-margin' : ''}`;
+    const vuBgClass = `ecp-vp-vu-bg ${
+        !transparent ? (isDark ? ' ecp-vp-vu-bg--dark' : ' ecp-vp-vu-bg--light') : ' ecp-vp-vu-bg--transparent'
+    }${showEqualizer && transparent ? ' ecp-vp-vu-bg--dimmed' : ''}${noControls ? ' ecp-vp-vu-bg--no-margin' : ''}`;
 
     return (
         <div ref={containerRef} className="ecp-vp-wrapper" style={{ backgroundColor: wrapperBg }}>
@@ -1464,7 +1466,7 @@ function VideoPlayer({
             style={{ backgroundColor: wrapperBg }}
         >
             <div
-                className={`ecp-video-inner${isFullscreen ? ' ecp-video-inner--fullscreen' : ''}${!(noControls || transparent) ? ' ecp-video-inner--padded' : ''}`}
+                className={`ecp-video-inner${isFullscreen ? ' ecp-video-inner--fullscreen' : ''}${!transparent ? ' ecp-video-inner--padded' : ''}`}
                 style={{ background: innerBg }}
             >
                 {/* Video Name */}
