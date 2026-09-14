@@ -418,7 +418,7 @@ function mr({
     mid: U.mid || 0,
     treble: U.treble || 0
   }), [ae, _e] = b(1), [N, Te] = b(0), [ce, Ne] = b(!1), [o, pe] = b({
-    enable: q.dolby8d ? (a == null ? void 0 : a.enable) !== void 0 ? a.enable : !0 : !1,
+    enable: q.dolby8d && (a == null ? void 0 : a.enable) !== void 0 ? a.enable : !1,
     spatial: {
       rate: ((bt = a == null ? void 0 : a.spatial) == null ? void 0 : bt.rate) !== void 0 ? a.spatial.rate : 0.11,
       width: ((yt = a == null ? void 0 : a.spatial) == null ? void 0 : yt.width) !== void 0 ? a.spatial.width : 135,

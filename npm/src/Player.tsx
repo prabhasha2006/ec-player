@@ -330,7 +330,7 @@ function VisualizePlayer({
 
     const [showDolbyWindow, setShowDolbyWindow] = useState(false)
     const [dolby8dSettings, setDolby8dSettings] = useState({
-        enable: controls.dolby8d ? (dolby8d?.enable !== undefined ? dolby8d.enable : true) : false,
+        enable: controls.dolby8d ? (dolby8d?.enable !== undefined ? dolby8d.enable : false) : false,
         spatial: {
             rate: dolby8d?.spatial?.rate !== undefined ? dolby8d.spatial.rate : 0.11,
             width: dolby8d?.spatial?.width !== undefined ? dolby8d.spatial.width : 135,
