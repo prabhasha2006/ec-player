@@ -71,7 +71,7 @@ export declare interface VideoPlayerProps {
     };
 }
 
-export declare function VisualizePlayer({ audio, name, author, theme, volume: vol, thumbnail, controls, mode, bands: _bands, transparent, autoPlay, equalizer }: VisualizePlayerProps): JSX_2.Element;
+export declare function VisualizePlayer({ audio, name, author, theme, volume: vol, thumbnail, controls, mode, bands: _bands, transparent, autoPlay, equalizer, dolby8d }: VisualizePlayerProps): JSX_2.Element;
 
 export declare interface VisualizePlayerProps {
     audio?: string;
@@ -90,6 +90,29 @@ export declare interface VisualizePlayerProps {
         trackName?: boolean;
         equalizer?: boolean;
         speed?: boolean;
+        dolby8d?: boolean;
+    };
+    dolby8d?: null | {
+        enable: boolean;
+        spatial?: {
+            rate?: number;
+            width?: number;
+            focus?: number;
+        };
+        reverb?: {
+            size?: number;
+            tone?: number;
+            mix?: number;
+        };
+        echo?: {
+            time?: number;
+            feedback?: number;
+            mix?: number;
+        };
+        tape?: {
+            speed?: number;
+            drive?: number;
+        };
     };
     mode?: 'light' | 'dark';
     bands?: {

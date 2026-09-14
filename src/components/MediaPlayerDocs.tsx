@@ -4,7 +4,7 @@ import { AudioLines, Upload, CassetteTape, SquareMinus, ChevronDown, ChevronUp, 
 import { VisualizePlayer, ThemeSelector, themes, WaveAudioPlayer, NanoAudioPlayer, VideoPlayer } from './Player.js';
 
 const importFrom = 'ecplayer'
-const npmVersion = '1.0.8'
+const npmVersion = '1.0.9'
 
 const themeConfig = {
     light: {
@@ -250,6 +250,7 @@ function VisualizePlayerDocs() {
     const [vizShowLoop, setVizShowLoop] = useState(true);
     const [vizShowStop, setVizShowStop] = useState(true);
     const [vizShowSpeed, setVizShowSpeed] = useState(true);
+    const [vizShowDolby8d, setVizShowDolby8d] = useState(false);
     const [vizAuthor, setVizAuthor] = useState('Artist Name');
     const [vizThumbnail, setVizThumbnail] = useState('https://cdn-icons-png.flaticon.com/512/3845/3845874.png');
     const [vizAutoPlay, setVizAutoPlay] = useState(false);
@@ -314,7 +315,8 @@ function VisualizePlayerDocs() {
         loop: ${vizShowLoop},
         trackName: ${vizShowTrackName},
         equalizer: ${vizShowEqName},
-        speed: ${vizShowSpeed}
+        speed: ${vizShowSpeed},
+        dolby8d: ${vizShowDolby8d}
     }}
 />`;
         } else if (activeExample === 'custom') {
@@ -332,6 +334,13 @@ function VisualizePlayerDocs() {
         bass: ${vizEqBass},
         mid: ${vizEqMid},
         treble: ${vizEqTreble}
+    }},
+    dolby8d={{
+        enable: ${vizShowDolby8d},
+        spatial: { rate: 0.2, width: 80, focus: 20 },
+        reverb: { size: 3.0, tone: 40, mix: 30 },
+        echo: { time: 50, feedback: 20, mix: 10 },
+        tape: { drive: 1, speed: 1.0 }
     }}
 />`;
         } else if (activeExample === 'bands') {
@@ -434,7 +443,8 @@ function VisualizePlayerDocs() {
         'Seek bar with time display',
         'Loop playback option',
         'Visualization-only mode',
-        '3-band equalizer with bass, mid, and treble controls'
+        '3-band equalizer with bass, mid, and treble controls',
+        '360° HRTF audio panner with 8D spatial audio virtualization'
     ];
 
     return (
@@ -665,7 +675,7 @@ function VisualizePlayerDocs() {
                                 </div>
 
                                 {/* Equalizer Settings */}
-                                <div className="space-y-3">
+                                {/* <div className="space-y-3">
                                     <h4 className={`font-medium ${theme.heading}`}>Default Equalizer Settings</h4>
 
                                     <div>
@@ -721,7 +731,7 @@ function VisualizePlayerDocs() {
                                             <span className={`text-xs ${theme.secondaryText}`}>+20</span>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
 
                                 <div className="space-y-2">
                                     <label className={`flex items-center gap-2 cursor-pointer ${theme.label}`}>
@@ -745,7 +755,8 @@ function VisualizePlayerDocs() {
                                                 ['vizShowLoop', vizShowLoop, setVizShowLoop, 'Show Loop'],
                                                 ['vizShowStop', vizShowStop, setVizShowStop, 'Show Stop'],
                                                 ['vizAutoPlay', vizAutoPlay, setVizAutoPlay, 'Auto Play'],
-                                                ['vizShowSpeed', vizShowSpeed, setVizShowSpeed, 'Show Speed']
+                                                ['vizShowSpeed', vizShowSpeed, setVizShowSpeed, 'Show Speed'],
+                                                ['vizShowDolby8d', vizShowDolby8d, setVizShowDolby8d, 'Show 8D Engine']
                                             ].map(([key, value, setter, label]: any) => (
                                                 <label key={key as string} className={`flex items-center gap-2 cursor-pointer ${theme.label}`}>
                                                     <input
@@ -763,7 +774,7 @@ function VisualizePlayerDocs() {
                             </div>
                             <div>
                                 <h4 className={`font-semibold ${theme.heading} mb-4`}>Live Preview</h4>
-                                <VisualizePlayer
+                                {/* <VisualizePlayer
                                     audio={audioFile}
                                     name="Sample Music"
                                     author={vizAuthor}
@@ -788,6 +799,56 @@ function VisualizePlayerDocs() {
                                         bass: vizEqBass,
                                         mid: vizEqMid,
                                         treble: vizEqTreble
+                                    }}
+                                /> */}
+                                <VisualizePlayer
+                                    audio={audioFile}
+                                    name="Sample Music"
+                                    author={vizAuthor}
+                                    theme={(vizTheme === 'custom' ? customTheme : vizTheme) as any}
+                                    mode={vizMode}
+                                    volume={vizVolume}
+                                    transparent={vizTransparent}
+                                    thumbnail={vizThumbnail}
+                                    autoPlay={vizAutoPlay}
+                                    controls={vizOnlyVisualization ? {} : {
+                                        play: true,
+                                        pause: true,
+                                        stop: vizShowStop,
+                                        seekbar: vizShowSeekbar,
+                                        volume: vizShowVolume,
+                                        loop: vizShowLoop,
+                                        trackName: vizShowTrackName,
+                                        equalizer: vizShowEqName,
+                                        speed: vizShowSpeed,
+                                        dolby8d: vizShowDolby8d
+                                    }}
+                                    equalizer={{
+                                        bass: vizEqBass,
+                                        mid: vizEqMid,
+                                        treble: vizEqTreble
+                                    }}
+                                    dolby8d={{
+                                        enable: true,
+                                        spatial: {
+                                            rate: 0.2,
+                                            width: 80,
+                                            focus: 20
+                                        },
+                                        reverb: {
+                                            size: 3,
+                                            tone: 40,
+                                            mix: 30
+                                        },
+                                        echo: {
+                                            time: 50,
+                                            feedback: 20,
+                                            mix: 10
+                                        },
+                                        tape: {
+                                            drive: 1,
+                                            speed: 1
+                                        }
                                     }}
                                 />
                             </div>
