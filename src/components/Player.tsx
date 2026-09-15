@@ -1068,7 +1068,7 @@ function VisualizePlayer({
                                             letterSpacing="0.5px"
                                             fontFamily="monospace"
                                         >
-                                            FRONT
+                                            8D
                                         </text>
                                     </g>
                                 </svg>
@@ -1330,7 +1330,7 @@ function VisualizePlayer({
                                             <div className={`ecp-vp-eq-val${isDark ? ' ecp-vp-eq-val--dark' : ' ecp-vp-eq-val--light'}`}>{dolby8dSettings.tape.speed.toFixed(2)}x</div>
                                             <div className="ecp-vp-eq-bar-wrap">
                                                 <input
-                                                    type="range" min="0.50" max="2.00" step="0.05" value={dolby8dSettings.tape.speed}
+                                                    type="range" min="0.50" max="2.00" step="0.01" value={dolby8dSettings.tape.speed}
                                                     onChange={(e) => updateDolbySetting('tape', 'speed', parseFloat(e.target.value))}
                                                     className="ecp-vp-eq-slider"
                                                     style={{
@@ -1339,7 +1339,7 @@ function VisualizePlayer({
                                                     } as React.CSSProperties}
                                                 />
                                             </div>
-                                            <div className={`ecp-vp-eq-label${isDark ? ' ecp-vp-eq-label--dark' : ' ecp-vp-eq-label--light'}`}>TAPE</div>
+                                            <div className={`ecp-vp-eq-label${isDark ? ' ecp-vp-eq-label--dark' : ' ecp-vp-eq-label--light'}`}>SPEED</div>
                                         </div>
                                         <div className="ecp-vp-eq-band-col">
                                             <div className={`ecp-vp-eq-val${isDark ? ' ecp-vp-eq-val--dark' : ' ecp-vp-eq-val--light'}`}>{dolby8dSettings.tape.drive}</div>
