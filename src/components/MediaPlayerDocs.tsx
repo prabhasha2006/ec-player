@@ -4,7 +4,7 @@ import { AudioLines, Upload, CassetteTape, SquareMinus, ChevronDown, ChevronUp, 
 import { VisualizePlayer, ThemeSelector, themes, WaveAudioPlayer, NanoAudioPlayer, VideoPlayer } from './Player.js';
 
 const importFrom = 'ecplayer'
-const npmVersion = '1.1.1'
+const npmVersion = '1.1.2'
 
 const themeConfig = {
     light: {
@@ -239,7 +239,7 @@ function VisualizePlayerDocs() {
     const [expandedSection, setExpandedSection] = useState('customize');
 
     // Customization states
-    const [vizTheme, setVizTheme] = useState('purple');
+    const [vizTheme, setVizTheme] = useState('rainbow');
     const [vizMode, setVizMode] = useState<'light' | 'dark'>('light');
     const [vizVolume, setVizVolume] = useState(70);
     const [vizTransparent, setVizTransparent] = useState(false);
@@ -250,15 +250,15 @@ function VisualizePlayerDocs() {
     const [vizShowLoop, setVizShowLoop] = useState(true);
     const [vizShowStop, setVizShowStop] = useState(true);
     const [vizShowSpeed, setVizShowSpeed] = useState(true);
-    const [vizShowDolby8d, setVizShowDolby8d] = useState(false);
+    const [vizShowspatialEngine, setVizShowspatialEngine] = useState(false);
     const [vizAuthor, setVizAuthor] = useState('Artist Name');
     const [vizThumbnail, setVizThumbnail] = useState('https://cdn-icons-png.flaticon.com/512/3845/3845874.png');
-    const [vizAutoPlay, setVizAutoPlay] = useState(false);
+    const [vizAutoPlay, setVizAutoPlay] = useState(true);
     const [vizOnlyVisualization, setVizOnlyVisualization] = useState(false);
 
     // Equalizer states
     const [vizEqBass, setVizEqBass] = useState(6);
-    const [vizEqMid, setVizEqMid] = useState(-5);
+    const [vizEqMid, setVizEqMid] = useState(-4);
     const [vizEqTreble, setVizEqTreble] = useState(10);
 
     // Custom theme state
@@ -316,7 +316,7 @@ function VisualizePlayerDocs() {
         trackName: ${vizShowTrackName},
         equalizer: ${vizShowEqName},
         speed: ${vizShowSpeed},
-        dolby8d: ${vizShowDolby8d}
+        spatialEngine: ${vizShowspatialEngine}
     }}
 />`;
         } else if (activeExample === 'custom') {
@@ -335,8 +335,8 @@ function VisualizePlayerDocs() {
         mid: ${vizEqMid},
         treble: ${vizEqTreble}
     }},
-    dolby8d={{
-        enable: ${vizShowDolby8d},
+    spatialEngine={{
+        enable: ${vizShowspatialEngine},
         spatial: { rate: 0.2, width: 80, focus: 20 },
         reverb: { size: 3.0, tone: 40, mix: 30 },
         echo: { time: 50, feedback: 20, mix: 10 },
@@ -387,11 +387,26 @@ function VisualizePlayerDocs() {
         treble: ${vizEqTreble}
     }}
 />`;
+        } else if (activeExample === 'spatialEngine') {
+            return `<VisualizePlayer
+    audio="${audioFile || 'path/to/audio.mp3'}"
+    name="Track Name"
+    controls={{
+        spatialEngine: true
+    }}
+    spatialEngine={{
+        enable: true,
+        spatial: { rate: 0.2, width: 80, focus: 20 },
+        reverb: { size: 3.0, tone: 40, mix: 30 },
+        echo: { time: 50, feedback: 20, mix: 10 },
+        tape: { drive: 1, speed: 1.0 }
+    }}
+/>`;
         }
         return '';
     };
 
-    const examples = ['basic', 'themed', 'controls', 'custom', 'bands', 'customTheme', 'onlyVisualization', 'equalizer'];
+    const examples = ['basic', 'themed', 'controls', 'custom', 'bands', 'customTheme', 'onlyVisualization', 'equalizer', 'spatialEngine'];
 
     const exampleTitles = {
         basic: 'Basic Usage',
@@ -401,7 +416,8 @@ function VisualizePlayerDocs() {
         bands: 'Custom Frequency Bands',
         customTheme: 'Custom Theme Object',
         onlyVisualization: 'Only Visualization',
-        equalizer: 'Equalizer Settings'
+        equalizer: 'Equalizer Settings',
+        spatialEngine: 'Spatial Engine'
     };
 
     const exampleDescriptions = {
@@ -412,7 +428,8 @@ function VisualizePlayerDocs() {
         bands: 'Define custom frequency bands for visualization',
         customTheme: 'Create a completely custom theme with your own colors',
         onlyVisualization: 'Display only the frequency visualization without any controls',
-        equalizer: 'Configure initial equalizer settings for bass, mid, and treble'
+        equalizer: 'Configure initial equalizer settings for bass, mid, and treble',
+        spatialEngine: 'Configure 360° HRTF spatial audio engine with reverb, echo, and tape drive settings'
     };
 
     const propDocs = [
@@ -427,7 +444,8 @@ function VisualizePlayerDocs() {
         { prop: 'autoPlay', type: 'boolean', default: 'false', description: 'Start playing automatically' },
         { prop: 'controls', type: 'object', default: '{...}', description: 'Configure which controls to show. Empty object removes all controls.' },
         { prop: 'bands', type: 'array', default: 'null', description: 'Custom frequency bands array' },
-        { prop: 'equalizer', type: 'object', default: '{ bass: 0, mid: 0, treble: 0 }', required: false, description: 'Initial equalizer settings for bass, mid, and treble (-20 to +20)' }
+        { prop: 'equalizer', type: 'object', default: '{ bass: 0, mid: 0, treble: 0 }', required: false, description: 'Initial equalizer settings for bass, mid, and treble (-20 to +20)' },
+        { prop: 'spatialEngine', type: 'object | boolean', default: 'null', required: false, description: 'Spatial engine config with 360° HRTF panning, reverb, echo, and tape drive settings' }
     ];
 
     const features = [
@@ -756,7 +774,7 @@ function VisualizePlayerDocs() {
                                                 ['vizShowStop', vizShowStop, setVizShowStop, 'Show Stop'],
                                                 ['vizAutoPlay', vizAutoPlay, setVizAutoPlay, 'Auto Play'],
                                                 ['vizShowSpeed', vizShowSpeed, setVizShowSpeed, 'Show Speed'],
-                                                ['vizShowDolby8d', vizShowDolby8d, setVizShowDolby8d, 'Show 8D Engine']
+                                                ['vizShowspatialEngine', vizShowspatialEngine, setVizShowspatialEngine, 'Show Spatial Engine']
                                             ].map(([key, value, setter, label]: any) => (
                                                 <label key={key as string} className={`flex items-center gap-2 cursor-pointer ${theme.label}`}>
                                                     <input
@@ -821,14 +839,14 @@ function VisualizePlayerDocs() {
                                         trackName: vizShowTrackName,
                                         equalizer: vizShowEqName,
                                         speed: vizShowSpeed,
-                                        dolby8d: vizShowDolby8d
+                                        spatialEngine: vizShowspatialEngine
                                     }}
                                     equalizer={{
                                         bass: vizEqBass,
                                         mid: vizEqMid,
                                         treble: vizEqTreble
                                     }}
-                                    dolby8d={{
+                                    spatialEngine={{
                                         enable: true,
                                         spatial: {
                                             rate: 0.2,

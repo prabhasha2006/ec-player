@@ -41,9 +41,9 @@ export interface VisualizePlayerProps {
         trackName?: boolean;
         equalizer?: boolean;
         speed?: boolean;
-        dolby8d?: boolean
+        spatialEngine?: boolean
     };
-    dolby8d?: null | {
+    spatialEngine?: null | {
         enable: boolean;
         spatial?: {
             rate?: number;
@@ -302,14 +302,14 @@ function VisualizePlayer({
         trackName: true,
         equalizer: true,
         speed: true,
-        dolby8d: false
+        spatialEngine: false
     },
     mode = 'light' as 'light' | 'dark',
     bands: _bands = null,
     transparent = false,
     autoPlay = false,
     equalizer = { bass: 0, mid: 0, treble: 0 },
-    dolby8d = null
+    spatialEngine = null
 }: VisualizePlayerProps) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
@@ -329,71 +329,71 @@ function VisualizePlayer({
     const [containerWidth, setContainerWidth] = useState(0);
 
     const [showDolbyWindow, setShowDolbyWindow] = useState(false)
-    const [dolby8dSettings, setDolby8dSettings] = useState({
-        enable: controls.dolby8d ? (dolby8d?.enable !== undefined ? dolby8d.enable : false) : false,
+    const [spatialEngineSettings, setspatialEngineSettings] = useState({
+        enable: !!controls.spatialEngine ? (spatialEngine?.enable !== undefined ? spatialEngine.enable : false) : false,
         spatial: {
-            rate: dolby8d?.spatial?.rate !== undefined ? dolby8d.spatial.rate : 0.11,
-            width: dolby8d?.spatial?.width !== undefined ? dolby8d.spatial.width : 135,
-            focus: dolby8d?.spatial?.focus !== undefined ? dolby8d.spatial.focus : 65
+            rate: spatialEngine?.spatial?.rate !== undefined ? spatialEngine.spatial.rate : 0.11,
+            width: spatialEngine?.spatial?.width !== undefined ? spatialEngine.spatial.width : 135,
+            focus: spatialEngine?.spatial?.focus !== undefined ? spatialEngine.spatial.focus : 65
         },
         reverb: {
-            size: dolby8d?.reverb?.size !== undefined ? dolby8d.reverb.size : 2.4,
-            tone: dolby8d?.reverb?.tone !== undefined ? dolby8d.reverb.tone : 62,
-            mix: dolby8d?.reverb?.mix !== undefined ? dolby8d.reverb.mix : 30
+            size: spatialEngine?.reverb?.size !== undefined ? spatialEngine.reverb.size : 2.4,
+            tone: spatialEngine?.reverb?.tone !== undefined ? spatialEngine.reverb.tone : 62,
+            mix: spatialEngine?.reverb?.mix !== undefined ? spatialEngine.reverb.mix : 30
         },
         echo: {
-            time: dolby8d?.echo?.time !== undefined ? dolby8d.echo.time : 500,
-            feedback: dolby8d?.echo?.feedback !== undefined ? dolby8d.echo.feedback : 45,
-            mix: dolby8d?.echo?.mix !== undefined ? dolby8d.echo.mix : 5
+            time: spatialEngine?.echo?.time !== undefined ? spatialEngine.echo.time : 500,
+            feedback: spatialEngine?.echo?.feedback !== undefined ? spatialEngine.echo.feedback : 45,
+            mix: spatialEngine?.echo?.mix !== undefined ? spatialEngine.echo.mix : 5
         },
         tape: {
-            speed: typeof dolby8d?.tape === 'number' ? dolby8d.tape : (dolby8d?.tape?.speed !== undefined ? dolby8d.tape.speed : 1.0),
-            drive: typeof dolby8d?.tape === 'object' && dolby8d.tape?.drive !== undefined ? dolby8d.tape.drive : 0
+            speed: typeof spatialEngine?.tape === 'number' ? spatialEngine.tape : (spatialEngine?.tape?.speed !== undefined ? spatialEngine.tape.speed : 1.0),
+            drive: typeof spatialEngine?.tape === 'object' && spatialEngine.tape?.drive !== undefined ? spatialEngine.tape.drive : 0
         }
     });
 
     useEffect(() => {
-        if (dolby8d) {
-            setDolby8dSettings({
-                enable: dolby8d.enable !== undefined ? dolby8d.enable : true,
+        if (spatialEngine) {
+            setspatialEngineSettings({
+                enable: !!controls.spatialEngine && (spatialEngine.enable !== undefined ? spatialEngine.enable : true),
                 spatial: {
-                    rate: dolby8d.spatial?.rate !== undefined ? dolby8d.spatial.rate : 0.2,
-                    width: dolby8d.spatial?.width !== undefined ? dolby8d.spatial.width : 80,
-                    focus: dolby8d.spatial?.focus !== undefined ? dolby8d.spatial.focus : 20
+                    rate: spatialEngine.spatial?.rate !== undefined ? spatialEngine.spatial.rate : 0.2,
+                    width: spatialEngine.spatial?.width !== undefined ? spatialEngine.spatial.width : 80,
+                    focus: spatialEngine.spatial?.focus !== undefined ? spatialEngine.spatial.focus : 20
                 },
                 reverb: {
-                    size: dolby8d.reverb?.size !== undefined ? dolby8d.reverb.size : 3,
-                    tone: dolby8d.reverb?.tone !== undefined ? dolby8d.reverb.tone : 40,
-                    mix: dolby8d.reverb?.mix !== undefined ? dolby8d.reverb.mix : 30
+                    size: spatialEngine.reverb?.size !== undefined ? spatialEngine.reverb.size : 3,
+                    tone: spatialEngine.reverb?.tone !== undefined ? spatialEngine.reverb.tone : 40,
+                    mix: spatialEngine.reverb?.mix !== undefined ? spatialEngine.reverb.mix : 30
                 },
                 echo: {
-                    time: dolby8d.echo?.time !== undefined ? dolby8d.echo.time : 50,
-                    feedback: dolby8d.echo?.feedback !== undefined ? dolby8d.echo.feedback : 20,
-                    mix: dolby8d.echo?.mix !== undefined ? dolby8d.echo.mix : 10
+                    time: spatialEngine.echo?.time !== undefined ? spatialEngine.echo.time : 50,
+                    feedback: spatialEngine.echo?.feedback !== undefined ? spatialEngine.echo.feedback : 20,
+                    mix: spatialEngine.echo?.mix !== undefined ? spatialEngine.echo.mix : 10
                 },
                 tape: {
-                    speed: typeof dolby8d.tape === 'number' ? dolby8d.tape : (dolby8d.tape?.speed !== undefined ? dolby8d.tape.speed : 1.0),
-                    drive: typeof dolby8d.tape === 'object' && dolby8d.tape?.drive !== undefined ? dolby8d.tape.drive : 0
+                    speed: typeof spatialEngine.tape === 'number' ? spatialEngine.tape : (spatialEngine.tape?.speed !== undefined ? spatialEngine.tape.speed : 1.0),
+                    drive: typeof spatialEngine.tape === 'object' && spatialEngine.tape?.drive !== undefined ? spatialEngine.tape.drive : 0
                 }
             });
         }
-    }, [dolby8d]);
+    }, [spatialEngine]);
 
     const [activeDolbyTab, setActiveDolbyTab] = useState<'spatial' | 'reverb' | 'echo' | 'tape'>('spatial');
 
-    const dolby8dSettingsRef = useRef(dolby8dSettings);
+    const spatialEngineSettingsRef = useRef(spatialEngineSettings);
     const playbackRateRef = useRef(playbackRate);
     useEffect(() => {
-        dolby8dSettingsRef.current = dolby8dSettings;
-    }, [dolby8dSettings]);
+        spatialEngineSettingsRef.current = spatialEngineSettings;
+    }, [spatialEngineSettings]);
     useEffect(() => {
         playbackRateRef.current = playbackRate;
     }, [playbackRate]);
 
     const updateAudioPlaybackRate = () => {
         if (audioRef.current) {
-            const isEn = dolby8dSettingsRef.current.enable;
-            const tapeMult = isEn ? dolby8dSettingsRef.current.tape.speed : 1.0;
+            const isEn = spatialEngineSettingsRef.current.enable;
+            const tapeMult = isEn ? spatialEngineSettingsRef.current.tape.speed : 1.0;
             const isTapeActive = isEn && tapeMult !== 1.0;
             const preservesPitch = !isTapeActive;
 
@@ -412,7 +412,7 @@ function VisualizePlayer({
     };
 
     const updateDolbySetting = (category: 'spatial' | 'reverb' | 'echo' | 'tape', key: string, value: number) => {
-        setDolby8dSettings(prev => ({
+        setspatialEngineSettings(prev => ({
             ...prev,
             enable: true,
             [category]: {
@@ -423,14 +423,14 @@ function VisualizePlayer({
     };
 
     const toggleDolbyEnable = () => {
-        setDolby8dSettings(prev => ({
+        setspatialEngineSettings(prev => ({
             ...prev,
             enable: !prev.enable
         }));
     };
 
     const resetDolbySettings = () => {
-        setDolby8dSettings({
+        setspatialEngineSettings({
             enable: true,
             spatial: { rate: 0.11, width: 135, focus: 65 },
             reverb: { size: 2.4, tone: 62, mix: 30 },
@@ -525,7 +525,25 @@ function VisualizePlayer({
     const isPlayingRef = useRef<boolean>(false);
     const themeRef = useRef<ThemeKey>(typeof theme === 'string' ? theme : 'purple');
 
-    const currentTheme: Theme = (typeof theme === 'string') ? (themes[theme] || themes.purple) : (typeof theme === 'object') ? theme : themes.purple;
+    const [rainbowColorIndex, setRainbowColorIndex] = useState(0);
+    const isRainbowTheme = (typeof theme === 'string' && theme === 'rainbow') || (typeof theme === 'object' && theme?.name === 'Rainbow');
+
+    useEffect(() => {
+        if (!isRainbowTheme) return;
+        const interval = setInterval(() => {
+            setRainbowColorIndex(prev => (prev + 1) % themes.rainbow.bars.length);
+        }, 5000);
+        return () => clearInterval(interval);
+    }, [isRainbowTheme]);
+
+    const baseTheme: Theme = (typeof theme === 'string') ? (themes[theme] || themes.purple) : (typeof theme === 'object') ? theme : themes.purple;
+    const currentTheme: Theme = isRainbowTheme ? {
+        ...baseTheme,
+        button: themes.rainbow.bars[rainbowColorIndex],
+        buttonHover: themes.rainbow.bars[(rainbowColorIndex + 1) % themes.rainbow.bars.length],
+        slider: themes.rainbow.bars[rainbowColorIndex]
+    } : baseTheme;
+
     const isDark = mode === 'dark';
     const noControls = (typeof controls === 'object' && Object.keys(controls).length === 0);
 
@@ -595,7 +613,7 @@ function VisualizePlayer({
             const audioElement = audioRef.current;
             const handleTimeUpdate = () => { if (!isSeeking) setCurrentTime(audioElement.currentTime); };
             const handleLoadedMetadata = () => setDuration(audioElement.duration);
-            const handleEnded = () => { if (!isLoop) { setIsPlaying(false); if (animationRef.current) cancelAnimationFrame(animationRef.current); } };
+            const handleEnded = () => { if (!isLoop) { setIsPlaying(false); } };
             const handlePlay = () => {
                 setIsPlaying(true);
                 updateAudioPlaybackRate();
@@ -612,7 +630,7 @@ function VisualizePlayer({
             peakHoldsRef.current = bands.map(() => 0);
             peakHoldTimesRef.current = bands.map(() => 0);
             updateVU();
-            if (wasPlaying) audioRef.current.play().catch(e => console.error("Play failed:", e));
+            if (wasPlaying || autoPlay || noControls) audioRef.current.play().catch(e => console.error("Play failed:", e));
         }
     }, [audio]);
 
@@ -620,7 +638,7 @@ function VisualizePlayer({
     useEffect(() => { if (audioRef.current) audioRef.current.loop = isLoop; }, [isLoop]);
     useEffect(() => {
         updateAudioPlaybackRate();
-    }, [playbackRate, dolby8dSettings.tape.speed, dolby8dSettings.enable]);
+    }, [playbackRate, spatialEngineSettings.tape.speed, spatialEngineSettings.enable]);
     useEffect(() => {
         if (audioContextRef.current) {
             if (bassFilterRef.current) bassFilterRef.current.gain.value = eqBands.bass;
@@ -631,29 +649,29 @@ function VisualizePlayer({
 
     useEffect(() => {
         if (audioContextRef.current) {
-            const isEn = dolby8dSettings.enable;
+            const isEn = spatialEngineSettings.enable;
             if (waveShaperRef.current) {
-                waveShaperRef.current.curve = makeDistortionCurve(isEn ? dolby8dSettings.tape.drive : 0);
+                waveShaperRef.current.curve = makeDistortionCurve(isEn ? spatialEngineSettings.tape.drive : 0);
             }
             if (reverbToneFilterRef.current) {
-                reverbToneFilterRef.current.frequency.value = (dolby8dSettings.reverb.tone / 100) * 8000 + 500;
+                reverbToneFilterRef.current.frequency.value = (spatialEngineSettings.reverb.tone / 100) * 8000 + 500;
             }
             if (reverbGainRef.current) {
-                reverbGainRef.current.gain.value = isEn ? dolby8dSettings.reverb.mix / 100 : 0;
+                reverbGainRef.current.gain.value = isEn ? spatialEngineSettings.reverb.mix / 100 : 0;
             }
             if (convolverRef.current && audioContextRef.current) {
                 try {
-                    convolverRef.current.buffer = createImpulseResponse(audioContextRef.current, dolby8dSettings.reverb.size);
+                    convolverRef.current.buffer = createImpulseResponse(audioContextRef.current, spatialEngineSettings.reverb.size);
                 } catch (e) { }
             }
             if (delayRef.current) {
-                delayRef.current.delayTime.value = Math.max(0.01, dolby8dSettings.echo.time / 1000);
+                delayRef.current.delayTime.value = Math.max(0.01, spatialEngineSettings.echo.time / 1000);
             }
             if (echoFeedbackRef.current) {
-                echoFeedbackRef.current.gain.value = isEn ? Math.min(0.85, dolby8dSettings.echo.feedback / 100) : 0;
+                echoFeedbackRef.current.gain.value = isEn ? Math.min(0.85, spatialEngineSettings.echo.feedback / 100) : 0;
             }
             if (echoGainRef.current) {
-                echoGainRef.current.gain.value = isEn ? dolby8dSettings.echo.mix / 100 : 0;
+                echoGainRef.current.gain.value = isEn ? spatialEngineSettings.echo.mix / 100 : 0;
             }
             if (!isEn) {
                 if (stereoPannerRef.current) {
@@ -671,12 +689,12 @@ function VisualizePlayer({
                 }
             }
         }
-    }, [dolby8dSettings]);
+    }, [spatialEngineSettings]);
 
     const updateSpatialAudio = () => {
         if (!audioContextRef.current || !isPlayingRef.current) return;
 
-        const currentDolby = dolby8dSettingsRef.current;
+        const currentDolby = spatialEngineSettingsRef.current;
         if (!currentDolby.enable) return;
 
         const now = performance.now();
@@ -742,7 +760,7 @@ function VisualizePlayer({
 
                     // 8D Tape WaveShaper
                     const waveShaper = ctx.createWaveShaper();
-                    waveShaper.curve = makeDistortionCurve(dolby8dSettingsRef.current.enable ? dolby8dSettingsRef.current.tape.drive : 0);
+                    waveShaper.curve = makeDistortionCurve(spatialEngineSettingsRef.current.enable ? spatialEngineSettingsRef.current.tape.drive : 0);
                     updateAudioPlaybackRate();
 
                     // 8D HRTF 3D Spatial Panner Node
@@ -770,20 +788,20 @@ function VisualizePlayer({
 
                     // 8D Reverb Path (Convolver + Tone Filter + Wet Gain)
                     const convolver = ctx.createConvolver();
-                    convolver.buffer = createImpulseResponse(ctx, dolby8dSettingsRef.current.reverb.size);
+                    convolver.buffer = createImpulseResponse(ctx, spatialEngineSettingsRef.current.reverb.size);
                     const reverbToneFilter = ctx.createBiquadFilter();
                     reverbToneFilter.type = 'lowpass';
-                    reverbToneFilter.frequency.value = (dolby8dSettingsRef.current.reverb.tone / 100) * 8000 + 500;
+                    reverbToneFilter.frequency.value = (spatialEngineSettingsRef.current.reverb.tone / 100) * 8000 + 500;
                     const reverbGain = ctx.createGain();
-                    reverbGain.gain.value = dolby8dSettingsRef.current.enable ? dolby8dSettingsRef.current.reverb.mix / 100 : 0;
+                    reverbGain.gain.value = spatialEngineSettingsRef.current.enable ? spatialEngineSettingsRef.current.reverb.mix / 100 : 0;
 
                     // 8D Echo / Delay Path (Delay + Feedback Loop + Wet Gain)
                     const delay = ctx.createDelay(2.0);
-                    delay.delayTime.value = dolby8dSettingsRef.current.echo.time / 1000;
+                    delay.delayTime.value = spatialEngineSettingsRef.current.echo.time / 1000;
                     const echoFeedback = ctx.createGain();
-                    echoFeedback.gain.value = Math.min(0.85, dolby8dSettingsRef.current.echo.feedback / 100);
+                    echoFeedback.gain.value = Math.min(0.85, spatialEngineSettingsRef.current.echo.feedback / 100);
                     const echoGain = ctx.createGain();
-                    echoGain.gain.value = dolby8dSettingsRef.current.enable ? dolby8dSettingsRef.current.echo.mix / 100 : 0;
+                    echoGain.gain.value = spatialEngineSettingsRef.current.enable ? spatialEngineSettingsRef.current.echo.mix / 100 : 0;
 
                     // Connect Echo Feedback Loop
                     delay.connect(echoFeedback);
@@ -865,7 +883,7 @@ function VisualizePlayer({
     const analyze = () => {
         if (!analyserRef.current || !isPlayingRef.current) return;
 
-        const currentDolby = dolby8dSettingsRef.current;
+        const currentDolby = spatialEngineSettingsRef.current;
 
         // 8D Orbital Spatial HRTF 3D Panning & Visualizer Update
         if (currentDolby.enable && audioContextRef.current) {
@@ -929,21 +947,48 @@ function VisualizePlayer({
     const updateVU = () => {
         if (!vuContainerRef.current) return;
         const currentTheme = themes[themeRef.current] || themes.rainbow;
-        let html = '';
-        bands.forEach((_, index) => {
-            const height = bandPeaksRef.current[index] * 100;
-            const peakPos = 100 - (peakHoldsRef.current[index] * 100);
+        const container = vuContainerRef.current;
+
+        if (container.children.length !== bands.length) {
+            let html = '';
+            bands.forEach(() => {
+                html += `
+                    <div class="ecp-vu-bar-wrap">
+                        <div class="ecp-vu-bar-fill"></div>
+                        <div class="ecp-vu-peak-line" style="display:none;"></div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        const containerHeight = container.clientHeight;
+        const wraps = container.children;
+        for (let index = 0; index < bands.length; index++) {
+            const wrap = wraps[index] as HTMLElement;
+            if (!wrap) continue;
+            const barFill = wrap.children[0] as HTMLElement;
+            const peakLine = wrap.children[1] as HTMLElement;
+
+            const heightPx = Math.round(bandPeaksRef.current[index] * containerHeight);
+            const peakPx = Math.round((1 - peakHoldsRef.current[index]) * containerHeight);
             const colorIndex = Math.floor((index / bands.length) * currentTheme.bars.length);
             const barColor = currentTheme.bars[Math.min(colorIndex, currentTheme.bars.length - 1)];
-            html += `
-                <div class="ecp-vu-bar-wrap">
-                    <div class="ecp-vu-bar-fill" style="height: ${height}%; background: ${barColor};">
-                        ${peakHoldsRef.current[index] > 0.1 ? `<div class="ecp-vu-peak-line" style="top: ${peakPos}%; background: ${currentTheme.peak};"></div>` : ''}
-                    </div>
-                </div>
-            `;
-        });
-        vuContainerRef.current.innerHTML = html;
+
+            if (barFill) {
+                barFill.style.height = `${heightPx}px`;
+                barFill.style.backgroundColor = barColor;
+            }
+
+            if (peakLine) {
+                const showPeak = peakHoldsRef.current[index] > 0.1;
+                peakLine.style.display = showPeak ? 'block' : 'none';
+                if (showPeak) {
+                    peakLine.style.transform = `translate3d(0, ${peakPx}px, 0)`;
+                    peakLine.style.backgroundColor = currentTheme.peak;
+                }
+            }
+        }
     };
 
     const togglePlay = () => {
@@ -978,10 +1023,6 @@ function VisualizePlayer({
     const handleEqChange = (band: 'bass' | 'mid' | 'treble', value: number) => setEqBands(prev => ({ ...prev, [band]: value }));
     const resetEqualizer = () => setEqBands({ bass: 0, mid: 0, treble: 0 });
 
-    useEffect(() => {
-        if ((((typeof controls === 'object' && Object.keys(controls).length === 0) || !controls) && !isPlaying) || autoPlay) togglePlay();
-    }, [controls]);
-
     const formatTime = (time: number) => {
         if (isNaN(time)) return '0:00';
         const minutes = Math.floor(time / 60);
@@ -1002,19 +1043,19 @@ function VisualizePlayer({
     const wrapperBg = !(noControls || transparent) ? (isDark ? '#6060606a' : '#ffffffab') : undefined;
     const innerBg = !(noControls || transparent) ? currentTheme.bg : undefined;
     const vuBgClass = `ecp-vp-vu-bg ${!transparent ? (isDark ? ' ecp-vp-vu-bg--dark' : ' ecp-vp-vu-bg--light') : ' ecp-vp-vu-bg--transparent'
-        }${showEqualizer && transparent ? ' ecp-vp-vu-bg--dimmed' : ''}${noControls ? ' ecp-vp-vu-bg--no-margin' : ''}`;
+        }${(showEqualizer || showDolbyWindow) && transparent ? ' ecp-vp-vu-bg--dimmed' : ''}${noControls ? ' ecp-vp-vu-bg--no-margin' : ''}`;
 
     return (
         <div ref={containerRef} className="ecp-vp-wrapper" style={{ backgroundColor: wrapperBg }}>
             <div className="ecp-vp-bg" style={{ background: innerBg }}>
                 {/* VU Meter */}
                 <div className="ecp-vp-vu-outer">
-                    <div className={vuBgClass}>
+                    <div className={vuBgClass} style={{ overflow: 'hidden' }}>
                         <div className="ecp-vp-vu-bars" ref={vuContainerRef} />
                     </div>
 
                     {/* Live Orbit Visualizer */}
-                    {dolby8dSettings.enable && isPlaying && (
+                    {spatialEngineSettings.enable && isPlaying && (
                         <div className="ecp-vp-8d-live-overlay">
                             <div className={`ecp-vp-8d-live-visualizer${isDark ? ' ecp-vp-8d-live-visualizer--dark' : ' ecp-vp-8d-live-visualizer--light'}`}
                                 style={{ '--theme-slider': currentTheme.slider, '--theme-slider-alpha': `${currentTheme.slider}33` } as React.CSSProperties}
@@ -1141,11 +1182,11 @@ function VisualizePlayer({
                                 </div>
                                 <div className="ecp-vp-8d-toggle-wrap">
                                     <span className={`ecp-vp-8d-toggle-label${isDark ? ' ecp-vp-8d-toggle-label--dark' : ' ecp-vp-8d-toggle-label--light'}`}>
-                                        {dolby8dSettings.enable ? 'On' : 'Off'}
+                                        {spatialEngineSettings.enable ? 'On' : 'Off'}
                                     </span>
                                     <button
                                         onClick={toggleDolbyEnable}
-                                        className={`ecp-vp-8d-toggle${dolby8dSettings.enable ? ' ecp-vp-8d-toggle--on' : ''}`}
+                                        className={`ecp-vp-8d-toggle${spatialEngineSettings.enable ? ' ecp-vp-8d-toggle--on' : ''}`}
                                     >
                                         <div className="ecp-vp-8d-toggle-thumb" />
                                     </button>
@@ -1156,7 +1197,7 @@ function VisualizePlayer({
                             {/* <div className={`ecp-vp-8d-visualizer${isDark ? ' ecp-vp-8d-visualizer--dark' : ' ecp-vp-8d-visualizer--light'}`}>
                                 <div className="ecp-vp-8d-orbit-ring" />
                                 <Headphones size={22} className="ecp-vp-8d-head-icon" />
-                                <div ref={orbitDotRef} className="ecp-vp-8d-orbit-dot" style={{ opacity: dolby8dSettings.enable ? 1 : 0.3 }} />
+                                <div ref={orbitDotRef} className="ecp-vp-8d-orbit-dot" style={{ opacity: spatialEngineSettings.enable ? 1 : 0.3 }} />
                             </div> */}
 
                             {/* Tab Bar */}
@@ -1177,14 +1218,14 @@ function VisualizePlayer({
                                 {activeDolbyTab === 'spatial' && (
                                     <div className="ecp-vp-eq-bands--horizontal">
                                         <div className="ecp-vp-eq-band-col">
-                                            <div className={`ecp-vp-eq-val${isDark ? ' ecp-vp-eq-val--dark' : ' ecp-vp-eq-val--light'}`}>{dolby8dSettings.spatial.rate.toFixed(2)}x</div>
+                                            <div className={`ecp-vp-eq-val${isDark ? ' ecp-vp-eq-val--dark' : ' ecp-vp-eq-val--light'}`}>{spatialEngineSettings.spatial.rate.toFixed(2)}x</div>
                                             <div className="ecp-vp-eq-bar-wrap">
                                                 <input
-                                                    type="range" min="0.01" max="1.00" step="0.01" value={dolby8dSettings.spatial.rate}
+                                                    type="range" min="0.01" max="1.00" step="0.01" value={spatialEngineSettings.spatial.rate}
                                                     onChange={(e) => updateDolbySetting('spatial', 'rate', parseFloat(e.target.value))}
                                                     className="ecp-vp-eq-slider"
                                                     style={{
-                                                        background: `linear-gradient(to right, ${currentTheme.slider} ${(dolby8dSettings.spatial.rate - 0.01) / 0.99 * 100}%, ${currentTheme.slider + '30'} ${(dolby8dSettings.spatial.rate - 0.01) / 0.99 * 100}%)`,
+                                                        background: `linear-gradient(to right, ${currentTheme.slider} ${(spatialEngineSettings.spatial.rate - 0.01) / 0.99 * 100}%, ${currentTheme.slider + '30'} ${(spatialEngineSettings.spatial.rate - 0.01) / 0.99 * 100}%)`,
                                                         '--thumb-color': currentTheme.slider
                                                     } as React.CSSProperties}
                                                 />
@@ -1192,14 +1233,14 @@ function VisualizePlayer({
                                             <div className={`ecp-vp-eq-label${isDark ? ' ecp-vp-eq-label--dark' : ' ecp-vp-eq-label--light'}`}>RATE</div>
                                         </div>
                                         <div className="ecp-vp-eq-band-col">
-                                            <div className={`ecp-vp-eq-val${isDark ? ' ecp-vp-eq-val--dark' : ' ecp-vp-eq-val--light'}`}>{dolby8dSettings.spatial.width}°</div>
+                                            <div className={`ecp-vp-eq-val${isDark ? ' ecp-vp-eq-val--dark' : ' ecp-vp-eq-val--light'}`}>{spatialEngineSettings.spatial.width}°</div>
                                             <div className="ecp-vp-eq-bar-wrap">
                                                 <input
-                                                    type="range" min="0" max="180" step="5" value={dolby8dSettings.spatial.width}
+                                                    type="range" min="0" max="180" step="5" value={spatialEngineSettings.spatial.width}
                                                     onChange={(e) => updateDolbySetting('spatial', 'width', parseInt(e.target.value))}
                                                     className="ecp-vp-eq-slider"
                                                     style={{
-                                                        background: `linear-gradient(to right, ${currentTheme.slider} ${dolby8dSettings.spatial.width / 180 * 100}%, ${currentTheme.slider + '30'} ${dolby8dSettings.spatial.width / 180 * 100}%)`,
+                                                        background: `linear-gradient(to right, ${currentTheme.slider} ${spatialEngineSettings.spatial.width / 180 * 100}%, ${currentTheme.slider + '30'} ${spatialEngineSettings.spatial.width / 180 * 100}%)`,
                                                         '--thumb-color': currentTheme.slider
                                                     } as React.CSSProperties}
                                                 />
@@ -1207,14 +1248,14 @@ function VisualizePlayer({
                                             <div className={`ecp-vp-eq-label${isDark ? ' ecp-vp-eq-label--dark' : ' ecp-vp-eq-label--light'}`}>WIDTH</div>
                                         </div>
                                         <div className="ecp-vp-eq-band-col">
-                                            <div className={`ecp-vp-eq-val${isDark ? ' ecp-vp-eq-val--dark' : ' ecp-vp-eq-val--light'}`}>{dolby8dSettings.spatial.focus}%</div>
+                                            <div className={`ecp-vp-eq-val${isDark ? ' ecp-vp-eq-val--dark' : ' ecp-vp-eq-val--light'}`}>{spatialEngineSettings.spatial.focus}%</div>
                                             <div className="ecp-vp-eq-bar-wrap">
                                                 <input
-                                                    type="range" min="0" max="100" step="1" value={dolby8dSettings.spatial.focus}
+                                                    type="range" min="0" max="100" step="1" value={spatialEngineSettings.spatial.focus}
                                                     onChange={(e) => updateDolbySetting('spatial', 'focus', parseInt(e.target.value))}
                                                     className="ecp-vp-eq-slider"
                                                     style={{
-                                                        background: `linear-gradient(to right, ${currentTheme.slider} ${dolby8dSettings.spatial.focus}%, ${currentTheme.slider + '30'} ${dolby8dSettings.spatial.focus}%)`,
+                                                        background: `linear-gradient(to right, ${currentTheme.slider} ${spatialEngineSettings.spatial.focus}%, ${currentTheme.slider + '30'} ${spatialEngineSettings.spatial.focus}%)`,
                                                         '--thumb-color': currentTheme.slider
                                                     } as React.CSSProperties}
                                                 />
@@ -1227,14 +1268,14 @@ function VisualizePlayer({
                                 {activeDolbyTab === 'reverb' && (
                                     <div className="ecp-vp-eq-bands--horizontal">
                                         <div className="ecp-vp-eq-band-col">
-                                            <div className={`ecp-vp-eq-val${isDark ? ' ecp-vp-eq-val--dark' : ' ecp-vp-eq-val--light'}`}>{dolby8dSettings.reverb.size.toFixed(1)}s</div>
+                                            <div className={`ecp-vp-eq-val${isDark ? ' ecp-vp-eq-val--dark' : ' ecp-vp-eq-val--light'}`}>{spatialEngineSettings.reverb.size.toFixed(1)}s</div>
                                             <div className="ecp-vp-eq-bar-wrap">
                                                 <input
-                                                    type="range" min="0.2" max="5.0" step="0.1" value={dolby8dSettings.reverb.size}
+                                                    type="range" min="0.2" max="5.0" step="0.1" value={spatialEngineSettings.reverb.size}
                                                     onChange={(e) => updateDolbySetting('reverb', 'size', parseFloat(e.target.value))}
                                                     className="ecp-vp-eq-slider"
                                                     style={{
-                                                        background: `linear-gradient(to right, ${currentTheme.slider} ${(dolby8dSettings.reverb.size - 0.2) / 4.8 * 100}%, ${currentTheme.slider + '30'} ${(dolby8dSettings.reverb.size - 0.2) / 4.8 * 100}%)`,
+                                                        background: `linear-gradient(to right, ${currentTheme.slider} ${(spatialEngineSettings.reverb.size - 0.2) / 4.8 * 100}%, ${currentTheme.slider + '30'} ${(spatialEngineSettings.reverb.size - 0.2) / 4.8 * 100}%)`,
                                                         '--thumb-color': currentTheme.slider
                                                     } as React.CSSProperties}
                                                 />
@@ -1242,14 +1283,14 @@ function VisualizePlayer({
                                             <div className={`ecp-vp-eq-label${isDark ? ' ecp-vp-eq-label--dark' : ' ecp-vp-eq-label--light'}`}>SIZE</div>
                                         </div>
                                         <div className="ecp-vp-eq-band-col">
-                                            <div className={`ecp-vp-eq-val${isDark ? ' ecp-vp-eq-val--dark' : ' ecp-vp-eq-val--light'}`}>{dolby8dSettings.reverb.tone}%</div>
+                                            <div className={`ecp-vp-eq-val${isDark ? ' ecp-vp-eq-val--dark' : ' ecp-vp-eq-val--light'}`}>{spatialEngineSettings.reverb.tone}%</div>
                                             <div className="ecp-vp-eq-bar-wrap">
                                                 <input
-                                                    type="range" min="0" max="100" step="1" value={dolby8dSettings.reverb.tone}
+                                                    type="range" min="0" max="100" step="1" value={spatialEngineSettings.reverb.tone}
                                                     onChange={(e) => updateDolbySetting('reverb', 'tone', parseInt(e.target.value))}
                                                     className="ecp-vp-eq-slider"
                                                     style={{
-                                                        background: `linear-gradient(to right, ${currentTheme.slider} ${dolby8dSettings.reverb.tone}%, ${currentTheme.slider + '30'} ${dolby8dSettings.reverb.tone}%)`,
+                                                        background: `linear-gradient(to right, ${currentTheme.slider} ${spatialEngineSettings.reverb.tone}%, ${currentTheme.slider + '30'} ${spatialEngineSettings.reverb.tone}%)`,
                                                         '--thumb-color': currentTheme.slider
                                                     } as React.CSSProperties}
                                                 />
@@ -1257,14 +1298,14 @@ function VisualizePlayer({
                                             <div className={`ecp-vp-eq-label${isDark ? ' ecp-vp-eq-label--dark' : ' ecp-vp-eq-label--light'}`}>TONE</div>
                                         </div>
                                         <div className="ecp-vp-eq-band-col">
-                                            <div className={`ecp-vp-eq-val${isDark ? ' ecp-vp-eq-val--dark' : ' ecp-vp-eq-val--light'}`}>{dolby8dSettings.reverb.mix}%</div>
+                                            <div className={`ecp-vp-eq-val${isDark ? ' ecp-vp-eq-val--dark' : ' ecp-vp-eq-val--light'}`}>{spatialEngineSettings.reverb.mix}%</div>
                                             <div className="ecp-vp-eq-bar-wrap">
                                                 <input
-                                                    type="range" min="0" max="100" step="1" value={dolby8dSettings.reverb.mix}
+                                                    type="range" min="0" max="100" step="1" value={spatialEngineSettings.reverb.mix}
                                                     onChange={(e) => updateDolbySetting('reverb', 'mix', parseInt(e.target.value))}
                                                     className="ecp-vp-eq-slider"
                                                     style={{
-                                                        background: `linear-gradient(to right, ${currentTheme.slider} ${dolby8dSettings.reverb.mix}%, ${currentTheme.slider + '30'} ${dolby8dSettings.reverb.mix}%)`,
+                                                        background: `linear-gradient(to right, ${currentTheme.slider} ${spatialEngineSettings.reverb.mix}%, ${currentTheme.slider + '30'} ${spatialEngineSettings.reverb.mix}%)`,
                                                         '--thumb-color': currentTheme.slider
                                                     } as React.CSSProperties}
                                                 />
@@ -1277,14 +1318,14 @@ function VisualizePlayer({
                                 {activeDolbyTab === 'echo' && (
                                     <div className="ecp-vp-eq-bands--horizontal">
                                         <div className="ecp-vp-eq-band-col">
-                                            <div className={`ecp-vp-eq-val${isDark ? ' ecp-vp-eq-val--dark' : ' ecp-vp-eq-val--light'}`}>{dolby8dSettings.echo.time}ms</div>
+                                            <div className={`ecp-vp-eq-val${isDark ? ' ecp-vp-eq-val--dark' : ' ecp-vp-eq-val--light'}`}>{spatialEngineSettings.echo.time}ms</div>
                                             <div className="ecp-vp-eq-bar-wrap">
                                                 <input
-                                                    type="range" min="50" max="1000" step="10" value={dolby8dSettings.echo.time}
+                                                    type="range" min="50" max="1000" step="10" value={spatialEngineSettings.echo.time}
                                                     onChange={(e) => updateDolbySetting('echo', 'time', parseInt(e.target.value))}
                                                     className="ecp-vp-eq-slider"
                                                     style={{
-                                                        background: `linear-gradient(to right, ${currentTheme.slider} ${(dolby8dSettings.echo.time - 50) / 950 * 100}%, ${currentTheme.slider + '30'} ${(dolby8dSettings.echo.time - 50) / 950 * 100}%)`,
+                                                        background: `linear-gradient(to right, ${currentTheme.slider} ${(spatialEngineSettings.echo.time - 50) / 950 * 100}%, ${currentTheme.slider + '30'} ${(spatialEngineSettings.echo.time - 50) / 950 * 100}%)`,
                                                         '--thumb-color': currentTheme.slider
                                                     } as React.CSSProperties}
                                                 />
@@ -1292,14 +1333,14 @@ function VisualizePlayer({
                                             <div className={`ecp-vp-eq-label${isDark ? ' ecp-vp-eq-label--dark' : ' ecp-vp-eq-label--light'}`}>TIME</div>
                                         </div>
                                         <div className="ecp-vp-eq-band-col">
-                                            <div className={`ecp-vp-eq-val${isDark ? ' ecp-vp-eq-val--dark' : ' ecp-vp-eq-val--light'}`}>{dolby8dSettings.echo.feedback}%</div>
+                                            <div className={`ecp-vp-eq-val${isDark ? ' ecp-vp-eq-val--dark' : ' ecp-vp-eq-val--light'}`}>{spatialEngineSettings.echo.feedback}%</div>
                                             <div className="ecp-vp-eq-bar-wrap">
                                                 <input
-                                                    type="range" min="0" max="85" step="1" value={dolby8dSettings.echo.feedback}
+                                                    type="range" min="0" max="85" step="1" value={spatialEngineSettings.echo.feedback}
                                                     onChange={(e) => updateDolbySetting('echo', 'feedback', parseInt(e.target.value))}
                                                     className="ecp-vp-eq-slider"
                                                     style={{
-                                                        background: `linear-gradient(to right, ${currentTheme.slider} ${dolby8dSettings.echo.feedback / 85 * 100}%, ${currentTheme.slider + '30'} ${dolby8dSettings.echo.feedback / 85 * 100}%)`,
+                                                        background: `linear-gradient(to right, ${currentTheme.slider} ${spatialEngineSettings.echo.feedback / 85 * 100}%, ${currentTheme.slider + '30'} ${spatialEngineSettings.echo.feedback / 85 * 100}%)`,
                                                         '--thumb-color': currentTheme.slider
                                                     } as React.CSSProperties}
                                                 />
@@ -1307,14 +1348,14 @@ function VisualizePlayer({
                                             <div className={`ecp-vp-eq-label${isDark ? ' ecp-vp-eq-label--dark' : ' ecp-vp-eq-label--light'}`}>FEEDBACK</div>
                                         </div>
                                         <div className="ecp-vp-eq-band-col">
-                                            <div className={`ecp-vp-eq-val${isDark ? ' ecp-vp-eq-val--dark' : ' ecp-vp-eq-val--light'}`}>{dolby8dSettings.echo.mix}%</div>
+                                            <div className={`ecp-vp-eq-val${isDark ? ' ecp-vp-eq-val--dark' : ' ecp-vp-eq-val--light'}`}>{spatialEngineSettings.echo.mix}%</div>
                                             <div className="ecp-vp-eq-bar-wrap">
                                                 <input
-                                                    type="range" min="0" max="100" step="1" value={dolby8dSettings.echo.mix}
+                                                    type="range" min="0" max="100" step="1" value={spatialEngineSettings.echo.mix}
                                                     onChange={(e) => updateDolbySetting('echo', 'mix', parseInt(e.target.value))}
                                                     className="ecp-vp-eq-slider"
                                                     style={{
-                                                        background: `linear-gradient(to right, ${currentTheme.slider} ${dolby8dSettings.echo.mix}%, ${currentTheme.slider + '30'} ${dolby8dSettings.echo.mix}%)`,
+                                                        background: `linear-gradient(to right, ${currentTheme.slider} ${spatialEngineSettings.echo.mix}%, ${currentTheme.slider + '30'} ${spatialEngineSettings.echo.mix}%)`,
                                                         '--thumb-color': currentTheme.slider
                                                     } as React.CSSProperties}
                                                 />
@@ -1327,14 +1368,14 @@ function VisualizePlayer({
                                 {activeDolbyTab === 'tape' && (
                                     <div className="ecp-vp-eq-bands--horizontal">
                                         <div className="ecp-vp-eq-band-col">
-                                            <div className={`ecp-vp-eq-val${isDark ? ' ecp-vp-eq-val--dark' : ' ecp-vp-eq-val--light'}`}>{dolby8dSettings.tape.speed.toFixed(2)}x</div>
+                                            <div className={`ecp-vp-eq-val${isDark ? ' ecp-vp-eq-val--dark' : ' ecp-vp-eq-val--light'}`}>{spatialEngineSettings.tape.speed.toFixed(2)}x</div>
                                             <div className="ecp-vp-eq-bar-wrap">
                                                 <input
-                                                    type="range" min="0.50" max="2.00" step="0.01" value={dolby8dSettings.tape.speed}
+                                                    type="range" min="0.50" max="2.00" step="0.01" value={spatialEngineSettings.tape.speed}
                                                     onChange={(e) => updateDolbySetting('tape', 'speed', parseFloat(e.target.value))}
                                                     className="ecp-vp-eq-slider"
                                                     style={{
-                                                        background: `linear-gradient(to right, ${currentTheme.slider} ${(dolby8dSettings.tape.speed - 0.5) / 1.5 * 100}%, ${currentTheme.slider + '30'} ${(dolby8dSettings.tape.speed - 0.5) / 1.5 * 100}%)`,
+                                                        background: `linear-gradient(to right, ${currentTheme.slider} ${(spatialEngineSettings.tape.speed - 0.5) / 1.5 * 100}%, ${currentTheme.slider + '30'} ${(spatialEngineSettings.tape.speed - 0.5) / 1.5 * 100}%)`,
                                                         '--thumb-color': currentTheme.slider
                                                     } as React.CSSProperties}
                                                 />
@@ -1342,14 +1383,14 @@ function VisualizePlayer({
                                             <div className={`ecp-vp-eq-label${isDark ? ' ecp-vp-eq-label--dark' : ' ecp-vp-eq-label--light'}`}>SPEED</div>
                                         </div>
                                         <div className="ecp-vp-eq-band-col">
-                                            <div className={`ecp-vp-eq-val${isDark ? ' ecp-vp-eq-val--dark' : ' ecp-vp-eq-val--light'}`}>{dolby8dSettings.tape.drive}</div>
+                                            <div className={`ecp-vp-eq-val${isDark ? ' ecp-vp-eq-val--dark' : ' ecp-vp-eq-val--light'}`}>{spatialEngineSettings.tape.drive}</div>
                                             <div className="ecp-vp-eq-bar-wrap">
                                                 <input
-                                                    type="range" min="0" max="50" step="1" value={dolby8dSettings.tape.drive}
+                                                    type="range" min="0" max="50" step="1" value={spatialEngineSettings.tape.drive}
                                                     onChange={(e) => updateDolbySetting('tape', 'drive', parseFloat(e.target.value))}
                                                     className="ecp-vp-eq-slider"
                                                     style={{
-                                                        background: `linear-gradient(to right, ${currentTheme.slider} ${(dolby8dSettings.tape.drive) / 50 * 100}%, ${currentTheme.slider + '30'} ${(dolby8dSettings.tape.drive) / 50 * 100}%)`,
+                                                        background: `linear-gradient(to right, ${currentTheme.slider} ${(spatialEngineSettings.tape.drive) / 50 * 100}%, ${currentTheme.slider + '30'} ${(spatialEngineSettings.tape.drive) / 50 * 100}%)`,
                                                         '--thumb-color': currentTheme.slider
                                                     } as React.CSSProperties}
                                                 />
@@ -1457,7 +1498,7 @@ function VisualizePlayer({
                         </button>
                     )}
 
-                    {controls.speed && !controls.dolby8d && (
+                    {controls.speed && !controls.spatialEngine && (
                         <div className="ecp-vp-speed-wrap">
                             <select value={playbackRate} onChange={handleSpeedChange} className={`ecp-vp-speed-select${isDark ? ' ecp-vp-speed-select--dark' : ' ecp-vp-speed-select--light'}`}>
                                 {['0.5', '0.75', '1', '1.25', '1.5', '2'].map(v => (
@@ -1467,7 +1508,7 @@ function VisualizePlayer({
                         </div>
                     )}
 
-                    {controls.dolby8d && (
+                    {controls.spatialEngine && (
                         <button
                             onClick={() => { setShowDolbyWindow(!showDolbyWindow); setShowEqualizer(false) }} disabled={!audio}
                             className={`ecp-vp-loop-btn${showDolbyWindow ? ' ecp-vp-loop-btn--on' : ' ecp-vp-loop-btn--off'}${containerWidth >= 700 ? ' ecp-vp-loop-btn--wide' : ''}`}
@@ -1980,7 +2021,7 @@ function VideoPlayer({
                 videoRef.current.src = video;
                 videoRef.current.volume = isMuted ? 0 : currentVolume / 100;
                 const handleCanPlay = () => {
-                    if (wasPlaying && videoRef.current) videoRef.current.play().catch((e: any) => console.error("Play failed:", e));
+                    if ((wasPlaying || autoPlay || noControls) && videoRef.current) videoRef.current.play().catch((e: any) => console.error("Play failed:", e));
                     if (videoRef.current) videoRef.current.removeEventListener('canplay', handleCanPlay);
                 };
                 videoRef.current.addEventListener('canplay', handleCanPlay);
@@ -2185,7 +2226,7 @@ function VideoPlayer({
         return `${minutes}:${seconds.toString().padStart(2, '0')}`;
     };
 
-    useEffect(() => { if (noControls && !isPlaying || autoPlay) togglePlay(); }, [controls]);
+
 
     if (error && error.length > 0) {
         return (
