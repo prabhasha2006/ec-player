@@ -420,19 +420,19 @@ function yr({
   }), [ce, Ee] = k(1), [w, Me] = k(0), [ne, $e] = k(!1), [i, de] = k({
     enable: N.spatialEngine && (a == null ? void 0 : a.enable) !== void 0 ? a.enable : !1,
     spatial: {
-      rate: ((kt = a == null ? void 0 : a.spatial) == null ? void 0 : kt.rate) !== void 0 ? a.spatial.rate : 0.11,
-      width: ((qt = a == null ? void 0 : a.spatial) == null ? void 0 : qt.width) !== void 0 ? a.spatial.width : 135,
-      focus: ((wt = a == null ? void 0 : a.spatial) == null ? void 0 : wt.focus) !== void 0 ? a.spatial.focus : 65
+      rate: ((kt = a == null ? void 0 : a.spatial) == null ? void 0 : kt.rate) !== void 0 ? a.spatial.rate : 0.2,
+      width: ((qt = a == null ? void 0 : a.spatial) == null ? void 0 : qt.width) !== void 0 ? a.spatial.width : 150,
+      focus: ((wt = a == null ? void 0 : a.spatial) == null ? void 0 : wt.focus) !== void 0 ? a.spatial.focus : 20
     },
     reverb: {
-      size: ((Nt = a == null ? void 0 : a.reverb) == null ? void 0 : Nt.size) !== void 0 ? a.reverb.size : 2.4,
-      tone: (($t = a == null ? void 0 : a.reverb) == null ? void 0 : $t.tone) !== void 0 ? a.reverb.tone : 62,
+      size: ((Nt = a == null ? void 0 : a.reverb) == null ? void 0 : Nt.size) !== void 0 ? a.reverb.size : 3,
+      tone: (($t = a == null ? void 0 : a.reverb) == null ? void 0 : $t.tone) !== void 0 ? a.reverb.tone : 40,
       mix: ((xt = a == null ? void 0 : a.reverb) == null ? void 0 : xt.mix) !== void 0 ? a.reverb.mix : 30
     },
     echo: {
-      time: ((Ct = a == null ? void 0 : a.echo) == null ? void 0 : Ct.time) !== void 0 ? a.echo.time : 500,
-      feedback: ((Tt = a == null ? void 0 : a.echo) == null ? void 0 : Tt.feedback) !== void 0 ? a.echo.feedback : 45,
-      mix: ((Rt = a == null ? void 0 : a.echo) == null ? void 0 : Rt.mix) !== void 0 ? a.echo.mix : 5
+      time: ((Ct = a == null ? void 0 : a.echo) == null ? void 0 : Ct.time) !== void 0 ? a.echo.time : 50,
+      feedback: ((Tt = a == null ? void 0 : a.echo) == null ? void 0 : Tt.feedback) !== void 0 ? a.echo.feedback : 30,
+      mix: ((Rt = a == null ? void 0 : a.echo) == null ? void 0 : Rt.mix) !== void 0 ? a.echo.mix : 10
     },
     tape: {
       speed: typeof (a == null ? void 0 : a.tape) == "number" ? a.tape : ((Pt = a == null ? void 0 : a.tape) == null ? void 0 : Pt.speed) !== void 0 ? a.tape.speed : 1,
@@ -445,7 +445,7 @@ function yr({
       enable: !!N.spatialEngine && (a.enable !== void 0 ? a.enable : !0),
       spatial: {
         rate: ((t = a.spatial) == null ? void 0 : t.rate) !== void 0 ? a.spatial.rate : 0.2,
-        width: ((l = a.spatial) == null ? void 0 : l.width) !== void 0 ? a.spatial.width : 80,
+        width: ((l = a.spatial) == null ? void 0 : l.width) !== void 0 ? a.spatial.width : 150,
         focus: ((g = a.spatial) == null ? void 0 : g.focus) !== void 0 ? a.spatial.focus : 20
       },
       reverb: {
@@ -455,7 +455,7 @@ function yr({
       },
       echo: {
         time: ((ae = a.echo) == null ? void 0 : ae.time) !== void 0 ? a.echo.time : 50,
-        feedback: ((X = a.echo) == null ? void 0 : X.feedback) !== void 0 ? a.echo.feedback : 20,
+        feedback: ((X = a.echo) == null ? void 0 : X.feedback) !== void 0 ? a.echo.feedback : 30,
         mix: ((J = a.echo) == null ? void 0 : J.mix) !== void 0 ? a.echo.mix : 10
       },
       tape: {

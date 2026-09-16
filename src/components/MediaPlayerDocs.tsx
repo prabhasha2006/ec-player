@@ -4,7 +4,7 @@ import { AudioLines, Upload, CassetteTape, SquareMinus, ChevronDown, ChevronUp, 
 import { VisualizePlayer, ThemeSelector, themes, WaveAudioPlayer, NanoAudioPlayer, VideoPlayer } from './Player.js';
 
 const importFrom = 'ecplayer'
-const npmVersion = '1.1.2'
+const npmVersion = '1.1.3'
 
 const themeConfig = {
     light: {

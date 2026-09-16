@@ -332,19 +332,19 @@ function VisualizePlayer({
     const [spatialEngineSettings, setspatialEngineSettings] = useState({
         enable: !!controls.spatialEngine ? (spatialEngine?.enable !== undefined ? spatialEngine.enable : false) : false,
         spatial: {
-            rate: spatialEngine?.spatial?.rate !== undefined ? spatialEngine.spatial.rate : 0.11,
-            width: spatialEngine?.spatial?.width !== undefined ? spatialEngine.spatial.width : 135,
-            focus: spatialEngine?.spatial?.focus !== undefined ? spatialEngine.spatial.focus : 65
+            rate: spatialEngine?.spatial?.rate !== undefined ? spatialEngine.spatial.rate : 0.2,
+            width: spatialEngine?.spatial?.width !== undefined ? spatialEngine.spatial.width : 150,
+            focus: spatialEngine?.spatial?.focus !== undefined ? spatialEngine.spatial.focus : 20
         },
         reverb: {
-            size: spatialEngine?.reverb?.size !== undefined ? spatialEngine.reverb.size : 2.4,
-            tone: spatialEngine?.reverb?.tone !== undefined ? spatialEngine.reverb.tone : 62,
+            size: spatialEngine?.reverb?.size !== undefined ? spatialEngine.reverb.size : 3,
+            tone: spatialEngine?.reverb?.tone !== undefined ? spatialEngine.reverb.tone : 40,
             mix: spatialEngine?.reverb?.mix !== undefined ? spatialEngine.reverb.mix : 30
         },
         echo: {
-            time: spatialEngine?.echo?.time !== undefined ? spatialEngine.echo.time : 500,
-            feedback: spatialEngine?.echo?.feedback !== undefined ? spatialEngine.echo.feedback : 45,
-            mix: spatialEngine?.echo?.mix !== undefined ? spatialEngine.echo.mix : 5
+            time: spatialEngine?.echo?.time !== undefined ? spatialEngine.echo.time : 50,
+            feedback: spatialEngine?.echo?.feedback !== undefined ? spatialEngine.echo.feedback : 30,
+            mix: spatialEngine?.echo?.mix !== undefined ? spatialEngine.echo.mix : 10
         },
         tape: {
             speed: typeof spatialEngine?.tape === 'number' ? spatialEngine.tape : (spatialEngine?.tape?.speed !== undefined ? spatialEngine.tape.speed : 1.0),
@@ -358,7 +358,7 @@ function VisualizePlayer({
                 enable: !!controls.spatialEngine && (spatialEngine.enable !== undefined ? spatialEngine.enable : true),
                 spatial: {
                     rate: spatialEngine.spatial?.rate !== undefined ? spatialEngine.spatial.rate : 0.2,
-                    width: spatialEngine.spatial?.width !== undefined ? spatialEngine.spatial.width : 80,
+                    width: spatialEngine.spatial?.width !== undefined ? spatialEngine.spatial.width : 150,
                     focus: spatialEngine.spatial?.focus !== undefined ? spatialEngine.spatial.focus : 20
                 },
                 reverb: {
@@ -368,7 +368,7 @@ function VisualizePlayer({
                 },
                 echo: {
                     time: spatialEngine.echo?.time !== undefined ? spatialEngine.echo.time : 50,
-                    feedback: spatialEngine.echo?.feedback !== undefined ? spatialEngine.echo.feedback : 20,
+                    feedback: spatialEngine.echo?.feedback !== undefined ? spatialEngine.echo.feedback : 30,
                     mix: spatialEngine.echo?.mix !== undefined ? spatialEngine.echo.mix : 10
                 },
                 tape: {
