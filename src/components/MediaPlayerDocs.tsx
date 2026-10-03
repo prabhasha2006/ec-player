@@ -340,7 +340,7 @@ function VisualizePlayerDocs() {
         spatial: { rate: 0.2, width: 80, focus: 20 },
         reverb: { size: 3.0, tone: 40, mix: 30 },
         echo: { time: 50, feedback: 20, mix: 10 },
-        tape: { drive: 1, speed: 1.0 }
+        tape: { drive: 0, speed: 1.0 }
     }}
 />`;
         } else if (activeExample === 'bands') {
@@ -864,7 +864,7 @@ function VisualizePlayerDocs() {
                                             mix: 10
                                         },
                                         tape: {
-                                            drive: 1,
+                                            drive: 0,
                                             speed: 1
                                         }
                                     }}
