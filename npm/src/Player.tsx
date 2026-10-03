@@ -352,7 +352,7 @@ function VisualizePlayer({
         }
     });
 
-    useEffect(() => {
+    /* useEffect(() => {
         if (spatialEngine) {
             setspatialEngineSettings({
                 enable: !!controls.spatialEngine && (spatialEngine.enable !== undefined ? spatialEngine.enable : true),
@@ -377,7 +377,7 @@ function VisualizePlayer({
                 }
             });
         }
-    }, [spatialEngine]);
+    }, [spatialEngine]); */
 
     const [activeDolbyTab, setActiveDolbyTab] = useState<'spatial' | 'reverb' | 'echo' | 'tape'>('spatial');
 

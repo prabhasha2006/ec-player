@@ -1057,7 +1057,7 @@
   flex: 1;
   height: 1.5rem;
   background: #d1d5db;
-  border-radius: 0.5rem;
+  border-radius: 9999px;
   -webkit-appearance: none;
   appearance: none;
   cursor: pointer;
@@ -1089,7 +1089,7 @@
 
 .ecp-vp-eq-reset {
   padding: 0.25rem 0.75rem;
-  border-radius: 0.25rem;
+  border-radius: 5rem;
   font-size: 0.75rem;
   cursor: pointer;
   transition: all 150ms;
@@ -1413,8 +1413,14 @@
 }
 
 .ecp-vp-eq-band-col .ecp-vp-eq-slider {
-  height: 0.5rem;
+  height: 1.8rem;
   border-radius: 9999px;
+}
+
+@media (max-width: 480px) {
+  .ecp-vp-eq-band-col .ecp-vp-eq-slider {
+    height: 0.9rem;
+  }
 }
 
 .ecp-vp-eq-band-col .ecp-vp-eq-slider::-webkit-slider-thumb {
@@ -1427,6 +1433,7 @@
   border: none;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
   cursor: pointer;
+  opacity: 0;
 }
 
 .ecp-vp-eq-band-col .ecp-vp-eq-slider::-moz-range-thumb {

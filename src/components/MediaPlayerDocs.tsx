@@ -4,7 +4,7 @@ import { AudioLines, Upload, CassetteTape, SquareMinus, ChevronDown, ChevronUp, 
 import { VisualizePlayer, ThemeSelector, themes, WaveAudioPlayer, NanoAudioPlayer, VideoPlayer } from './Player.js';
 
 const importFrom = 'ecplayer'
-const npmVersion = '1.1.3'
+const npmVersion = '1.1.4'
 
 const themeConfig = {
     light: {
@@ -257,9 +257,9 @@ function VisualizePlayerDocs() {
     const [vizOnlyVisualization, setVizOnlyVisualization] = useState(false);
 
     // Equalizer states
-    const [vizEqBass, setVizEqBass] = useState(6);
+    const [vizEqBass, setVizEqBass] = useState(5);
     const [vizEqMid, setVizEqMid] = useState(-4);
-    const [vizEqTreble, setVizEqTreble] = useState(10);
+    const [vizEqTreble, setVizEqTreble] = useState(9);
 
     // Custom theme state
     const [customTheme, setCustomTheme] = useState({
